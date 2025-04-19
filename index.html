@@ -171,7 +171,7 @@
 
   <div class="info-section" id="about">
     <h3>About</h3>
-    <p>Built and designed by <a href="https://facebook.com" target="_blank">Bishal Mishra</a>. Version 1.0. Open‑source and free to use—customize it to your needs!</p>
+    <p>Build & Designed by <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank">Bishal Mishra</a>. Version 1.0. Open‑source and free to use—customize it to your needs!</p>
   </div>
 
   <div class="info-section" id="tips">
@@ -198,8 +198,112 @@
     </ul>
   </div>
 
+<!-- Continue from the end of your existing HTML before </body> -->
+<div class="info-section" id="testimonials">
+  <h3 style="text-align:center">Testimonials</h3>
+  <div class="testimonial-slider">
+    <div class="slides active">
+      <p>"Note P@d has revolutionized the way I take notes. It's sleek, fast, and reliable!"</p>
+      <h4>- Bishal Mishra</h4>
+      <small>CEO & Developer</small>
+    </div>
+    <div class="slides">
+      <p>"Perfect for daily use. I love the voice input and the easy export options!"</p>
+      <h4>- Narayan Giri</h4>
+      <small>Customer</small>
+    </div>
+    <div class="slides">
+      <p>"A handy online notepad with just the right amount of features. Love the dark mode!"</p>
+      <h4>- Neha Jaiswal</h4>
+      <small>Customer</small>
+    </div>
+    <div class="dots">
+      <span onclick="setSlide(0)"></span>
+      <span onclick="setSlide(1)"></span>
+      <span onclick="setSlide(2)"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .testimonial-slider {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .slides {
+    display: none;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 10px;
+  }
+
+  .slides.active {
+    display: block;
+    animation: fade 1s;
+  }
+
+  .slides h4 {
+    margin: 10px 0 0;
+  }
+
+  .dots {
+    margin-top: 10px;
+  }
+
+  .dots span {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    display: inline-block;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .dots span.active {
+    background-color: #8c53ff;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slides');
+  const dots = document.querySelectorAll('.dots span');
+
+  function showSlide(n) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      dots[i].classList.remove('active');
+    });
+    slides[n].classList.add('active');
+    dots[n].classList.add('active');
+  }
+
+  function setSlide(n) {
+    currentSlide = n;
+    showSlide(currentSlide);
+  }
+
+  function autoSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  setInterval(autoSlide, 4000);
+  showSlide(currentSlide);
+</script>
+
   <footer>
-    Design by <a href="https://facebook.com" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
+    Design by ❤️ <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
   </footer>
 
   <script>
