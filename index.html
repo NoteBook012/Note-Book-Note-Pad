@@ -1,514 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Note P@d - All Features</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    :root {
-      --bg: #fff;
-      --text: #000;
-      --card: #f9f9f9;
-    }
-    body.dark {
-      --bg: #1e1e1e;
-      --text: #fff;
-      --card: #2c2c2c;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header, footer {
-      background: #8c53ff;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-    }
-    #menu-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      background: #eee;
-      padding: 10px;
-    }
-    #menu-bar button, select {
-      padding: 5px 10px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-    #editor {
-      flex: 1;
-      padding: 20px;
-    }
-    #editor textarea, #editor input[type="text"] {
-      width: 100%;
-      font-size: 16px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: var(--card);
-      color: var(--text);
-      resize: vertical;
-    }
-    .dark #menu-bar, .dark #editor textarea, .dark #editor input[type="text"] {
-      background: var(--card);
-    }
-    #notes {
-      padding: 10px 20px;
-    }
-    .note {
-      border-radius: 10px;
-      background: var(--card);
-      padding: 15px;
-      margin: 10px 0;
-      position: relative;
-    }
-    .note.pinned {
-      border-left: 4px solid gold;
-    }
-    .note button {
-      margin-right: 5px;
-    }
-    #char-count {
-      text-align: right;
-      font-size: 14px;
-      margin-top: 5px;
-      opacity: 0.7;
-    }
-    .info-section {
-      background: var(--card);
-      padding: 20px;
-      margin: 20px;
-      border-radius: 10px;
-    }
-    .info-section h3 {
-      margin-top: 0;
-    }
-    .info-section ul {
-      list-style: disc inside;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Note P@d - All Features</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+--bg: #fff;
+--text: #000;
+--card: #f9f9f9;
+}
+body.dark {
+--bg: #1e1e1e;
+--text: #fff;
+--card: #2c2c2c;
+}
+body {
+font-family: 'Poppins', sans-serif;
+background: var(--bg);
+color: var(--text);
+margin: 0;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+header, footer {
+background: #8c53ff;
+color: white;
+padding: 10px 20px;
+text-align: center;
+}
+#menu-bar {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+justify-content: center;
+background: #eee;
+padding: 10px;
+}
+#menu-bar button, select {
+padding: 5px 10px;
+border-radius: 6px;
+border: none;
+cursor: pointer;
+}
+#editor {
+flex: 1;
+padding: 20px;
+}
+#editor textarea, #editor input[type="text"] {
+width: 100%;
+font-size: 16px;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid #ccc;
+background: var(--card);
+color: var(--text);
+resize: vertical;
+}
+.dark #menu-bar, .dark #editor textarea, .dark #editor input[type="text"] {
+background: var(--card);
+}
+#notes {
+padding: 10px 20px;
+}
+.note {
+border-radius: 10px;
+background: var(--card);
+padding: 15px;
+margin: 10px 0;
+position: relative;
+}
+.note.pinned {
+border-left: 4px solid gold;
+}
+.note button {
+margin-right: 5px;
+}
+#char-count {
+text-align: right;
+font-size: 14px;
+margin-top: 5px;
+opacity: 0.7;
+}
+.info-section {
+background: var(--card);
+padding: 20px;
+margin: 20px;
+border-radius: 10px;
+}
+.info-section h3 {
+margin-top: 0;
+}
+.info-section ul {
+list-style: disc inside;
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
-  </header>
+<header>
+<h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
+</header>
 
-  <div id="menu-bar">
-    <button onclick="newDoc()">New</button>
-    <button onclick="saveNote()">Save</button>
-    <button onclick="cutText()">Cut</button>
-    <button onclick="undo()">Undo</button>
-    <button onclick="redo()">Redo</button>
-    <button onclick="findReplace()">Find & Replace</button>
-    <select id="font-family" onchange="changeFont()">
-      <option value="Poppins">Poppins</option>
-      <option value="Arial">Arial</option>
-      <option value="Courier New">Courier</option>
-      <option value="Georgia">Georgia</option>
-    </select>
-    <select id="font-size" onchange="changeFontSize()">
-      <option value="14px">14px</option>
-      <option value="16px" selected>16px</option>
-      <option value="18px">18px</option>
-      <option value="24px">24px</option>
-    </select>
-    <button onclick="toggleDark()">🌙</button>
-    <button onclick="startVoiceInput()">🎤</button>
-  </div>
-
-  <div id="editor">
-    <input type="text" id="note-title" placeholder="Note Title" style="font-size:18px;"/>
-    <textarea id="note-text" placeholder="Start typing your note..."></textarea>
-    <div id="char-count">Character Count: 0</div>
-  </div>
-
-  <div id="notes">
-    <h3>Your Notes</h3>
-    <div id="note-list"></div>
-  </div>
-
-  <!-- Info Sections -->
-  <div class="info-section" id="features">
-    <h3>Features</h3>
-    <ul>
-      <li><strong>Simple Interface:</strong> Clean, intuitive layout with all tools at your fingertips.</li>
-      <li><strong>Autosave:</strong> Drafts are saved automatically as you type, so you never lose work.</li>
-      <li><strong>Character Count:</strong> Live counter to help you track length.</li>
-      <li><strong>Find & Replace:</strong> Quickly locate and replace text within your note.</li>
-      <li><strong>Print:</strong> One‑click print support for hard‑copy notes.</li>
-    </ul>
-  </div>
-
-  <div class="info-section" id="overview">
-    <h3>Overview</h3>
-    <p>Note P@d is a lightweight, browser‑based notepad designed for quick idea capture and daily journaling. No installation or sign‑up is required—just open your browser, and you’re ready to start writing.</p>
-  </div>
-
-  <div class="info-section" id="how-it-works">
-    <h3>How Does It Work?</h3>
-    <p>All notes and drafts are stored in your browser’s <code>localStorage</code>, so data never leaves your device. The JavaScript handles creating, reading, updating, and deleting notes, while libraries like jsPDF enable PDF export. Voice input leverages the Web Speech API for hands‑free typing.</p>
-  </div>
-
-  <div class="info-section" id="compatibility">
-    <h3>Browser Compatibility</h3>
-    <ul>
-      <li>Chrome, Firefox, Edge, and Safari (latest versions).</li>
-      <li>Mobile browsers supported, though voice input may vary.</li>
-      <li>If your browser doesn’t support voice, the feature will gracefully disable.</li>
-    </ul>
-  </div>
-
-  <div class="info-section" id="about">
-    <h3>About</h3>
-    <p>Build & Designed by <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank">Bishal Mishra</a>. Version 1.0. Open‑source and free to use—customize it to your needs!</p>
-  </div>
-
-  <div class="info-section" id="tips">
-    <h3>Tips for Using an Online Notepad</h3>
-    <ul>
-      <li>Use keyboard shortcuts: <code>Ctrl+S</code> to save, <code>Ctrl+F</code> to find.</li>
-      <li>Backup your notes regularly via the export options.</li>
-      <li>Pin important notes so they stay at the top.</li>
-      <li>Organize by using clear titles and dates.</li>
-    </ul>
-  </div>
-
-  <div class="info-section" id="privacy">
-    <h3>Privacy &amp; Security</h3>
-    <p>Your notes stay on your device—nothing is uploaded to a server. Clearing your browser data will remove all notes, so consider exporting backups if needed.</p>
-  </div>
-
-  <div class="info-section" id="quick-access">
-    <h3>Quick Access</h3>
-    <ul>
-      <li>Bookmark this page or install as a PWA for one‑click access.</li>
-      <li>Set it as your browser’s homepage to have it ready on launch.</li>
-      <li>Use keyboard shortcuts for faster workflows.</li>
-    </ul>
-  </div>
-
-<!-- Continue from the end of your existing HTML before </body> -->
-<div class="info-section" id="testimonials">
-  <h3 style="text-align:center">Testimonials</h3>
-  <div class="testimonial-slider">
-    <div class="slides active">
-      <p>"Note P@d has revolutionized the way I take notes. It's sleek, fast, and reliable!"</p>
-      <h4>- Bishal Mishra</h4>
-      <small>CEO & Developer</small>
-    </div>
-    <div class="slides">
-      <p>"Perfect for daily use. I love the voice input and the easy export options!"</p>
-      <h4>- Narayan Giri</h4>
-      <small>Customer</small>
-    </div>
-    <div class="slides">
-      <p>"A handy online notepad with just the right amount of features. Love the dark mode!"</p>
-      <h4>- Neha Jaiswal</h4>
-      <small>Customer</small>
-    </div>
-    <div class="dots">
-      <span onclick="setSlide(0)"></span>
-      <span onclick="setSlide(1)"></span>
-      <span onclick="setSlide(2)"></span>
-    </div>
-  </div>
+<div id="menu-bar">
+<button onclick="newDoc()">New</button>
+<button onclick="saveNote()">Save</button>
+<button onclick="cutText()">Cut</button>
+<button onclick="undo()">Undo</button>
+<button onclick="redo()">Redo</button>
+<button onclick="findReplace()">Find & Replace</button>
+<select id="font-family" onchange="changeFont()">
+<option value="Poppins">Poppins</option>
+<option value="Arial">Arial</option>
+<option value="Courier New">Courier</option>
+<option value="Georgia">Georgia</option>
+</select>
+<select id="font-size" onchange="changeFontSize()">
+<option value="14px">14px</option>
+<option value="16px" selected>16px</option>
+<option value="18px">18px</option>
+<option value="24px">24px</option>
+</select>
+<button onclick="toggleDark()">🌙</button>
+<button onclick="startVoiceInput()">🎤</button>
 </div>
 
+<div id="editor">
+<input type="text" id="note-title" placeholder="Note Title" style="font-size:18px;"/>
+<textarea id="note-text" placeholder="Start typing your note..."></textarea>
+<div id="char-count">Character Count: 0</div>
+</div>
+
+<div id="notes">
+<h3>Your Notes</h3>
+<div id="note-list"></div>
+</div>
+
+<!-- Info Sections -->
+<div class="info-section" id="features">
+<h3>Features</h3>
+<ul>
+<li><strong>Simple Interface:</strong> Clean, intuitive layout with all tools at your fingertips.</li>
+<li><strong>Autosave:</strong> Drafts are saved automatically as you type, so you never lose work.</li>
+<li><strong>Character Count:</strong> Live counter to help you track length.</li>
+<li><strong>Find & Replace:</strong> Quickly locate and replace text within your note.</li>
+<li><strong>Print:</strong> One‑click print support for hard‑copy notes.</li>
+</ul>
+</div>
+
+<div class="info-section" id="overview">
+<h3>Overview</h3>
+<p>Note P@d is a lightweight, browser‑based notepad designed for quick idea capture and daily journaling. No installation or sign‑up is required—just open your browser, and you’re ready to start writing.</p>
+</div>
+
+<div class="info-section" id="how-it-works">
+<h3>How Does It Work?</h3>
+<p>All notes and drafts are stored in your browser’s <code>localStorage</code>, so data never leaves your device. The JavaScript handles creating, reading, updating, and deleting notes, while libraries like jsPDF enable PDF export. Voice input leverages the Web Speech API for hands‑free typing.</p>
+</div>
+
+<div class="info-section" id="compatibility">
+<h3>Browser Compatibility</h3>
+<ul>
+<li>Chrome, Firefox, Edge, and Safari (latest versions).</li>
+<li>Mobile browsers supported, though voice input may vary.</li>
+<li>If your browser doesn’t support voice, the feature will gracefully disable.</li>
+</ul>
+</div>
+
+<div class="info-section" id="about">
+<h3>About</h3>
+<p>Build & Designed by <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank">Bishal Mishra</a>. Version 1.0. Open‑source and free to use—customize it to your needs!</p>
+</div>
+
+<div class="info-section" id="tips">
+<h3>Tips for Using an Online Notepad</h3>
+<ul>
+<li>Use keyboard shortcuts: <code>Ctrl+S</code> to save, <code>Ctrl+F</code> to find.</li>
+<li>Backup your notes regularly via the export options.</li>
+<li>Pin important notes so they stay at the top.</li>
+<li>Organize by using clear titles and dates.</li>
+</ul>
+</div>
+
+<div class="info-section" id="privacy">
+<h3>Privacy &amp; Security</h3>
+<p>Your notes stay on your device—nothing is uploaded to a server. Clearing your browser data will remove all notes, so consider exporting backups if needed.</p>
+</div>
+
+<div class="info-section" id="quick-access">
+<h3>Quick Access</h3>
+<ul>
+<li>Bookmark this page or install as a PWA for one‑click access.</li>
+<li>Set it as your browser’s homepage to have it ready on launch.</li>
+<li>Use keyboard shortcuts for faster workflows.</li>
+</ul>
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Note P@d Testimonials</title>
 <style>
-  .testimonial-slider {
-    position: relative;
-    max-width: 600px;
-    margin: auto;
-    text-align: center;
-  }
+:root {
+--card: #f9f9f9;
+}
 
-  .slides {
-    display: none;
-    padding: 20px;
-    background: var(--card);
-    border-radius: 10px;
-  }
+body {
+font-family: Arial, sans-serif;
+background: #fff;
+margin: 0;
+padding: 20px;
+}
 
-  .slides.active {
-    display: block;
-    animation: fade 1s;
-  }
+.info-section {
+padding: 40px 20px;
+background: #fafafa;
+}
 
-  .slides h4 {
-    margin: 10px 0 0;
-  }
+.testimonial-slider {
+position: relative;
+max-width: 600px;
+margin: auto;
+text-align: center;
+}
 
-  .dots {
-    margin-top: 10px;
-  }
+.slides {
+display: none;
+padding: 20px;
+background: var(--card);
+border-radius: 10px;
+transition: all 0.5s ease;
+}
 
-  .dots span {
-    height: 12px;
-    width: 12px;
-    margin: 0 5px;
-    display: inline-block;
-    background-color: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.slides.active {
+display: block;
+animation: fade 1s;
+}
 
-  .dots span.active {
-    background-color: #8c53ff;
-  }
+.slides img {
+width: 80px;
+height: 80px;
+border-radius: 50%;
+object-fit: cover;
+margin-bottom: 10px;
+}
 
-  @keyframes fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+.slides h4 {
+margin: 10px 0 0;
+}
+
+.slides small {
+display: block;
+color: #666;
+margin-top: 4px;
+}
+
+.dots {
+margin-top: 10px;
+}
+
+.dots span {
+height: 12px;
+width: 12px;
+margin: 0 5px;
+display: inline-block;
+background-color: #bbb;
+border-radius: 50%;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.dots span.active {
+background-color: #8c53ff;
+}
+
+.arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+font-size: 24px;
+background: rgba(0, 0, 0, 0.1);
+border: none;
+cursor: pointer;
+padding: 8px 12px;
+border-radius: 50%;
+user-select: none;
+}
+
+.arrow.left {
+left: -40px;
+}
+
+.arrow.right {
+right: -40px;
+}
+
+@keyframes fade {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+.arrow.left { left: 0; }
+.arrow.right { right: 0; }
+}
 </style>
+</head>
+<body>
+
+<div class="info-section" id="testimonials">
+<h3 style="text-align:center">Testimonials</h3>
+<div class="testimonial-slider" id="slider">
+<div class="slides active">
+<img src="https://i.pravatar.cc/80?img=5" alt="Bishal Mishra">
+<p>"Note P@d has revolutionized the way I take notes. It's sleek, fast, and reliable!"</p>
+<h4>- Bishal Mishra</h4>
+<small>CEO & Developer</small>
+</div>
+<div class="slides">
+<img src="https://i.pravatar.cc/80?img=12" alt="Narayan Giri">
+<p>"Perfect for daily use. I love the voice input and the easy export options!"</p>
+<h4>- Narayan Giri</h4>
+<small>Customer</small>
+</div>
+<div class="slides">
+<img src="https://i.pravatar.cc/80?img=20" alt="Neha Jaiswal">
+<p>"A handy online notepad with just the right amount of features. Love the dark mode!"</p>
+<h4>- Neha Jaiswal</h4>
+<small>Customer</small>
+</div>
+
+<button class="arrow left" onclick="prevSlide()">&#10094;</button>
+<button class="arrow right" onclick="nextSlide()">&#10095;</button>
+
+<div class="dots">
+<span onclick="setSlide(0)"></span>
+<span onclick="setSlide(1)"></span>
+<span onclick="setSlide(2)"></span>
+</div>
+</div>
+</div>
 
 <script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slides');
-  const dots = document.querySelectorAll('.dots span');
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slides');
+const dots = document.querySelectorAll('.dots span');
 
-  function showSlide(n) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove('active');
-      dots[i].classList.remove('active');
-    });
-    slides[n].classList.add('active');
-    dots[n].classList.add('active');
-  }
+function showSlide(n) {
+slides.forEach((slide, i) => {
+slide.classList.remove('active');
+dots[i].classList.remove('active');
+});
+slides[n].classList.add('active');
+dots[n].classList.add('active');
+}
 
-  function setSlide(n) {
-    currentSlide = n;
-    showSlide(currentSlide);
-  }
+function setSlide(n) {
+currentSlide = n;
+showSlide(currentSlide);
+}
 
-  function autoSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }
+function nextSlide() {
+currentSlide = (currentSlide + 1) % slides.length;
+showSlide(currentSlide);
+}
 
-  setInterval(autoSlide, 4000);
-  showSlide(currentSlide);
+function prevSlide() {
+currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+showSlide(currentSlide);
+}
+
+// Auto Slide
+setInterval(() => {
+nextSlide();
+}, 4000);
+
+// Swipe Support
+let startX = 0;
+const slider = document.getElementById('slider');
+
+slider.addEventListener('touchstart', e => {
+startX = e.touches[0].clientX;
+});
+
+slider.addEventListener('touchend', e => {
+const endX = e.changedTouches[0].clientX;
+if (startX - endX > 50) nextSlide();
+if (endX - startX > 50) prevSlide();
+});
+
+// Init first slide
+showSlide(currentSlide);
 </script>
 
-  <footer>
-    Design by ❤️ <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
-  </footer>
+</body>
+</html>
 
-  <script>
-    // ELEMENTS
-    const titleInput = document.getElementById('note-title');
-    const textInput  = document.getElementById('note-text');
-    const noteList   = document.getElementById('note-list');
-    const charCount  = document.getElementById('char-count');
-    let editModeId = null;
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact Us</title>
+<style>
+body {
+font-family: 'Segoe UI', sans-serif;
+background: #f5f7fa;
+margin: 0;
+padding: 0;
+}
+.contact-form {
+max-width: 600px;
+background: #fff;
+padding: 30px;
+margin: 50px auto;
+box-shadow: 0 0 15px rgba(0,0,0,0.1);
+border-radius: 10px;
+}
+.contact-form h2 {
+margin-bottom: 20px;
+color: #333;
+text-align: center;
+}
+.form-group {
+margin-bottom: 15px;
+}
+.form-group label {
+display: block;
+font-weight: 600;
+margin-bottom: 5px;
+}
+.form-group input, .form-group textarea {
+width: 100%;
+padding: 12px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 16px;
+box-sizing: border-box;
+}
+.form-group textarea {
+resize: vertical;
+height: 120px;
+}
+.form-group button {
+background-color: #4CAF50;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+.form-group button:hover {
+background-color: #45a049;
+}
+.form-message {
+margin-top: 15px;
+font-weight: bold;
+color: green;
+text-align: center;
+}
+@media (max-width: 600px) {
+.contact-form {
+margin: 20px;
+padding: 20px;
+}
+}
+</style>
+</head>
+<body>
 
-    // DRAFT AUTOSAVE
-    function saveDraft() {
-      localStorage.setItem('draft', JSON.stringify({
-        title: titleInput.value,
-        text: textInput.value
-      }));
-    }
-    function loadDraft() {
-      const d = localStorage.getItem('draft');
-      if (d) {
-        const { title, text } = JSON.parse(d);
-        titleInput.value = title;
-        textInput.value  = text;
-      }
-    }
-    function clearDraft() {
-      localStorage.removeItem('draft');
-    }
-    titleInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
-    textInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
+<div class="contact-form">
+<h2>Contact Us</h2>
+<form id="contactForm">
+<div class="form-group">
+<label for="name">Name *</label>
+<input type="text" id="name" required />
+</div>
+<div class="form-group">
+<label for="email">Email *</label>
+<input type="email" id="email" required />
+</div>
+<div class="form-group">
+<label for="phone">Phone Number *</label>
+<input type="tel" id="phone" pattern="[0-9]{10}" placeholder="e.g. 9876543210" required />
+</div>
+<div class="form-group">
+<label for="message">Message *</label>
+<textarea id="message" required></textarea>
+</div>
+<div class="form-group">
+<button type="submit">Send Message</button>
+</div>
+<div class="form-message" id="formMessage"></div>
+</form>
+</div>
 
-    // CHAR COUNT
-    function updateCharCount() {
-      charCount.textContent = `Character Count: ${textInput.value.length}`;
-    }
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+e.preventDefault();
 
-    // NOTE CRUD
-    function newDoc() {
-      editModeId = null;
-      titleInput.value = '';
-      textInput.value  = '';
-      updateCharCount();
-      clearDraft();
-    }
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const message = document.getElementById('message').value.trim();
 
-    function saveNote() {
-      const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      const timestamp = new Date().toLocaleString();
-      if (editModeId) {
-        const idx = notes.findIndex(n => n.id === editModeId);
-        notes[idx].title = titleInput.value || 'Untitled';
-        notes[idx].text  = textInput.value;
-        editModeId = null;
-      } else {
-        notes.push({
-          id: Date.now(),
-          title: titleInput.value || 'Untitled',
-          text: textInput.value,
-          date: timestamp,
-          pinned: false
-        });
-      }
-      localStorage.setItem('notes', JSON.stringify(notes));
-      displayNotes();
-      newDoc();
-    }
+if (!name || !email || !phone || !message) {
+document.getElementById('formMessage').style.color = "red";
+document.getElementById('formMessage').textContent = "Please fill all fields.";
+return;
+}
 
-    function displayNotes() {
-      const notes = JSON.parse(localStorage.getItem('notes')) || [];
-      notes.sort((a,b) => b.pinned - a.pinned);
-      noteList.innerHTML = '';
-      notes.forEach(n => {
-        const div = document.createElement('div');
-        div.className = `note ${n.pinned? 'pinned':''}`;
-        div.innerHTML = `
-          <strong>${n.title}</strong>
-          <p>${n.text}</p>
-          <small>Created on: ${n.date}</small><br/>
-          <button onclick="editNote(${n.id})">Edit</button>
-          <button onclick="pinNote(${n.id})">${n.pinned? 'Unpin':'Pin'}</button>
-          <button onclick="deleteNote(${n.id})">Delete</button>
-          <button onclick="shareNote(${n.id})">Share</button>
-          <button onclick="exportNote(${n.id})">.txt</button>
-          <button onclick="exportPDF(${n.id})">PDF</button>
-          <button onclick="printNote(${n.id})">Print</button>
-        `;
-        noteList.appendChild(div);
-      });
-    }
+if (!/^[0-9]{10}$/.test(phone)) {
+document.getElementById('formMessage').style.color = "red";
+document.getElementById('formMessage').textContent = "Enter a valid 10-digit phone number.";
+return;
+}
 
-    function deleteNote(id) {
-      let notes = JSON.parse(localStorage.getItem('notes'))||[];
-      notes = notes.filter(n => n.id !== id);
-      localStorage.setItem('notes', JSON.stringify(notes));
-      displayNotes();
-    }
+// Simulate successful submission
+document.getElementById('formMessage').style.color = "green";
+document.getElementById('formMessage').textContent = "Message sent successfully!";
+document.getElementById('contactForm').reset();
+});
+</script>
 
-    function pinNote(id) {
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n => n.id===id);
-      note.pinned = !note.pinned;
-      localStorage.setItem('notes', JSON.stringify(notes));
-      displayNotes();
-    }
+<footer>
+Design by ❤️ <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
+</footer>
 
-    function editNote(id) {
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n => n.id===id);
-      if (!note) return;
-      titleInput.value = note.title;
-      textInput.value  = note.text;
-      editModeId = id;
-      updateCharCount();
-    }
+<script>
+// ELEMENTS
+const titleInput = document.getElementById('note-title');
+const textInput = document.getElementById('note-text');
+const noteList = document.getElementById('note-list');
+const charCount = document.getElementById('char-count');
+let editModeId = null;
 
-    // UTILITY
-    function cutText()   { textInput.select(); document.execCommand('cut'); updateCharCount(); }
-    function undo()      { document.execCommand('undo'); }
-    function redo()      { document.execCommand('redo'); }
-    function findReplace(){
-      const f = prompt('Find:');
-      const r = prompt('Replace with:');
-      if (f!==null && r!==null) {
-        textInput.value = textInput.value.replaceAll(f, r);
-        updateCharCount();
-      }
-    }
-    function changeFont()     { textInput.style.fontFamily = document.getElementById('font-family').value; }
-    function changeFontSize() { textInput.style.fontSize   = document.getElementById('font-size').value; }
-    function toggleDark() {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
-    }
-    function loadDarkMode(){
-      if (localStorage.getItem('darkMode')==='true') document.body.classList.add('dark');
-    }
-    function startVoiceInput(){
-      if (!('webkitSpeechRecognition' in window)) return alert('Voice not supported');
-      const rec = new webkitSpeechRecognition();
-      rec.lang = 'en-US';
-      rec.onresult = e => {
-        textInput.value += ' ' + e.results[0][0].transcript;
-        saveDraft(); updateCharCount();
-      };
-      rec.start();
-    }
+// DRAFT AUTOSAVE
+function saveDraft() {
+localStorage.setItem('draft', JSON.stringify({
+title: titleInput.value,
+text: textInput.value
+}));
+}
+function loadDraft() {
+const d = localStorage.getItem('draft');
+if (d) {
+const { title, text } = JSON.parse(d);
+titleInput.value = title;
+textInput.value = text;
+}
+}
+function clearDraft() {
+localStorage.removeItem('draft');
+}
+titleInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
+textInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
 
-    // SHARE / EXPORT / PRINT
-    function shareNote(id){
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n=>n.id===id);
-      if (navigator.share && note) {
-        navigator.share({ title: note.title, text: note.text }).catch(()=>{});
-      } else alert('Share not supported');
-    }
+// CHAR COUNT
+function updateCharCount() {
+charCount.textContent = `Character Count: ${textInput.value.length}`;
+}
 
-    function exportNote(id){
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n=>n.id===id);
-      if (!note) return;
-      const blob = new Blob([note.title+'\n\n'+note.text], {type:'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${note.title.replace(/\s+/g,'_')}.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+// NOTE CRUD
+function newDoc() {
+editModeId = null;
+titleInput.value = '';
+textInput.value = '';
+updateCharCount();
+clearDraft();
+}
 
-    async function exportPDF(id){
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n=>n.id===id);
-      if (!note) return;
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(14);
-      doc.text(note.title, 10, 10);
-      doc.setFontSize(12);
-      doc.text(note.text, 10, 20);
-      doc.save(`${note.title.replace(/\s+/g,'_')}.pdf`);
-    }
+function saveNote() {
+const notes = JSON.parse(localStorage.getItem('notes')) || [];
+const timestamp = new Date().toLocaleString();
+if (editModeId) {
+const idx = notes.findIndex(n => n.id === editModeId);
+notes[idx].title = titleInput.value || 'Untitled';
+notes[idx].text = textInput.value;
+editModeId = null;
+} else {
+notes.push({
+id: Date.now(),
+title: titleInput.value || 'Untitled',
+text: textInput.value,
+date: timestamp,
+pinned: false
+});
+}
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+newDoc();
+}
 
-    function printNote(id){
-      const notes = JSON.parse(localStorage.getItem('notes'))||[];
-      const note = notes.find(n=>n.id===id);
-      if (!note) return;
-      const win = window.open('','_blank','width=800,height=600');
-      win.document.write(`
-        <html><head><title>Print</title></head>
-        <body><h1>${note.title}</h1>
-        <p>${note.text.replace(/\n/g,'<br>')}</p>
-        <small>Created on: ${note.date}</small>
-        </body></html>`);
-      win.document.close();
-      win.print();
-      win.close();
-    }
+function displayNotes() {
+const notes = JSON.parse(localStorage.getItem('notes')) || [];
+notes.sort((a,b) => b.pinned - a.pinned);
+noteList.innerHTML = '';
+notes.forEach(n => {
+const div = document.createElement('div');
+div.className = `note ${n.pinned? 'pinned':''}`;
+div.innerHTML = `
+<strong>${n.title}</strong>
+<p>${n.text}</p>
+<small>Created on: ${n.date}</small><br/>
+<button onclick="editNote(${n.id})">Edit</button>
+<button onclick="pinNote(${n.id})">${n.pinned? 'Unpin':'Pin'}</button>
+<button onclick="deleteNote(${n.id})">Delete</button>
+<button onclick="shareNote(${n.id})">Share</button>
+<button onclick="exportNote(${n.id})">.txt</button>
+<button onclick="exportPDF(${n.id})">PDF</button>
+<button onclick="printNote(${n.id})">Print</button>
+`;
+noteList.appendChild(div);
+});
+}
 
-    // INITIALIZE
-    window.onload = () => {
-      loadDarkMode();
-      loadDraft();
-      displayNotes();
-      updateCharCount();
-    };
-  </script>
+function deleteNote(id) {
+let notes = JSON.parse(localStorage.getItem('notes'))||[];
+notes = notes.filter(n => n.id !== id);
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+}
+
+function pinNote(id) {
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n => n.id===id);
+note.pinned = !note.pinned;
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+}
+
+function editNote(id) {
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n => n.id===id);
+if (!note) return;
+titleInput.value = note.title;
+textInput.value = note.text;
+editModeId = id;
+updateCharCount();
+}
+
+// UTILITY
+function cutText() { textInput.select(); document.execCommand('cut'); updateCharCount(); }
+function undo() { document.execCommand('undo'); }
+function redo() { document.execCommand('redo'); }
+function findReplace(){
+const f = prompt('Find:');
+const r = prompt('Replace with:');
+if (f!==null && r!==null) {
+textInput.value = textInput.value.replaceAll(f, r);
+updateCharCount();
+}
+}
+function changeFont() { textInput.style.fontFamily = document.getElementById('font-family').value; }
+function changeFontSize() { textInput.style.fontSize = document.getElementById('font-size').value; }
+function toggleDark() {
+document.body.classList.toggle('dark');
+localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+}
+function loadDarkMode(){
+if (localStorage.getItem('darkMode')==='true') document.body.classList.add('dark');
+}
+function startVoiceInput(){
+if (!('webkitSpeechRecognition' in window)) return alert('Voice not supported');
+const rec = new webkitSpeechRecognition();
+rec.lang = 'en-US';
+rec.onresult = e => {
+textInput.value += ' ' + e.results[0][0].transcript;
+saveDraft(); updateCharCount();
+};
+rec.start();
+}
+
+// SHARE / EXPORT / PRINT
+function shareNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (navigator.share && note) {
+navigator.share({ title: note.title, text: note.text }).catch(()=>{});
+} else alert('Share not supported');
+}
+
+function exportNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const blob = new Blob([note.title+'\n\n'+note.text], {type:'text/plain'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `${note.title.replace(/\s+/g,'_')}.txt`;
+a.click();
+URL.revokeObjectURL(url);
+}
+
+async function exportPDF(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+doc.setFontSize(14);
+doc.text(note.title, 10, 10);
+doc.setFontSize(12);
+doc.text(note.text, 10, 20);
+doc.save(`${note.title.replace(/\s+/g,'_')}.pdf`);
+}
+
+function printNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const win = window.open('','_blank','width=800,height=600');
+win.document.write(`
+<html><head><title>Print</title></head>
+<body><h1>${note.title}</h1>
+<p>${note.text.replace(/\n/g,'<br>')}</p>
+<small>Created on: ${note.date}</small>
+</body></html>`);
+win.document.close();
+win.print();
+win.close();
+}
+
+// INITIALIZE
+window.onload = () => {
+loadDarkMode();
+loadDraft();
+displayNotes();
+updateCharCount();
+};
+</script>
 </body>
 </html>
