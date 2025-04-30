@@ -138,6 +138,232 @@ list-style: disc inside;
 <h3>Your Notes</h3>
 <div id="note-list"></div>
 </div>
+<!-- 🔐 AUTH MODALS & POPUPS -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-content glass">
+    <h2 id="authTitle">Sign In</h2>
+    <input type="text" id="authUsername" placeholder="Username" />
+    <input type="password" id="authPassword" placeholder="Password" />
+    <button id="authSubmit">Submit</button>
+    <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p>
+  </div>
+</div>
+
+<div id="welcomePopup" class="modal hidden">
+  <div class="modal-content glass">
+    <h2>👋 Welcome to Note P@d!</h2>
+    <p>Create notes, draw on the whiteboard, and save your work locally!</p>
+    <button id="getStartedBtn">Get Started</button>
+  </div>
+</div>
+
+<!-- 👤 USER STATUS -->
+<div id="userInfo" class="user-info hidden">
+  <span id="welcomeUser"></span>
+  <button id="logoutBtn">Logout</button>
+</div>
+
+<!-- 🎨 MODERN STYLES -->
+<style>
+:root {
+  --primary: #4f46e5;
+  --bg: #f9fafb;
+  --text: #1f2937;
+  --radius: 14px;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: var(--radius);
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: var(--text);
+}
+
+.modal-content p {
+  color: #374151;
+  font-size: 14px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 16px;
+}
+
+.modal-content button {
+  background: var(--primary);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: #4338ca;
+}
+
+.modal-content a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.user-info {
+  position: fixed;
+  top: 12px;
+  right: 18px;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+}
+
+.user-info button {
+  padding: 5px 10px;
+  background: #e11d48;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.user-info button:hover {
+  background: #be123c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<!-- 🔐 JS FUNCTIONALITY -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const authModal = document.getElementById("authModal");
+  const authTitle = document.getElementById("authTitle");
+  const authUsername = document.getElementById("authUsername");
+  const authPassword = document.getElementById("authPassword");
+  const authSubmit = document.getElementById("authSubmit");
+  const switchMode = document.getElementById("switchMode");
+  const welcomePopup = document.getElementById("welcomePopup");
+  const getStartedBtn = document.getElementById("getStartedBtn");
+  const userInfo = document.getElementById("userInfo");
+  const welcomeUser = document.getElementById("welcomeUser");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  let isSignUp = false;
+
+  if (!localStorage.getItem("visitedBefore")) {
+    welcomePopup.classList.remove("hidden");
+  } else {
+    const currentUser = localStorage.getItem("currentUser");
+    if (!currentUser) showAuthModal();
+    else showUserInfo(currentUser);
+  }
+
+  getStartedBtn.onclick = () => {
+    welcomePopup.classList.add("hidden");
+    localStorage.setItem("visitedBefore", "yes");
+    showAuthModal();
+  };
+
+  function showAuthModal() {
+    authModal.classList.remove("hidden");
+    authTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
+    authSubmit.textContent = isSignUp ? "Register" : "Login";
+    switchMode.innerHTML = isSignUp
+      ? 'Already have an account? <a href="#">Sign In</a>'
+      : 'Don\'t have an account? <a href="#">Sign Up</a>';
+  }
+
+  switchMode.onclick = (e) => {
+    e.preventDefault();
+    isSignUp = !isSignUp;
+    showAuthModal();
+  };
+
+  authSubmit.onclick = () => {
+    const username = authUsername.value.trim();
+    const password = authPassword.value.trim();
+    if (!username || !password) return alert("Please fill in all fields");
+
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+    if (isSignUp) {
+      if (users[username]) return alert("Username already exists");
+      users[username] = password;
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("currentUser", username);
+      authModal.classList.add("hidden");
+      showUserInfo(username);
+    } else {
+      if (users[username] !== password) return alert("Invalid credentials");
+      localStorage.setItem("currentUser", username);
+      authModal.classList.add("hidden");
+      showUserInfo(username);
+    }
+  };
+
+  function showUserInfo(username) {
+    userInfo.classList.remove("hidden");
+    welcomeUser.textContent = `👋 Hello, ${username}`;
+  }
+
+  logoutBtn.onclick = () => {
+    localStorage.removeItem("currentUser");
+    userInfo.classList.add("hidden");
+    showAuthModal();
+  };
+});
+</script>
 
 <!-- Info Sections -->
 <div class="info-section" id="features">
