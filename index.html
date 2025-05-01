@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Note P@d - All Features</title>
+<title>Note Pad-Free Premium Features</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
+    
 :root {
 --bg: #fff;
 --text: #000;
@@ -137,119 +138,163 @@ list-style: disc inside;
 <h3>Your Notes</h3>
 <div id="note-list"></div>
 </div>
-
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Note P@d - Auth</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #4f46e5;
-      --bg: #f9fafb;
-      --text: #1f2937;
-      --radius: 14px;
+      --primary: #6366f1;
+      --bg: #f3f4f6;
+      --text: #111827;
+      --glass: rgba(255, 255, 255, 0.85);
+      --radius: 16px;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      background: var(--bg);
+      background: linear-gradient(135deg, #dbeafe, #fef3c7);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    .modal {
+
+    .modal, .welcome-popup {
       position: fixed;
       inset: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(6px);
-      z-index: 9999;
+      z-index: 1000;
     }
-    .modal-content {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
+
+    .modal-content, .welcome-content {
+      background: var(--glass);
+      padding: 32px;
       border-radius: var(--radius);
       text-align: center;
-      max-width: 340px;
+      max-width: 380px;
       width: 90%;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.5s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
-    .modal-content h2 {
-      margin-bottom: 15px;
+
+    .modal-content h2, .welcome-content h2 {
+      margin-bottom: 20px;
       color: var(--text);
     }
+
     .modal-content input {
       width: 100%;
-      padding: 10px 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border: 1px solid #d1d5db;
       border-radius: var(--radius);
       font-size: 16px;
+      background: #f9fafb;
     }
-    .modal-content button {
+
+    .modal-content button, .welcome-content button {
       background: var(--primary);
       color: white;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
       border-radius: var(--radius);
       font-size: 16px;
-      margin-top: 10px;
+      margin-top: 16px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    .modal-content button:hover {
-      background: #4338ca;
+
+    .modal-content button:hover, .welcome-content button:hover {
+      background: #4f46e5;
     }
+
     .modal-content a {
       color: var(--primary);
       text-decoration: none;
-      display: block;
-      margin-top: 10px;
       font-size: 13px;
+      display: block;
+      margin-top: 12px;
     }
+
     .user-info {
       position: fixed;
       top: 12px;
       right: 18px;
       background: #fff;
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: var(--radius);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       font-size: 14px;
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       z-index: 999;
     }
+
+    .user-info img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+    }
+
     .user-info button {
-      padding: 5px 10px;
-      background: #e11d48;
+      padding: 6px 12px;
+      background: #dc2626;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 13px;
       cursor: pointer;
     }
+
     .user-info button:hover {
-      background: #be123c;
+      background: #b91c1c;
     }
+
+    .confetti {
+      font-size: 48px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pop 1s ease-out;
+      pointer-events: none;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
     .hidden { display: none; }
   </style>
 </head>
 <body>
 
 <!-- Welcome Popup -->
-<div id="welcomePopup" class="modal hidden">
-  <div class="modal-content">
-    <h2>👋 Welcome to Note P@d!</h2>
-    <p>Create notes, draw, and save your work locally!</p>
+<div id="welcomePopup" class="welcome-popup">
+  <div class="welcome-content">
+    <h2>Welcome to Note P@d!</h2>
+    <p>Capture your ideas. Organize your thoughts. Let’s get started!</p>
     <button id="getStartedBtn">Get Started</button>
   </div>
 </div>
@@ -257,11 +302,11 @@ list-style: disc inside;
 <!-- Auth Modal -->
 <div id="authModal" class="modal hidden">
   <div class="modal-content">
-    <h2 id="authTitle">Sign In</h2>
+    <h2 id="authTitle">Sign In to Note P@d</h2>
     <input type="text" id="authUsername" placeholder="Username" />
     <input type="password" id="authPassword" placeholder="Password" />
-    <button id="authSubmit">Submit</button>
-    <div id="googleSignInDiv" style="margin: 15px 0;"></div>
+    <button id="authSubmit">Sign In</button>
+    <div id="googleSignInDiv" style="margin: 20px 0;"></div>
     <a href="#" id="forgotPassword">Forgot Password?</a>
     <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p>
   </div>
@@ -269,12 +314,17 @@ list-style: disc inside;
 
 <!-- User Info Display -->
 <div id="userInfo" class="user-info">
-  <span id="welcomeUser"></span>
+  <img id="userPic" src="" alt="Profile" />
   <button id="logoutBtn">Logout</button>
 </div>
 
+<div id="confetti" class="confetti hidden">🎉</div>
+<audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const welcomePopup = document.getElementById("welcomePopup");
+  const getStartedBtn = document.getElementById("getStartedBtn");
   const authModal = document.getElementById("authModal");
   const authTitle = document.getElementById("authTitle");
   const authUsername = document.getElementById("authUsername");
@@ -282,35 +332,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const authSubmit = document.getElementById("authSubmit");
   const switchMode = document.getElementById("switchMode");
   const forgotPassword = document.getElementById("forgotPassword");
-  const welcomePopup = document.getElementById("welcomePopup");
-  const getStartedBtn = document.getElementById("getStartedBtn");
   const userInfo = document.getElementById("userInfo");
-  const welcomeUser = document.getElementById("welcomeUser");
   const logoutBtn = document.getElementById("logoutBtn");
+  const userPic = document.getElementById("userPic");
+  const confetti = document.getElementById("confetti");
+  const loginSound = document.getElementById("loginSound");
+
   let isSignUp = false;
 
-  if (!localStorage.getItem("visitedBefore")) {
+  if (!localStorage.getItem("visited")) {
     welcomePopup.classList.remove("hidden");
+    localStorage.setItem("visited", "true");
+  } else if (!localStorage.getItem("currentUser")) {
+    authModal.classList.remove("hidden");
   } else {
-    const user = localStorage.getItem("currentUser");
-    if (!user) authModal.classList.remove("hidden");
-    else showUserInfo(user);
+    showUserInfo(localStorage.getItem("currentUser"), localStorage.getItem("userPic"));
   }
 
   getStartedBtn.onclick = () => {
     welcomePopup.classList.add("hidden");
-    localStorage.setItem("visitedBefore", "yes");
     authModal.classList.remove("hidden");
   };
 
   switchMode.onclick = (e) => {
     e.preventDefault();
     isSignUp = !isSignUp;
-    authTitle.textContent = isSignUp ? "Sign Up" : "Sign In";
-    authSubmit.textContent = isSignUp ? "Register" : "Login";
+    authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back";
+    authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In";
     switchMode.innerHTML = isSignUp
       ? 'Already have an account? <a href="#">Sign In</a>'
-      : 'Don\'t have an account? <a href="#">Sign Up</a>';
+      : 'Don’t have an account? <a href="#">Sign Up</a>';
   };
 
   authSubmit.onclick = () => {
@@ -325,13 +376,11 @@ document.addEventListener("DOMContentLoaded", () => {
       users[username] = password;
       localStorage.setItem("users", JSON.stringify(users));
       localStorage.setItem("currentUser", username);
-      authModal.classList.add("hidden");
-      showUserInfo(username);
+      loginSuccess(username, ""); 
     } else {
       if (users[username] !== password) return alert("Invalid credentials");
       localStorage.setItem("currentUser", username);
-      authModal.classList.add("hidden");
-      showUserInfo(username);
+      loginSuccess(username, "");
     }
   };
 
@@ -349,45 +398,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  function showUserInfo(username) {
-    userInfo.style.display = "flex";
-    welcomeUser.textContent = `👋 Hello, ${username}`;
-  }
-
   logoutBtn.onclick = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("userPic");
     userInfo.style.display = "none";
     authModal.classList.remove("hidden");
   };
+
+  function loginSuccess(username, picUrl) {
+    showUserInfo(username, picUrl);
+    confetti.classList.remove("hidden");
+    setTimeout(() => confetti.classList.add("hidden"), 1200);
+    loginSound.play();
+    setTimeout(() => window.location.href = "dashboard.html", 1800);
+  }
+
+  function showUserInfo(username, picUrl) {
+    userInfo.style.display = "flex";
+    userPic.src = picUrl || "https://ui-avatars.com/api/?name=" + encodeURIComponent(username);
+    authModal.classList.add("hidden");
+  }
+
+  // Google Login
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "823008037515-e21637gli75vn7lsn1b1bhkpq37gmuug.apps.googleusercontent.com",
+      callback: handleGoogleSignIn
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignInDiv"),
+      { theme: "outline", size: "large", shape: "pill" }
+    );
+  };
+
+  function handleGoogleSignIn(response) {
+    const data = jwtDecode(response.credential);
+    const name = data.name || data.email;
+    const picture = data.picture || "";
+    localStorage.setItem("currentUser", name);
+    localStorage.setItem("userPic", picture);
+    loginSuccess(name, picture);
+  }
+
+  function jwtDecode(token) {
+    const payload = token.split('.')[1];
+    return JSON.parse(atob(payload));
+  }
 });
-
-window.onload = function () {
-  google.accounts.id.initialize({
-    client_id: "823008037515-e21637gli75vn7lsn1b1bhkpq37gmuug.apps.googleusercontent.com",
-    callback: handleGoogleSignIn
-  });
-  google.accounts.id.renderButton(
-    document.getElementById("googleSignInDiv"),
-    { theme: "outline", size: "large" }
-  );
-};
-
-function handleGoogleSignIn(response) {
-  const data = jwtDecode(response.credential);
-  const name = data.name || data.email;
-  localStorage.setItem("currentUser", name);
-  document.getElementById("authModal").classList.add("hidden");
-  document.getElementById("userInfo").style.display = "flex";
-  document.getElementById("welcomeUser").textContent = `👋 Hello, ${name}`;
-}
-
-function jwtDecode(token) {
-  const payload = token.split('.')[1];
-  return JSON.parse(atob(payload));
-}
 </script>
 </body>
 </html>
+
 
 <!-- Info Sections -->
 <div class="info-section" id="features">
@@ -448,7 +509,49 @@ function jwtDecode(token) {
 <li>Use keyboard shortcuts for faster workflows.</li>
 </ul>
 </div>
+    <!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" style="
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  padding: 10px 15px;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0.7;
+  display: none;
+  transition: opacity 0.3s, transform 0.3s;
+">
+  ⬆️
+</button>
 
+<script>
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.style.display = "block";
+    } else {
+      scrollToTopBtn.style.display = "none";
+    }
+  });
+
+  scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <title>Note P@d Testimonials</title>
 <style>
@@ -556,6 +659,8 @@ to { opacity: 1; }
 .arrow.right { right: 0; }
 }
 </style>
+</head>
+<body>
 
 <div class="info-section" id="testimonials">
 <h3 style="text-align:center">Testimonials</h3>
@@ -642,6 +747,11 @@ if (endX - startX > 50) prevSlide();
 showSlide(currentSlide);
 </script>
 
+</body>
+</html>
+
+<html lang="en">
+<head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Contact Us</title>
@@ -711,7 +821,8 @@ padding: 20px;
 }
 }
 </style>
-
+</head>
+<body>
 
 <div class="contact-form">
 <h2>Contact Us</h2>
@@ -766,78 +877,6 @@ document.getElementById('formMessage').textContent = "Message sent successfully!
 document.getElementById('contactForm').reset();
 });
 </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 2000px; /* To make the page scrollable */
-            background: #f0f0f0;
-        }
-
-        #scrollToTopBtn {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #008CBA;
-            color: #fff;
-            border: none;
-            padding: 15px 20px;
-            font-size: 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        #scrollToTopBtn:hover {
-            background-color: #005f73;
-            transform: scale(1.1); /* Grow the button */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        #scrollToTopBtn:active {
-            background-color: #003d47;
-            transform: scale(1);
-        }
-
-        /* Add animation for the button visibility */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-    </style>
-</head>
-
-<body>
-
-    <button id="scrollToTopBtn">↑</button>
-
-    <script>
-        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.style.display = 'block';
-                scrollToTopBtn.style.animation = 'fadeIn 0.5s ease'; // Add fade-in effect
-            } else {
-                scrollToTopBtn.style.display = 'none';
-            }
-        });
-
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
 
 <footer>
 Design by ❤️ <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
