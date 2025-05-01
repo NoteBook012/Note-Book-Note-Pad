@@ -139,7 +139,8 @@ list-style: disc inside;
 <div id="note-list"></div>
 </div>
 
-  <meta charset="UTF-8" />
+ 
+    * { <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Note P@d - Auth</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -153,7 +154,6 @@ list-style: disc inside;
       --radius: 16px;
     }
 
-    * {
       box-sizing: border-box;
     }
 
@@ -869,7 +869,7 @@ return;
 
 // Simulate successful submission
 document.getElementById('formMessage').style.color = "green";
-document.getElementById('formMessage').textContent = "Message sent successfully!";
+document.getElementById('formMessage').textContent = "Message sent successfully!✅";
 document.getElementById('contactForm').reset();
 });
 </script>
