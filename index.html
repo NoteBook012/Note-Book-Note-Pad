@@ -141,14 +141,14 @@ list-style: disc inside;
     <!-- Social Contact Features (Single Page Integration with Official Icons & Animations) -->
 
 <!-- Floating Contact Button -->
-<div id="contact-fab" style="position: fixed; bottom: 20px; left: 20px; z-index: 999;">
+<div id="contact-fab" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
   <button onclick="toggleContactPanel()" style="border-radius: 50%; background-color: #007bff; color: white; border: none; width: 60px; height: 60px; font-size: 28px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.3s ease;">
     <i class="fab fa-facebook-messenger"></i>
   </button>
 </div>
 
 <!-- Contact Panel -->
-<div id="contact-panel" style="display: none; position: fixed; bottom: 90px; left: 20px; background: white; border: 1px solid #ccc; border-radius: 12px; padding: 15px; width: 300px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 999; animation: fadeInUp 0.4s ease forwards;">
+<div id="contact-panel" style="display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 12px; padding: 15px; width: 300px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 999; animation: fadeInUp 0.4s ease forwards;">
   <h3 style="margin-top: 0; font-family: Arial, sans-serif;">Contact Us</h3>
   <form onsubmit="saveContactForm(event)">
     <input type="text" id="contact-name" placeholder="Your Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
