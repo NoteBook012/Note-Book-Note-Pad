@@ -138,6 +138,97 @@ list-style: disc inside;
 <h3>Your Notes</h3>
 <div id="note-list"></div>
 </div>
+    <!-- Social Contact Features (Single Page Integration with Official Icons & Animations) -->
+
+<!-- Floating Contact Button -->
+<div id="contact-fab" style="position: fixed; bottom: 20px; left: 20px; z-index: 999;">
+  <button onclick="toggleContactPanel()" style="border-radius: 50%; background-color: #007bff; color: white; border: none; width: 60px; height: 60px; font-size: 28px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.3s ease;">
+    <i class="fab fa-facebook-messenger"></i>
+  </button>
+</div>
+
+<!-- Contact Panel -->
+<div id="contact-panel" style="display: none; position: fixed; bottom: 90px; left: 20px; background: white; border: 1px solid #ccc; border-radius: 12px; padding: 15px; width: 300px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 999; animation: fadeInUp 0.4s ease forwards;">
+  <h3 style="margin-top: 0; font-family: Arial, sans-serif;">Contact Us</h3>
+  <form onsubmit="saveContactForm(event)">
+    <input type="text" id="contact-name" placeholder="Your Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="email" id="contact-email" placeholder="Your Email" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <textarea id="contact-message" placeholder="Your Message" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+    <button type="submit" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold;">
+      <i class="fas fa-paper-plane"></i> Send
+    </button>
+  </form>
+  <hr>
+  <div style="display: flex; gap: 12px; justify-content: center; font-size: 22px;">
+    <a href="https://www.facebook.com/share/192BNc6so2/?mibextid=wwXIfr" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="https://youtube.com/@btmobilecare" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="https://wa.me/+979827801575" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#contact-fab button:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
+#contact-panel {
+  animation: fadeInUp 0.4s ease;
+  transition: opacity 0.3s ease;
+}
+
+#contact-panel i {
+  color: #007bff;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#contact-panel i:hover {
+  transform: scale(1.2);
+  color: #0056b3;
+}
+</style>
+
+<script>
+function toggleContactPanel() {
+  const panel = document.getElementById("contact-panel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
+
+function saveContactForm(event) {
+  event.preventDefault();
+  const name = document.getElementById("contact-name").value;
+  const email = document.getElementById("contact-email").value;
+  const message = document.getElementById("contact-message").value;
+
+  const formData = { name, email, message, date: new Date().toISOString() };
+  const saved = JSON.parse(localStorage.getItem("notePadContactMessages") || "[]");
+  saved.push(formData);
+  localStorage.setItem("notePadContactMessages", JSON.stringify(saved));
+
+  alert("Message saved locally. Thank you!");
+  document.querySelector("form").reset();
+  toggleContactPanel();
+}
+
+// Auto-open the panel after delay
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const panel = document.getElementById("contact-panel");
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+    }
+  }, 5000); // Show after 5 seconds
+});
+</script>
+
 
  
  <meta charset="UTF-8" />
