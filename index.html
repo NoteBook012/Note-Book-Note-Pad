@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/png" href="image/favicon.png">
+<title>Note Pad-Free Premium Features</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    
+:root {
+--bg: #fff;
+--text: #000;
+--card: #f9f9f9;
+}
+body.dark {
+--bg: #1e1e1e;
+--text: #fff;
+--card: #2c2c2c;
+}
+body {
+font-family: 'Poppins', sans-serif;
+background: var(--bg);
+color: var(--text);
+margin: 0;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+header, footer {
+background: #8c53ff;
+color: white;
+padding: 10px 20px;
+text-align: center;
+}
+#menu-bar {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+justify-content: center;
+background: #eee;
+padding: 10px;
+}
+#menu-bar button, select {
+padding: 5px 10px;
+border-radius: 6px;
+border: none;
+cursor: pointer;
+}
+#editor {
+flex: 1;
+padding: 20px;
+}
+#editor textarea, #editor input[type="text"] {
+width: 100%;
+font-size: 16px;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid #ccc;
+background: var(--card);
+color: var(--text);
+resize: vertical;
+}
+.dark #menu-bar, .dark #editor textarea, .dark #editor input[type="text"] {
+background: var(--card);
+}
+#notes {
+padding: 10px 20px;
+}
+.note {
+border-radius: 10px;
+background: var(--card);
+padding: 15px;
+margin: 10px 0;
+position: relative;
+}
+.note.pinned {
+border-left: 4px solid gold;
+}
+.note button {
+margin-right: 5px;
+}
+#char-count {
+text-align: right;
+font-size: 14px;
+margin-top: 5px;
+opacity: 0.7;
+}
+.info-section {
+background: var(--card);
+padding: 20px;
+margin: 20px;
+border-radius: 10px;
+}
+.info-section h3 {
+margin-top: 0;
+}
+.info-section ul {
+list-style: disc inside;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
+</header>
+
+<div id="menu-bar">
+<button onclick="newDoc()">📝New</button>
+<button onclick="saveNote()">💾Save</button>
+<button onclick="cutText()">✂️ Cut</button>
+<button onclick="undo()">↩️Undo</button>
+<button onclick="redo()">↪️Redo</button>
+<button onclick="findReplace()">🔎Find & Replace</button>
+<select id="font-family" onchange="changeFont()">
+<option value="Poppins">Poppins</option>
+<option value="Arial">Arial</option>
+<option value="Courier New">Courier</option>
+<option value="Georgia">Georgia</option>
+</select>
+<select id="font-size" onchange="changeFontSize()">
+<option value="14px">14px</option>
+<option value="16px" selected>16px</option>
+<option value="18px">18px</option>
+<option value="24px">24px</option>
+</select>
+<button onclick="toggleDark()">🌗</button>
+<button onclick="startVoiceInput()">🎙️</button>
+</div>
+
+<div id="editor">
+<input type="text" id="note-title" placeholder="Note Title" style="font-size:18px;"/>
+<textarea id="note-text" placeholder="Start typing your note..."></textarea>
+<div id="char-count">Character Count: 0</div>
+</div>
+
+<div id="notes">
+<h3>Your Notes</h3>
+<div id="note-list"></div>
+</div>
+    <!-- Social Contact Features (Single Page Integration with Official Icons & Animations) -->
+
+<!-- Floating Contact Button -->
+<div id="contact-fab" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+  <button onclick="toggleContactPanel()" style="border-radius: 50%; background-color: #007bff; color: white; border: none; width: 60px; height: 60px; font-size: 28px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: transform 0.3s ease;">
+    <i class="fab fa-facebook-messenger"></i>
+  </button>
+</div>
+
+<!-- Contact Panel -->
+<div id="contact-panel" style="display: none; position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 12px; padding: 15px; width: 300px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 999; animation: fadeInUp 0.4s ease forwards;">
+  <h3 style="margin-top: 0; font-family: Arial, sans-serif;">Contact Us</h3>
+  <form onsubmit="saveContactForm(event)">
+    <input type="text" id="contact-name" placeholder="Your Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="email" id="contact-email" placeholder="Your Email" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    <textarea id="contact-message" placeholder="Your Message" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+    <button type="submit" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold;">
+      <i class="fas fa-paper-plane"></i> Send
+    </button>
+  </form>
+  <hr>
+  <div style="display: flex; gap: 12px; justify-content: center; font-size: 22px;">
+    <a href="https://www.facebook.com/share/192BNc6so2/?mibextid=wwXIfr" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="https://youtube.com/@btmobilecare" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="https://wa.me/+979827801575" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#contact-fab button:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+
+#contact-panel {
+  animation: fadeInUp 0.4s ease;
+  transition: opacity 0.3s ease;
+}
+
+#contact-panel i {
+  color: #007bff;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#contact-panel i:hover {
+  transform: scale(1.2);
+  color: #0056b3;
+}
+</style>
+
+<script>
+function toggleContactPanel() {
+  const panel = document.getElementById("contact-panel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
+
+function saveContactForm(event) {
+  event.preventDefault();
+  const name = document.getElementById("contact-name").value;
+  const email = document.getElementById("contact-email").value;
+  const message = document.getElementById("contact-message").value;
+
+  const formData = { name, email, message, date: new Date().toISOString() };
+  const saved = JSON.parse(localStorage.getItem("notePadContactMessages") || "[]");
+  saved.push(formData);
+  localStorage.setItem("notePadContactMessages", JSON.stringify(saved));
+
+  alert("Message saved locally. Thank you!");
+  document.querySelector("form").reset();
+  toggleContactPanel();
+}
+
+// Auto-open the panel after delay
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const panel = document.getElementById("contact-panel");
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+    }
+  }, 5000); // Show after 5 seconds
+});
+</script>
+
+
+ 
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Note P@d - Auth</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --bg: #f3f4f6;
+      --text: #111827;
+      --glass: rgba(255, 255, 255, 0.85);
+      --radius: 16px;
+    }
+
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #dbeafe, #fef3c7);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .modal, .welcome-popup {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+    }
+
+    .modal-content, .welcome-content {
+      background: var(--glass);
+      padding: 32px;
+      border-radius: var(--radius);
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.5s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .modal-content h2, .welcome-content h2 {
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius);
+      font-size: 16px;
+      background: #f9fafb;
+    }
+
+    .modal-content button, .welcome-content button {
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      margin-top: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .modal-content button:hover, .welcome-content button:hover {
+      background: #4f46e5;
+    }
+
+    .modal-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 13px;
+      display: block;
+      margin-top: 12px;
+    }
+
+    .user-info {
+      position: fixed;
+      top: 12px;
+      right: 18px;
+      background: #fff;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      font-size: 14px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .user-info img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+    }
+
+    .user-info button {
+      padding: 6px 12px;
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .user-info button:hover {
+      background: #b91c1c;
+    }
+
+    .confetti {
+      font-size: 48px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pop 1s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
+    .hidden { display: none; }
+  </style>
+
+
+<!-- Welcome Popup -->
+<div id="welcomePopup" class="welcome-popup">
+  <div class="welcome-content">
+    <h2>Welcome to Note P@d!</h2>
+    <p>Capture your ideas. Organize your thoughts. Let’s get started!</p>
+    <button id="getStartedBtn">Get Started</button>
+  </div>
+</div>
+
+<!-- Auth Modal -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-content">
+    <h2 id="authTitle">Sign In to Note P@d</h2>
+    <input type="text" id="authUsername" placeholder="Username" />
+    <input type="password" id="authPassword" placeholder="Password" />
+    <button id="authSubmit">Sign In</button>
+    <div id="googleSignInDiv" style="margin: 20px 0;"></div>
+    <a href="#" id="forgotPassword">Forgot Password?</a>
+    <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p>
+  </div>
+</div>
+
+<!-- User Info Display -->
+<div id="userInfo" class="user-info">
+  <img id="userPic" src="" alt="Profile" />
+  <button id="logoutBtn">Logout</button>
+</div>
+
+<div id="confetti" class="confetti hidden">🎉</div>
+<audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const welcomePopup = document.getElementById("welcomePopup");
+  const getStartedBtn = document.getElementById("getStartedBtn");
+  const authModal = document.getElementById("authModal");
+  const authTitle = document.getElementById("authTitle");
+  const authUsername = document.getElementById("authUsername");
+  const authPassword = document.getElementById("authPassword");
+  const authSubmit = document.getElementById("authSubmit");
+  const switchMode = document.getElementById("switchMode");
+  const forgotPassword = document.getElementById("forgotPassword");
+  const userInfo = document.getElementById("userInfo");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userPic = document.getElementById("userPic");
+  const confetti = document.getElementById("confetti");
+  const loginSound = document.getElementById("loginSound");
+
+  let isSignUp = false;
+
+  if (!localStorage.getItem("visited")) {
+    welcomePopup.classList.remove("hidden");
+    localStorage.setItem("visited", "true");
+  } else if (!localStorage.getItem("currentUser")) {
+    authModal.classList.remove("hidden");
+  } else {
+    showUserInfo(localStorage.getItem("currentUser"), localStorage.getItem("userPic"));
+  }
+
+  getStartedBtn.onclick = () => {
+    welcomePopup.classList.add("hidden");
+    authModal.classList.remove("hidden");
+  };
+
+  switchMode.onclick = (e) => {
+    e.preventDefault();
+    isSignUp = !isSignUp;
+    authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back";
+    authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In";
+    switchMode.innerHTML = isSignUp
+      ? 'Already have an account? <a href="#">Sign In</a>'
+      : 'Don’t have an account? <a href="#">Sign Up</a>';
+  };
+
+  authSubmit.onclick = () => {
+    const username = authUsername.value.trim();
+    const password = authPassword.value.trim();
+    if (!username || !password) return alert("Please fill in all fields");
+
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+    if (isSignUp) {
+      if (users[username]) return alert("Username already exists");
+      users[username] = password;
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("currentUser", username);
+      loginSuccess(username, ""); 
+    } else {
+      if (users[username] !== password) return alert("Invalid credentials");
+      localStorage.setItem("currentUser", username);
+      loginSuccess(username, "");
+    }
+  };
+
+  forgotPassword.onclick = (e) => {
+    e.preventDefault();
+    const username = prompt("Enter your username:");
+    if (!username) return;
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    if (!users[username]) return alert("Username not found.");
+    const newPassword = prompt("Enter new password:");
+    if (newPassword) {
+      users[username] = newPassword;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Password reset successful.");
+    }
+  };
+
+  logoutBtn.onclick = () => {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userPic");
+    userInfo.style.display = "none";
+    authModal.classList.remove("hidden");
+  };
+
+  function loginSuccess(username, picUrl) {
+    showUserInfo(username, picUrl);
+    confetti.classList.remove("hidden");
+    setTimeout(() => confetti.classList.add("hidden"), 1200);
+    loginSound.play();
+   
+  }
+
+  function showUserInfo(username, picUrl) {
+    userInfo.style.display = "flex";
+    userPic.src = picUrl || "https://ui-avatars.com/api/?name=" + encodeURIComponent(username);
+    authModal.classList.add("hidden");
+  }
+
+  // Google Login
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com",
+      callback: handleGoogleSignIn
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignInDiv"),
+      { theme: "outline", size: "large", shape: "pill" }
+    );
+  };
+
+  function handleGoogleSignIn(response) {
+    const data = jwtDecode(response.credential);
+    const name = data.name || data.email;
+    const picture = data.picture || "";
+    localStorage.setItem("currentUser", name);
+    localStorage.setItem("userPic", picture);
+    loginSuccess(name, picture);
+  }
+
+  function jwtDecode(token) {
+    const payload = token.split('.')[1];
+    return JSON.parse(atob(payload));
+  }
+});
+</script>
+
+
+
+<!-- Info Sections -->
+<div class="info-section" id="features">
+  <h3>Features</h3>
+  <ul>
+    <li><strong>Simple Interface:</strong> Enjoy a clean, distraction-free workspace with all your essential tools smartly organized and accessible. Whether you're jotting quick notes or drafting a long entry, the minimalist design helps you stay focused.</li>
+    <li><strong>Autosave:</strong> Never worry about losing progress. Note P@d automatically saves your work in real-time as you type. Even if you close the tab or refresh the page, your drafts are right where you left them.</li>
+    <li><strong>Character Count:</strong> Keep track of your content length as you write with the live character counter. Perfect for tweets, assignments, or any situation with a word or character limit.</li>
+    <li><strong>Find & Replace:</strong> Quickly scan through your text to locate specific words or phrases, and replace them instantly with just a click. This saves time during editing and is ideal for repetitive content updates.</li>
+    <li><strong>Print:</strong> Need a hard copy? Just one click and your note is formatted and ready to print—no extra steps or formatting required.</li>
+    <li><strong>Dark Mode:</strong> Switch to a sleek dark theme for better readability at night or in low-light environments. It’s easy on the eyes and reduces glare.</li>
+    <li><strong>Voice Input:</strong> Use your voice to write! Our integration with the Web Speech API enables hands-free typing. Simply speak, and your words will appear in real-time—great for quick thoughts or accessibility.</li>
+    <li><strong>Export Options:</strong> Download your notes in .TXT or beautifully formatted PDF format. Perfect for sharing, archiving, or printing offline copies.</li>
+    <li><strong>Pin Notes:</strong> Keep important notes at the top of your list so you can access them instantly. Ideal for tasks, reminders, or ongoing work.</li>
+    <li><strong>Undo/Redo:</strong> Made a mistake? Easily undo or redo your last action. It’s like having an unlimited time machine for your text.</li>
+    <li><strong>Share Notes:</strong> Instantly share any note via a link or social platform—no account required. Great for collaborating or quickly sending notes.</li>
+  </ul>
+</div>
+
+<div class="info-section" id="overview">
+  <h3>Overview</h3>
+  <p>Note P@d is your smart, browser-based companion for everyday writing. Whether it's journaling, brainstorming, or creating a to-do list, this tool offers fast, secure, and efficient note-taking without the need to install software or sign in. Open it in your browser, and you're ready to go. It's lightweight, lightning-fast, and focused entirely on your writing experience.</p>
+</div>
+
+<div class="info-section" id="how-it-works">
+  <h3>How Does It Work?</h3>
+  <p>Note P@d stores everything you write directly in your browser’s <code>localStorage</code>. That means your notes never leave your device, ensuring maximum privacy. JavaScript powers all key operations like creating, editing, deleting, and organizing notes. Additional libraries like jsPDF let you turn your notes into high-quality PDFs, while the Web Speech API powers the voice input feature. You don’t need internet after the first load—it's essentially a mini offline app!</p>
+</div>
+
+<div class="info-section" id="compatibility">
+  <h3>Browser Compatibility</h3>
+  <ul>
+    <li>Fully compatible with the latest versions of Chrome, Firefox, Edge, and Safari.</li>
+    <li>Optimized for mobile browsers—take notes on the go.</li>
+    <li>Voice input works in supported browsers. If unsupported, the feature will disable gracefully without affecting other tools.</li>
+    <li>Installable as a PWA (Progressive Web App) on both desktop and mobile.</li>
+  </ul>
+</div>
+
+<div class="info-section" id="about">
+  <h3>About</h3>
+  <p>Note P@d is crafted with care by <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank">Bishal Mishra</a>. Version 1.0 is fully open-source and built to empower users with a fast, flexible, and secure writing experience. No fluff, just functionality. We believe in privacy-first tools that respect your data and give you full control over your content. Customize it, improve it, or contribute to its growth!</p>
+</div>
+
+<div class="info-section" id="tips">
+  <h3>Tips for Using Note P@d Effectively</h3>
+  <ul>
+    <li>Use keyboard shortcuts like <code>Ctrl+S</code> to save, <code>Ctrl+F</code> to search, and <code>Ctrl+Z</code> to undo.</li>
+    <li>Regularly export important notes to PDF or .TXT files for long-term backup.</li>
+    <li>Use pinning to keep high-priority notes at the top of your dashboard.</li>
+    <li>Give each note a clear title and date to make searching and organizing easier.</li>
+    <li>Switch to dark mode during night sessions to reduce eye strain.</li>
+    <li>Enable voice input when typing gets tiring or for hands-free sessions.</li>
+  </ul>
+</div>
+
+<div class="info-section" id="privacy">
+  <h3>Privacy & Security</h3>
+  <p>Your data is 100% yours. All notes are stored locally in your browser. There are no servers, no cloud sync, and no hidden trackers. This means only you can access your content, and clearing your browser cache or storage will remove all notes—so be sure to export backups regularly if needed.</p>
+</div>
+
+<div class="info-section" id="quick-access">
+  <h3>Quick Access</h3>
+  <ul>
+    <li>Bookmark this page for instant access whenever you need it.</li>
+    <li>Install as a PWA to open Note P@d just like an app from your desktop or phone.</li>
+    <li>Set it as your homepage so you can start jotting down ideas right when your browser opens.</li>
+    <li>Use keyboard shortcuts to streamline your writing workflow.</li>
+  </ul>
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Note P@d Testimonials</title>
+<style>
+:root {
+--card: #f9f9f9;
+}
+
+body {
+font-family: Arial, sans-serif;
+background: #fff;
+margin: 0;
+padding: 20px;
+}
+
+.info-section {
+padding: 40px 20px;
+background: #fafafa;
+}
+
+.testimonial-slider {
+position: relative;
+max-width: 600px;
+margin: auto;
+text-align: center;
+}
+
+.slides {
+display: none;
+padding: 20px;
+background: var(--card);
+border-radius: 10px;
+transition: all 0.5s ease;
+}
+
+.slides.active {
+display: block;
+animation: fade 1s;
+}
+
+.slides img {
+width: 80px;
+height: 80px;
+border-radius: 50%;
+object-fit: cover;
+margin-bottom: 10px;
+}
+
+.slides h4 {
+margin: 10px 0 0;
+}
+
+.slides small {
+display: block;
+color: #666;
+margin-top: 4px;
+}
+
+.dots {
+margin-top: 10px;
+}
+
+.dots span {
+height: 12px;
+width: 12px;
+margin: 0 5px;
+display: inline-block;
+background-color: #bbb;
+border-radius: 50%;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.dots span.active {
+background-color: #8c53ff;
+}
+
+.arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+font-size: 24px;
+background: rgba(0, 0, 0, 0.1);
+border: none;
+cursor: pointer;
+padding: 8px 12px;
+border-radius: 50%;
+user-select: none;
+}
+
+.arrow.left {
+left: -40px;
+}
+
+.arrow.right {
+right: -40px;
+}
+
+@keyframes fade {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+.arrow.left { left: 0; }
+.arrow.right { right: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="info-section" id="testimonials">
+<h3 style="text-align:center">Testimonials</h3>
+<div class="testimonial-slider" id="slider">
+<div class="slides active">
+<img src="https://i.pravatar.cc/80?img=5" alt="Bishal Mishra">
+<p>"Note P@d has revolutionized the way I take notes. It's sleek, fast, and reliable!"</p>
+<h4>- Bishal Mishra</h4>
+<small>CEO & Developer</small>
+</div>
+<div class="slides">
+<img src="https://i.pravatar.cc/80?img=12" alt="Narayan Giri">
+<p>"Perfect for daily use. I love the voice input and the easy export options!"</p>
+<h4>- Narayan Giri</h4>
+<small>Customer</small>
+</div>
+<div class="slides">
+<img src="https://i.pravatar.cc/80?img=20" alt="Neha Jaiswal">
+<p>"A handy online notepad with just the right amount of features. Love the dark mode!"</p>
+<h4>- Neha Jaiswal</h4>
+<small>Customer</small>
+</div>
+
+<button class="arrow left" onclick="prevSlide()">&#10094;</button>
+<button class="arrow right" onclick="nextSlide()">&#10095;</button>
+
+<div class="dots">
+<span onclick="setSlide(0)"></span>
+<span onclick="setSlide(1)"></span>
+<span onclick="setSlide(2)"></span>
+</div>
+</div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slides');
+const dots = document.querySelectorAll('.dots span');
+
+function showSlide(n) {
+slides.forEach((slide, i) => {
+slide.classList.remove('active');
+dots[i].classList.remove('active');
+});
+slides[n].classList.add('active');
+dots[n].classList.add('active');
+}
+
+function setSlide(n) {
+currentSlide = n;
+showSlide(currentSlide);
+}
+
+function nextSlide() {
+currentSlide = (currentSlide + 1) % slides.length;
+showSlide(currentSlide);
+}
+
+function prevSlide() {
+currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+showSlide(currentSlide);
+}
+
+// Auto Slide
+setInterval(() => {
+nextSlide();
+}, 4000);
+
+// Swipe Support
+let startX = 0;
+const slider = document.getElementById('slider');
+
+slider.addEventListener('touchstart', e => {
+startX = e.touches[0].clientX;
+});
+
+slider.addEventListener('touchend', e => {
+const endX = e.changedTouches[0].clientX;
+if (startX - endX > 50) nextSlide();
+if (endX - startX > 50) prevSlide();
+});
+
+// Init first slide
+showSlide(currentSlide);
+</script>
+
+</body>
+</html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact Us</title>
+<style>
+body {
+font-family: 'Segoe UI', sans-serif;
+background: #f5f7fa;
+margin: 0;
+padding: 0;
+}
+.contact-form {
+max-width: 600px;
+background: #fff;
+padding: 30px;
+margin: 50px auto;
+box-shadow: 0 0 15px rgba(0,0,0,0.1);
+border-radius: 10px;
+}
+.contact-form h2 {
+margin-bottom: 20px;
+color: #333;
+text-align: center;
+}
+.form-group {
+margin-bottom: 15px;
+}
+.form-group label {
+display: block;
+font-weight: 600;
+margin-bottom: 5px;
+}
+.form-group input, .form-group textarea {
+width: 100%;
+padding: 12px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 16px;
+box-sizing: border-box;
+}
+.form-group textarea {
+resize: vertical;
+height: 120px;
+}
+.form-group button {
+background-color: #4CAF50;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+.form-group button:hover {
+background-color: #45a049;
+}
+.form-message {
+margin-top: 15px;
+font-weight: bold;
+color: green;
+text-align: center;
+}
+@media (max-width: 600px) {
+.contact-form {
+margin: 20px;
+padding: 20px;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="contact-form">
+<h2>Contact Us</h2>
+<form id="contactForm">
+<div class="form-group">
+<label for="name">Name *</label>
+<input type="text" id="name" required />
+</div>
+<div class="form-group">
+<label for="email">Email *</label>
+<input type="email" id="email" required />
+</div>
+<div class="form-group">
+<label for="phone">Phone Number *</label>
+<input type="tel" id="phone" pattern="[0-9]{10}" placeholder="e.g. 9876543210" required />
+</div>
+<div class="form-group">
+<label for="message">Message *</label>
+<textarea id="message" required></textarea>
+</div>
+<div class="form-group">
+<button type="submit">Send Message</button>
+</div>
+<div class="form-message" id="formMessage"></div>
+</form>
+</div>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+e.preventDefault();
+
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const message = document.getElementById('message').value.trim();
+
+if (!name || !email || !phone || !message) {
+document.getElementById('formMessage').style.color = "red";
+document.getElementById('formMessage').textContent = "Please fill all fields.";
+return;
+}
+
+if (!/^[0-9]{10}$/.test(phone)) {
+document.getElementById('formMessage').style.color = "red";
+document.getElementById('formMessage').textContent = "Enter a valid 10-digit phone number.";
+return;
+}
+
+// Simulate successful submission
+document.getElementById('formMessage').style.color = "green";
+document.getElementById('formMessage').textContent = "Message sent successfully!✅";
+document.getElementById('contactForm').reset();
+});
+</script>
+
+<footer>
+Design by ❤️ <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" style="color: #fff; text-decoration: underline;">Bishal Mishra</a>
+</footer>
+
+<script>
+// ELEMENTS
+const titleInput = document.getElementById('note-title');
+const textInput = document.getElementById('note-text');
+const noteList = document.getElementById('note-list');
+const charCount = document.getElementById('char-count');
+let editModeId = null;
+
+// DRAFT AUTOSAVE
+function saveDraft() {
+localStorage.setItem('draft', JSON.stringify({
+title: titleInput.value,
+text: textInput.value
+}));
+}
+function loadDraft() {
+const d = localStorage.getItem('draft');
+if (d) {
+const { title, text } = JSON.parse(d);
+titleInput.value = title;
+textInput.value = text;
+}
+}
+function clearDraft() {
+localStorage.removeItem('draft');
+}
+titleInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
+textInput.addEventListener('input', () => { saveDraft(); updateCharCount(); });
+
+// CHAR COUNT
+function updateCharCount() {
+charCount.textContent = `Character Count: ${textInput.value.length}`;
+}
+
+// NOTE CRUD
+function newDoc() {
+editModeId = null;
+titleInput.value = '';
+textInput.value = '';
+updateCharCount();
+clearDraft();
+}
+
+function saveNote() {
+const notes = JSON.parse(localStorage.getItem('notes')) || [];
+const timestamp = new Date().toLocaleString();
+if (editModeId) {
+const idx = notes.findIndex(n => n.id === editModeId);
+notes[idx].title = titleInput.value || 'Untitled';
+notes[idx].text = textInput.value;
+editModeId = null;
+} else {
+notes.push({
+id: Date.now(),
+title: titleInput.value || 'Untitled',
+text: textInput.value,
+date: timestamp,
+pinned: false
+});
+}
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+newDoc();
+}
+
+function displayNotes() {
+const notes = JSON.parse(localStorage.getItem('notes')) || [];
+notes.sort((a,b) => b.pinned - a.pinned);
+noteList.innerHTML = '';
+notes.forEach(n => {
+const div = document.createElement('div');
+div.className = `note ${n.pinned? 'pinned':''}`;
+div.innerHTML = `
+<strong>${n.title}</strong>
+<p>${n.text}</p>
+<small>Created on: ${n.date}</small><br/>
+<button onclick="editNote(${n.id})">Edit</button>
+<button onclick="pinNote(${n.id})">${n.pinned? 'Unpin':'Pin'}</button>
+<button onclick="deleteNote(${n.id})">Delete</button>
+<button onclick="shareNote(${n.id})">Share</button>
+<button onclick="exportNote(${n.id})">.txt</button>
+<button onclick="exportPDF(${n.id})">PDF</button>
+<button onclick="printNote(${n.id})">Print</button>
+`;
+noteList.appendChild(div);
+});
+}
+
+function deleteNote(id) {
+let notes = JSON.parse(localStorage.getItem('notes'))||[];
+notes = notes.filter(n => n.id !== id);
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+}
+
+function pinNote(id) {
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n => n.id===id);
+note.pinned = !note.pinned;
+localStorage.setItem('notes', JSON.stringify(notes));
+displayNotes();
+}
+
+function editNote(id) {
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n => n.id===id);
+if (!note) return;
+titleInput.value = note.title;
+textInput.value = note.text;
+editModeId = id;
+updateCharCount();
+}
+
+// UTILITY
+function cutText() { textInput.select(); document.execCommand('cut'); updateCharCount(); }
+function undo() { document.execCommand('undo'); }
+function redo() { document.execCommand('redo'); }
+function findReplace(){
+const f = prompt('Find:');
+const r = prompt('Replace with:');
+if (f!==null && r!==null) {
+textInput.value = textInput.value.replaceAll(f, r);
+updateCharCount();
+}
+}
+function changeFont() { textInput.style.fontFamily = document.getElementById('font-family').value; }
+function changeFontSize() { textInput.style.fontSize = document.getElementById('font-size').value; }
+function toggleDark() {
+document.body.classList.toggle('dark');
+localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+}
+function loadDarkMode(){
+if (localStorage.getItem('darkMode')==='true') document.body.classList.add('dark');
+}
+function startVoiceInput(){
+if (!('webkitSpeechRecognition' in window)) return alert('Voice not supported');
+const rec = new webkitSpeechRecognition();
+rec.lang = 'en-US';
+rec.onresult = e => {
+textInput.value += ' ' + e.results[0][0].transcript;
+saveDraft(); updateCharCount();
+};
+rec.start();
+}
+
+// SHARE / EXPORT / PRINT
+function shareNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (navigator.share && note) {
+navigator.share({ title: note.title, text: note.text }).catch(()=>{});
+} else alert('Share not supported');
+}
+
+function exportNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const blob = new Blob([note.title+'\n\n'+note.text], {type:'text/plain'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = `${note.title.replace(/\s+/g,'_')}.txt`;
+a.click();
+URL.revokeObjectURL(url);
+}
+
+async function exportPDF(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+doc.setFontSize(14);
+doc.text(note.title, 10, 10);
+doc.setFontSize(12);
+doc.text(note.text, 10, 20);
+doc.save(`${note.title.replace(/\s+/g,'_')}.pdf`);
+}
+
+function printNote(id){
+const notes = JSON.parse(localStorage.getItem('notes'))||[];
+const note = notes.find(n=>n.id===id);
+if (!note) return;
+const win = window.open('','_blank','width=800,height=600');
+win.document.write(`
+<html><head><title>Print</title></head>
+<body><h1>${note.title}</h1>
+<p>${note.text.replace(/\n/g,'<br>')}</p>
+<small>Created on: ${note.date}</small>
+</body></html>`);
+win.document.close();
+win.print();
+win.close();
+}
+
+// INITIALIZE
+window.onload = () => {
+loadDarkMode();
+loadDraft();
+displayNotes();
+updateCharCount();
+};
+</script>
+</body>
+</html>
