@@ -98,7 +98,7 @@
         body.dark .note { border-color: #444; }
         body.dark .note:hover { box-shadow: 0 6px 20px var(--shadow-dark); }
         .note.pinned { border-left: 5px solid gold; }
-        .note h4 { margin-bottom: 5px; font-size: 18px; color: var(--primary); }
+        .note h4 { margin-bottom: 5px; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .note p { margin: 10px 0; }
         .note small { color: #888; }
         body.dark .note small { color: #aaa; }
@@ -311,6 +311,35 @@ const findReplaceDialog = document.getElementById('find-replace-dialog');
 const findInput = document.getElementById('find-input');
 const replaceInput = document.getElementById('replace-input');
 
+// --- NEW: USER & DATA KEY MANAGEMENT ---
+function getCurrentUserId() {
+    return localStorage.getItem('currentUserId');
+}
+function getUserNotesKey() {
+    const userId = getCurrentUserId();
+    return userId ? `notes_${userId}` : null;
+}
+function getDraftKey() {
+    const userId = getCurrentUserId();
+    return userId ? `draft_${userId}` : null;
+}
+
+// --- NEW: PASSWORD HASHING UTILITY ---
+async function hashPassword(password) {
+    if (!password) return '';
+    try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch (error) {
+        console.error("Hashing failed:", error);
+        alert("A security feature (hashing) failed. Please use a modern browser.");
+        return '';
+    }
+}
+
 // --- HISTORY (UNDO/REDO) FUNCTIONS ---
 function recordState() {
     clearTimeout(lastChangeTimeout);
@@ -382,29 +411,43 @@ function newDoc() {
     titleInput.focus();
 }
 function saveNote() {
+    const key = getUserNotesKey(); // MODIFIED
+    if (!key) { alert("Please sign in to save notes."); return; } // MODIFIED
     if (!textInput.value.trim()) { alert("Cannot save an empty note."); return; }
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+    const notes = JSON.parse(localStorage.getItem(key)) || [];
     const timestamp = new Date().toLocaleString();
     if (editModeId) {
         const idx = notes.findIndex(n => n.id === editModeId);
-        if (idx > -1) { notes[idx] = { ...notes[idx], title: titleInput.value || 'Untitled Note', text: textInput.value, date: timestamp }; }
+        if (idx > -1) {
+            // MODIFIED: Preserve existing properties like pinned and lock status
+            const existingNote = notes[idx];
+            notes[idx] = { ...existingNote, title: titleInput.value || 'Untitled Note', text: textInput.value, date: timestamp }; 
+        }
     } else {
-        notes.unshift({ id: Date.now(), title: titleInput.value || 'Untitled Note', text: textInput.value, date: timestamp, pinned: false });
+        // MODIFIED: Add default lock status for new notes
+        notes.unshift({ id: Date.now(), title: titleInput.value || 'Untitled Note', text: textInput.value, date: timestamp, pinned: false, isLocked: false });
     }
-    localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem(key, JSON.stringify(notes)); // MODIFIED
     displayNotes();
     newDoc();
 }
 function displayNotes() {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const key = getUserNotesKey(); // MODIFIED
+    const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : []; // MODIFIED
     notes.sort((a, b) => b.pinned - a.pinned || b.id - a.id);
+    // MODIFIED: Updated note template for lock feature
     noteList.innerHTML = notes.map(n => `
         <div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}">
-            <h4>${n.title}</h4>
-            <p>${n.text.substring(0, 200)}${n.text.length > 200 ? '...' : ''}</p>
+            <h4>${n.title} ${n.isLocked ? '<i class="fas fa-lock" style="color: #ffc107;"></i>' : ''}</h4>
+            ${n.isLocked 
+                ? `<p><i>This note is locked. Click 'Edit' or 'Unlock' to view.</i></p>`
+                : `<p>${n.text.substring(0, 200)}${n.text.length > 200 ? '...' : ''}</p>`
+            }
             <small>Last updated: ${n.date}</small>
             <div class="note-actions">
                 <button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button>
+                <button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${n.isLocked ? 'Unlock' : 'Lock'}</button>
                 <button onclick="pinNote(${n.id})"><i class="fas fa-thumbtack"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>
                 <button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>
                 <button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button>
@@ -412,9 +455,24 @@ function displayNotes() {
         </div>
     `).join('');
 }
-function editNote(id) {
-    const note = (JSON.parse(localStorage.getItem('notes')) || []).find(n => n.id === id);
+async function editNote(id) { // MODIFIED: now async
+    const key = getUserNotesKey();
+    if (!key) return;
+    const notes = JSON.parse(localStorage.getItem(key)) || [];
+    const note = notes.find(n => n.id === id);
     if (!note) return;
+
+    // NEW: Password check for locked notes
+    if (note.isLocked) {
+        const password = prompt("This note is locked. Enter password to edit:");
+        if (!password) return;
+        const hashed = await hashPassword(password);
+        if (hashed !== note.passwordHash) {
+            alert("Incorrect password.");
+            return;
+        }
+    }
+
     titleInput.value = note.title;
     textInput.value = note.text;
     editModeId = id;
@@ -424,22 +482,82 @@ function editNote(id) {
     titleInput.focus();
 }
 function deleteNote(id) {
+    const key = getUserNotesKey(); // MODIFIED
+    if (!key) return;
     if (!confirm("Are you sure you want to delete this note permanently?")) return;
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
-    localStorage.setItem('notes', JSON.stringify(notes.filter(n => n.id !== id)));
+    let notes = JSON.parse(localStorage.getItem(key)) || [];
+    localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); // MODIFIED
     displayNotes();
     if (editModeId === id) newDoc();
 }
 function pinNote(id) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const key = getUserNotesKey(); // MODIFIED
+    if (!key) return;
+    const notes = JSON.parse(localStorage.getItem(key)) || [];
     const note = notes.find(n => n.id === id);
     if (note) { note.pinned = !note.pinned; }
-    localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem(key, JSON.stringify(notes)); // MODIFIED
     displayNotes();
 }
-async function exportPDF(id) {
-    const note = (JSON.parse(localStorage.getItem('notes')) || []).find(n => n.id === id);
+// NEW: Lock/Unlock feature
+async function toggleLock(id) {
+    const key = getUserNotesKey();
+    if (!key) return;
+    let notes = JSON.parse(localStorage.getItem(key)) || [];
+    const noteIndex = notes.findIndex(n => n.id === id);
+    if (noteIndex === -1) return;
+
+    const note = notes[noteIndex];
+
+    if (note.isLocked) { // Unlock logic
+        const password = prompt("Enter password to unlock this note:");
+        if (!password) return;
+        const hashed = await hashPassword(password);
+        if (hashed === note.passwordHash) {
+            note.isLocked = false;
+            delete note.passwordHash;
+            alert("Note unlocked!");
+        } else {
+            alert("Incorrect password.");
+            return;
+        }
+    } else { // Lock logic
+        const password = prompt("Enter a new password to lock this note (min 4 chars):");
+        if (!password || password.length < 4) {
+            alert("Password is too short. Please try again.");
+            return;
+        }
+        const confirmPassword = prompt("Confirm password:");
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+        note.isLocked = true;
+        note.passwordHash = await hashPassword(password);
+        alert("Note locked successfully!");
+    }
+    notes[noteIndex] = note;
+    localStorage.setItem(key, JSON.stringify(notes));
+    displayNotes();
+}
+async function exportPDF(id) { // MODIFIED: now async
+    const key = getUserNotesKey();
+    if (!key) return;
+    const notes = JSON.parse(localStorage.getItem(key)) || [];
+    const note = notes.find(n => n.id === id);
     if (!note) return;
+
+    // NEW: Password check for locked notes
+    if (note.isLocked) {
+        const password = prompt("This note is locked. Enter password to export:");
+        if (!password) return;
+        const hashed = await hashPassword(password);
+        if (hashed !== note.passwordHash) {
+            alert("Incorrect password.");
+            return;
+        }
+    }
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20);
@@ -447,9 +565,22 @@ async function exportPDF(id) {
     doc.text(doc.splitTextToSize(note.text, 180), 15, 30);
     doc.save(`${note.title.replace(/\s+/g, '_')}.pdf`);
 }
-function saveDraft() { localStorage.setItem('draft', JSON.stringify({ title: titleInput.value, text: textInput.value })); }
-function loadDraft() { const d = localStorage.getItem('draft'); if (d) { const { title, text } = JSON.parse(d); titleInput.value = title; textInput.value = text; } }
-function clearDraft() { localStorage.removeItem('draft'); }
+function saveDraft() {
+    const key = getDraftKey(); // MODIFIED
+    if (!key) return;
+    localStorage.setItem(key, JSON.stringify({ title: titleInput.value, text: textInput.value }));
+}
+function loadDraft() { 
+    const key = getDraftKey(); // MODIFIED
+    if (!key) return;
+    const d = localStorage.getItem(key); 
+    if (d) { const { title, text } = JSON.parse(d); titleInput.value = title; textInput.value = text; } 
+}
+function clearDraft() { 
+    const key = getDraftKey(); // MODIFIED
+    if (!key) return;
+    localStorage.removeItem(key); 
+}
 function updateCharCount() { charCount.textContent = `Character Count: ${textInput.value.length}`; }
 function updateAll() { saveDraft(); updateCharCount(); }
 
@@ -468,12 +599,19 @@ function changeFontSize() { textInput.style.fontSize = document.getElementById('
 function startVoiceInput() { alert("Voice input feature coming soon!"); }
 
 // --- AUTHENTICATION FUNCTIONS ---
-function loginSuccess(username, picUrl) {
+function loginSuccess(username, picUrl, userId) { // MODIFIED: added userId
+    localStorage.setItem("currentUserId", userId); // NEW: Store the unique ID
     showUserInfo(username, picUrl);
     authModal.classList.add("hidden");
     confetti.classList.remove("hidden");
     loginSound.play().catch(e => console.log("Audio play failed:", e));
     setTimeout(() => confetti.classList.add("hidden"), 1200);
+    
+    // NEW: Load the user's specific data after login
+    loadDraft();
+    displayNotes();
+    updateAll();
+    resetHistory(textInput.value);
 }
 function showUserInfo(username, picUrl) {
     userInfo.style.display = "flex";
@@ -486,9 +624,11 @@ function handleGoogleSignIn(response) {
     if (!data) return;
     const name = data.name || data.email;
     const picture = data.picture || "";
+    // MODIFIED: Use the unique 'sub' field as the user ID for Google accounts
+    const userId = data.sub; 
     localStorage.setItem("currentUser", name);
     localStorage.setItem("userPic", picture);
-    loginSuccess(name, picture);
+    loginSuccess(name, picture, userId);
 }
 
 // --- PWA INSTALLATION ---
@@ -519,20 +659,16 @@ document.addEventListener('keydown', (e) => {
 });
 
 // --- PAGE INITIALIZATION ---
-// This function initializes Google Sign In. It's called on window.onload to ensure the GSI script is ready.
 function initGoogleSignIn() {
     try {
         google.accounts.id.initialize({
-            client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com",
+            client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", // Replace with your actual client ID
             callback: handleGoogleSignIn
         });
         google.accounts.id.renderButton(
             document.getElementById("googleSignInDiv"),
             { theme: "outline", size: "large", shape: "pill", width: "300" }
         );
-        // Important: For Google Sign-In to work, you must add your website's domain
-        // (e.g., https://your-domain.com or http://localhost:5500) to the
-        // "Authorized JavaScript origins" in your Google Cloud Console for this Client ID.
     } catch (error) {
         console.error("Google GSI could not be initialized. Is the GSI script blocked?", error);
         document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load.";
@@ -540,23 +676,23 @@ function initGoogleSignIn() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Initialize Core Features
     loadDarkMode();
-    loadDraft();
-    displayNotes();
-    updateAll();
-    resetHistory(textInput.value);
 
-    // 2. Initialize Auth Flow (non-Google part)
-    if (localStorage.getItem("currentUser")) {
+    // MODIFIED: Auth flow now determines which user's data to load.
+    const currentUserId = getCurrentUserId();
+    if (currentUserId) {
         showUserInfo(localStorage.getItem("currentUser"), localStorage.getItem("userPic"));
+        loadDraft();
+        displayNotes();
+        updateAll();
+        resetHistory(textInput.value);
     } else if (!localStorage.getItem("visited")) {
         welcomePopup.classList.remove("hidden");
     } else {
         authModal.classList.remove("hidden");
     }
 
-    // 3. Attach Event Listeners
+    // Attach Event Listeners
     textInput.addEventListener('input', () => { updateAll(); recordState(); });
     titleInput.addEventListener('input', saveDraft);
 
@@ -582,19 +718,24 @@ document.addEventListener("DOMContentLoaded", () => {
             users[username] = password; // In a real app, hash this password!
             localStorage.setItem("users", JSON.stringify(users));
             localStorage.setItem("currentUser", username);
-            loginSuccess(username, "");
+            loginSuccess(username, "", username); // MODIFIED: use username as unique ID
         } else {
             if (users[username] !== password) return alert("Invalid credentials");
             localStorage.setItem("currentUser", username);
-            loginSuccess(username, "");
+            loginSuccess(username, "", username); // MODIFIED: use username as unique ID
         }
     };
     logoutBtn.onclick = () => {
         localStorage.removeItem("currentUser");
         localStorage.removeItem("userPic");
+        localStorage.removeItem("currentUserId"); // NEW: Clear the user ID
         if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
         userInfo.style.display = "none";
         authModal.classList.remove("hidden");
+
+        // NEW: Clear the UI after logout
+        noteList.innerHTML = '';
+        newDoc();
     };
    
     // Go to top button logic
@@ -613,7 +754,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('replace-all-btn').onclick = () => findAndReplace(true);
 });
 
-// Call Google Sign-In initialization after the page and its resources (like the GSI script) are fully loaded.
 window.onload = initGoogleSignIn;
 </script>
 
