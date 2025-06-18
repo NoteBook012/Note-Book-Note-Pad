@@ -100,7 +100,8 @@
         #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s, box-shadow 0.3s; }
         #editor textarea:focus, #editor input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
         #editor input[type="text"] { margin-bottom: 15px; font-size: 20px; font-weight: 600; }
-        body.dark #editor textarea, body.dark #editor input[type="text"] { border-color: #444; background: #333; }
+        /* --- DARK MODE TEXT FIX --- */
+        body.dark #editor textarea, body.dark #editor input[type="text"] { border-color: #444; background: #333; color: var(--text-dark); }
         
         #editor-stats { display: flex; gap: 20px; margin-top: 10px; font-size: 14px; color: #888; }
         body.dark #editor-stats { color: #aaa; }
@@ -240,13 +241,13 @@
         #emailVerifiedStatus .fa-times-circle { color: #dc3545; } /* Red */
         
         /* Other existing styles... (modal, about-dev, etc.) */
-        .about-dev { display: flex; align-items: center; gap: 25px; } .about-dev img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px var(--shadow-light); } body.dark .about-dev img { box-shadow: 0 4px 15px var(--shadow-dark); } .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } .about-dev a:hover { text-decoration: underline; } .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1); } body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } body.dark .modal-content input { border-color: #555; background: #333; } .modal-content button, .welcome-content button { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: var(--radius); font-size: 16px; margin-top: 16px; cursor: pointer; transition: background 0.3s ease; width: 100%; } .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; } #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: background-color 0.2s, transform 0.2s; } #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } body.dark #find-replace-dialog { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); } #find-replace-dialog input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; } #find-replace-dialog button { padding: 8px 12px; } #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+        .about-dev { display: flex; align-items: center; gap: 25px; } .about-dev img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px var(--shadow-light); } body.dark .about-dev img { box-shadow: 0 4px 15px var(--shadow-dark); } .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } .about-dev a:hover { text-decoration: underline; } .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1); } body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } body.dark .modal-content input { border-color: #555; background: #333; } .modal-content button, .welcome-content button { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: var(--radius); font-size: 16px; margin-top: 16px; cursor: pointer; transition: background 0.3s ease; width: 100%; } .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; } #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: background-color 0.2s, transform 0.2s; } #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } body.dark #find-replace-dialog { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); } #find-replace-dialog input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; } /* --- DARK MODE TEXT FIX --- */ body.dark #find-replace-dialog input { background: #333; border-color: #555; color: var(--text-dark); } #find-replace-dialog button { padding: 8px 12px; } #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
         @media (max-width: 768px) { .about-dev { flex-direction: column; text-align: center; } .profile-container { top: 10px; right: 10px; } #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center;} body.dark .mode-switcher { border-top-color: #555;} }
     </style>
 </head>
 <body>
 
-<!-- NEW: Profile Dropdown (replaces old userInfo div) -->
+<!-- Profile Dropdown -->
 <div id="profile-container" class="profile-container hidden">
     <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
     <div id="profile-dropdown" class="profile-dropdown hidden">
@@ -266,6 +267,8 @@
         </ul>
     </div>
 </div>
+<!-- Hidden file input for photo upload -->
+<input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <header>
     <h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
@@ -344,7 +347,7 @@
     <div class="info-section" id="about">
         <h3>About the Developer</h3>
         <div class="about-dev">
-            <img src="https://i.ibb.co/Y4ygWpC2/Untitled-design.png" alt="Untitled-design" border="0">CEO ="Bishal Mishra">
+            <img src="https://i.ibb.co/Y4ygWpC2/Untitled-design.png" alt="Untitled-design" border="0">
             <div>
                 <p>Note P@d is crafted with care by <strong><a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank">Bishal Mishra</a></strong>, a passionate web developer dedicated to creating tools that are simple, powerful, and respect user privacy. This project is built to empower users with a fast, flexible, and secure writing experience. No fluff, just functionality that works for you.</p>
             </div>
@@ -405,7 +408,7 @@ const switchAuthModeLink = document.getElementById('switchMode');
 const confetti = document.getElementById('confetti');
 const loginSound = document.getElementById('loginSound');
 
-// NEW: Profile Dropdown Elements
+// Profile Dropdown Elements
 const profileContainer = document.getElementById('profile-container');
 const profileIcon = document.getElementById('profile-icon');
 const profileDropdown = document.getElementById('profile-dropdown');
@@ -417,6 +420,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 const verifyEmailBtn = document.getElementById('verifyEmailBtn');
 const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
+const photoUploadInput = document.getElementById('photoUpload');
 
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -448,10 +452,16 @@ function attachEventListeners() {
     logoutBtn.addEventListener('click', handleLogout);
     verifyEmailBtn.addEventListener('click', handleVerifyEmail);
     resetPasswordBtn.addEventListener('click', handleResetPassword);
-    editProfilePhotoBtn.addEventListener('click', (e) => { e.preventDefault(); alert('Feature coming soon!'); });
+    
+    // UPDATED: Profile photo functionality
+    editProfilePhotoBtn.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        photoUploadInput.click();
+    });
+    photoUploadInput.addEventListener('change', handlePhotoUpload);
 }
 
-// --- NEW: PROFILE & AUTH FUNCTIONS ---
+// --- PROFILE & AUTH FUNCTIONS ---
 function toggleProfileDropdown() {
     profileDropdown.classList.toggle('hidden');
 }
@@ -498,15 +508,21 @@ function showUserInfo() {
         emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
         verifyEmailBtn.style.opacity = '0.6';
         verifyEmailBtn.style.cursor = 'default';
+        verifyEmailBtn.parentElement.style.display = 'block'; // Ensure it's visible
     } else {
         emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
         verifyEmailBtn.style.opacity = '1';
         verifyEmailBtn.style.cursor = 'pointer';
+        verifyEmailBtn.parentElement.style.display = 'block'; // Ensure it's visible
     }
 
     const provider = localStorage.getItem('authProvider');
     if (provider === 'google') {
         resetPasswordBtn.parentElement.style.display = 'none';
+        // Google accounts are pre-verified, so hide the verify button too
+        if (localStorage.getItem('emailVerified') === 'true') {
+            verifyEmailBtn.parentElement.style.display = 'none';
+        }
     } else {
         resetPasswordBtn.parentElement.style.display = 'block';
     }
@@ -560,24 +576,72 @@ function handleLogout(e) {
     newDoc();
 }
 
+// --- NEW/UPDATED FUNCTIONALITY ---
+
+function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const base64Image = e.target.result;
+        localStorage.setItem('userPic', base64Image);
+        showUserInfo(); // Immediately update the UI
+        alert("Profile photo updated!");
+    };
+    reader.readAsDataURL(file);
+}
+
 function handleVerifyEmail(e) {
     e.preventDefault();
-    const isVerified = localStorage.getItem('emailVerified') === 'true';
-    if (isVerified) {
+    if (localStorage.getItem('emailVerified') === 'true') {
         alert('Your email is already verified.');
+        return;
+    }
+    
+    // Simulate sending a code
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    alert(`A verification code has been "sent" to your email.\n\nYour code is: ${verificationCode}`);
+
+    const userCode = prompt("Please enter the 6-digit verification code:");
+
+    if (userCode === verificationCode) {
+        localStorage.setItem('emailVerified', 'true');
+        alert("Email verified successfully!");
+        showUserInfo(); // Update UI to show green check
     } else {
-        const email = localStorage.getItem('userEmail');
-        alert(`A verification link has been sent to ${email}. Please check your inbox. (This is a demo)`);
+        alert("Incorrect code. Please try again.");
     }
 }
 
 function handleResetPassword(e) {
     e.preventDefault();
-    const provider = localStorage.getItem('authProvider');
-    if (provider === 'google') return;
-    const email = localStorage.getItem('userEmail');
-    alert(`A password reset link has been sent to ${email}. (This is a demo)`);
+    if (localStorage.getItem('authProvider') === 'google') return;
+
+    const newPassword = prompt("Enter your new password (min 4 characters):");
+    if (!newPassword || newPassword.length < 4) {
+        alert("Password is too short. Please try again.");
+        return;
+    }
+
+    const confirmPassword = prompt("Confirm your new password:");
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+    }
+
+    const username = localStorage.getItem('userEmail');
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    if (users[username]) {
+        users[username] = newPassword; // Update the password
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Your password has been reset successfully!");
+    } else {
+        alert("An error occurred. Could not find user.");
+    }
 }
+
+// --- END NEW/UPDATED FUNCTIONALITY ---
 
 function loginSuccess(username, picUrl, userId) {
     localStorage.setItem("currentUserId", userId);
@@ -598,7 +662,7 @@ function loginSuccess(username, picUrl, userId) {
 function initGoogleSignIn() {
     try {
         google.accounts.id.initialize({
-            client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com",
+            client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", // This is a public client ID for testing
             callback: handleGoogleSignIn
         });
         google.accounts.id.renderButton(
@@ -630,7 +694,7 @@ function handleGoogleSignIn(response) {
     localStorage.setItem("userPic", picture);
     localStorage.setItem('authProvider', 'google');
     localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified);
+    localStorage.setItem('emailVerified', emailVerified.toString());
     
     loginSuccess(name, picture, userId);
 }
