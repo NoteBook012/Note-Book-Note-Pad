@@ -389,6 +389,10 @@
             margin-bottom: 25px;
             text-align: center;
         }
+        body.dark #calendar-container {
+            box-shadow: 0 4px 15px var(--shadow-dark);
+        }
+
 
         .calendar-header {
             display: flex;
@@ -486,6 +490,24 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             transform: scale(1.05);
         }
+
+        #exitCalendarBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545; /* Red color for exit */
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        #exitCalendarBtn:hover {
+            background-color: #c82333; /* Darker red on hover */
+            transform: translateY(-2px);
+        }
+
 
         /* Responsive adjustments */
         @media (max-width: 768px) { 
@@ -601,6 +623,7 @@
             <div class="calendar-day-header">Fri</div>
             <div class="calendar-day-header">Sat</div>
             </div>
+        <button id="exitCalendarBtn">Exit Calendar</button>
     </div>
 
     <div id="notes">
@@ -726,6 +749,7 @@ const currentMonthYearDisplay = document.getElementById('currentMonthYear');
 const calendarGrid = document.querySelector('#calendar-container .calendar-grid');
 const prevMonthBtn = document.getElementById('prevMonthBtn');
 const nextMonthBtn = document.getElementById('nextMonthBtn');
+const exitCalendarBtn = document.getElementById('exitCalendarBtn'); // New exit button
 
 
 // --- INITIALIZATION ---
@@ -820,8 +844,13 @@ function attachEventListeners() {
             // Add 'selected' to the clicked date
             e.target.classList.add('selected');
             // You could add logic here to show events for the selected date
-            alert(`Selected date: ${currentMonthYearDisplay.textContent} ${e.target.textContent}`);
+            // alert(`Selected date: ${currentMonthYearDisplay.textContent} ${e.target.textContent}`);
         }
+    });
+
+    // New: Exit Calendar Button Listener
+    exitCalendarBtn.addEventListener('click', () => {
+        switchMode('notepad'); // Return to Notepad mode
     });
 }
 
@@ -1073,7 +1102,7 @@ function switchMode(mode) {
     calendarContainer.classList.add('hidden'); // Hide calendar
     
     // Hide or show title/whiteboardTitle inputs based on mode
-    titleInput.classList.toggle('hidden', mode === 'whiteboard');
+    titleInput.classList.toggle('hidden', mode === 'whiteboard' || mode === 'calendar'); // Hide title for calendar too
     whiteboardTitleInput.classList.toggle('hidden', mode !== 'whiteboard');
 
     // Manage active mode button
@@ -1256,14 +1285,20 @@ async function hashPassword(password) { if (!password) return ''; const encoder 
 function initWhiteboard() { whiteboardState.canvas = whiteboardCanvas; whiteboardState.ctx = whiteboardCanvas.getContext('2d'); resizeWhiteboard(); whiteboardState.canvas.addEventListener('mousedown', startDrawing); whiteboardState.canvas.addEventListener('mouseup', stopDrawing); whiteboardState.canvas.addEventListener('mouseout', stopDrawing); whiteboardState.canvas.addEventListener('mousemove', draw); whiteboardState.canvas.addEventListener('touchstart', startDrawing); whiteboardState.canvas.addEventListener('touchend', stopDrawing); whiteboardState.canvas.addEventListener('touchmove', draw); document.getElementById('wb-color').onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; document.getElementById('wb-eraser').classList.remove('active'); }; document.getElementById('wb-size').onchange = (e) => whiteboardState.brushSize = e.target.value; document.getElementById('wb-eraser').onclick = toggleEraser; document.getElementById('wb-clear').onclick = clearCanvas; document.getElementById('wb-download').onclick = downloadCanvas; window.addEventListener('resize', resizeWhiteboard); }
 function resizeWhiteboard() { 
     // Save current content before resizing
-    const imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
+    // Check if context is available before attempting to get image data
+    let imageData = null;
+    if (whiteboardState.ctx && whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) {
+        imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
+    }
 
     const containerWidth = whiteboardSection.clientWidth - 50; 
     whiteboardState.canvas.width = containerWidth; 
     whiteboardState.canvas.height = Math.min(containerWidth * 0.6, window.innerHeight * 0.5); 
 
     // Restore content after resizing
-    whiteboardState.ctx.putImageData(imageData, 0, 0);
+    if (imageData) {
+        whiteboardState.ctx.putImageData(imageData, 0, 0);
+    }
 }
 function getMousePos(e) { const rect = whiteboardState.canvas.getBoundingClientRect(); const scaleX = whiteboardState.canvas.width / rect.width; const scaleY = whiteboardState.canvas.height / rect.height; const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY }; }
 function startDrawing(e) { e.preventDefault(); whiteboardState.isDrawing = true; const { x, y } = getMousePos(e); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
@@ -1285,9 +1320,10 @@ function renderCalendar(date) {
     
     currentMonthYearDisplay.textContent = date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
     
-    // Clear previous days, but keep day headers
-    const existingDays = calendarGrid.querySelectorAll('.calendar-date');
-    existingDays.forEach(day => day.remove());
+    // Clear previous days, but keep day headers (first 7 elements)
+    while (calendarGrid.children.length > 7) {
+        calendarGrid.removeChild(calendarGrid.lastChild);
+    }
 
     const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday...
     const daysInMonth = new Date(year, month + 1, 0).getDate(); // Last day of current month
