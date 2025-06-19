@@ -129,14 +129,14 @@
         body.dark #menu-bar { background: #252525; box-shadow: 0 4px 15px var(--shadow-dark); }
         body.dark #menu-bar button, body.dark #menu-bar select { background-color: var(--card-dark); color: var(--text-dark); }
         
+        .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; }
+        body.dark .mode-switcher { border-left-color: #555; }
         .mode-switcher button { transition: background-color 0.3s ease, color 0.3s ease; }
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
-        .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; }
-        body.dark .mode-switcher { border-left-color: #555; }
-
-        #editor, #notes, .info-section, #whiteboard-container, #faq-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
-        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #faq-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        
+        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
        
         #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
         #editor textarea:focus, #editor input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
@@ -366,7 +366,7 @@
             /* Corrected: max-height 0 and overflow hidden for smooth slide effect */
             max-height: 0; 
             overflow: hidden; 
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Smooth reveal */
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding-top 0.3s ease-out; /* Smooth reveal */
             padding-top: 0; /* Starts at 0, will expand */
             line-height: 1.5;
             opacity: 0; /* Start invisible */
@@ -381,7 +381,125 @@
             color: var(--text-dark);
         }
 
-        @media (max-width: 768px) { .about-dev { flex-direction: column; text-align: center; } .profile-container { top: 10px; right: 10px; } #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center;} body.dark .mode-switcher { border-top-color: #555;} }
+        /* Calendar Styles */
+        #calendar-container {
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 15px var(--shadow-light);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .calendar-header button:hover {
+            background: var(--primary-dark);
+        }
+
+        .calendar-header h4 {
+            font-size: 24px;
+            color: var(--primary);
+            margin: 0 10px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            width: 100%;
+            max-width: 600px; /* Limit calendar width */
+            margin: 0 auto;
+        }
+
+        .calendar-day-header {
+            font-weight: 600;
+            color: #777;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        body.dark .calendar-day-header {
+            color: #bbb;
+        }
+
+        .calendar-date {
+            padding: 10px 5px;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+            min-height: 40px; /* Ensure consistent height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body.dark .calendar-date {
+            background-color: #3e3e3e;
+        }
+
+        .calendar-date:hover:not(.empty):not(.selected) {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        body.dark .calendar-date:hover:not(.empty):not(.selected) {
+            background-color: #4a4a4a;
+        }
+
+        .calendar-date.empty {
+            background-color: transparent;
+            cursor: default;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .calendar-date.current-day {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .calendar-date.selected {
+            background-color: var(--primary-dark);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) { 
+            .about-dev { flex-direction: column; text-align: center; } 
+            .profile-container { top: 10px; right: 10px; } 
+            #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } 
+            .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center;} 
+            body.dark .mode-switcher { border-top-color: #555;}
+            .calendar-day-header, .calendar-date {
+                font-size: 13px;
+                padding: 6px 3px;
+                min-height: 35px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -438,6 +556,7 @@
             <button id="mode-notepad" onclick="switchMode('notepad')" class="active-mode">Notepad</button>
             <button id="mode-whiteboard" onclick="switchMode('whiteboard')">Whiteboard</button>
             <button id="mode-todo" onclick="switchMode('todo')">To-Do List</button>
+            <button id="mode-calendar" onclick="switchMode('calendar')">🗓️ Calendar</button>
         </div>
     </div>
 
@@ -466,6 +585,23 @@
         </div>
     </div>
 
+    <div id="calendar-container" class="hidden">
+        <h3>🗓️ Calendar</h3>
+        <div class="calendar-header">
+            <button id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+            <h4 id="currentMonthYear"></h4>
+            <button id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+            </div>
+    </div>
 
     <div id="notes">
         <h3><i class="fas fa-star" style="color: gold; margin-right: 8px;"></i>Your Saved Notes</h3>
@@ -542,6 +678,9 @@ let lastChangeTimeout = null;
 let currentMode = 'notepad';
 let whiteboardState = { canvas: null, ctx: null, isDrawing: false, isErasing: false, lastX: 0, lastY: 0, brushColor: '#000000', brushSize: 5 };
 
+// Calendar variables
+let currentCalendarDate = new Date(); // Stores the currently displayed month/year
+
 // --- DOM ELEMENTS ---
 const titleInput = document.getElementById('note-title');
 const textInput = document.getElementById('note-text');
@@ -581,13 +720,22 @@ const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
 
+// Calendar DOM elements
+const calendarContainer = document.getElementById('calendar-container');
+const currentMonthYearDisplay = document.getElementById('currentMonthYear');
+const calendarGrid = document.querySelector('#calendar-container .calendar-grid');
+const prevMonthBtn = document.getElementById('prevMonthBtn');
+const nextMonthBtn = document.getElementById('nextMonthBtn');
+
+
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
     checkAuthStatus();
     attachEventListeners();
     initWhiteboard(); 
-    switchMode('notepad');
+    renderCalendar(currentCalendarDate); // Initialize calendar display
+    switchMode('notepad'); // Default mode
 });
 
 window.onload = initGoogleSignIn;
@@ -620,7 +768,7 @@ function attachEventListeners() {
     });
     photoUploadInput.addEventListener('change', handlePhotoUpload);
 
-    // NEW: FAQ section accordion behavior
+    // FAQ section accordion behavior
     document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', () => {
             const answer = question.nextElementSibling;
@@ -650,6 +798,30 @@ function attachEventListeners() {
                 }, 10); // Small delay
             }
         });
+    });
+
+    // Calendar navigation
+    prevMonthBtn.addEventListener('click', () => {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+        renderCalendar(currentCalendarDate);
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+        renderCalendar(currentCalendarDate);
+    });
+
+    calendarGrid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('calendar-date') && !e.target.classList.contains('empty')) {
+            // Remove 'selected' from previously selected dates
+            document.querySelectorAll('.calendar-date.selected').forEach(date => {
+                date.classList.remove('selected');
+            });
+            // Add 'selected' to the clicked date
+            e.target.classList.add('selected');
+            // You could add logic here to show events for the selected date
+            alert(`Selected date: ${currentMonthYearDisplay.textContent} ${e.target.textContent}`);
+        }
     });
 }
 
@@ -896,27 +1068,34 @@ function switchMode(mode) {
     currentMode = mode;
     editorSection.classList.add('hidden');
     whiteboardSection.classList.add('hidden');
-    textInput.classList.add('hidden');
     todoListContainer.classList.add('hidden');
     addTodoBtn.classList.add('hidden');
-    document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
+    calendarContainer.classList.add('hidden'); // Hide calendar
+    
+    // Hide or show title/whiteboardTitle inputs based on mode
+    titleInput.classList.toggle('hidden', mode === 'whiteboard');
+    whiteboardTitleInput.classList.toggle('hidden', mode !== 'whiteboard');
 
+    // Manage active mode button
+    document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
+    document.getElementById(`mode-${mode}`).classList.add('active-mode');
+
+    // Show appropriate section based on mode
     if (mode === 'notepad') {
         editorSection.classList.remove('hidden');
         textInput.classList.remove('hidden');
-        document.getElementById('mode-notepad').classList.add('active-mode');
     } else if (mode === 'whiteboard') {
         whiteboardSection.classList.remove('hidden');
-        document.getElementById('mode-whiteboard').classList.add('active-mode');
         resizeWhiteboard();
     } else if (mode === 'todo') {
-        editorSection.classList.remove('hidden');
+        editorSection.classList.remove('hidden'); // To show title input for todo
         todoListContainer.classList.remove('hidden');
         addTodoBtn.classList.remove('hidden');
-        document.getElementById('mode-todo').classList.add('active-mode');
+        textInput.classList.add('hidden'); // Hide text area in todo mode
+    } else if (mode === 'calendar') {
+        calendarContainer.classList.remove('hidden');
+        renderCalendar(currentCalendarDate); // Render calendar when switched to
     }
-    titleInput.classList.toggle('hidden', mode === 'whiteboard');
-    whiteboardTitleInput.classList.toggle('hidden', mode !== 'whiteboard');
 }
 
 // --- CORE FUNCTIONS (Notepad, Whiteboard, To-Do) ---
@@ -930,7 +1109,9 @@ function newDoc() {
     updateAll();
     clearDraft();
     resetHistory();
-    switchMode('notepad');
+    // Keep the current calendar date on new doc
+    renderCalendar(currentCalendarDate); 
+    switchMode('notepad'); // Default mode
     titleInput.focus();
 }
 
@@ -953,6 +1134,12 @@ function saveNote() {
         title = titleInput.value || 'Untitled To-Do List';
         content = serializeTodoList();
         type = 'todo';
+    } else if (currentMode === 'calendar') {
+        // Calendar content is not "saved" in the same way as notes, whiteboards, or todo lists.
+        // If you want to save calendar *events*, this would be the place to implement that.
+        // For now, saving just switches to a new doc for other types.
+        alert("Calendar content is managed directly and does not require manual saving like notes.");
+        return; 
     }
 
     const notes = JSON.parse(localStorage.getItem(key)) || [];
@@ -1021,9 +1208,9 @@ async function editNote(id) {
         if (hashed !== note.passwordHash) { alert("Incorrect password."); return; }
     }
 
-    newDoc();
+    newDoc(); // Clears current editing area
     const noteType = note.type || 'notepad';
-    switchMode(noteType);
+    switchMode(noteType); // Switch to appropriate mode for editing
     editModeId = id;
 
     if (noteType === 'notepad') {
@@ -1036,6 +1223,7 @@ async function editNote(id) {
         img.onload = () => {
             clearCanvas();
             whiteboardState.ctx.drawImage(img, 0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
+            // After drawing, get image data to prevent it from disappearing
             whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
         };
         img.src = note.text;
@@ -1066,7 +1254,17 @@ async function hashPassword(password) { if (!password) return ''; const encoder 
 
 // --- WHITEBOARD ---
 function initWhiteboard() { whiteboardState.canvas = whiteboardCanvas; whiteboardState.ctx = whiteboardCanvas.getContext('2d'); resizeWhiteboard(); whiteboardState.canvas.addEventListener('mousedown', startDrawing); whiteboardState.canvas.addEventListener('mouseup', stopDrawing); whiteboardState.canvas.addEventListener('mouseout', stopDrawing); whiteboardState.canvas.addEventListener('mousemove', draw); whiteboardState.canvas.addEventListener('touchstart', startDrawing); whiteboardState.canvas.addEventListener('touchend', stopDrawing); whiteboardState.canvas.addEventListener('touchmove', draw); document.getElementById('wb-color').onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; document.getElementById('wb-eraser').classList.remove('active'); }; document.getElementById('wb-size').onchange = (e) => whiteboardState.brushSize = e.target.value; document.getElementById('wb-eraser').onclick = toggleEraser; document.getElementById('wb-clear').onclick = clearCanvas; document.getElementById('wb-download').onclick = downloadCanvas; window.addEventListener('resize', resizeWhiteboard); }
-function resizeWhiteboard() { const dataUrl = whiteboardState.canvas.toDataURL(); const containerWidth = whiteboardSection.clientWidth - 50; whiteboardState.canvas.width = containerWidth; whiteboardState.canvas.height = Math.min(containerWidth * 0.6, window.innerHeight * 0.5); const img = new Image(); img.onload = () => whiteboardState.ctx.drawImage(img, 0, 0); img.src = dataUrl; }
+function resizeWhiteboard() { 
+    // Save current content before resizing
+    const imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
+
+    const containerWidth = whiteboardSection.clientWidth - 50; 
+    whiteboardState.canvas.width = containerWidth; 
+    whiteboardState.canvas.height = Math.min(containerWidth * 0.6, window.innerHeight * 0.5); 
+
+    // Restore content after resizing
+    whiteboardState.ctx.putImageData(imageData, 0, 0);
+}
 function getMousePos(e) { const rect = whiteboardState.canvas.getBoundingClientRect(); const scaleX = whiteboardState.canvas.width / rect.width; const scaleY = whiteboardState.canvas.height / rect.height; const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY }; }
 function startDrawing(e) { e.preventDefault(); whiteboardState.isDrawing = true; const { x, y } = getMousePos(e); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
 function stopDrawing() { if (!whiteboardState.isDrawing) return; whiteboardState.isDrawing = false; }
@@ -1079,6 +1277,47 @@ function downloadCanvas() { const link = document.createElement('a'); link.downl
 function addTodoItem(text = '', checked = false) { const itemDiv = document.createElement('div'); itemDiv.className = 'todo-item'; if (checked) itemDiv.classList.add('completed'); const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = checked; checkbox.onchange = () => itemDiv.classList.toggle('completed', checkbox.checked); const textSpan = document.createElement('span'); textSpan.className = 'todo-text'; textSpan.contentEditable = true; textSpan.textContent = text || 'New to-do...'; itemDiv.appendChild(checkbox); itemDiv.appendChild(textSpan); todoListContainer.appendChild(itemDiv); }
 function serializeTodoList() { const items = []; todoListContainer.querySelectorAll('.todo-item').forEach(item => { items.push({ text: item.querySelector('.todo-text').textContent, checked: item.querySelector('input[type="checkbox"]').checked }); }); return JSON.stringify(items); }
 function parseAndRenderTodoList(jsonString) { todoListContainer.innerHTML = ''; try { JSON.parse(jsonString).forEach(item => addTodoItem(item.text, item.checked)); } catch (e) { console.error("Failed to parse To-Do list", e); } }
+
+// --- CALENDAR FUNCTIONS ---
+function renderCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth(); // 0-11
+    
+    currentMonthYearDisplay.textContent = date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    
+    // Clear previous days, but keep day headers
+    const existingDays = calendarGrid.querySelectorAll('.calendar-date');
+    existingDays.forEach(day => day.remove());
+
+    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday...
+    const daysInMonth = new Date(year, month + 1, 0).getDate(); // Last day of current month
+
+    const today = new Date();
+    const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+    // Add empty divs for preceding days to align first day correctly
+    for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.classList.add('calendar-date', 'empty');
+        calendarGrid.appendChild(emptyDiv);
+    }
+
+    // Add actual days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateDiv = document.createElement('div');
+        dateDiv.classList.add('calendar-date');
+        dateDiv.textContent = day;
+
+        if (isCurrentMonth && day === today.getDate()) {
+            dateDiv.classList.add('current-day');
+        }
+        // You could add a 'selected' class here if you want to remember selections
+        // For example: if (selectedDates.includes(new Date(year, month, day).toDateString())) dateDiv.classList.add('selected');
+
+        calendarGrid.appendChild(dateDiv);
+    }
+}
+
 
 // --- EDITOR ACTIONS ---
 function recordState() { clearTimeout(lastChangeTimeout); lastChangeTimeout = setTimeout(() => { if (currentMode !== 'notepad') return; const currentState = textInput.value; if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) { undoStack.push(currentState); redoStack = []; if (undoStack.length > 50) undoStack.shift(); } }, 500); }
