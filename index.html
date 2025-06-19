@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
-    <!-- SEO Meta Tags -->
     <title>Note P@d - Modern Online Notepad, Whiteboard & To-Do List</title>
     <meta name="description" content="Note P@d is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager. Your data is saved locally. Works offline."/>
     <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra"/>
@@ -12,48 +11,89 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://your-domain-here.com/">
 
-    <!-- Open Graph / Social Media Tags -->
     <meta property="og:title" content="Note P@d - Modern Online Notepad, Whiteboard & To-Do List" />
     <meta property="og:description" content="A free, secure online tool with a notepad, whiteboard, and to-do list. Works offline, no sign-up required for basic use." />
     <meta property="og:image" content="https://i.imgur.com/kR1k1jU.png" />
     <meta property="og:url" content="https://your-domain-here.com/" />
     <meta property="og:type" content="website" />
 
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
    
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.imgur.com/kR1k1jU.png">
 
-    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
    
-    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Note P@d",
-      "applicationCategory": "ProductivityApplication",
-      "operatingSystem": "All (Web-based)",
-      "offers": {
-        "@type": "Offer",
-        "price": "0"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Note P@d",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "All (Web-based)",
+        "offers": {
+          "@type": "Offer",
+          "price": "0"
+        },
+        "description": "A free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager.",
+        "author": {
+          "@type": "Person",
+          "name": "Bishal Mishra"
+        }
       },
-      "description": "A free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager.",
-      "author": {
-        "@type": "Person",
-        "name": "Bishal Mishra"
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Note P@d?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Note P@d is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager. It works offline and saves your data locally in your browser."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data safe and private?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, absolutely. All your notes are stored locally in your browser's localStorage and are never transmitted to any external server. Your data remains 100% on your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use Note P@d offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Note P@d is a Progressive Web App (PWA). Once you visit it for the first time, it can be used offline, making it reliable even without an internet connection."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to sign up or create an account? (Note P@d)",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For basic local note-taking, no sign-up is required. You can start using it immediately. If you wish to manage multiple user profiles or use Google Sign-In, then account features are available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I export my notes from Note P@d?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can export your notepad entries as PDF files using the \"PDF\" button available with each saved note. Whiteboard drawings can be downloaded as PNG images."
+            }
+          }
+        ]
       }
-    }
+    ]
     </script>
 
-    <!-- STYLES -->
     <style>
         :root {
             --bg-light: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
@@ -72,7 +112,7 @@
         }
 
         html { height: 100%; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.3s, color 0.3s; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.5s ease, color 0.5s ease; display: flex; flex-direction: column; min-height: 100vh; }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -84,20 +124,21 @@
         footer a:hover { opacity: 0.8; }
 
         #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; box-shadow: 0 4px 15px var(--shadow-light); }
-        #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: background-color 0.2s, transform 0.2s; }
+        #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
         #menu-bar button:hover, #menu-bar select:hover { background-color: #e0e0e0; transform: translateY(-2px); }
         body.dark #menu-bar { background: #252525; box-shadow: 0 4px 15px var(--shadow-dark); }
         body.dark #menu-bar button, body.dark #menu-bar select { background-color: var(--card-dark); color: var(--text-dark); }
         
+        .mode-switcher button { transition: background-color 0.3s ease, color 0.3s ease; }
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
         .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; }
         body.dark .mode-switcher { border-left-color: #555; }
 
-        #editor, #notes, .info-section, #whiteboard-container { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
-        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        #editor, #notes, .info-section, #whiteboard-container, #faq-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #faq-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
        
-        #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s, box-shadow 0.3s; }
+        #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
         #editor textarea:focus, #editor input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
         #editor input[type="text"] { margin-bottom: 15px; font-size: 20px; font-weight: 600; }
         /* --- DARK MODE TEXT FIX --- */
@@ -112,7 +153,7 @@
         #whiteboard-toolbar label { font-weight: 600; }
         #whiteboard-toolbar input[type="color"] { width: 40px; height: 40px; border: none; padding: 0; cursor: pointer; background: none; border-radius: 50%; }
         #whiteboard-toolbar input[type="range"] { cursor: pointer; }
-        #whiteboard-toolbar button { padding: 8px 15px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; }
+        #whiteboard-toolbar button { padding: 8px 15px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; transition: all 0.2s ease-in-out; }
         #whiteboard-toolbar button.active { background: var(--primary); color: white; border-color: var(--primary); }
         
         #todo-list-container { min-height: 200px; padding: 10px; border-radius: var(--radius); border: 1px solid #e0e0e0; }
@@ -125,7 +166,7 @@
         .todo-item.completed .todo-text { text-decoration: line-through; color: #999; }
         #add-todo-btn { margin-top: 15px; }
 
-        .note { border-radius: var(--radius); padding: 20px; margin-bottom: 15px; border: 1px solid #e7e7e7; transition: box-shadow 0.3s, transform 0.3s; }
+        .note { border-radius: var(--radius); padding: 20px; margin-bottom: 15px; border: 1px solid #e7e7e7; transition: box-shadow 0.3s ease, transform 0.3s ease, border-left 0.3s ease; }
         .note:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow-light); }
         body.dark .note { border-color: #444; }
         body.dark .note:hover { box-shadow: 0 6px 20px var(--shadow-dark); }
@@ -134,7 +175,7 @@
         .note p { margin: 10px 0; word-break: break-word; }
         .note small { color: #888; }
         body.dark .note small { color: #aaa; }
-        .note-actions button { margin-right: 8px; margin-top: 10px; padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; }
+        .note-actions button { margin-right: 8px; margin-top: 10px; padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; transition: all 0.2s ease-in-out; }
         body.dark .note-actions button { background: #3e3e3e; color: var(--text-dark); border-color: #555; }
 
         h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
@@ -145,7 +186,7 @@
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* NEW: Profile Dropdown Styles */
+        /* Profile Dropdown Styles */
         .profile-container {
             position: fixed;
             top: 20px;
@@ -159,7 +200,7 @@
             cursor: pointer;
             border: 2px solid var(--primary);
             box-shadow: 0 4px 15px var(--shadow-light);
-            transition: transform 0.2s;
+            transition: transform 0.2s ease-in-out;
             object-fit: cover;
         }
         #profile-icon:hover, #profile-icon:focus {
@@ -176,6 +217,7 @@
             border: 1px solid #eee;
             overflow: hidden;
             animation: fadeIn 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         body.dark .profile-dropdown {
             background: var(--card-dark);
@@ -218,7 +260,7 @@
             text-decoration: none;
             color: var(--text-light);
             font-size: 14px;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease;
         }
         body.dark .dropdown-menu li a {
             color: var(--text-dark);
@@ -241,13 +283,109 @@
         #emailVerifiedStatus .fa-times-circle { color: #dc3545; } /* Red */
         
         /* Other existing styles... (modal, about-dev, etc.) */
-        .about-dev { display: flex; align-items: center; gap: 25px; } .about-dev img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px var(--shadow-light); } body.dark .about-dev img { box-shadow: 0 4px 15px var(--shadow-dark); } .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } .about-dev a:hover { text-decoration: underline; } .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1); } body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } body.dark .modal-content input { border-color: #555; background: #333; } .modal-content button, .welcome-content button { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: var(--radius); font-size: 16px; margin-top: 16px; cursor: pointer; transition: background 0.3s ease; width: 100%; } .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; } #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: background-color 0.2s, transform 0.2s; } #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } body.dark #find-replace-dialog { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); } #find-replace-dialog input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; } /* --- DARK MODE TEXT FIX --- */ body.dark #find-replace-dialog input { background: #333; border-color: #555; color: var(--text-dark); } #find-replace-dialog button { padding: 8px 12px; } #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+        .about-dev { display: flex; align-items: center; gap: 25px; } .about-dev img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px var(--shadow-light); } body.dark .about-dev img { box-shadow: 0 4px 15px var(--shadow-dark); } .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } .about-dev a:hover { text-decoration: underline; } .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1); } body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } body.dark .modal-content input { border-color: #555; background: #333; } .modal-content button, .welcome-content button { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: var(--radius); font-size: 16px; margin-top: 16px; cursor: pointer; transition: background 0.3s ease; width: 100%; } .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; }
+
+        /* Scroll to top button - Round and filled */
+        #goToTopBtn { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            width: 50px; 
+            height: 50px; 
+            background-color: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 50%; /* Make it perfectly round */
+            font-size: 24px; 
+            cursor: pointer; 
+            display: none; /* Controlled by JS */
+            z-index: 1000; 
+            box-shadow: 0 4px 12px var(--shadow-light); 
+            transition: all 0.3s ease-in-out; /* Smooth transitions for hover/visibility */
+            display: flex; /* Use flexbox to center content */
+            align-items: center;
+            justify-content: center;
+        } 
+        #goToTopBtn:hover { 
+            background-color: var(--primary-dark); 
+            transform: scale(1.1); 
+        } 
+        body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
+        
+        #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } 
+        body.dark #find-replace-dialog { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); } 
+        #find-replace-dialog input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; } 
+        /* --- DARK MODE TEXT FIX --- */ 
+        body.dark #find-replace-dialog input { background: #333; border-color: #555; color: var(--text-dark); } 
+        #find-replace-dialog button { padding: 8px 12px; } 
+        #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } 
+        .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
+        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+        /* FAQ Section Styles (People Also Ask) */
+        .faq-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        body.dark .faq-item {
+            border-bottom-color: #3a3a3a;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+
+        .faq-question {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            cursor: pointer; /* Indicate it's clickable */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '\25BC'; /* Down arrow */
+            font-family: 'Font Awesome 6 Free'; /* Use Font Awesome for consistency if preferred */
+            font-weight: 900; /* For solid icon */
+            font-size: 16px;
+            margin-left: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            font-size: 15px;
+            color: var(--text-light);
+            /* Corrected: max-height 0 and overflow hidden for smooth slide effect */
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Smooth reveal */
+            padding-top: 0; /* Starts at 0, will expand */
+            line-height: 1.5;
+            opacity: 0; /* Start invisible */
+        }
+        .faq-answer.show {
+            /* max-height will be set dynamically by JS to scrollHeight for smooth transition */
+            opacity: 1;
+            padding-top: 5px; /* Add padding when shown */
+        }
+
+        body.dark .faq-answer {
+            color: var(--text-dark);
+        }
+
         @media (max-width: 768px) { .about-dev { flex-direction: column; text-align: center; } .profile-container { top: 10px; right: 10px; } #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center;} body.dark .mode-switcher { border-top-color: #555;} }
     </style>
 </head>
 <body>
 
-<!-- Profile Dropdown -->
 <div id="profile-container" class="profile-container hidden">
     <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
     <div id="profile-dropdown" class="profile-dropdown hidden">
@@ -267,7 +405,6 @@
         </ul>
     </div>
 </div>
-<!-- Hidden file input for photo upload -->
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <header>
@@ -335,7 +472,6 @@
         <div id="note-list"></div>
     </div>
    
-    <!-- Informational sections -->
     <div class="info-section" id="overview">
         <h3>Overview</h3>
         <p>Note P@d is your smart, browser-based companion for everyday writing. Whether it's journaling, brainstorming, creating a to-do list, or drafting important content, this tool offers a fast, secure, and efficient note-taking experience without the need to install bulky software. Open it in your browser, and you're ready to go. It's lightweight, lightning-fast, and focused entirely on providing a seamless writing environment.</p>
@@ -357,6 +493,30 @@
         <h3>Privacy & Security</h3>
         <p>Your data is 100% yours, always. We believe in absolute privacy. All your notes are stored locally in your browser and are never transmitted to any external server. This means only you can access your content. Remember, clearing your browser's site data will permanently delete your notes, so be sure to use the export feature for important backups.</p>
     </div>
+
+    <div class="info-section" id="faq-section">
+        <h3>Frequently Asked Questions (FAQ)</h3>
+        <div class="faq-item">
+            <h4 class="faq-question">What is Note P@d?</h4>
+            <p class="faq-answer">Note P@d is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager. It works offline and saves your data locally in your browser.</p>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Is my data safe and private?</h4>
+            <p class="faq-answer">Yes, absolutely. All your notes are stored locally in your browser's localStorage and are never transmitted to any external server. Your data remains 100% on your device.</p>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Can I use Note P@d offline?</h4>
+            <p class="faq-answer">Yes, Note P@d is a Progressive Web App (PWA). Once you visit it for the first time, it can be used offline, making it reliable even without an internet connection.</p>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Do I need to sign up or create an account?</h4>
+            <p class="faq-answer">For basic local note-taking, no sign-up is required. You can start using it immediately. If you wish to manage multiple user profiles or use Google Sign-In, then account features are available.</p>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">How do I export my notes?</h4>
+            <p class="faq-answer">You can export your notepad entries as PDF files using the "PDF" button available with each saved note. Whiteboard drawings can be downloaded as PNG images.</p>
+        </div>
+    </div>
 </main>
 
 <div id="welcomePopup" class="welcome-popup hidden"> <div class="welcome-content"> <h2>Welcome to Note P@d!</h2> <p>Capture your ideas. Organize your thoughts. Let’s get started!</p> <button id="getStartedBtn">Get Started</button> </div> </div>
@@ -371,7 +531,6 @@
 </footer>
 
 
-<!-- SCRIPT -->
 <script>
 // --- GLOBAL VARIABLES ---
 let editModeId = null;
@@ -437,7 +596,8 @@ window.onload = initGoogleSignIn;
 function attachEventListeners() {
     textInput.addEventListener('input', () => { updateAll(); recordState(); });
     titleInput.addEventListener('input', saveDraft);
-    window.onscroll = () => { goToTopBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none"; };
+    // Updated scroll-to-top visibility logic
+    window.onscroll = () => { goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     document.getElementById('getStartedBtn').onclick = () => { welcomePopup.classList.add("hidden"); authModal.classList.remove("hidden"); localStorage.setItem("visited", "true"); }; 
     switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
@@ -459,6 +619,38 @@ function attachEventListeners() {
         photoUploadInput.click();
     });
     photoUploadInput.addEventListener('change', handlePhotoUpload);
+
+    // NEW: FAQ section accordion behavior
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isActive = question.classList.contains('active');
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-question').forEach(q => {
+                if (q !== question && q.classList.contains('active')) {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('show');
+                    q.nextElementSibling.style.maxHeight = '0'; // Collapse
+                }
+            });
+
+            // Toggle the clicked answer
+            if (isActive) {
+                question.classList.remove('active');
+                answer.classList.remove('show');
+                answer.style.maxHeight = '0'; // Collapse
+            } else {
+                question.classList.add('active');
+                answer.classList.add('show');
+                // Set max-height to scrollHeight to allow for smooth transition based on content
+                // A small timeout ensures the element renders before we calculate scrollHeight
+                setTimeout(() => {
+                    answer.style.maxHeight = answer.scrollHeight + "px"; 
+                }, 10); // Small delay
+            }
+        });
+    });
 }
 
 // --- PROFILE & AUTH FUNCTIONS ---
