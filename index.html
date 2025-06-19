@@ -123,6 +123,66 @@
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
         footer a:hover { opacity: 0.8; }
 
+        /* Get in Touch Section Styles (now within the main content area) */
+        .get-in-touch-section {
+            background: var(--card-light);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 15px var(--shadow-light);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        body.dark .get-in-touch-section {
+            background: var(--card-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
+        }
+
+        .get-in-touch-section h3 {
+            margin-bottom: 20px;
+        }
+
+        .get-in-touch-content {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap to the next line */
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Space between each contact item */
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between icon and text within a contact item */
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        body.dark .contact-item {
+            color: var(--text-dark);
+        }
+
+        .contact-item a {
+            color: var(--primary); /* Use primary color for links */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .contact-item i {
+            color: var(--primary); /* Icon color */
+            font-size: 20px; /* Icon size */
+        }
+        /* End Get in Touch Section Styles */
+
+
         #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; box-shadow: 0 4px 15px var(--shadow-light); }
         #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
         #menu-bar button:hover, #menu-bar select:hover { background-color: #e0e0e0; transform: translateY(-2px); }
@@ -521,6 +581,11 @@
                 padding: 6px 3px;
                 min-height: 35px;
             }
+            /* Responsive adjustments for Get in Touch section */
+            .get-in-touch-content {
+                flex-direction: column; /* Stack vertically on small screens */
+                gap: 10px; /* Adjust gap */
+            }
         }
     </style>
 </head>
@@ -674,6 +739,27 @@
         <div class="faq-item">
             <h4 class="faq-question">How do I export my notes?</h4>
             <p class="faq-answer">You can export your notepad entries as PDF files using the "PDF" button available with each saved note. Whiteboard drawings can be downloaded as PNG images.</p>
+        </div>
+    </div>
+
+    <div class="get-in-touch-section">
+        <h3>Get in Touch</h3>
+        <div class="get-in-touch-content">
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i> Phone: <a href="tel:+9779827801575" target="_blank">+977 9827801575</a>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/message/JYA22CVSYSZ4N1" target="_blank">Send Message</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i> Email: <a href="mailto:bishalmishra9000@gmail.com" target="_blank">bishalmishra9000@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-facebook"></i> Facebook: <a href="https://www.facebook.com/share/1Hs9qM6BUM/?mibextid=wwXIfr" target="_blank">Bishal Mishra Page</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-globe"></i> Website: <a href="https://bishalmishra.com" target="_blank">bishalmishra.com</a>
+            </div>
         </div>
     </div>
 </main>
@@ -1013,13 +1099,13 @@ function handleResetPassword(e) {
 
     const newPassword = prompt("Enter your new password (min 4 characters):");
     if (!newPassword || newPassword.length < 4) {
-        alert("Password is too short. Please try again.");
+        alert("Password is too short.");
         return;
     }
 
     const confirmPassword = prompt("Confirm your new password:");
     if (newPassword !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
+        alert("Passwords do not match.");
         return;
     }
 
