@@ -111,17 +111,86 @@
             --radius: 12px;
         }
 
-        html { height: 100%; }
+        html { height: 100%; scroll-behavior: smooth; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.5s ease, color 0.5s ease; display: flex; flex-direction: column; min-height: 100vh; }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; }
         header, footer { background: var(--primary); color: white; padding: 15px 20px; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
+        /* --- NEW: Header Flexbox for Menu Button --- */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .header-content {
+            text-align: center;
+        }
         body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
         footer { margin-top: auto; }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
         footer a:hover { opacity: 0.8; }
+        
+        /* --- NEW: Sidenav Styles --- */
+        .sidenav {
+            height: 100%;
+            width: 0; /* Initially hidden */
+            position: fixed;
+            z-index: 1002; /* Higher than other content */
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        body.dark .sidenav {
+            background-color: rgba(30, 30, 30, 0.95);
+        }
+
+        .sidenav a {
+            padding: 10px 15px 10px 32px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-light);
+            display: block;
+            transition: 0.3s;
+        }
+        body.dark .sidenav a {
+            color: var(--text-dark);
+        }
+
+        .sidenav a:hover {
+            color: var(--primary);
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .open-nav-btn {
+            font-size: 28px;
+            cursor: pointer;
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            transition: transform 0.2s;
+        }
+        .open-nav-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        /* --- End Sidenav Styles --- */
 
         /* Get in Touch Section Styles (now within the main content area) */
         .get-in-touch-section {
@@ -586,10 +655,23 @@
                 flex-direction: column; /* Stack vertically on small screens */
                 gap: 10px; /* Adjust gap */
             }
+            .open-nav-btn {
+                left: 15px;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- NEW: Sidenav HTML Structure -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="#" onclick="closeNav()">Home</a>
+  <a href="#overview" onclick="closeNav()">Services</a>
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#" onclick="alert('Blogs coming soon!'); closeNav();">Blogs</a>
+  <a href="#contact-section" onclick="closeNav()">Contact</a>
+</div>
 
 <div id="profile-container" class="profile-container hidden">
     <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
@@ -613,8 +695,13 @@
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <header>
-    <h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
-    <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List All-in-One</p>
+    <!-- NEW: Hamburger menu button -->
+    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <!-- NEW: Wrapper for header content to help with centering -->
+    <div class="header-content">
+        <h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
+        <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List All-in-One</p>
+    </div>
 </header>
 
 <main class="container">
@@ -743,7 +830,7 @@
     </div>
 
  
-  <h2>Contact Us</h2>
+  <h2 id="contact-section">Contact Us</h2>
   <ul style="list-style: none; padding: 0;">
     <!-- Phone -->
     <li style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -862,6 +949,14 @@ const prevMonthBtn = document.getElementById('prevMonthBtn');
 const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); // New exit button
 
+// --- NEW: SIDENAV FUNCTIONS ---
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
 
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
