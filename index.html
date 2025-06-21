@@ -375,6 +375,34 @@
             margin-bottom: 15px;
             display: block; /* Remove extra space below image */
         }
+        /* Styles for "Read More" functionality */
+        .blog-content-short {
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Show only 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 3.6em; /* Approx 3 lines * line-height */
+            margin-bottom: 15px; /* Space for the button */
+        }
+        .blog-content-full {
+            display: block; /* Show full content */
+            max-height: none; /* Remove height limit */
+            margin-bottom: 15px;
+        }
+        .read-more-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease-in-out;
+        }
+        .read-more-btn:hover {
+            background: var(--primary-dark);
+        }
 
 
         .hidden { display: none !important; }
@@ -1062,7 +1090,7 @@ function attachEventListeners() {
     window.onscroll = () => { goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     document.getElementById('getStartedBtn').onclick = () => { welcomePopup.classList.add("hidden"); authModal.classList.remove("hidden"); localStorage.setItem("visited", "true"); }; 
-    switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
+    switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; authSubmit.textContent = isSignUp ? "Sign Up" : "SignIn"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
     authSubmit.onclick = handleAuthSubmit;
     document.getElementById('close-find-replace').onclick = closeFindReplace;
     document.getElementById('replace-btn').onclick = () => findAndReplace(false);
@@ -1687,8 +1715,9 @@ const blogPostsData = [
         date: "2024-07-25",
         views: 1580,
         author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1516979318028-4d51370c8d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to note-taking
-        content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away."
+        image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png", // Image related to note-taking
+        content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency.",
+        fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, the benefits of the markdown editor (if implemented), and how to integrate Note P@d into your daily routine for peak performance. We'll delve into creating structured notes, using tags for better organization, and even some advanced tips for power users. Embrace the simplicity and power of digital note-taking with Note P@d!"
     },
     {
         id: 2,
@@ -1696,8 +1725,9 @@ const blogPostsData = [
         date: "2024-07-20",
         views: 1120,
         author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1498009185240-631826077847?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to drawing/whiteboarding
-        content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools to bring your concepts to life, making complex ideas instantly understandable."
+        image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", // Image related to drawing/whiteboarding
+        content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively.",
+        fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools to bring your concepts to life, making complex ideas instantly understandable. Explore the use of different colors, brush sizes, and the eraser tool. Consider how to save and export your whiteboard creations for sharing or later reference, enhancing your team's ability to communicate visually."
     },
     {
         id: 3,
@@ -1705,8 +1735,9 @@ const blogPostsData = [
         date: "2024-07-15",
         views: 1750,
         author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1542831371-29b0f74f9724?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to to-do lists
-        content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day."
+        image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", // Image related to to-do lists
+        content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list.",
+        fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day. Discover techniques like the Eisenhower Matrix and time blocking to make your to-do lists work for you, not against you. Understand how to set deadlines and reminders for maximum impact."
     },
     {
         id: 4,
@@ -1715,7 +1746,8 @@ const blogPostsData = [
         views: 950,
         author: "Bishal Mishra",
         image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to offline/connectivity
-        content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go."
+        content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are.",
+        fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go. Learn about service workers and local storage, and how they contribute to a robust, always-available application, even in areas with poor or no internet connectivity. This feature makes Note P@d a truly dependable tool for anyone."
     },
     {
         id: 5,
@@ -1723,8 +1755,9 @@ const blogPostsData = [
         date: "2024-07-05",
         views: 2100,
         author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1517291136069-723546397d72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to security/privacy
-        content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device. Learn about the security measures in place and why this local-first approach is essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security."
+        image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", // Image related to security/privacy
+        content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device.",
+        fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device. Learn about the security measures in place and why this local-first approach is essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security. Understand the implications of browser storage for your sensitive information and why it's crucial for applications like Note P@d to prioritize your privacy above all else."
     }
 ];
 
@@ -1732,7 +1765,13 @@ function loadBlogPosts() {
     blogList.innerHTML = ''; // Clear existing blog posts
     blogPostsData.forEach(post => {
         const blogPostDiv = document.createElement('div');
+        // Add a unique ID to the blog post div for easier targeting by toggleBlogContent
+        blogPostDiv.id = `blog-${post.id}`; 
         blogPostDiv.classList.add('blog-post');
+
+        // Initially display only the short content
+        const shortContent = `<div class="blog-content-short">${post.content}</div>`;
+        const fullContent = `<div class="blog-content-full hidden">${post.fullContent}</div>`;
 
         blogPostDiv.innerHTML = `
             <h4>${post.title}</h4>
@@ -1743,12 +1782,42 @@ function loadBlogPosts() {
             </div>
             ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image">` : ''}
             <div class="blog-post-content">
-                <p>${post.content}</p>
-                <p><a href="#" onclick="alert('This is a placeholder for a full blog post view. The content is displayed here for demonstration.'); return false;">Read More →</a></p>
+                ${shortContent}
+                ${fullContent}
+                <button class="read-more-btn" onclick="toggleBlogContent(${post.id})">Read More →</button>
             </div>
         `;
         blogList.appendChild(blogPostDiv);
     });
+}
+
+// NEW: Function to toggle the visibility of full blog content
+function toggleBlogContent(postId) {
+    // Find the specific blog post element using the ID we assigned
+    const blogPostElement = document.getElementById(`blog-${postId}`); 
+    if (!blogPostElement) return;
+
+    const contentShort = blogPostElement.querySelector('.blog-content-short');
+    const contentFull = blogPostElement.querySelector('.blog-content-full');
+    const readMoreBtn = blogPostElement.querySelector('.read-more-btn');
+
+    if (!contentShort || !contentFull || !readMoreBtn) return;
+
+    const isExpanded = !contentFull.classList.contains('hidden');
+
+    if (isExpanded) {
+        // Hide full content, show short content, change button text
+        contentFull.classList.add('hidden');
+        contentShort.classList.remove('hidden');
+        readMoreBtn.textContent = 'Read More →';
+        readMoreBtn.style.backgroundColor = 'var(--primary)'; // Reset color
+    } else {
+        // Show full content, hide short content, change button text
+        contentFull.classList.remove('hidden');
+        contentShort.classList.add('hidden');
+        readMoreBtn.textContent = 'Show Less ←';
+        readMoreBtn.style.backgroundColor = 'var(--primary-dark)'; // Change color when expanded
+    }
 }
 
 </script>
