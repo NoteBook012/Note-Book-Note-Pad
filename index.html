@@ -795,7 +795,12 @@
     <span class="open-nav-btn" onclick="openNav()">☰</span>
     <!-- NEW: Wrapper for header content to help with centering -->
     <div class="header-content">
-        <h1>📝 NOTE_<span style="color:#ffc107">P@D</span></h1>
+        <!-- MODIFIED: Wrap h1 in an anchor tag -->
+        <h1>
+            <a href="#" onclick="refreshPage()" style="text-decoration: none; color: inherit;">
+                📝 NOTE_<span style="color:#ffc107">P@D</span>
+            </a>
+        </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List All-in-One</p>
     </div>
 </header>
@@ -1059,6 +1064,11 @@ const calendarGrid = document.querySelector('#calendar-container .calendar-grid'
 const prevMonthBtn = document.getElementById('prevMonthBtn');
 const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); // New exit button
+
+// --- NEW FUNCTION TO REFRESH THE PAGE ---
+function refreshPage() {
+    window.location.reload();
+}
 
 // --- NEW: SIDENAV FUNCTIONS ---
 function openNav() {
@@ -1758,7 +1768,7 @@ const blogPostsData = [
         image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", // Image related to security/privacy
         content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device.",
         fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device. Learn about the security measures in place and why this local-first approach is essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security. Understand the implications of browser storage for your sensitive information and why it's crucial for applications like Note P@d to prioritize your privacy above all else."
-    }
+    },
 ];
 
 function loadBlogPosts() {
