@@ -6,7 +6,7 @@
     
     <title>Note P@d - Modern Online Notepad, Whiteboard & To-Do List</title>
     <meta name="description" content="Note P@d is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager. Your data is saved locally. Works offline."/>
-    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra"/>
+    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips"/>
     <meta name="author" content="Bishal Mishra">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://your-domain-here.com/">
@@ -264,8 +264,8 @@
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
         
-        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
-        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
        
         #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
         #editor textarea:focus, #editor input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
@@ -312,6 +312,71 @@
         .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
         
+        /* Blog Post Styles */
+        .blog-post {
+            background: var(--card-light);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 15px var(--shadow-light);
+            margin-bottom: 25px;
+            text-align: left; /* Align blog content to the left */
+        }
+        body.dark .blog-post {
+            background: var(--card-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
+        }
+        .blog-post h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .blog-post-meta {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        body.dark .blog-post-meta {
+            color: #aaa;
+        }
+        .blog-post-meta i {
+            margin-right: 5px;
+            color: var(--primary); /* Color for icons in meta */
+        }
+        .blog-post-content {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-light); 
+        }
+        body.dark .blog-post-content {
+            color: var(--text-dark);
+        }
+        .blog-post-content p {
+            margin-bottom: 15px;
+        }
+        .blog-post-content a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .blog-post-content a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        .blog-post-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            display: block; /* Remove extra space below image */
+        }
+
+
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -319,7 +384,7 @@
         .profile-container {
             position: fixed;
             top: 20px;
-            right: 20px;
+            right: 20px; /* Positioned to the right */
             z-index: 999;
         }
         #profile-icon {
@@ -337,8 +402,8 @@
         }
         .profile-dropdown {
             position: absolute;
-            top: 55px;
-            right: 0;
+            top: 55px; /* Positioned below the icon */
+            right: 0; /* Align to the right edge of the container */
             width: 260px;
             background: var(--card-light);
             border-radius: var(--radius);
@@ -669,11 +734,12 @@
   <a href="#" onclick="closeNav()">Home</a>
   <a href="#overview" onclick="closeNav()">Services</a>
   <a href="#about" onclick="closeNav()">About</a>
-  <a href="#" onclick="alert('Blogs coming soon!'); closeNav();">Blogs</a>
+  <a href="#blogs-section" onclick="closeNav()">Blogs</a> <!-- Updated to link to Blogs -->
   <a href="#contact-section" onclick="closeNav()">Contact</a>
 </div>
 
-<div id="profile-container" class="profile-container hidden">
+<!-- NEW: Profile Container -->
+<div id="profile-container" class="profile-container">
     <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
     <div id="profile-dropdown" class="profile-dropdown hidden">
         <div class="dropdown-header">
@@ -687,6 +753,8 @@
             <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
             <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
             <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+            <li class="divider"></li>
+            <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> <!-- NEW: Account link -->
             <li class="divider"></li>
             <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
         </ul>
@@ -731,6 +799,8 @@
             <button id="mode-whiteboard" onclick="switchMode('whiteboard')">Whiteboard</button>
             <button id="mode-todo" onclick="switchMode('todo')">To-Do List</button>
             <button id="mode-calendar" onclick="switchMode('calendar')">🗓️ Calendar</button>
+            <!-- NEW: Blog mode button -->
+            <button id="mode-blog" onclick="switchMode('blog')">Blog</button>
         </div>
     </div>
 
@@ -776,6 +846,14 @@
             <div class="calendar-day-header">Sat</div>
             </div>
         <button id="exitCalendarBtn">Exit Calendar</button>
+    </div>
+
+    <!-- NEW: Blogs Section -->
+    <div id="blogs-section" class="info-section">
+        <h3><i class="fas fa-blog" style="color: #6610f2; margin-right: 8px;"></i>Productivity Insights</h3>
+        <div id="blog-list">
+            <!-- Blog posts will be loaded here by JavaScript -->
+        </div>
     </div>
 
     <div id="notes">
@@ -940,6 +1018,11 @@ const verifyEmailBtn = document.getElementById('verifyEmailBtn');
 const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
+const manageAccountBtn = document.getElementById('manageAccountBtn'); // NEW: Account button
+
+// Blog elements
+const blogsSection = document.getElementById('blogs-section');
+const blogList = document.getElementById('blog-list'); // NEW: Reference to the blog list container
 
 // Calendar DOM elements
 const calendarContainer = document.getElementById('calendar-container');
@@ -966,6 +1049,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initWhiteboard(); 
     renderCalendar(currentCalendarDate); // Initialize calendar display
     switchMode('notepad'); // Default mode
+    loadBlogPosts(); // Load blog posts on DOMContentLoaded
 });
 
 window.onload = initGoogleSignIn;
@@ -990,6 +1074,7 @@ function attachEventListeners() {
     logoutBtn.addEventListener('click', handleLogout);
     verifyEmailBtn.addEventListener('click', handleVerifyEmail);
     resetPasswordBtn.addEventListener('click', handleResetPassword);
+    manageAccountBtn.addEventListener('click', handleManageAccount); // NEW: Listener for Manage Account
     
     // UPDATED: Profile photo functionality
     editProfilePhotoBtn.addEventListener('click', (e) => { 
@@ -1240,6 +1325,15 @@ function handleResetPassword(e) {
     }
 }
 
+// NEW: Function to handle the "Manage Account" button click
+function handleManageAccount(e) {
+    e.preventDefault();
+    // In a real application, this would navigate to a dedicated account management page or open a modal.
+    // For now, we'll just show an alert.
+    alert("Account management features are not fully implemented yet. You can manage your profile photo and email verification from here.");
+    // You could potentially open a modal here with more account settings.
+}
+
 // --- END NEW/UPDATED FUNCTIONALITY ---
 
 function loginSuccess(username, picUrl, userId) {
@@ -1306,9 +1400,10 @@ function switchMode(mode) {
     todoListContainer.classList.add('hidden');
     addTodoBtn.classList.add('hidden');
     calendarContainer.classList.add('hidden'); // Hide calendar
+    blogsSection.classList.add('hidden'); // NEW: Hide blogs section
     
-    // Hide or show title/whiteboardTitle inputs based on mode
-    titleInput.classList.toggle('hidden', mode === 'whiteboard' || mode === 'calendar'); // Hide title for calendar too
+    // Show or hide title/whiteboardTitle inputs based on mode
+    titleInput.classList.toggle('hidden', mode === 'whiteboard' || mode === 'calendar' || mode === 'blog'); // Hide title for calendar and blog
     whiteboardTitleInput.classList.toggle('hidden', mode !== 'whiteboard');
 
     // Manage active mode button
@@ -1330,6 +1425,8 @@ function switchMode(mode) {
     } else if (mode === 'calendar') {
         calendarContainer.classList.remove('hidden');
         renderCalendar(currentCalendarDate); // Render calendar when switched to
+    } else if (mode === 'blog') { // NEW: Show blogs section
+        blogsSection.classList.remove('hidden');
     }
 }
 
@@ -1574,13 +1671,85 @@ function findAndReplace(replaceAll = false) { const findValue = document.getElem
 // --- NOTE ACTIONS ---
 function deleteNote(id) { const key = getUserNotesKey(); if (!key || !confirm("Are you sure you want to delete this note permanently?")) return; let notes = JSON.parse(localStorage.getItem(key)) || []; localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); displayNotes(); if (editModeId === id) newDoc(); }
 function pinNote(id) { const key = getUserNotesKey(); if (!key) return; const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (note) note.pinned = !note.pinned; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
-async function toggleLock(id) { const key = getUserNotesKey(); if (!key) return; let notes = JSON.parse(localStorage.getItem(key)) || []; const noteIndex = notes.findIndex(n => n.id === id); if (noteIndex === -1) return; const note = notes[noteIndex]; if (note.isLocked) { const password = prompt("Enter password to unlock this note:"); if (!password) return; const hashed = await hashPassword(password); if (hashed === note.passwordHash) { note.isLocked = false; delete note.passwordHash; alert("Note unlocked!"); } else { alert("Incorrect password."); return; } } else { const password = prompt("Enter a new password to lock this note (min 4 chars):"); if (!password || password.length < 4) { alert("Password is too short."); return; } const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } note.isLocked = true; note.passwordHash = await hashPassword(password); alert("Note locked successfully!"); } notes[noteIndex] = note; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
+async function toggleLock(id) { const key = getUserNotesKey(); if (!key) return; let notes = JSON.parse(localStorage.getItem(key)) || []; const noteIndex = notes.findIndex(n => n.id === id); if (noteIndex === -1) return; const note = notes[noteIndex]; if (note.isLocked) { const password = prompt("Enter password to unlock this note:"); if (!password) return; const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } else { const password = prompt("Enter a new password to lock this note (min 4 chars):"); if (!password || password.length < 4) { alert("Password is too short."); return; } const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } note.isLocked = true; note.passwordHash = await hashPassword(password); alert("Note locked successfully!"); } notes[noteIndex] = note; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
 async function exportPDF(id) { const key = getUserNotesKey(); if (!key) return; const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) return; if (note.isLocked) { const password = prompt("This note is locked. Enter password to export:"); if (!password) return; const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20); doc.setFont("Helvetica", "normal"); doc.setFontSize(12); let contentToExport = note.text; if (note.type === 'todo') { try { contentToExport = JSON.parse(note.text).map(item => `${item.checked ? '[x]' : '[ ]'} ${item.text}`).join('\n'); } catch { contentToExport = "Error: Could not parse to-do list."} } doc.text(doc.splitTextToSize(contentToExport, 180), 15, 30); doc.save(`${note.title.replace(/\s+/g, '_')}.pdf`); }
 
 // --- PWA & SHORTCUTS ---
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; installBtn.classList.remove('hidden'); });
 installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; } } });
+
+// --- NEW: BLOG POSTS FUNCTIONALITY ---
+const blogPostsData = [
+    {
+        id: 1,
+        title: "Unlock Your Productivity: The Power of a Digital Notepad",
+        date: "2024-07-25",
+        views: 1580,
+        author: "Bishal Mishra",
+        image: "https://images.unsplash.com/photo-1516979318028-4d51370c8d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to note-taking
+        content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away."
+    },
+    {
+        id: 2,
+        title: "Beyond Text: Harnessing the Whiteboard Feature",
+        date: "2024-07-20",
+        views: 1120,
+        author: "Bishal Mishra",
+        image: "https://images.unsplash.com/photo-1498009185240-631826077847?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to drawing/whiteboarding
+        content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools to bring your concepts to life, making complex ideas instantly understandable."
+    },
+    {
+        id: 3,
+        title: "Conquer Your To-Do List: Strategies for Effective Task Management",
+        date: "2024-07-15",
+        views: 1750,
+        author: "Bishal Mishra",
+        image: "https://images.unsplash.com/photo-1542831371-29b0f74f9724?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to to-do lists
+        content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day."
+    },
+    {
+        id: 4,
+        title: "The Seamless Offline Experience: Why Note P@d is Always Available",
+        date: "2024-07-10",
+        views: 950,
+        author: "Bishal Mishra",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to offline/connectivity
+        content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go."
+    },
+    {
+        id: 5,
+        title: "Your Privacy Matters: How Note P@d Protects Your Data",
+        date: "2024-07-05",
+        views: 2100,
+        author: "Bishal Mishra",
+        image: "https://images.unsplash.com/photo-1517291136069-723546397d72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", // Image related to security/privacy
+        content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server, and remains completely on your device. Learn about the security measures in place and why this local-first approach is essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security."
+    }
+];
+
+function loadBlogPosts() {
+    blogList.innerHTML = ''; // Clear existing blog posts
+    blogPostsData.forEach(post => {
+        const blogPostDiv = document.createElement('div');
+        blogPostDiv.classList.add('blog-post');
+
+        blogPostDiv.innerHTML = `
+            <h4>${post.title}</h4>
+            <div class="blog-post-meta">
+                <span><i class="fas fa-calendar-alt"></i> Posted Date: ${post.date}</span>
+                <span><i class="fas fa-user"></i> Posted By: ${post.author}</span>
+                <span><i class="fas fa-eye"></i> View Count: ${post.views}</span>
+            </div>
+            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image">` : ''}
+            <div class="blog-post-content">
+                <p>${post.content}</p>
+                <p><a href="#" onclick="alert('This is a placeholder for a full blog post view. The content is displayed here for demonstration.'); return false;">Read More →</a></p>
+            </div>
+        `;
+        blogList.appendChild(blogPostDiv);
+    });
+}
 
 </script>
 </body>
