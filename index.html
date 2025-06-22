@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -19,7 +19,7 @@
 
     <link rel="manifest" href="manifest.json">
    
-       <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -404,6 +404,84 @@
             background: var(--primary-dark);
         }
 
+        /* Premium Feature Styles */
+        .premium-offerings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .premium-feature-card {
+            background: var(--card-light); /* Use your existing theme variables */
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 15px var(--shadow-light);
+            text-align: center;
+            flex: 1 1 280px; /* Flex properties for responsiveness */
+            max-width: 300px;
+        }
+        body.dark .premium-feature-card {
+            background: var(--card-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
+        }
+        .premium-feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .premium-feature-card .price {
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+        .premium-buy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s ease;
+            margin-top: 15px;
+        }
+        .premium-buy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .manual-payment-info {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee; /* Or use your theme's separator color */
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-light); /* Use theme variable */
+        }
+        body.dark .manual-payment-info {
+            border-top-color: #444; /* Adjust for dark mode */
+            color: var(--text-dark); /* Use theme variable */
+        }
+        .manual-payment-info p {
+            margin-bottom: 5px;
+        }
+        .manual-payment-info small {
+            margin-top: 10px;
+            color: #888; /* Adjust for theme */
+            text-align: center;
+        }
+        body.dark .manual-payment-info small {
+            color: #aaa; /* Adjust for dark mode */
+        }
+        /* Style for the QR code image itself */
+        .manual-payment-info img {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Slight shadow for the QR */
+            width: 150px; /* Fixed width for QR code */
+            height: 150px; /* Fixed height for QR code */
+            border-radius: var(--radius);
+        }
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -894,6 +972,50 @@
         <div id="note-list"></div>
     </div>
    
+    <!-- PREMIUM FEATURES SECTION -->
+    <div id="premium-features-section" class="hidden">
+        <h3>Unlock Premium Features</h3>
+        <div class="premium-offerings">
+            
+            <!-- Example for Premium Feature 1 -->
+            <div class="premium-feature-card">
+                <h4>Advanced Cloud Sync</h4>
+                <p>Sync your notes across all your devices seamlessly.</p>
+                <p class="price">Price: Rs. 100/month</p>
+                <button class="premium-buy-btn" data-feature="cloud-sync" data-price="100">Upgrade to Premium</button>
+                
+                <div class="manual-payment-info">
+                    <p>Pay manually via Esewa:</p>
+                    <img src="https://i.ibb.co/8nCNtjvL/IMG-0120.jpg" alt="Esewa QR Code">
+                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
+                    <p><strong>Esewa Number:</strong> 9827801575</p>
+                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
+                </div>
+            </div>
+
+            <!-- Example for Premium Feature 2 -->
+            <div class="premium-feature-card">
+                <h4>Priority Support</h4>
+                <p>Get faster responses to your queries.</p>
+                <p class="price">Price: Rs. 50/month</p>
+                <button class="premium-buy-btn" data-feature="priority-support" data-price="50">Upgrade to Premium</button>
+                
+                <div class="manual-payment-info">
+                    <p>Pay manually via Esewa:</p>
+                    <img src="https://i.ibb.co/8nCNtjvL/IMG-0120.jpg" alt="Esewa QR Code">
+                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
+                    <p><strong>Esewa Number:</strong> 9827801575</p>
+                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
+                </div>
+            </div>
+            
+            <!-- Add more premium features here -->
+
+        </div>
+    </div>
+    <!-- END PREMIUM FEATURES SECTION -->
+
+
     <div class="info-section" id="overview">
         <h3>Overview</h3>
         <p>Note P@d is your smart, browser-based companion for everyday writing. Whether it's journaling, brainstorming, creating a to-do list, or drafting important content, this tool offers a fast, secure, and efficient note-taking experience without the need to install bulky software. Open it in your browser, and you're ready to go. It's lightweight, lightning-fast, and focused entirely on providing a seamless writing environment.</p>
@@ -1051,7 +1173,7 @@ const verifyEmailBtn = document.getElementById('verifyEmailBtn');
 const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
-const manageAccountBtn = document.getElementById('manageAccountBtn'); // NEW: Account button
+const manageAccountBtn = document.getElementById('manageAccountBtn'); // NEW: Account link
 
 // Blog elements
 const blogsSection = document.getElementById('blogs-section');
@@ -1064,6 +1186,10 @@ const calendarGrid = document.querySelector('#calendar-container .calendar-grid'
 const prevMonthBtn = document.getElementById('prevMonthBtn');
 const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); // New exit button
+
+// --- Premium Features Related Elements ---
+const premiumFeaturesSection = document.getElementById('premium-features-section'); // Added this line
+const QR_CODE_IMAGE_URL = "https://i.ibb.co/8nCNtjvL/IMG-0120.jpg"; // Your QR code image URL
 
 // --- NEW FUNCTION TO REFRESH THE PAGE ---
 function refreshPage() {
@@ -1082,12 +1208,13 @@ function closeNav() {
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
-    checkAuthStatus();
+    checkAuthStatus(); // This also loads draft notes and displays saved notes
     attachEventListeners();
     initWhiteboard(); 
     renderCalendar(currentCalendarDate); // Initialize calendar display
     switchMode('notepad'); // Default mode
     loadBlogPosts(); // Load blog posts on DOMContentLoaded
+    updateUIForPremiumFeatures(); // Ensure premium UI is set on load (important if user is already logged in)
 });
 
 window.onload = initGoogleSignIn;
@@ -1181,6 +1308,32 @@ function attachEventListeners() {
     exitCalendarBtn.addEventListener('click', () => {
         switchMode('notepad'); // Return to Notepad mode
     });
+    
+    // --- Premium Feature Upgrade Button Listeners ---
+    document.querySelectorAll('.premium-buy-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const feature = button.getAttribute('data-feature');
+            const price = button.getAttribute('data-price');
+
+            if (!getCurrentUserId()) {
+                alert("Please sign in to purchase premium features.");
+                authModal.classList.remove("hidden"); // Show login modal
+                return;
+            }
+
+            // Show the payment instructions for the specific feature
+            const card = button.closest('.premium-feature-card');
+            if (card) {
+                const paymentInfo = card.querySelector('.manual-payment-info');
+                if (paymentInfo) {
+                    // Make the payment info section visible
+                    paymentInfo.style.display = 'flex'; // Use flex to apply flex properties
+                    // Scroll to it
+                    paymentInfo.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
 }
 
 // --- PROFILE & AUTH FUNCTIONS ---
@@ -1207,6 +1360,9 @@ function checkAuthStatus() {
     } else {
         authModal.classList.remove("hidden");
     }
+    // Always call updateUIForPremiumFeatures after checking auth status,
+    // as this might reveal premium status based on logged-in user.
+    updateUIForPremiumFeatures();
 }
 
 function showUserInfo() {
@@ -1296,6 +1452,7 @@ function handleLogout(e) {
     authModal.classList.remove("hidden");
     noteList.innerHTML = '';
     newDoc();
+    updateUIForPremiumFeatures(); // Update UI after logout
 }
 
 // --- NEW/UPDATED FUNCTIONALITY ---
@@ -1372,8 +1529,6 @@ function handleManageAccount(e) {
     // You could potentially open a modal here with more account settings.
 }
 
-// --- END NEW/UPDATED FUNCTIONALITY ---
-
 function loginSuccess(username, picUrl, userId) {
     localStorage.setItem("currentUserId", userId);
     if(picUrl) localStorage.setItem("userPic", picUrl);
@@ -1388,6 +1543,7 @@ function loginSuccess(username, picUrl, userId) {
     displayNotes();
     updateAll();
     resetHistory(textInput.value);
+    updateUIForPremiumFeatures(); // Update premium UI after login
 }
 
 function initGoogleSignIn() {
@@ -1466,6 +1622,8 @@ function switchMode(mode) {
     } else if (mode === 'blog') { // NEW: Show blogs section
         blogsSection.classList.remove('hidden');
     }
+    
+    updateUIForPremiumFeatures(); // Ensure premium UI is updated when mode changes
 }
 
 // --- CORE FUNCTIONS (Notepad, Whiteboard, To-Do) ---
@@ -1830,6 +1988,69 @@ function toggleBlogContent(postId) {
     }
 }
 
+// --- PREMIUM FEATURE UI MANAGEMENT ---
+
+// Placeholder function to check premium status (replace with actual logic)
+function checkPremiumStatus(feature) {
+    // For manual payment, this might check localStorage flags set after user contact.
+    // Example: return localStorage.getItem(`premium_${feature}_activated`) === 'true';
+    // For demonstration purposes, we'll assume no premium features are active.
+    return false; 
+}
+
+// Update the UI elements for premium features based on status
+function updateUIForPremiumFeatures() {
+    const premiumSection = document.getElementById('premium-features-section');
+    if (!premiumSection) return; // Exit if the section doesn't exist
+
+    document.querySelectorAll('.premium-feature-card').forEach(card => {
+        const buyButton = card.querySelector('.premium-buy-btn');
+        const manualPaymentInfo = card.querySelector('.manual-payment-info');
+        
+        // Ensure elements exist before proceeding
+        if (!buyButton || !manualPaymentInfo) {
+            console.warn("Missing buy button or manual payment info in a premium card.");
+            return;
+        }
+
+        // Get the feature name from the button's data attribute
+        const feature = buyButton.getAttribute('data-feature');
+
+        if (checkPremiumStatus(feature)) {
+            // If premium feature is active
+            buyButton.style.display = 'none'; // Hide the upgrade button
+            // Display a message indicating the feature is active
+            manualPaymentInfo.style.display = 'flex'; // Use flex to apply flex properties
+            manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`;
+        } else {
+            // If feature is not active, ensure payment info is visible
+            buyButton.style.display = 'block'; // Show the upgrade button
+            
+            // Render the payment info if it's not already populated
+            // This ensures it's only set once, preventing duplicate content
+            if (!manualPaymentInfo.querySelector('img')) { 
+                manualPaymentInfo.innerHTML = `
+                    <p>Pay manually via Esewa:</p>
+                    <img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code">
+                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
+                    <p><strong>Esewa Number:</strong> 9827801575</p>
+                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
+                `;
+            }
+            // Ensure the display is set to flex to show the content correctly
+            manualPaymentInfo.style.display = 'flex'; 
+        }
+    });
+    // Make the entire premium features section visible if there are any cards,
+    // or hide it if there are no premium features to show.
+    // For now, we assume it should be shown if the section exists.
+    // You might want to add logic here to only show the section if premium features are actually available or relevant.
+    premiumFeaturesSection.classList.remove('hidden'); 
+}
+
+// Call this function when the user logs in or after manual activation
+// It's already called in DOMContentLoaded and after loginSuccess.
+// Ensure it's called when the page loads if the user is already logged in.
 </script>
 </body>
 </html>
