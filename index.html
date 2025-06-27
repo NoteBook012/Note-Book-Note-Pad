@@ -890,14 +890,14 @@
   <a href="#" onclick="closeAndScrollToTop()">Home</a>
   <a href="#overview" onclick="closeNavAndScroll('#overview')">Overview</a>
   <a href="#about" onclick="closeNavAndScroll('#about')">About</a>
-  <a href="#blogs-section" onclick="closeNavAndScroll('#blogs-section')">Blog</a>
+  <a href="#blogs-section" onclick="closeNavAndSwitchModeAndScroll('blog', '#blogs-section')">Blog</a>
   <a href="#faq-section" onclick="closeNavAndScroll('#faq-section')">FAQ</a>
   <a href="#privacy-policy-section" onclick="closeNavAndScroll('#privacy-policy-section')">Privacy Policy</a>
   <a href="#terms-of-service-section" onclick="closeNavAndScroll('#terms-of-service-section')">Terms of Service</a>
   <a href="#contact-us-section" onclick="closeNavAndScroll('#contact-us-section')">Contact</a>
 </div>
 
-<div id="profile-container" class="profile-container">
+<div id="profile-container" class="profile-container hidden"> <!-- Initially hidden -->
     <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
     <div id="profile-dropdown" class="profile-dropdown hidden">
         <div class="dropdown-header">
@@ -1235,7 +1235,7 @@
         <p>The Service and its original content, features, and functionality are owned by Bishal Mishra and are protected by copyright, trademark, and other intellectual property laws.</p>
 
         <h4>6. Disclaimer of Warranties; Limitation of Liability</h4>
-        <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties, expressed or implied, regarding the operation or availability of the Service, or the information, content, materials, or products included thereon. To the fullest extent permissible by applicable law, we disclaim all warranties, express or implied, including, but not limited to, implied warranties of merchantability and fitness for a particular purpose.</p>
+        <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties, expressed or implied, regarding the operation or availability of the Service, or the information, content, materials, or products included thereon. To the fullest extent permissible by applicable law, we disclaim all warranties, express or implied, including, but not limited to, implied warranties of merchantability and fitness for a particular purpose.
         <p>We will not be liable for any damages of any kind arising from the use of this Service, including, but not limited to direct, indirect, incidental, punitive, and consequential damages. You are responsible for backing up data stored locally. We are not responsible for any loss of data.</p>
 
         <h4>7. Termination</h4>
@@ -1280,6 +1280,7 @@
     </div>
 </main>
 
+<!-- Welcome Popup and Auth Modal are now initially hidden and only appear if explicitly triggered (e.g., by save button) -->
 <div id="welcomePopup" class="welcome-popup hidden"> <div class="welcome-content"> <h2>Welcome to Note P@d!</h2> <p>Capture your ideas. Organize your thoughts. Let’s get started!</p> <button id="getStartedBtn">Get Started</button> </div> </div>
 <div id="authModal" class="modal hidden"> <div class="modal-content"> <h2 id="authTitle">Sign In to Note P@d</h2> <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> <button id="authSubmit">Sign In</button> <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> <a href="#" id="forgotPassword">Forgot Password?</a> <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> </div> </div>
 <div id="find-replace-dialog" class="hidden"> <input type="text" id="find-input" placeholder="Find..."> <input type="text" id="replace-input" placeholder="Replace with..."> <button id="replace-btn">Replace</button> <button id="replace-all-btn">Replace All</button> <button id="close-find-replace" class="close-btn" title="Close">×</button> </div>
@@ -1384,6 +1385,17 @@ function closeNavAndScroll(selector) {
         scrollToSection(selector);
     }, 300); 
 }
+
+// New function to switch mode and then scroll
+function closeNavAndSwitchModeAndScroll(mode, selector) {
+    closeNav();
+    setTimeout(() => {
+        switchMode(mode); // First, switch the mode which handles section visibility
+        scrollToSection(selector); // Then, scroll to the newly visible section
+    }, 300); 
+}
+
+
 function closeAndScrollToTop() {
     closeNav();
     setTimeout(() => {
@@ -1398,11 +1410,12 @@ function refreshPage() {
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
+    // Don't show welcome/auth modal initially. Just check auth status.
     checkAuthStatus(); 
     attachEventListeners();
     initWhiteboard(); 
     if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
-    switchMode('notepad'); 
+    switchMode('notepad'); // Ensures notepad is the default active section on load
     loadBlogPosts(); 
     updateUIForPremiumFeatures();
     document.getElementById('currentYear').textContent = new Date().getFullYear(); // Set current year in footer
@@ -1441,11 +1454,12 @@ function attachEventListeners() {
     };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     
+    // Removed direct display of welcomePopup/authModal on DOMContentLoaded, so this button also won't trigger it on load
     const getStartedBtn = document.getElementById('getStartedBtn');
     if (getStartedBtn) getStartedBtn.onclick = () => { 
         if(welcomePopup) welcomePopup.classList.add("hidden"); 
         if(authModal) authModal.classList.remove("hidden"); 
-        localStorage.setItem("visited", "true"); 
+        // localStorage.setItem("visited", "true"); // No longer strictly needed for this logic
     }; 
     
     if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
@@ -1540,7 +1554,7 @@ function attachEventListeners() {
 
             if (!getCurrentUserId()) {
                 alert("Please sign in to purchase premium features.");
-                if(authModal) authModal.classList.remove("hidden"); 
+                if(authModal) authModal.classList.remove("hidden"); // Show auth modal
                 return;
             }
 
@@ -1576,10 +1590,11 @@ function checkAuthStatus() {
             updateAll();
             resetHistory(textInput.value);
         }
-    } else if (!localStorage.getItem("visited")) {
-        if(welcomePopup) welcomePopup.classList.remove("hidden");
     } else {
-        if(authModal) authModal.classList.remove("hidden");
+        // If not logged in, ensure profile container is hidden
+        if(profileContainer) profileContainer.classList.add('hidden');
+        // No modal is shown on load if not signed in, user can use locally
+        displayNotes(); // Will show "Please sign in to see your saved notes." for notes list
     }
     updateUIForPremiumFeatures();
 }
@@ -1590,7 +1605,10 @@ function showUserInfo() {
     const email = localStorage.getItem('userEmail');
     const isVerified = localStorage.getItem('emailVerified') === 'true';
 
-    if (!username || !profileContainer || !profileIcon || !userPic || !userNameDisplay || !userEmailDisplay || !emailVerifiedStatus || !verifyEmailBtn || !resetPasswordBtn) return;
+    if (!username || !profileContainer || !profileIcon || !userPic || !userNameDisplay || !userEmailDisplay || !emailVerifiedStatus || !verifyEmailBtn) {
+        // console.warn("Missing elements for user info display or no username.");
+        return;
+    }
 
 
     profileContainer.classList.remove('hidden');
@@ -1612,18 +1630,20 @@ function showUserInfo() {
         verifyEmailBtn.style.cursor = 'pointer';
     }
     // Ensure parent <li> is visible if button itself is
-    verifyEmailBtn.parentElement.style.display = 'block';
+    if(verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
 
 
     const provider = localStorage.getItem('authProvider');
-    if (provider === 'google') {
-        resetPasswordBtn.parentElement.style.display = 'none'; // Hide reset password for Google users
-        // Google emails are often pre-verified
-        if (localStorage.getItem('emailVerified') === 'true') {
-             verifyEmailBtn.parentElement.style.display = 'none'; // Hide verify if already verified (common for Google)
+    if (resetPasswordBtn) {
+        if (provider === 'google') {
+            resetPasswordBtn.parentElement.style.display = 'none'; // Hide reset password for Google users
+            // Google emails are often pre-verified
+            if (localStorage.getItem('emailVerified') === 'true') {
+                if(verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'none'; // Hide verify if already verified (common for Google)
+            }
+        } else {
+            resetPasswordBtn.parentElement.style.display = 'block';
         }
-    } else {
-        resetPasswordBtn.parentElement.style.display = 'block';
     }
 }
 
@@ -1671,9 +1691,10 @@ function handleLogout(e) {
         profileDropdown.classList.add('hidden');
     }
     
-    if(authModal) authModal.classList.remove("hidden");
-    if(noteList) noteList.innerHTML = '';
-    newDoc();
+    if(authModal) authModal.classList.remove("hidden"); // Show auth modal after logout
+    if(noteList) noteList.innerHTML = ''; // Clear notes when user logs out
+    newDoc(); // Clear editor
+    displayNotes(); // Will show "Please sign in to see your saved notes."
     updateUIForPremiumFeatures(); 
 }
 
@@ -1896,7 +1917,11 @@ function newDoc() {
 
 function saveNote() {
     const key = getUserNotesKey();
-    if (!key) { alert("Please sign in to save notes."); return; }
+    if (!key) { 
+        alert("Please sign in to save notes. Your current work will remain in the editor until you navigate away or refresh."); 
+        if(authModal) authModal.classList.remove("hidden"); // Show auth modal
+        return; 
+    }
 
     let title, content, type;
     if (currentMode === 'notepad') {
@@ -1943,60 +1968,64 @@ function saveNote() {
 function displayNotes() {
     if(!noteList) return;
     const key = getUserNotesKey();
+    // Notes are only loaded/displayed if a user is logged in
     const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : [];
-    notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); // Pinned first, then by ID
     
-    noteList.innerHTML = notes.map(n => {
-        let contentPreview = '';
-        const noteType = n.type || 'notepad'; // Default to notepad if type is missing
-
-        if (n.isLocked && n.passwordHash) { // Check for passwordHash to confirm it's truly locked
-            contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
-        } else if (noteType === 'whiteboard') {
-            contentPreview = `<img src="${n.text}" alt="Whiteboard Preview for ${n.title}" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`;
-        } else if (noteType === 'todo') {
-            try { 
-                const todoItems = JSON.parse(n.text);
-                const completedItems = todoItems.filter(item => item.checked).length;
-                contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`; 
-            }
-            catch { contentPreview = `<i>Corrupted To-Do List.</i>`}
-        } else { // Notepad
-            contentPreview = `${n.text.substring(0, 150)}${n.text.length > 150 ? '...' : ''}`; // Shorter preview
-        }
-
-        const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
-        const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; // Use far for unpinned for visual cue
-        const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝');
-
-        return `
-        <div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}">
-            <h4>
-                ${noteTypeIcon} 
-                <span class="note-title-text">${n.title}</span>
-                ${lockIcon}
-            </h4>
-            <p class="note-content-preview">${contentPreview}</p>
-            <small>Last updated: ${n.date}</small>
-            <div class="note-actions">
-                <button onclick="editNote(${n.id})" aria-label="Edit note ${n.title}"><i class="fas fa-edit"></i> Edit</button>
-                <button onclick="toggleLock(${n.id})" aria-label="${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'} note ${n.title}"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button>
-                <button onclick="pinNote(${n.id})" aria-label="${n.pinned ? 'Unpin' : 'Pin'} note ${n.title}"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>
-                ${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})" aria-label="Export note ${n.title} as PDF"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}
-                <button onclick="deleteNote(${n.id})" aria-label="Delete note ${n.title}"><i class="fas fa-trash"></i> Delete</button>
-            </div>
-        </div>
-    `;
-    }).join('');
+    // Only display notes if logged in, otherwise show prompt
     if (notes.length === 0 && key) {
         noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>";
     } else if (!key) {
          noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>";
+    } else {
+        notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); // Pinned first, then by ID
+    
+        noteList.innerHTML = notes.map(n => {
+            let contentPreview = '';
+            const noteType = n.type || 'notepad'; // Default to notepad if type is missing
+
+            if (n.isLocked && n.passwordHash) { // Check for passwordHash to confirm it's truly locked
+                contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
+            } else if (noteType === 'whiteboard') {
+                contentPreview = `<img src="${n.text}" alt="Whiteboard Preview for ${n.title}" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`;
+            } else if (noteType === 'todo') {
+                try { 
+                    const todoItems = JSON.parse(n.text);
+                    const completedItems = todoItems.filter(item => item.checked).length;
+                    contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`; 
+                }
+                catch { contentPreview = `<i>Corrupted To-Do List.</i>`}
+            } else { // Notepad
+                contentPreview = `${n.text.substring(0, 150)}${n.text.length > 150 ? '...' : ''}`; // Shorter preview
+            }
+
+            const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
+            const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; // Use far for unpinned for visual cue
+            const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝');
+
+            return `
+            <div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}">
+                <h4>
+                    ${noteTypeIcon} 
+                    <span class="note-title-text">${n.title}</span>
+                    ${lockIcon}
+                </h4>
+                <p class="note-content-preview">${contentPreview}</p>
+                <small>Last updated: ${n.date}</small>
+                <div class="note-actions">
+                    <button onclick="editNote(${n.id})" aria-label="Edit note ${n.title}"><i class="fas fa-edit"></i> Edit</button>
+                    <button onclick="toggleLock(${n.id})" aria-label="${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'} note ${n.title}"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button>
+                    <button onclick="pinNote(${n.id})" aria-label="${n.pinned ? 'Unpin' : 'Pin'} note ${n.title}"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>
+                    ${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})" aria-label="Export note ${n.title} as PDF"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}
+                    <button onclick="deleteNote(${n.id})" aria-label="Delete note ${n.title}"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        `;
+        }).join('');
     }
 }
 
 async function editNote(id) {
-    const key = getUserNotesKey(); if (!key) return;
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in to edit notes."); if(authModal) authModal.classList.remove("hidden"); return; }
     const notes = JSON.parse(localStorage.getItem(key)) || [];
     const note = notes.find(n => n.id === id);
     if (!note) { alert("Note not found."); return;}
@@ -2344,14 +2373,15 @@ function findAndReplace(replaceAll = false) {
 
 function deleteNote(id) { 
     const key = getUserNotesKey(); 
-    if (!key || !confirm("Are you sure you want to delete this note permanently? This action cannot be undone.")) return; 
+    if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; }
+    if (!confirm("Are you sure you want to delete this note permanently? This action cannot be undone.")) return; 
     let notes = JSON.parse(localStorage.getItem(key)) || []; 
     localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); 
     displayNotes(); 
     if (editModeId === id) newDoc(); 
 }
 function pinNote(id) { 
-    const key = getUserNotesKey(); if (!key) return; 
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in to pin notes."); if(authModal) authModal.classList.remove("hidden"); return; }
     const notes = JSON.parse(localStorage.getItem(key)) || []; 
     const note = notes.find(n => n.id === id); 
     if (note) note.pinned = !note.pinned; 
@@ -2359,7 +2389,7 @@ function pinNote(id) {
     displayNotes(); 
 }
 async function toggleLock(id) { 
-    const key = getUserNotesKey(); if (!key) return; 
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in to lock/unlock notes."); if(authModal) authModal.classList.remove("hidden"); return; }
     let notes = JSON.parse(localStorage.getItem(key)) || []; 
     const noteIndex = notes.findIndex(n => n.id === id); 
     if (noteIndex === -1) return; 
@@ -2389,7 +2419,7 @@ async function toggleLock(id) {
     displayNotes(); 
 }
 async function exportPDF(id) { 
-    const key = getUserNotesKey(); if (!key) return; 
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in to export notes."); if(authModal) authModal.classList.remove("hidden"); return; }
     const notes = JSON.parse(localStorage.getItem(key)) || []; 
     const note = notes.find(n => n.id === id); 
     if (!note) { alert("Note not found for PDF export."); return; }
@@ -2622,7 +2652,7 @@ function updateUIForPremiumFeatures() {
     3.  USER EXPERIENCE & NAVIGATION:
         *   Ensure your site is easy to navigate on both desktop and mobile. The Sidenav is good.
         *   Site Speed: Optimize images and ensure fast loading times.
-        *   Mobile-Friendliness: Test thoroughly on different devices. Your CSS has responsive queries, which is good.
+        *   Mobile-Friendly: Test thoroughly on different devices. Your CSS has responsive queries, which is good.
         *   No Broken Links: Check all internal and external links.
 
     4.  TECHNICAL REQUIREMENTS:
