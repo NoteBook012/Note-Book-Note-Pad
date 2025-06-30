@@ -222,7 +222,6 @@
         
         .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; flex-wrap: wrap; }
         body.dark .mode-switcher { border-left-color: #555; }
-        .mode-switcher button { transition: background-color 0.3s ease, color 0.3s ease; }
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
         
@@ -332,6 +331,14 @@
         .blog-post-content p {
             margin-bottom: 15px;
         }
+        .blog-post-content ul { /* Ensure lists in blog content have proper styling */
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .blog-post-content ul li {
+            margin-bottom: 5px;
+        }
         .blog-post-content a {
             color: var(--primary);
             text-decoration: none;
@@ -376,6 +383,190 @@
             margin-top: 10px; 
         }
         .read-more-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Styles for the SEE Result button within blog post */
+        .blog-post-content .see-result-btn {
+            display: block; /* Make it a block element to center */
+            width: fit-content; /* Only take necessary width */
+            margin: 15px auto; /* Center the button */
+            background-color: #28a745; /* Green for check result */
+            color: white;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .blog-post-content .see-result-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+
+        /* Blog Post Footer Section Styles */
+        .blog-post-footer-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between different sections */
+        }
+
+        body.dark .blog-post-footer-section {
+            border-top-color: #3a3a3a;
+        }
+
+        .blog-post-footer-section > div {
+            flex: 1 1 calc(50% - 10px); /* Two columns on larger screens */
+            min-width: 250px; /* Minimum width for each section */
+            padding: 15px;
+            background: var(--bg-light); /* Lighter background for these internal sections */
+            border-radius: var(--radius);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            color: var(--text-light);
+        }
+
+        body.dark .blog-post-footer-section > div {
+            background: #333;
+            box-shadow: 0 2px 10px var(--shadow-dark);
+            color: var(--text-dark);
+        }
+
+        .blog-post-footer-section h5 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        /* Tags */
+        .tags-list a {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #555;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 5px;
+            font-size: 14px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        body.dark .tags-list a {
+            background-color: #4a4a4a;
+            color: #ccc;
+        }
+
+        .tags-list a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Share Buttons */
+        .blog-share button {
+            background: #4267B2; /* Facebook Blue */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 15px;
+            margin-right: 10px;
+            transition: background 0.2s ease;
+        }
+        .blog-share button:nth-of-type(2) {
+            background: #25D366; /* WhatsApp Green */
+        }
+        .blog-share button:hover {
+            opacity: 0.9;
+        }
+        .blog-share button i {
+            margin-right: 8px;
+        }
+
+        /* Search */
+        .blog-search input[type="text"] {
+            width: calc(100% - 20px); /* Adjust for padding within the container */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            font-size: 15px;
+            background: var(--card-light);
+            color: var(--text-light);
+            transition: border-color 0.3s ease;
+        }
+        body.dark .blog-search input[type="text"] {
+            background: #2b2b2b;
+            border-color: #555;
+            color: var(--text-dark);
+        }
+        .blog-search input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Recent Posts */
+        .blog-recent-posts ul {
+            list-style: none;
+            padding: 0;
+        }
+        .blog-recent-posts li {
+            margin-bottom: 10px;
+        }
+        .blog-recent-posts li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-size: 15px;
+        }
+        body.dark .blog-recent-posts li a {
+            color: var(--text-dark);
+        }
+        .blog-recent-posts li a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Newsletter */
+        .blog-newsletter input[type="email"] {
+            width: calc(100% - 20px); /* Adjust for padding within the container */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            font-size: 15px;
+            margin-bottom: 10px;
+            background: var(--card-light);
+            color: var(--text-light);
+            transition: border-color 0.3s ease;
+        }
+        body.dark .blog-newsletter input[type="email"] {
+            background: #2b2b2b;
+            border-color: #555;
+            color: var(--text-dark);
+        }
+        .blog-newsletter input[type="email"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .blog-newsletter button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.2s ease;
+        }
+        .blog-newsletter button:hover {
             background: var(--primary-dark);
         }
 
@@ -878,6 +1069,9 @@
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
             .blog-post h4 { font-size: 18px; }
+            .blog-post-footer-section > div {
+                flex: 1 1 100%; /* Single column on small screens */
+            }
         }
         @media (max-width: 480px) {
             #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
@@ -966,7 +1160,7 @@
         </div>
     </div>
 
-    <div id="editor">
+    <div id="editor" class="hidden">
         <input type="text" id="note-title" placeholder="Your Note Title..." />
         <textarea id="note-text" placeholder="Start typing... your work is saved automatically." rows="10"></textarea>
         <div id="todo-list-container" class="hidden"></div>
@@ -1011,13 +1205,13 @@
     </div>
 
     <div id="blogs-section" class="info-section hidden"> 
-        <h3><i class="fas fa-blog" style="color: #6610f2; margin-right: 8px;"></i>Productivity Insights & Blog</h3>
+        <h3 id="blog-main-heading"><i class="fas fa-blog" style="color: #6610f2; margin-right: 8px;"></i>Productivity Insights & Blog</h3>
         <div id="blog-list">
         </div>
     </div>
 
     <!-- AdSense Ad Unit Start -->
-    <div class="adsense-ad-container">
+    <div class="adsense-ad-container hidden">
         <!-- Note Pad -->
         <ins class="adsbygoogle"
              style="display:block"
@@ -1031,7 +1225,7 @@
     </div>
     <!-- AdSense Ad Unit End -->
 
-    <div id="notes"> 
+    <div id="notes" class="hidden"> 
         <h3 style="text-align: center;"><i class="fas fa-star" style="color: gold; margin-right: 8px;"></i>Your Saved Notes</h3>
         <div id="note-list"></div>
     </div>
@@ -1068,13 +1262,13 @@
         </div>
     </div>
 
-    <div class="info-section" id="overview">
+    <div class="info-section hidden" id="overview">
         <h3>Welcome to Note P@d: Your All-in-One Digital Workspace</h3>
         <p>Note P@d is more than just an online notepad; it's your versatile, browser-based companion designed for modern productivity. Whether you're capturing fleeting ideas, journaling your thoughts, brainstorming new projects, drafting important content, sketching diagrams, or managing your daily tasks, Note P@d offers a fast, secure, and efficient experience. Forget bulky software installations – open Note P@d in your browser, and you're ready to create, organize, and achieve. It's lightweight, incredibly fast, and meticulously focused on providing a seamless, distraction-free environment for all your needs.</p>
         <p>Our platform integrates a powerful text editor, a dynamic digital whiteboard, a simple to-do list manager, and a handy calendar, all designed to work harmoniously. With offline capabilities and local data storage, your work is always accessible and private. Explore our <a href="#blogs-section" onclick="switchModeAndScroll('blog', '#blogs-section')">Productivity Insights blog</a> for tips and tricks to maximize your efficiency with Note P@d and beyond.</p>
     </div>
 
-    <div class="info-section" id="how-it-works">
+    <div class="info-section hidden" id="how-it-works">
         <h3>How Note P@d Works: Secure, Offline, and In Your Browser</h3>
         <p>Note P@d leverages cutting-edge web technologies like HTML5, CSS3, and JavaScript to deliver a smooth, responsive, and private user experience. Here’s a breakdown of its core principles:</p>
         <ul>
@@ -1087,7 +1281,7 @@
         <p>Remember, if you are not using an account with cloud sync, clearing your browser's site data will permanently delete your locally stored notes. Always use the export features or consider an account for important data backup.</p>
     </div>
 
-    <div class="info-section" id="about">
+    <div class="info-section hidden" id="about">
         <h3>About the Developer: Bishal Mishra</h3>
         <div class="about-dev">
             <img src="https://i.ibb.co/Y4ygWpC2/Untitled-design.png" alt="Bishal Mishra, Developer of Note P@d" border="0">
@@ -1099,7 +1293,7 @@
         </div>
     </div>
 
-    <div class="info-section" id="privacy"> 
+    <div class="info-section hidden" id="privacy"> 
         <h3>Your Privacy & Security: Our Commitment</h3>
         <p>At Note P@d, your data privacy and security are paramount. We believe in absolute transparency and user control over information. Here's our commitment:</p>
         <ul>
@@ -1111,7 +1305,7 @@
         <p>We encourage you to read our full <a href="#privacy-policy-section" onclick="scrollToSection('#privacy-policy-section')">Privacy Policy</a> for detailed information on how we collect, use, and protect your information. Your trust is important to us, and we strive to create a secure environment for your thoughts and ideas.</p>
     </div>
 
-    <div class="info-section" id="faq-section">
+    <div class="info-section hidden" id="faq-section">
         <h3>Frequently Asked Questions (FAQ)</h3>
         <div class="faq-item">
             <h4 class="faq-question">What is Note P@d?</h4>
@@ -1143,7 +1337,7 @@
         </div>
     </div>
 
-    <div id="privacy-policy-section" class="info-section">
+    <div id="privacy-policy-section" class="info-section hidden">
         <h3>Privacy Policy for Note P@d</h3>
         <p><strong>Last Updated:</strong> July 25, 2025</p>
         
@@ -1203,7 +1397,7 @@
         
     </div>
 
-    <div id="terms-of-service-section" class="info-section">
+    <div id="terms-of-service-section" class="info-section hidden">
         <h3>Terms of Service for Note P@d</h3>
         <p><strong>Last Updated:</strong> July 26, 2025</p>
 
@@ -1256,7 +1450,7 @@
         <p>If you have any questions about these Terms, please contact us using the details in the <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a> section of this website.</p>
     </div>
  
-    <div id="contact-us-section"> 
+    <div id="contact-us-section" class="info-section hidden"> 
         <h2>Contact Us</h2>
         <ul>
             <li>
@@ -1354,6 +1548,7 @@ const manageAccountBtn = document.getElementById('manageAccountBtn');
 
 const blogsSection = document.getElementById('blogs-section');
 const blogList = document.getElementById('blog-list'); 
+const blogMainHeading = document.getElementById('blog-main-heading'); // Added reference to the main blog heading
 
 const calendarContainer = document.getElementById('calendar-container');
 const currentMonthYearDisplay = document.getElementById('currentMonthYear');
@@ -1363,7 +1558,11 @@ const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); 
 
 const premiumFeaturesSection = document.getElementById('premium-features-section'); 
+const adsenseContainer = document.querySelector('.adsense-ad-container'); // Get AdSense container
 const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtjv/IMG-0120.jpg"; 
+
+// Global variable to track if a single blog post is currently expanded
+let singleBlogPostExpandedId = null;
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() {
@@ -1419,7 +1618,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initWhiteboard(); 
     if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
     switchMode('notepad'); // Ensures notepad is the default active section on load
-    loadBlogPosts(); 
+    loadBlogPosts(); // Load blogs initially so data is ready for filtering etc.
     updateUIForPremiumFeatures();
     document.getElementById('currentYear').textContent = new Date().getFullYear(); // Set current year in footer
 });
@@ -1868,39 +2067,111 @@ function switchModeAndScroll(mode, selector) {
     }, 100); 
 }
 
+// Helper function to hide all major content sections
+function hideAllMainSections() {
+    const mainSections = [
+        editorSection,
+        whiteboardSection,
+        calendarContainer,
+        blogsSection, // This will be handled differently for blog mode
+        noteList.parentElement, // Selects the #notes div itself
+        premiumFeaturesSection,
+        document.getElementById('overview'),
+        document.getElementById('how-it-works'),
+        document.getElementById('about'), // Explicitly target about section
+        document.getElementById('privacy'),
+        document.getElementById('faq-section'),
+        document.getElementById('privacy-policy-section'),
+        document.getElementById('terms-of-service-section'),
+        document.getElementById('contact-us-section'),
+        adsenseContainer // The AdSense container
+    ];
+
+    mainSections.forEach(sec => {
+        if (sec) sec.classList.add('hidden');
+    });
+
+    // Also hide these specific elements if they're not part of the main sections above or need separate control
+    if (todoListContainer) todoListContainer.classList.add('hidden');
+    if (addTodoBtn) addTodoBtn.classList.add('hidden');
+    if (titleInput) titleInput.classList.add('hidden');
+    if (textInput) textInput.classList.add('hidden');
+    if (whiteboardTitleInput) whiteboardTitleInput.classList.add('hidden');
+}
 
 function switchMode(mode) {
     currentMode = mode;
 
-    const sections = [editorSection, whiteboardSection, todoListContainer, addTodoBtn, calendarContainer, blogsSection, titleInput, whiteboardTitleInput];
-    sections.forEach(sec => { if (sec) sec.classList.add('hidden'); });
-    
+    hideAllMainSections(); // Hide everything first
+
+    // Remove active state from all mode buttons
     document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
     const modeButton = document.getElementById(`mode-${mode}`);
     if (modeButton) modeButton.classList.add('active-mode');
 
+    // Show sections based on the selected mode
     if (mode === 'notepad') {
         if(editorSection) editorSection.classList.remove('hidden');
         if(textInput) textInput.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
+        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
+        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
+        
+        // Show all general info sections when in "app" modes
+        document.getElementById('overview').classList.remove('hidden');
+        document.getElementById('how-it-works').classList.remove('hidden');
+        document.getElementById('about').classList.remove('hidden'); // Show About section
+        document.getElementById('privacy').classList.remove('hidden');
+        document.getElementById('faq-section').classList.remove('hidden');
+        document.getElementById('privacy-policy-section').classList.remove('hidden');
+        document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('contact-us-section').classList.remove('hidden');
+        updateUIForPremiumFeatures(); // This function shows/hides premium-features-section based on login status
+
     } else if (mode === 'whiteboard') {
         if(whiteboardSection) whiteboardSection.classList.remove('hidden');
         if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden');
         resizeWhiteboard();
+        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
+        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
+
+        document.getElementById('overview').classList.remove('hidden');
+        document.getElementById('how-it-works').classList.remove('hidden');
+        document.getElementById('about').classList.remove('hidden'); // Show About section
+        document.getElementById('privacy').classList.remove('hidden');
+        document.getElementById('faq-section').classList.remove('hidden');
+        document.getElementById('privacy-policy-section').classList.remove('hidden');
+        document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('contact-us-section').classList.remove('hidden');
+        updateUIForPremiumFeatures();
+
     } else if (mode === 'todo') {
-        if(editorSection) editorSection.classList.remove('hidden'); // Title input part of editor section
+        if(editorSection) editorSection.classList.remove('hidden'); 
         if(todoListContainer) todoListContainer.classList.remove('hidden');
         if(addTodoBtn) addTodoBtn.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
-        if(textInput) textInput.classList.add('hidden'); 
+        if(textInput) textInput.classList.add('hidden'); // Hide actual textarea
+        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
+        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
+
+        document.getElementById('overview').classList.remove('hidden');
+        document.getElementById('how-it-works').classList.remove('hidden');
+        document.getElementById('about').classList.remove('hidden'); // Show About section
+        document.getElementById('privacy').classList.remove('hidden');
+        document.getElementById('faq-section').classList.remove('hidden');
+        document.getElementById('privacy-policy-section').classList.remove('hidden');
+        document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('contact-us-section').classList.remove('hidden');
+        updateUIForPremiumFeatures();
+
     } else if (mode === 'calendar') {
         if(calendarContainer) calendarContainer.classList.remove('hidden');
-        if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
+        if(currentMonthYearDisplay) renderCalendar(currentCalendarDate);
+
     } else if (mode === 'blog') { 
         if(blogsSection) blogsSection.classList.remove('hidden');
+        showBlogList(); // Show all blog posts in their short form
     }
-    
-    updateUIForPremiumFeatures(); 
 }
 
 function newDoc() {
@@ -1998,7 +2269,11 @@ function displayNotes() {
                 }
                 catch { contentPreview = `<i>Corrupted To-Do List.</i>`}
             } else { // Notepad
-                contentPreview = `${n.text.substring(0, 150)}${n.text.length > 150 ? '...' : ''}`; // Shorter preview
+                // Remove HTML tags from content preview to prevent XSS and malformed preview
+                const div = document.createElement('div');
+                div.innerHTML = n.text;
+                const plainText = div.textContent || div.innerText || '';
+                contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`; // Shorter preview
             }
 
             const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
@@ -2210,7 +2485,7 @@ function clearCanvas() {
 function downloadCanvas() { 
     if(!whiteboardState.canvas || !whiteboardTitleInput) return;
     const link = document.createElement('a'); 
-    link.download = `${whiteboardTitleInput.value.trim() || 'whiteboard_drawing'}.png`; // Ensure filename is valid
+    link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`; // Sanitize filename
     link.href = whiteboardState.canvas.toDataURL('image/png'); 
     link.click(); 
 }
@@ -2476,9 +2751,10 @@ const blogPostsData = [
         date: "2024-07-25",
         views: 1580,
         author: "Bishal Mishra",
-        image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png", 
+        image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png",
         content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively.",
-        fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, the benefits of the markdown editor (if implemented), and how to integrate Note P@d into your daily routine for peak performance. We'll delve into creating structured notes, using tags for better organization, and even some advanced tips for power users. Embrace the simplicity and power of digital note-taking with Note P@d! The ability to quickly jot down thoughts, create outlines, or draft longer pieces of text without worrying about saving (thanks to auto-save and local storage) frees up mental bandwidth. Furthermore, features like font and size customization allow for a personalized writing environment, reducing eye strain and improving focus during long writing sessions. With Note P@d, your digital workspace adapts to you, not the other way around."
+        fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, the benefits of the markdown editor (if implemented), and how to integrate Note P@d into your daily routine for peak performance. We'll delve into creating structured notes, using tags for better organization, and even some advanced tips for power users. Embrace the simplicity and power of digital note-taking with Note P@d! The ability to quickly jot down thoughts, create outlines, or draft longer pieces of text without worrying about about saving (thanks to auto-save and local storage) frees up mental bandwidth. Furthermore, features like font and size customization allow for a personalized writing environment, reducing eye strain and improving focus during long writing sessions. With Note P@d, your digital workspace adapts to you, not the other way around.",
+        tags: ["productivity", "notepad", "digital tools", "organization", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
     },
     {
         id: 2,
@@ -2486,9 +2762,10 @@ const blogPostsData = [
         date: "2024-07-20",
         views: 1120,
         author: "Bishal Mishra",
-        image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", 
+        image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png",
         content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas and creating visual outlines.",
-        fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively (if collaboration is a feature). We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference, enhancing your ability to communicate visually and preserve your creative bursts."
+        fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively (if collaboration is a feature). We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference, enhancing your ability to communicate visually and preserve your creative bursts.",
+        tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
     },
     {
         id: 3,
@@ -2496,9 +2773,10 @@ const blogPostsData = [
         date: "2024-07-15",
         views: 1750,
         author: "Bishal Mishra",
-        image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", 
+        image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban",
         content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the satisfaction of checking items off.",
-        fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day. Discover techniques like creating actionable items, setting clear titles for your lists, and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity. Note P@d's to-do list is designed for clarity and ease of use, helping you stay on top of your commitments."
+        fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day. Discover techniques like creating actionable items, setting clear titles for your lists, and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity. Note P@d's to-do list is designed for clarity and ease of use, helping you stay on top of your commitments.",
+        tags: ["to-do list", "task management", "organization", "productivity", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
     },
     {
         id: 4,
@@ -2506,9 +2784,10 @@ const blogPostsData = [
         date: "2024-07-10",
         views: 950,
         author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", 
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains how this ensures your notes are always accessible.",
-        fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device, even if you can't reach our servers. This feature makes Note P@d a truly dependable tool for capturing thoughts anytime, anywhere."
+        fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device, even if you can't reach our servers. This feature makes Note P@d a truly dependable tool for capturing thoughts anytime, anywhere.",
+        tags: ["offline", "PWA", "accessibility", "web technologies", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
     },
     {
         id: 5,
@@ -2516,33 +2795,256 @@ const blogPostsData = [
         date: "2024-07-05",
         views: 2100,
         author: "Bishal Mishra",
-        image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", 
+        image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI",
         content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server by default, and remains on your device.",
-        fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, meaning it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach and why it's essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security and user control. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy."
+        fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, meaning it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach and why it's essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security and user control. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.",
+        tags: ["privacy", "security", "local storage", "data protection", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
     },
-    // IMPORTANT FOR ADSENSE: Add MANY MORE (15-20+) unique, high-quality blog posts here.
-    // They should be substantial (500-1000+ words each) and offer real value.
+    {
+        id: 6,
+        title: "Class 10 (SEE) Result for the Academic Year 2081/2082: Check Your SEE Result!",
+        date: "2025-07-01", // Assuming a future date for this
+        views: 0, // Will be updated as it's a new post
+        author: "Bishal Mishra",
+        image: "https://i.ibb.co/H26W4rW/SEE-Result-2081.png", // Generic placeholder image for SEE result
+        content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.",
+        fullContent: `
+            <p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p>
+            <p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. It's a significant milestone for all students, marking the completion of their secondary education and opening doors to new academic pursuits. Ensure you have your symbol number and date of birth ready to retrieve your results. This year's examination saw a large number of students participating nationwide, and the NEB has worked diligently to ensure timely and fair evaluation. <br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p>
+            <p>We understand the anticipation and excitement surrounding the SEE results. To make the process as smooth as possible, we have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081. These websites ensure an easy and hassle-free process for accessing your results:</p>
+            <ul>
+                <li><a href="https://www.see.gov.np/" target="_blank" rel="noopener noreferrer">Official SEE Board Website: www.see.gov.np</a></li>
+                <li><a href="https://www.neb.gov.np/" target="_blank" rel="noopener noreferrer">National Examination Board Website: https://www.neb.gov.np/</a></li>
+                <li><a href="http://www.see.ntc.net.np/" target="_blank" rel="noopener noreferrer">NTC Result Portal: http://www.see.ntc.net.np/</a></li>
+                <li><a href="https://see.nicasiabank.com/" target="_blank" rel="noopener noreferrer">NIC Asia Bank Result Portal: https://see.nicasiabank.com/</a></li>
+                <li><a href="https://see.edusanjal.com/" target="_blank" rel="noopener noreferrer">Edusanjal Result Portal: https://see.edusanjal.com/</a></li>
+                <li><a href="https://ekantipur.com/" target="_blank" rel="noopener noreferrer">eKantipur Result Portal: https://ekantipur.com/</a></li>
+                <li><a href="https://www.theconnectplus.com/" target="_blank" rel="noopener noreferrer">The Connect Plus Result Portal: https://www.theconnectplus.com/</a></li>
+                <li><a href="https://khalti.com/app" target="_blank" rel="noopener noreferrer">Khalti Result Portal: https://khalti.com/app</a></li>
+                <li><a href="https://www.neemaacademy.com/" target="_blank" rel="noopener noreferrer">Neema Academy Result Portal: https://www.neemaacademy.com/</a></li>
+                <li><a href="https://mypay.com.np/" target="_blank" rel="noopener noreferrer">MyPay Result Portal: https://mypay.com.np/</a></li>
+                <li><a href="http://www.nepaleducationportal.com/" target="_blank" rel="noopener noreferrer">Nepal Education Portal: http://www.nepaleducationportal.com/</a></li>
+                <li><a href="http://www.ayoresult.com/" target="_blank" rel="noopener noreferrer">Ayo Result Portal: http://www.ayoresult.com/</a></li>
+                <li><a href="http://www.results.matraeducation.com/" target="_blank" rel="noopener noreferrer">Matra Education Result Portal: http://www.results.matraeducation.com/</a></li>
+                <li><a href="http://www.tuteeline.com/" target="_blank" rel="noopener noreferrer">Tuteeline Result Portal: http://www.tuteeline.com/</a></li>
+            </ul>
+            <p>Congratulations to all the students who have successfully completed their SEE examinations! Your hard work and dedication have paid off. We wish you all the very best for your future academic endeavors. Remember, the SEE result is just one step in your educational journey. Focus on what you've learned and how you can apply it in your next chapter. Good luck!</p>
+        `,
+        tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82", "education", "student life", "board exams", "SEE"]
+    }
 ];
 
+// Function to generate tags HTML
+function generateTagsHTML(tags) {
+    if (!tags || tags.length === 0) return '';
+    return tags.map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join('');
+}
+
+// Function to generate recent posts HTML (excluding current post)
+function generateRecentPostsHTML(currentPostId) {
+    let recentPostsHtml = '';
+    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date desc
+    let count = 0;
+    for (const post of sortedPosts) {
+        if (post.id !== currentPostId && count < 3) { // Show up to 3 recent, excluding current
+            recentPostsHtml += `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id}); scrollToSection('#blog-${post.id}');">${post.title}</a></li>`;
+            count++;
+        }
+    }
+    return recentPostsHtml ? `<ul>${recentPostsHtml}</ul>` : '<p>No other recent posts.</p>';
+}
+
+// Function to share post
+function sharePost(platform, postId, title) {
+    const postUrl = window.location.href.split('#')[0] + `#blog-${postId}`; // URL to the specific post
+    let shareUrl = '';
+    if (platform === 'facebook') {
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}&quote=${encodeURIComponent(title)}`;
+    } else if (platform === 'whatsapp') {
+        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + postUrl)}`;
+    }
+    window.open(shareUrl, '_blank');
+}
+
+// Function to filter blog posts based on search query
+function filterBlogPosts(query) {
+    const searchTerm = query.toLowerCase().trim();
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        const title = postElement.querySelector('h4 a').textContent.toLowerCase();
+        // Check for both short and full content
+        const shortContent = postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '';
+        const fullContent = postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || '';
+        const tagsContainer = postElement.querySelector('.blog-tags .tags-list');
+        const tags = tagsContainer ? tagsContainer.textContent.toLowerCase() : '';
+
+        if (title.includes(searchTerm) || shortContent.includes(searchTerm) || fullContent.includes(searchTerm) || tags.includes(searchTerm)) {
+            postElement.style.display = 'block';
+        } else {
+            postElement.style.display = 'none';
+        }
+    });
+}
+
+// Function to filter blog posts by tag (re-renders blog list or filters)
+function filterBlogPostsByTag(tag) {
+    // Hide the main blog heading when a tag filter is applied
+    if (blogMainHeading) blogMainHeading.classList.add('hidden');
+
+    // Show the 'Back to All Posts' button
+    let backButton = document.getElementById('back-to-blog-list-btn');
+    if (!backButton) {
+        backButton = document.createElement('button');
+        backButton.id = 'back-to-blog-list-btn';
+        backButton.textContent = '← Back to All Posts';
+        backButton.className = 'read-more-btn'; // Re-use button style
+        backButton.style.marginBottom = '20px';
+        backButton.onclick = showBlogList;
+        if (blogsSection) {
+             blogsSection.insertBefore(backButton, blogsSection.firstChild);
+        }
+    }
+
+
+    const searchTerm = tag.toLowerCase().trim();
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        const tagsContainer = postElement.querySelector('.blog-tags .tags-list');
+        if (!tagsContainer) {
+            postElement.style.display = 'none'; // Hide if no tags container
+            return;
+        }
+        // Get all individual tag texts
+        const postTags = Array.from(tagsContainer.querySelectorAll('a')).map(a => a.textContent.toLowerCase());
+
+        // Display the post if it contains the tag, and ensure it's in short view with hidden footer
+        if (postTags.includes(searchTerm)) {
+            postElement.style.display = 'block';
+            const contentShort = postElement.querySelector('.blog-content-short');
+            const contentFull = postElement.querySelector('.blog-content-full');
+            const readMoreBtn = postElement.querySelector('.read-more-btn');
+            const footerSection = postElement.querySelector('.blog-post-footer-section');
+
+            if (contentShort) contentShort.classList.remove('hidden');
+            if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
+            if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
+            if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
+        } else {
+            postElement.style.display = 'none'; // Hide posts that don't match the tag
+        }
+    });
+    // Scroll to blog section if filtering from outside
+    setTimeout(() => {
+        const blogSection = document.getElementById('blogs-section');
+        if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+}
+
+
+// Function to display all blog posts in their summarized view
+function showBlogList() {
+    singleBlogPostExpandedId = null; // Reset single post state
+
+    if (blogsSection) blogsSection.classList.remove('hidden'); // Ensure the main blog section is visible
+    if (blogMainHeading) blogMainHeading.classList.remove('hidden'); // Show the main blog heading
+
+    // Remove any 'back to all posts' button if present
+    const backButton = document.getElementById('back-to-blog-list-btn');
+    if (backButton) backButton.remove();
+
+    // Loop through all blog posts and show them in short view, hide their footers
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        postElement.classList.remove('hidden'); // Ensure post itself is visible
+        const contentShort = postElement.querySelector('.blog-content-short');
+        const contentFull = postElement.querySelector('.blog-content-full');
+        const readMoreBtn = postElement.querySelector('.read-more-btn');
+        const footerSection = postElement.querySelector('.blog-post-footer-section');
+
+        if (contentShort) contentShort.classList.remove('hidden');
+        if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
+        if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
+        if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
+    });
+}
+
+// Function to display only a single blog post in its expanded view
+function showSingleBlogPost(postId) {
+    singleBlogPostExpandedId = postId; // Set current expanded post
+
+    if (blogsSection) blogsSection.classList.remove('hidden');
+    if (blogMainHeading) blogMainHeading.classList.add('hidden'); // Hide the main blog heading
+
+    // Add a 'back to all posts' button
+    let backButton = document.getElementById('back-to-blog-list-btn');
+    if (!backButton) {
+        backButton = document.createElement('button');
+        backButton.id = 'back-to-blog-list-btn';
+        backButton.textContent = '← Back to All Posts';
+        backButton.className = 'read-more-btn'; // Re-use button style
+        backButton.style.marginBottom = '20px';
+        backButton.onclick = showBlogList;
+        if (blogsSection) {
+             blogsSection.insertBefore(backButton, blogsSection.firstChild);
+        }
+    }
+
+
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        const currentPostId = parseInt(postElement.id.replace('blog-', ''), 10);
+        const contentShort = postElement.querySelector('.blog-content-short');
+        const contentFull = postElement.querySelector('.blog-content-full');
+        const readMoreBtn = postElement.querySelector('.read-more-btn');
+        const footerSection = postElement.querySelector('.blog-post-footer-section');
+
+        if (currentPostId === postId) {
+            postElement.classList.remove('hidden'); // Make sure this specific post is visible
+            if (contentShort) contentShort.classList.add('hidden');
+            if (contentFull) contentFull.classList.remove('hidden'); // Show full content
+            if (readMoreBtn) readMoreBtn.textContent = 'Show Less ←'; // Change button text
+            if (footerSection) footerSection.classList.remove('hidden'); // Show footer for this post
+        } else {
+            postElement.classList.add('hidden'); // Hide all other posts
+            if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
+            if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
+        }
+    });
+}
+
+function toggleBlogContent(postId) {
+    // If the clicked post is already expanded, collapse it and show all posts
+    if (singleBlogPostExpandedId === postId) {
+        showBlogList();
+    } else {
+        // Otherwise, expand the clicked post and hide others
+        showSingleBlogPost(postId);
+    }
+    // Scroll to the top of the blogs section after toggling
+    setTimeout(() => {
+        const blogSection = document.getElementById('blogs-section');
+        if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+}
+
+
 function loadBlogPosts() {
-    if(!blogList) return;
-    blogList.innerHTML = ''; 
-    if(blogPostsData.length === 0) {
+    if (!blogList) return;
+    blogList.innerHTML = '';
+    if (blogPostsData.length === 0) {
         blogList.innerHTML = "<p>No blog posts available at the moment. Check back soon!</p>";
         return;
     }
-    blogPostsData.forEach(post => {
+
+    // Sort posts by date, most recent first
+    const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    sortedBlogPosts.forEach(post => {
         const blogPostDiv = document.createElement('div');
-        blogPostDiv.id = `blog-${post.id}`; 
+        blogPostDiv.id = `blog-${post.id}`;
         blogPostDiv.classList.add('blog-post');
 
-        // Sanitize content for display to prevent XSS if content were user-generated or from less trusted source
-        // For this controlled data, direct HTML is fine, but good practice to be aware.
         const shortContentHTML = `<div class="blog-content-short">${post.content}</div>`;
-        const fullContentHTML = `<div class="blog-content-full hidden">${post.fullContent}</div>`;
+        const fullContentHTML = `<div class="blog-content-full hidden">${post.fullContent}</div>`; // Ensure full content is hidden initially
 
         blogPostDiv.innerHTML = `
-            <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id}); scrollToSection('#blog-${post.id}');" style="text-decoration:none; color:inherit;">${post.title}</a></h4>
+            <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4>
             <div class="blog-post-meta">
                 <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
                 <span><i class="fas fa-user"></i> By: ${post.author}</span>
@@ -2552,34 +3054,39 @@ function loadBlogPosts() {
             <div class="blog-post-content">
                 ${shortContentHTML}
                 ${fullContentHTML}
-                <button class="read-more-btn" onclick="toggleBlogContent(${post.id}); scrollToSection('#blog-${post.id}');">Read More →</button>
+                <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>
+            </div>
+            <div class="blog-post-footer-section hidden"> <!-- ADDED HIDDEN CLASS HERE -->
+                <div class="blog-tags">
+                    <h5>TAGS</h5>
+                    <div class="tags-list">
+                        ${generateTagsHTML(post.tags)}
+                    </div>
+                </div>
+                <div class="blog-share">
+                    <h5>SHARE POST</h5>
+                    <button class="share-btn" onclick="sharePost('facebook', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-facebook"></i> Facebook</button>
+                    <button class="share-btn" onclick="sharePost('whatsapp', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                </div>
+                <div class="blog-search">
+                    <h5>SEARCH</h5>
+                    <input type="text" placeholder="Search posts..." id="blog-search-input-${post.id}" onkeyup="filterBlogPosts(this.value)">
+                </div>
+                <div class="blog-recent-posts">
+                    <h5>RECENT POSTS</h5>
+                    <ul class="recent-posts-list">
+                        ${generateRecentPostsHTML(post.id)}
+                    </ul>
+                </div>
+                <div class="blog-newsletter">
+                    <h5>NEWSLETTER</h5>
+                    <input type="email" placeholder="Enter your e-mail and subscribe" class="newsletter-email">
+                    <button class="newsletter-btn">Subscribe</button>
+                </div>
             </div>
         `;
         blogList.appendChild(blogPostDiv);
     });
-}
-
-function toggleBlogContent(postId) {
-    const blogPostElement = document.getElementById(`blog-${postId}`); 
-    if (!blogPostElement) return;
-
-    const contentShort = blogPostElement.querySelector('.blog-content-short');
-    const contentFull = blogPostElement.querySelector('.blog-content-full');
-    const readMoreBtn = blogPostElement.querySelector('.read-more-btn');
-
-    if (!contentShort || !contentFull || !readMoreBtn) return;
-
-    const isExpanded = !contentFull.classList.contains('hidden');
-
-    if (isExpanded) {
-        contentFull.classList.add('hidden');
-        contentShort.classList.remove('hidden');
-        readMoreBtn.textContent = 'Read More →';
-    } else {
-        contentFull.classList.remove('hidden');
-        contentShort.classList.add('hidden');
-        readMoreBtn.textContent = 'Show Less ←';
-    }
 }
 
 function checkPremiumStatus(feature) {
@@ -2638,47 +3145,5 @@ function updateUIForPremiumFeatures() {
     });
 }
 </script>
-<!-- 
-    IMPORTANT NOTES FOR ADSENSE APPROVAL:
-
-    1.  UNIQUE, HIGH-QUALITY CONTENT:
-        *   Blog Posts: The 5 sample blog posts are placeholders. You need to write AT LEAST 15-20+ UNIQUE, well-written, and informative articles (500-1000+ words each) related to productivity, note-taking, organization, using digital tools, etc. This is THE MOST CRITICAL factor.
-        *   Expand "Overview", "How It Works", "About" sections with more detailed, unique text.
-        *   Ensure all content on your site is original and not copied from elsewhere.
-
-    2.  ESSENTIAL PAGES (FILL THEM COMPLETELY):
-        *   Privacy Policy: The template provided (`#privacy-policy-section`) MUST be filled with your actual, comprehensive Privacy Policy. Update placeholders like "[IMPORTANT: Enter Current Date]".
-        *   Terms of Service: Similarly, fill the `#terms-of-service-section` with your actual Terms of Service.
-        *   About Us/Developer: Make this engaging and establish trust.
-        *   Contact Us: Ensure clear and easy ways for users to contact you. Your current contact section is good.
-
-    3.  USER EXPERIENCE & NAVIGATION:
-        *   Ensure your site is easy to navigate on both desktop and mobile. The Sidenav is good.
-        *   Site Speed: Optimize images and ensure fast loading times.
-        *   Mobile-Friendly: Test thoroughly on different devices. Your CSS has responsive queries, which is good.
-        *   No Broken Links: Check all internal and external links.
-
-    4.  TECHNICAL REQUIREMENTS:
-        *   Domain Name: Use a custom top-level domain (e.g., yourdomain.com), not a subdomain from a free service if possible.
-        *   Update Placeholders: Search for "IMPORTANT:" in this code and update all placeholders, especially domain names in `<link rel="canonical">`, `og:url`, and Schema JSON-LD.
-        *   `robots.txt`: Create a `robots.txt` file in your root directory to allow Google crawlers. A simple one could be:
-            User-agent: *
-            Allow: /
-            Sitemap: https://your-domain-here.com/sitemap.xml  (Replace with your domain and sitemap location)
-        *   `sitemap.xml`: Create a sitemap listing all your important pages (Home, Blog posts, About, Contact, Privacy, Terms) and submit it to Google Search Console.
-
-    5.  ADSENSE POLICIES:
-        *   Avoid "thin content" (pages with very little useful text). Each page should offer value.
-        *   Do not have excessive ads (once approved) or intrusive pop-ups.
-        *   Ensure your site doesn't promote prohibited content. (Your site type is fine in this regard).
-
-    6.  USER-GENERATED CONTENT (Your Notes Section):
-        *   AdSense generally doesn't consider user-generated content that is private (like the notes a user saves for themselves) as part of the site's primary content for review. The publicly accessible blog and informational pages are what they will primarily assess.
-
-    7.  PREMIUM FEATURES:
-        *   While having premium features is fine, ensure your site offers substantial free value first. Don't make the site feel like it's solely for selling premium upgrades, especially before AdSense approval. The focus should be on the free content and tools.
-
-    It often takes time and multiple attempts to get AdSense approval. Focus on creating a valuable, content-rich resource for users. Good luck!
--->
 </body>
 </html>
