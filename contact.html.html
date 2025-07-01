@@ -272,12 +272,17 @@
         .iti__flag-container {
             padding: 0; /* Remove default padding */
         }
+        /* Style for the dropdown button (flag and dial code) */
         .iti__selected-flag {
             padding-left: 15px; /* Adjust padding for flag */
             background-color: var(--input-bg-green); /* Match input background */
             border-right: 1px solid var(--input-border-green); /* Separator */
             border-radius: var(--radius) 0 0 var(--radius); /* Rounded left corners */
             height: 100%; /* Fill height */
+            /* Ensure the flag and dial code are visible */
+            display: flex !important; /* Force flex display */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally if space allows */
         }
         body.dark .iti__selected-flag {
             background-color: #3a3a3a;
@@ -289,6 +294,7 @@
         body.dark .iti__selected-flag:hover {
             background-color: #4a4a4a;
         }
+        /* Style for the dropdown list of countries */
         .iti__country-list {
             border: 1px solid var(--input-border-green);
             box-shadow: 0 4px 15px var(--shadow-light);
@@ -302,12 +308,15 @@
             box-shadow: 0 4px 15px var(--shadow-dark);
             background-color: var(--card-dark);
         }
+        /* Styling for the dial code number */
         .iti__dial-code {
             color: var(--text-light);
+            margin-left: 8px; /* Space between flag and dial code */
         }
         body.dark .iti__dial-code {
             color: var(--text-dark);
         }
+        /* Search input within the dropdown */
         .iti__search-input {
             width: calc(100% - 20px) !important; /* Adjust search input width */
             border: 1px solid var(--input-border-green);
@@ -322,6 +331,7 @@
             border-color: #555;
             color: var(--text-dark);
         }
+        /* Individual country items in the list */
         .iti__country {
             padding: 10px 15px;
             color: var(--text-light);
@@ -329,6 +339,7 @@
         body.dark .iti__country {
             color: var(--text-dark);
         }
+        /* Highlighted country in the list (on hover/focus) */
         .iti__country.highlight {
             background-color: var(--primary-light-transparent);
         }
@@ -805,11 +816,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize intl-tel-input
     const phoneInputField = document.querySelector("#phone");
     if (phoneInputField) {
-        window.intlTelInput = intlTelInput(phoneInputField, {
+        // Store the instance in a global variable for potential access
+        window.iti = intlTelInput(phoneInputField, {
             initialCountry: "np", // Set initial country to Nepal (NP for Nepal)
             preferredCountries: ["np", "in", "us", "gb", "ca"], // Prefer Nepal, India, US, UK, Canada
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js", // Required for formatting/validation
         });
+
+        // Add a check to confirm if the intl-tel-input was initialized properly
+        // The intl-tel-input library wraps the input in a div with class 'iti'
+        // If the 'iti' class is not present on a parent, it likely failed.
+        if (!phoneInputField.closest('.iti')) {
+            console.error("intl-tel-input failed to initialize on the #phone input.");
+            console.error("This often happens when running directly from the file system (file:///...).");
+            console.error("Please run the page using a local web server (e.g., http://localhost:8000) for full functionality.");
+            // Optionally, you can show an alert to the user here as well:
+            // alert("Phone number input features are not fully loaded. Please ensure you are viewing this page on a web server (e.g., http://localhost) and not directly from your file system (file:///).");
+        } else {
+            console.log("intl-tel-input initialized successfully.");
+        }
     }
 
     // Handle reCAPTCHA checkbox visual toggle
@@ -833,8 +858,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const subject = document.getElementById('subject').value.trim();
             const message = document.getElementById('message').value.trim();
             let phone = '';
-            if (window.intlTelInput && phoneInputField) {
-                phone = window.intlTelInput.getNumber(); // Get formatted phone number
+            if (window.iti && phoneInputField) { // Check if iti instance exists
+                phone = window.iti.getNumber(); // Get formatted phone number from the instance
             }
             const isRecaptchaChecked = recaptchaCheckbox ? recaptchaCheckbox.classList.contains('checked') : false;
 
@@ -849,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Optional: Basic phone number validation (intl-tel-input provides more robust options)
-            if (phoneInputField && !window.intlTelInput.isValidNumber()) {
+            if (window.iti && !window.iti.isValidNumber()) { // Use iti instance for validation
                 alert('Please enter a valid phone number.');
                 return;
             }
@@ -867,8 +892,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (recaptchaCheckbox) {
                 recaptchaCheckbox.classList.remove('checked');
             }
-            if (phoneInputField && window.intlTelInput) {
-                window.intlTelInput.setNumber(""); // Clear the phone number input
+            if (window.iti) { // Clear the phone number input using the iti instance
+                window.iti.setNumber(""); 
             }
             
             // In a real application, you would send this data to your server:
@@ -960,7 +985,7 @@ function closeDropdownOnClickOutside(event) {
 }
 
 function checkAuthStatus() {
-    const currentUserId = getCurrentUserId();
+    const currentUserId = localStorage.getItem('currentUserId'); // Fixed to use localStorage directly
     if (currentUserId) {
         showUserInfo();
     } else {
