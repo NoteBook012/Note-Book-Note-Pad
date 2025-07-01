@@ -53,7 +53,7 @@ Experience it live! No installation needed.
 ## 📸 Screenshot
 
 <p align="center">
-  <img src="https://i.imgur.com/example.png"(https://ibb.co/N2j4JHLQ)" alt="NoteBook Screenshot" width="80%">
+  <img src="<img src="https://i.ibb.co/whWvPxK3/Screenshot-2025-07-01-152540.png" alt="Screenshot-2025-07-01-152540" border="0">"([https://ibb.co/N2j4JHLQ](https://ibb.co/N2j4JHLQ))" alt="NoteBook Screenshot" width="80%">
 </p>
 
 *A preview of the NoteBook interface in dark mode.*
