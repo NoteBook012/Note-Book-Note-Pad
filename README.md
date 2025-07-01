@@ -20,7 +20,9 @@
 ---
 # NoteBook - A Simple & Fast Online Notepad
 
-![Header](./assets/notebook-header.png) <!-- It's a great idea to create a nice header image for your project and place it in an `assets` folder! -->
+<p align="center">
+  <img src="https://i.ibb.co/3mDDhKVv/favicon.png" alt="NoteBook Logo" width="128">
+</p>
 
 A clean, minimalist, and fast-loading web-based notepad. Write down your thoughts, notes, or code snippets instantly without any distractions. Your notes are automatically saved to your browser's local storage, ensuring you never lose your work.
 
