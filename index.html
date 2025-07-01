@@ -225,7 +225,7 @@
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
         
-        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section 
+        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section
         { 
             background: var(--card-light); 
             padding: 25px; 
@@ -234,7 +234,7 @@
             margin-bottom: 25px; 
             text-align: left; 
         }
-        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section { 
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section { 
             background: var(--card-dark); 
             box-shadow: 0 4px 15px var(--shadow-dark); 
         }
@@ -279,12 +279,12 @@
         body.dark .note-actions button { background: #3e3e3e; color: var(--text-dark); border-color: #555; }
 
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
-        .info-section h3, #blogs-section h3, #faq-section h3, #privacy-policy-section h3, #terms-of-service-section h3  { text-align: left;  }
-        .info-section p, .info-section ul, #privacy-policy-section p, #privacy-policy-section ul, #terms-of-service-section p, #terms-of-service-section ul  { margin-bottom: 15px; }
+        .info-section h3, #blogs-section h3, #faq-section h3, #privacy-policy-section h3, #terms-of-service-section h3, #disclaimer-section h3 { text-align: left;  }
+        .info-section p, .info-section ul, #privacy-policy-section p, #privacy-policy-section ul, #terms-of-service-section p, #terms-of-service-section ul, #disclaimer-section p, #disclaimer-section ul  { margin-bottom: 15px; }
         .info-section ul { list-style: none; padding-left: 0; }
         .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
-        #privacy-policy-section h4, #terms-of-service-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
+        #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
 
         .blog-post {
             background: var(--card-light);
@@ -351,7 +351,7 @@
         }
         .blog-post-image {
             max-width: 100%;
-            height: auto;
+            height: auto; /* Keep auto for responsiveness */
             border-radius: var(--radius);
             margin-bottom: 15px;
             display: block; 
@@ -1091,14 +1091,15 @@
   <a href="#faq-section" onclick="closeNavAndScroll('#faq-section')">FAQ</a>
   <a href="#privacy-policy-section" onclick="closeNavAndScroll('#privacy-policy-section')">Privacy Policy</a>
   <a href="#terms-of-service-section" onclick="closeNavAndScroll('#terms-of-service-section')">Terms of Service</a>
+  <a href="#disclaimer-section" onclick="closeNavAndScroll('#disclaimer-section')">Disclaimer</a>
   <a href="#contact-us-section" onclick="closeNavAndScroll('#contact-us-section')">Contact</a>
 </div>
 
 <div id="profile-container" class="profile-container hidden"> <!-- Initially hidden -->
-    <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0">
+    <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
     <div id="profile-dropdown" class="profile-dropdown hidden">
         <div class="dropdown-header">
-            <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile"> 
+            <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
             <div>
                 <span id="userNameDisplay">User Name</span>
                 <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
@@ -1240,7 +1241,7 @@
                 <button class="premium-buy-btn" data-feature="cloud-sync" data-price="100">Upgrade to Premium</button>
                 <div class="manual-payment-info">
                     <p>Pay manually via Esewa:</p>
-                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care">
+                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
                     <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
                     <p><strong>Esewa Number:</strong> 9827801575</p>
                     <small>After payment, please contact us with your transaction ID to activate your feature.</small>
@@ -1253,7 +1254,7 @@
                 <button class="premium-buy-btn" data-feature="priority-support" data-price="50">Upgrade to Premium</button>
                 <div class="manual-payment-info">
                     <p>Pay manually via Esewa:</p>
-                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care">
+                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
                     <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
                     <p><strong>Esewa Number:</strong> 9827801575</p>
                     <small>After payment, please contact us with your transaction ID to activate your feature.</small>
@@ -1284,7 +1285,7 @@
     <div class="info-section hidden" id="about">
         <h3>About the Developer: Bishal Mishra</h3>
         <div class="about-dev">
-            <img src="https://i.ibb.co/Y4ygWpC2/Untitled-design.png" alt="Bishal Mishra, Developer of Note P@d" border="0">
+            <img src="https://i.ibb.co/Y4ygWpC2/Untitled-design.png" alt="Bishal Mishra, Developer of Note P@d" border="0" width="120" height="120">
             <div class="about-dev-text">
                 <p>Note P@d is meticulously crafted and passionately maintained by <strong><a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Bishal Mishra</a></strong>, a web developer dedicated to building digital tools that are simple, powerful, and prioritize user privacy and experience. With a keen interest in productivity and web technologies, Bishal envisioned Note P@d as a go-to solution for individuals seeking a versatile and reliable online workspace.</p>
                 <p>The philosophy behind Note P@d is to provide a comprehensive suite of tools that aid in daily organization and creativity, without unnecessary complexities. This project is a testament to the power of modern web capabilities to create applications that are accessible, efficient, and user-centric. Bishal believes in continuous improvement and values user feedback to make Note P@d even better.</p>
@@ -1449,7 +1450,36 @@
         <h4>10. Contact Us</h4>
         <p>If you have any questions about these Terms, please contact us using the details in the <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a> section of this website.</p>
     </div>
- 
+
+    <div id="disclaimer-section" class="info-section hidden">
+        <h3>Disclaimer for Note P@d</h3>
+        <p><strong>Last Updated:</strong> July 26, 2025</p>
+
+        <p>The information provided by Note P@d on [www.bishalmishra.com] (the "Site") is for general informational purposes only. All information on the Site is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.</p>
+
+        <h4>External Links Disclaimer</h4>
+        <p>The Site may contain (or you may be sent through the Site) links to other websites or content belonging to or originating from third parties. Such external links are not investigated, monitored, or checked for accuracy, adequacy, validity, reliability, availability, or completeness by us. We do not warrant, endorse, guarantee, or assume responsibility for the accuracy or reliability of any information offered by third-party websites linked through the Site or any website or feature linked in any banner or other advertising. We will not be a party to or in any way be responsible for monitoring any transaction between you and third-party providers of products or services.</p>
+
+        <h4>Professional Advice Disclaimer</h4>
+        <p>The Site cannot and does not contain legal, financial, health, or any other professional advice. The information is provided for general informational and educational purposes only and is not a substitute for professional advice. Accordingly, before taking any actions based upon such information, we encourage you to consult with the appropriate professionals. We do not provide any kind of professional advice. The use or reliance of any information contained on this site is solely at your own risk.</p>
+
+        <h4>Errors and Omissions Disclaimer</h4>
+        <p>While we have made every attempt to ensure that the information contained in this site has been obtained from reliable sources, Note P@d is not responsible for any errors or omissions or for the results obtained from the use of this information. All information in this site is provided "as is", with no guarantee of completeness, accuracy, timeliness, or of the results obtained from the use of this information, and without warranty of any kind, express or implied, including, but not limited to warranties of performance, merchantability, and fitness for a particular purpose.</p>
+
+        <h4>Fair Use Disclaimer</h4>
+        <p>This Site may contain copyrighted material the use of which has not always been specifically authorized by the copyright owner. We are making such material available in our efforts to advance understanding of environmental, political, human rights, economic, scientific, and social justice issues, etc. We believe this constitutes a "fair use" of any such copyrighted material as provided for in section 107 of the US Copyright Law. If you wish to use copyrighted material from this site for purposes of your own that go beyond "fair use", you must obtain permission from the copyright owner.</p>
+
+        <h4>Views Expressed Disclaimer</h4>
+        <p>The Site may contain views and opinions which are those of the authors and do not necessarily reflect the official policy or position of any other author, agency, organization, employer, or company, including Note P@d.</p>
+
+        <h4>No Responsibility Disclaimer</h4>
+        <p>The information on the Site is provided with the understanding that Note P@d is not herein engaged in rendering legal, accounting, tax, or other professional advice and services. As such, it should not be used as a substitute for consultation with professional accounting, tax, legal, or other competent advisers.</p>
+        <p>In no event shall Note P@d or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever arising out of or in connection with your access or use or inability to access or use the Service.</p>
+
+        <h4>Contact Us</h4>
+        <p>If you have any questions about this Disclaimer, please contact us using the details in the <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a> section of this website.</p>
+    </div>
+
     <div id="contact-us-section" class="info-section hidden"> 
         <h2>Contact Us</h2>
         <ul>
@@ -1490,6 +1520,7 @@
    <div>
         <a href="#privacy-policy-section" onclick="scrollToSection('#privacy-policy-section')">Privacy Policy</a> |
         <a href="#terms-of-service-section" onclick="scrollToSection('#terms-of-service-section')">Terms of Service</a> |
+        <a href="#disclaimer-section" onclick="scrollToSection('#disclaimer-section')">Disclaimer</a> |
         <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a>
    </div>
 </footer>
@@ -2083,6 +2114,7 @@ function hideAllMainSections() {
         document.getElementById('faq-section'),
         document.getElementById('privacy-policy-section'),
         document.getElementById('terms-of-service-section'),
+        document.getElementById('disclaimer-section'), // Added disclaimer section
         document.getElementById('contact-us-section'),
         adsenseContainer // The AdSense container
     ];
@@ -2125,6 +2157,7 @@ function switchMode(mode) {
         document.getElementById('faq-section').classList.remove('hidden');
         document.getElementById('privacy-policy-section').classList.remove('hidden');
         document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
         document.getElementById('contact-us-section').classList.remove('hidden');
         updateUIForPremiumFeatures(); // This function shows/hides premium-features-section based on login status
 
@@ -2142,6 +2175,7 @@ function switchMode(mode) {
         document.getElementById('faq-section').classList.remove('hidden');
         document.getElementById('privacy-policy-section').classList.remove('hidden');
         document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
         document.getElementById('contact-us-section').classList.remove('hidden');
         updateUIForPremiumFeatures();
 
@@ -2161,6 +2195,7 @@ function switchMode(mode) {
         document.getElementById('faq-section').classList.remove('hidden');
         document.getElementById('privacy-policy-section').classList.remove('hidden');
         document.getElementById('terms-of-service-section').classList.remove('hidden');
+        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
         document.getElementById('contact-us-section').classList.remove('hidden');
         updateUIForPremiumFeatures();
 
@@ -3050,7 +3085,7 @@ function loadBlogPosts() {
                 <span><i class="fas fa-user"></i> By: ${post.author}</span>
                 <span><i class="fas fa-eye"></i> ${post.views} views</span>
             </div>
-            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image">` : ''}
+            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" width="600" height="350">` : ''}
             <div class="blog-post-content">
                 ${shortContentHTML}
                 ${fullContentHTML}
@@ -3130,7 +3165,7 @@ function updateUIForPremiumFeatures() {
             if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]')) {
                  manualPaymentInfo.innerHTML = `
                     <p>Pay manually via Esewa:</p>
-                    <img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care">
+                    <img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
                     <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
                     <p><strong>Esewa Number:</strong> 9827801575</p>
                     <small>After payment, please contact us with your transaction ID to activate your feature.</small>
