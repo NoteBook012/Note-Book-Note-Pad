@@ -11,7 +11,7 @@
     <strong><a href="https://bishalmishra.com">bishalmishra.com</a></strong>
   </p>
   <p>
-    I'm a <strong>[Your Role - e.g., Full-Stack Developer, AI/ML Engineer, DevOps Specialist]</strong> based in <strong>[Your Location - e.g., Kathmandu, Nepal]</strong>. 
+    I'm a <strong>[Developer / CEO Of Note Pad </strong> based in <strong>[Location - Kathmandu, Nepal]</strong>. 
     <br/>
     I'm passionate about building scalable, efficient, and user-friendly applications. My goal is to leverage technology to solve real-world problems and create meaningful impact.
   </p>
@@ -40,13 +40,13 @@ Experience it live! No installation needed.
 
 ## ✨ Features
 
-- **✍️ Instant Typing:** Just open the site and start writing. No sign-up, no pop-ups, no nonsense.
-- **💾 Auto-Save:** Your notes are automatically saved to your browser's local storage as you type.
-- **💨 Blazing Fast:** Built with vanilla HTML, CSS, and JavaScript for maximum performance and zero load time.
-- **🌗 Light & Dark Mode:** Switch between themes for comfortable viewing in any lighting condition.
-- **📥 Download Notes:** Easily save your notes as a `.txt` file to your local machine.
-- **📱 Fully Responsive:** Works beautifully on desktop, tablet, and mobile devices.
-- **🗑️ Clear with One Click:** A dedicated button to clear the entire notepad when you're done.
+- **Instant Typing:** Just open the site and start writing. No sign-up, no pop-ups, no nonsense.
+- **Auto-Save:** Your notes are automatically saved to your browser's local storage as you type.
+- **Blazing Fast:** Built with vanilla HTML, CSS, and JavaScript for maximum performance and zero load time.
+- **Light & Dark Mode:** Switch between themes for comfortable viewing in any lighting condition.
+- **Download Notes:** Easily save your notes as a `.txt` file to your local machine.
+- **Fully Responsive:** Works beautifully on desktop, tablet, and mobile devices.
+- **Clear with One Click:** A dedicated button to clear the entire notepad when you're done.
 
 ---
 
