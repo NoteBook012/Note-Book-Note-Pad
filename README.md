@@ -18,10 +18,9 @@
 </div>
 
 ---
-
 # NoteBook - A Simple & Fast Online Notepad
 
-![Header](./assets/notebook-header.png) <!-- It's a great idea to create a nice header image for your project! -->
+![Header](./assets/notebook-header.png) <!-- It's a great idea to create a nice header image for your project and place it in an `assets` folder! -->
 
 A clean, minimalist, and fast-loading web-based notepad. Write down your thoughts, notes, or code snippets instantly without any distractions. Your notes are automatically saved to your browser's local storage, ensuring you never lose your work.
 
@@ -40,27 +39,23 @@ Experience it live! No installation needed.
 
 ## ✨ Features
 
-- **Instant Typing:** Just open the site and start writing. No sign-up, no pop-ups, no nonsense.
-- **Auto-Save:** Your notes are automatically saved to your browser's local storage as you type.
-- **Blazing Fast:** Built with vanilla HTML, CSS, and JavaScript for maximum performance and zero load time.
-- **Light & Dark Mode:** Switch between themes for comfortable viewing in any lighting condition.
-- **Download Notes:** Easily save your notes as a `.txt` file to your local machine.
-- **Fully Responsive:** Works beautifully on desktop, tablet, and mobile devices.
-- **Clear with One Click:** A dedicated button to clear the entire notepad when you're done.
+- **✍️ Instant Typing:** Just open the site and start writing. No sign-up, no pop-ups, no nonsense.
+- **💾 Auto-Save:** Your notes are automatically saved to your browser's local storage as you type.
+- **💨 Blazing Fast:** Built with vanilla HTML, CSS, and JavaScript for maximum performance and zero load time.
+- **🌗 Light & Dark Mode:** Switch between themes for comfortable viewing in any lighting condition.
+- **📥 Download Notes:** Easily save your notes as a `.txt` file to your local machine.
+- **📱 Fully Responsive:** Works beautifully on desktop, tablet, and mobile devices.
+- **🗑️ Clear with One Click:** A dedicated button to clear the entire notepad when you're done.
 
 ---
 
 ## 📸 Screenshot
 
 <p align="center">
-  <img src="<img src="https://i.ibb.co/whWvPxK3/Screenshot-2025-07-01-152540.png" alt="Screenshot-2025-07-01-152540" border="0">"([https://ibb.co/N2j4JHLQ](https://ibb.co/N2j4JHLQ))" alt="NoteBook Screenshot" width="80%">
+  <img src="https://i.ibb.co/whWvPxK3/Screenshot-2025-07-01-152540.png" alt="NoteBook Screenshot" width="80%">
 </p>
 
 *A preview of the NoteBook interface in dark mode.*
-
-<!-- 
-**Pro Tip:** You should take a screenshot of your site and upload it to the `assets` folder or an image hosting site like Imgur. Then, replace the `https://i.imgur.com/example.png` link with your own screenshot link. 
--->
 
 ---
 
