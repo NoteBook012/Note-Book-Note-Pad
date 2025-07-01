@@ -132,6 +132,7 @@
            
             --primary: #8c53ff;
             --primary-dark: #7042cc;
+            --primary-light-transparent: rgba(140, 83, 255, 0.1);
             --radius: 12px;
         }
 
@@ -140,16 +141,17 @@
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; } 
-        header, footer { background: var(--primary); color: white; padding: 15px 20px; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
+        main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; transition: max-width 0.3s ease; } 
+        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
         header {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start; /* Default for mobile */
             align-items: center;
             position: relative;
         }
         .header-content {
             text-align: center;
+            flex-grow: 1; /* Allows it to take center space */
         }
         body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
         footer { margin-top: auto; padding: 20px;  }
@@ -203,12 +205,12 @@
         .open-nav-btn {
             font-size: 28px;
             cursor: pointer;
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
             color: white;
             transition: transform 0.2s;
+            position: absolute;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .open-nav-btn:hover {
             transform: translateY(-50%) scale(1.1);
@@ -286,6 +288,17 @@
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
         #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
 
+        /* Blog Styling */
+        main.container.full-width-mode {
+            max-width: 100%;
+            padding: 20px 3%; /* More padding on the sides */
+        }
+        .full-width-mode .blog-post {
+            max-width: 900px; /* Keep content readable */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .blog-post {
             background: var(--card-light);
             padding: 25px;
@@ -321,8 +334,8 @@
             color: var(--primary); 
         }
         .blog-post-content {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 16px; /* Slightly larger font */
+            line-height: 1.8; /* Increased line height */
             color: var(--text-light); 
         }
         body.dark .blog-post-content {
@@ -331,7 +344,7 @@
         .blog-post-content p {
             margin-bottom: 15px;
         }
-        .blog-post-content ul { /* Ensure lists in blog content have proper styling */
+        .blog-post-content ul {
             list-style: disc;
             padding-left: 20px;
             margin-bottom: 15px;
@@ -351,7 +364,7 @@
         }
         .blog-post-image {
             max-width: 100%;
-            height: auto; /* Keep auto for responsiveness */
+            height: auto;
             border-radius: var(--radius);
             margin-bottom: 15px;
             display: block; 
@@ -386,12 +399,11 @@
             background: var(--primary-dark);
         }
 
-        /* Styles for the SEE Result button within blog post */
         .blog-post-content .see-result-btn {
-            display: block; /* Make it a block element to center */
-            width: fit-content; /* Only take necessary width */
-            margin: 15px auto; /* Center the button */
-            background-color: #28a745; /* Green for check result */
+            display: block;
+            width: fit-content;
+            margin: 15px auto;
+            background-color: #28a745;
             color: white;
             padding: 12px 25px;
             border-radius: var(--radius);
@@ -401,275 +413,85 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-
         .blog-post-content .see-result-btn:hover {
             background-color: #218838;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
-
-        /* Blog Post Footer Section Styles */
         .blog-post-footer-section {
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #f0f0f0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px; /* Space between different sections */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
-
-        body.dark .blog-post-footer-section {
-            border-top-color: #3a3a3a;
-        }
-
+        body.dark .blog-post-footer-section { border-top-color: #3a3a3a; }
         .blog-post-footer-section > div {
-            flex: 1 1 calc(50% - 10px); /* Two columns on larger screens */
-            min-width: 250px; /* Minimum width for each section */
             padding: 15px;
-            background: var(--bg-light); /* Lighter background for these internal sections */
+            background: var(--bg-light);
             border-radius: var(--radius);
             box-shadow: 0 2px 10px var(--shadow-light);
             color: var(--text-light);
         }
+        body.dark .blog-post-footer-section > div { background: #333; box-shadow: 0 2px 10px var(--shadow-dark); color: var(--text-dark); }
+        .blog-post-footer-section h5 { color: var(--primary); margin-bottom: 15px; font-size: 1.1em; font-weight: 700; }
+        .tags-list a { display: inline-block; background-color: #e0e0e0; color: #555; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin: 5px; font-size: 14px; transition: background-color 0.2s ease, color 0.2s ease; }
+        body.dark .tags-list a { background-color: #4a4a4a; color: #ccc; }
+        .tags-list a:hover { background-color: var(--primary); color: white; }
+        .blog-share button { background: #4267B2; color: white; border: none; padding: 8px 15px; border-radius: var(--radius); cursor: pointer; font-size: 15px; margin-right: 10px; transition: background 0.2s ease; }
+        .blog-share button:nth-of-type(2) { background: #25D366; }
+        .blog-share button:hover { opacity: 0.9; }
+        .blog-share button i { margin-right: 8px; }
+        .blog-search input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
+        body.dark .blog-search input[type="text"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
+        .blog-search input[type="text"]:focus { outline: none; border-color: var(--primary); }
+        .blog-recent-posts ul { list-style: none; padding: 0; }
+        .blog-recent-posts li { margin-bottom: 10px; }
+        .blog-recent-posts li a { color: var(--text-light); text-decoration: none; transition: color 0.2s ease; font-size: 15px; }
+        body.dark .blog-recent-posts li a { color: var(--text-dark); }
+        .blog-recent-posts li a:hover { color: var(--primary); text-decoration: underline; }
+        .blog-newsletter input[type="email"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; margin-bottom: 10px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
+        body.dark .blog-newsletter input[type="email"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
+        .blog-newsletter input[type="email"]:focus { outline: none; border-color: var(--primary); }
+        .blog-newsletter button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; width: 100%; transition: background 0.2s ease; }
+        .blog-newsletter button:hover { background: var(--primary-dark); }
 
-        body.dark .blog-post-footer-section > div {
-            background: #333;
-            box-shadow: 0 2px 10px var(--shadow-dark);
-            color: var(--text-dark);
-        }
 
-        .blog-post-footer-section h5 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            font-weight: 700;
-        }
-
-        /* Tags */
-        .tags-list a {
-            display: inline-block;
-            background-color: #e0e0e0;
-            color: #555;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            margin: 5px;
-            font-size: 14px;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-
-        body.dark .tags-list a {
-            background-color: #4a4a4a;
-            color: #ccc;
-        }
-
-        .tags-list a:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        /* Share Buttons */
-        .blog-share button {
-            background: #4267B2; /* Facebook Blue */
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 15px;
-            margin-right: 10px;
-            transition: background 0.2s ease;
-        }
-        .blog-share button:nth-of-type(2) {
-            background: #25D366; /* WhatsApp Green */
-        }
-        .blog-share button:hover {
-            opacity: 0.9;
-        }
-        .blog-share button i {
-            margin-right: 8px;
-        }
-
-        /* Search */
-        .blog-search input[type="text"] {
-            width: calc(100% - 20px); /* Adjust for padding within the container */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-            font-size: 15px;
-            background: var(--card-light);
-            color: var(--text-light);
-            transition: border-color 0.3s ease;
-        }
-        body.dark .blog-search input[type="text"] {
-            background: #2b2b2b;
-            border-color: #555;
-            color: var(--text-dark);
-        }
-        .blog-search input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        /* Recent Posts */
-        .blog-recent-posts ul {
-            list-style: none;
-            padding: 0;
-        }
-        .blog-recent-posts li {
-            margin-bottom: 10px;
-        }
-        .blog-recent-posts li a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            font-size: 15px;
-        }
-        body.dark .blog-recent-posts li a {
-            color: var(--text-dark);
-        }
-        .blog-recent-posts li a:hover {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        /* Newsletter */
-        .blog-newsletter input[type="email"] {
-            width: calc(100% - 20px); /* Adjust for padding within the container */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-            font-size: 15px;
-            margin-bottom: 10px;
-            background: var(--card-light);
-            color: var(--text-light);
-            transition: border-color 0.3s ease;
-        }
-        body.dark .blog-newsletter input[type="email"] {
-            background: #2b2b2b;
-            border-color: #555;
-            color: var(--text-dark);
-        }
-        .blog-newsletter input[type="email"]:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .blog-newsletter button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background 0.2s ease;
-        }
-        .blog-newsletter button:hover {
-            background: var(--primary-dark);
-        }
-
-        .premium-offerings {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .premium-feature-card {
-            background: var(--card-light); 
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 15px var(--shadow-light);
-            text-align: center;
-            flex: 1 1 280px; 
-            max-width: 300px;
-        }
-        body.dark .premium-feature-card {
-            background: var(--card-dark);
-            box-shadow: 0 4px 15px var(--shadow-dark);
-        }
-        .premium-feature-card h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        .premium-feature-card .price {
-            font-weight: bold;
-            color: var(--primary);
-            margin-top: 15px;
-            font-size: 1.1em;
-        }
-        .premium-buy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.2s ease;
-            margin-top: 15px;
-        }
-        .premium-buy-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .manual-payment-info {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee; 
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            font-size: 14px;
-            color: var(--text-light); 
-        }
-        body.dark .manual-payment-info {
-            border-top-color: #444; 
-            color: var(--text-dark); 
-        }
-        .manual-payment-info p {
-            margin-bottom: 5px;
-        }
-        .manual-payment-info small {
-            margin-top: 10px;
-            color: #888; 
-            text-align: center;
-        }
-        body.dark .manual-payment-info small {
-            color: #aaa; 
-        }
-        .manual-payment-info img {
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            width: 150px; 
-            height: 150px; 
-            border-radius: var(--radius);
-            margin-bottom: 10px; 
-        }
+        .premium-offerings { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+        .premium-feature-card { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); text-align: center; flex: 1 1 280px; max-width: 300px; }
+        body.dark .premium-feature-card { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        .premium-feature-card h4 { color: var(--primary); margin-bottom: 10px; }
+        .premium-feature-card .price { font-weight: bold; color: var(--primary); margin-top: 15px; font-size: 1.1em; }
+        .premium-buy-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; transition: background 0.2s ease; margin-top: 15px; }
+        .premium-buy-btn:hover { background: var(--primary-dark); }
+        .manual-payment-info { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: none; flex-direction: column; align-items: center; font-size: 14px; color: var(--text-light); }
+        body.dark .manual-payment-info { border-top-color: #444; color: var(--text-dark); }
+        .manual-payment-info p { margin-bottom: 5px; }
+        .manual-payment-info small { margin-top: 10px; color: #888; text-align: center; }
+        body.dark .manual-payment-info small { color: #aaa; }
+        .manual-payment-info img { box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 150px; height: 150px; border-radius: var(--radius); margin-bottom: 10px; }
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .profile-container {
-            position: fixed;
-            top: 20px;
-            right: 20px; 
+            position: relative;
             z-index: 999;
+            margin-left: auto; /* Push to the right in flex container */
         }
         #profile-icon {
             width: 42px;
             height: 42px;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid var(--primary);
-            box-shadow: 0 4px 15px var(--shadow-light);
+            border: 2px solid #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             transition: transform 0.2s ease-in-out;
             object-fit: cover;
         }
-        #profile-icon:hover, #profile-icon:focus {
-            transform: scale(1.1);
-        }
+        #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
         .profile-dropdown {
             position: absolute;
             top: 55px; 
@@ -683,66 +505,19 @@
             animation: fadeIn 0.3s ease;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        body.dark .profile-dropdown {
-            background: var(--card-dark);
-            box-shadow: 0 8px 25px var(--shadow-dark);
-            border-color: #444;
-        }
-        .dropdown-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        body.dark .dropdown-header {
-            border-bottom-color: #444;
-        }
-        .dropdown-header img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .dropdown-header span {
-            font-weight: 600;
-            font-size: 16px;
-            word-break: break-all;
-        }
+        body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
+        .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
+        body.dark .dropdown-header { border-bottom-color: #444; }
+        .dropdown-header img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .dropdown-header span { font-weight: 600; font-size: 16px; word-break: break-all; }
         body.dark .dropdown-header small { color: #bbb !important; }
-
-        .dropdown-menu {
-            list-style: none;
-            padding: 10px 0;
-            margin: 0;
-        }
-        .dropdown-menu li a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 14px;
-            transition: background-color 0.2s ease;
-        }
-        body.dark .dropdown-menu li a {
-            color: var(--text-dark);
-        }
-        .dropdown-menu li a:hover {
-            background-color: #f5f5f5;
-        }
-        body.dark .dropdown-menu li a:hover {
-            background-color: #3e3e3e;
-        }
-        .dropdown-menu li.divider {
-            height: 1px;
-            margin: 8px 0;
-            background: #e0e0e0;
-        }
-        body.dark .dropdown-menu li.divider {
-            background: #444;
-        }
+        .dropdown-menu { list-style: none; padding: 10px 0; margin: 0; }
+        .dropdown-menu li a { display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none; color: var(--text-light); font-size: 14px; transition: background-color 0.2s ease; }
+        body.dark .dropdown-menu li a { color: var(--text-dark); }
+        .dropdown-menu li a:hover { background-color: #f5f5f5; }
+        body.dark .dropdown-menu li a:hover { background-color: #3e3e3e; }
+        .dropdown-menu li.divider { height: 1px; margin: 8px 0; background: #e0e0e0; }
+        body.dark .dropdown-menu li.divider { background: #444; }
         #emailVerifiedStatus .fa-check-circle { color: #28a745; } 
         #emailVerifiedStatus .fa-times-circle { color: #dc3545; } 
         
@@ -763,30 +538,8 @@
         .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } 
         .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; }
 
-        #goToTopBtn { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
-            width: 50px; 
-            height: 50px; 
-            background-color: var(--primary); 
-            color: white; 
-            border: none; 
-            border-radius: 50%; 
-            font-size: 24px; 
-            cursor: pointer; 
-            display: none; 
-            z-index: 1000; 
-            box-shadow: 0 4px 12px var(--shadow-light); 
-            transition: all 0.3s ease-in-out; 
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-        } 
-        #goToTopBtn:hover { 
-            background-color: var(--primary-dark); 
-            transform: scale(1.1); 
-        } 
+        #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: all 0.3s ease-in-out; display: flex; align-items: center; justify-content: center; } 
+        #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } 
         body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
         
         #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } 
@@ -795,287 +548,154 @@
         body.dark #find-replace-dialog input { background: #333; border-color: #555; color: var(--text-dark); } 
         #find-replace-dialog button { padding: 8px 12px; } 
         #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } 
+        
         .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
+        /* FAQ Styling - UPDATED */
         .faq-item {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 10px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
         }
-
-        body.dark .faq-item {
-            border-bottom-color: #3a3a3a;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none; 
-        }
+        body.dark .faq-item { border-color: #3a3a3a; }
 
         .faq-question {
             font-size: 18px;
             color: var(--primary);
-            margin-bottom: 8px;
+            padding: 15px 20px;
             cursor: pointer; 
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600; 
+            transition: background-color 0.3s ease;
+        }
+        .faq-question.active {
+            background-color: var(--primary-light-transparent);
         }
 
         .faq-question::after {
-            content: '\f078'; 
+            content: '\f067'; /* Font Awesome Plus Icon */
             font-family: 'Font Awesome 6 Free'; 
             font-weight: 900; 
             font-size: 16px;
-            margin-left: 10px;
-            transition: transform 0.2s ease;
+            transition: transform 0.3s ease;
         }
-
         .faq-question.active::after {
-            transform: rotate(180deg); 
+            transform: rotate(45deg); /* Rotates plus to a 'x' like close icon */
+            content: '\f068'; /* Font Awesome Minus Icon */
         }
 
         .faq-answer {
             font-size: 15px;
             color: var(--text-light);
-            max-height: 0; 
-            overflow: hidden; 
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding-top 0.3s ease-out; 
-            padding-top: 0; 
             line-height: 1.6; 
-            opacity: 0; 
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            padding: 0 20px; /* Side padding, top/bottom is 0 when collapsed */
         }
-        .faq-answer.show {
-            opacity: 1;
-            padding-top: 10px; 
-        }
+        .faq-answer p { padding-bottom: 15px; } /* Add padding to the content inside */
+        body.dark .faq-answer { color: var(--text-dark); }
+        /* End FAQ Styling */
 
-        body.dark .faq-answer {
-            color: var(--text-dark);
-        }
+        /* Calendar Styling */
+        #calendar-container { padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: center; }
+        body.dark #calendar-container { box-shadow: 0 4px 15px var(--shadow-dark); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .calendar-header button { background: var(--primary); color: white; border: none; border-radius: 8px; padding: 10px 15px; cursor: pointer; font-size: 18px; transition: background 0.2s ease-in-out; }
+        .calendar-header button:hover { background: var(--primary-dark); }
+        .calendar-header h4 { font-size: 24px; color: var(--primary); margin: 0 10px; flex-grow: 1; text-align: center; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; width: 100%; max-width: 600px; margin: 0 auto; }
+        .calendar-day-header { font-weight: 600; color: #777; padding: 8px 0; text-align: center; font-size: 14px; }
+        body.dark .calendar-day-header { color: #bbb; }
+        .calendar-date { padding: 10px 5px; text-align: center; border-radius: 8px; background-color: #f9f9f9; cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease; font-size: 15px; font-weight: 500; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        body.dark .calendar-date { background-color: #3e3e3e; }
+        .calendar-date:hover:not(.empty):not(.selected) { background-color: #e0e0e0; transform: translateY(-2px); }
+        body.dark .calendar-date:hover:not(.empty):not(.selected) { background-color: #4a4a4a; }
+        .calendar-date.empty { background-color: transparent; cursor: default; pointer-events: none; opacity: 0.5; }
+        .calendar-date.current-day { background-color: var(--primary); color: white; font-weight: 700; }
+        .calendar-date.selected { background-color: var(--primary-dark); color: white; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: scale(1.05); }
+        #exitCalendarBtn { margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: var(--radius); cursor: pointer; font-size: 16px; transition: background-color 0.2s ease, transform 0.2s ease; }
+        #exitCalendarBtn:hover { background-color: #c82333; transform: translateY(-2px); }
 
-        #calendar-container {
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 15px var(--shadow-light);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        body.dark #calendar-container {
-            box-shadow: 0 4px 15px var(--shadow-dark);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-header button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.2s ease-in-out;
-        }
-
-        .calendar-header button:hover {
-            background: var(--primary-dark);
-        }
-
-        .calendar-header h4 { 
-            font-size: 24px;
-            color: var(--primary);
-            margin: 0 10px;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            width: 100%;
-            max-width: 600px; 
-            margin: 0 auto;
-        }
-
-        .calendar-day-header {
-            font-weight: 600;
-            color: #777;
-            padding: 8px 0;
-            text-align: center;
-            font-size: 14px;
-        }
-        body.dark .calendar-day-header {
-            color: #bbb;
-        }
-
-        .calendar-date {
-            padding: 10px 5px;
-            text-align: center;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            font-size: 15px;
-            font-weight: 500;
-            min-height: 40px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        body.dark .calendar-date {
-            background-color: #3e3e3e;
-        }
-
-        .calendar-date:hover:not(.empty):not(.selected) {
-            background-color: #e0e0e0;
-            transform: translateY(-2px);
-        }
-        body.dark .calendar-date:hover:not(.empty):not(.selected) {
-            background-color: #4a4a4a;
-        }
-
-        .calendar-date.empty {
-            background-color: transparent;
-            cursor: default;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        .calendar-date.current-day {
-            background-color: var(--primary);
-            color: white;
-            font-weight: 700;
-        }
-
-        .calendar-date.selected {
-            background-color: var(--primary-dark);
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transform: scale(1.05);
-        }
-
-        #exitCalendarBtn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #dc3545; 
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-        }
-
-        #exitCalendarBtn:hover {
-            background-color: #c82333; 
-            transform: translateY(-2px);
-        }
-
-        #contact-us-section {
-            background: var(--card-light);
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 15px var(--shadow-light);
-            margin-bottom: 25px;
-        }
-        body.dark #contact-us-section {
-            background: var(--card-dark);
-            box-shadow: 0 4px 15px var(--shadow-dark);
-        }
-        #contact-us-section h2 { 
-            text-align: left;
-            margin-bottom: 20px; 
-        }
-        #contact-us-section ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px; 
-        }
-        #contact-us-section li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px; 
-            font-size: 16px; 
-        }
-        #contact-us-section li svg {
-            width: 24px;
-            height: 24px;
-            margin-right: 12px; 
-            fill: var(--primary); 
-        }
-        #contact-us-section li a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500; 
-        }
-        #contact-us-section li a:hover {
-            text-decoration: underline;
-            color: var(--primary-dark);
-        }
-        #contact-us-section li span { 
-             color: var(--text-light);
-        }
-        body.dark #contact-us-section li span {
-             color: var(--text-dark);
-        }
+        /* Contact Us Styling */
+        #contact-us-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #contact-us-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        #contact-us-section h2 { text-align: left; margin-bottom: 20px; }
+        #contact-us-section ul { list-style: none; padding: 0; margin-top: 15px; }
+        #contact-us-section li { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; }
+        #contact-us-section li svg { width: 24px; height: 24px; margin-right: 12px; fill: var(--primary); }
+        #contact-us-section li a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        #contact-us-section li a:hover { text-decoration: underline; color: var(--primary-dark); }
+        #contact-us-section li span { color: var(--text-light); }
+        body.dark #contact-us-section li span { color: var(--text-dark); }
 
         /* AdSense Container Style */
-        .adsense-ad-container {
-            margin: 25px auto; /* Centered with top/bottom margin */
-            padding: 10px 0; /* Some padding around the ad */
-            text-align: center; /* Centers the ad unit if it's narrower than container */
-            min-height: 50px; /* Minimum height to prevent collapse before ad loads */
-            background-color: var(--card-light); /* Match card background */
-            border-radius: var(--radius);
-            box-shadow: 0 2px 8px var(--shadow-light); /* Subtle shadow */
-        }
-        body.dark .adsense-ad-container {
-            background-color: var(--card-dark);
-            box-shadow: 0 2px 8px var(--shadow-dark);
-        }
-
-
-        @media (max-width: 768px) { 
-            .about-dev { flex-direction: column; text-align: center; } 
-            .profile-container { top: 10px; right: 10px; } 
-            #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } 
-            .mode-switcher { 
-                border-left: none; 
-                padding-left: 0; 
-                margin-left: 0; 
-                border-top: 1px solid #ddd; 
-                padding-top: 10px; 
-                width: 100%; 
-                justify-content: center;
-            } 
-            body.dark .mode-switcher { border-top-color: #555;}
-            .calendar-day-header, .calendar-date {
-                font-size: 12px; 
-                padding: 5px 2px;
-                min-height: 30px;
+        .adsense-ad-container { margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; background-color: var(--card-light); border-radius: var(--radius); box-shadow: 0 2px 8px var(--shadow-light); }
+        body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
+        
+        /* --- MEDIA QUERIES --- */
+        
+        /* Desktop Layout */
+        @media (min-width: 1024px) {
+            header {
+                justify-content: space-between;
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+            .header-content {
+                flex-grow: 0; /* Don't grow to push profile icon */
+                margin: 0 auto; /* Center title */
             }
             .open-nav-btn {
-                left: 15px;
+                position: relative; /* Take it out of absolute positioning */
+                left: auto;
+                top: auto;
+                transform: none;
             }
+            .profile-container {
+                position: relative; /* Take it out of fixed positioning */
+                top: auto;
+                right: auto;
+                margin-left: 20px; /* Space from nav button */
+            }
+            main.container.desktop-two-column {
+                display: grid;
+                grid-template-columns: 2fr 1.2fr;
+                gap: 25px;
+                align-items: flex-start;
+            }
+            main.container.desktop-two-column #notes,
+            main.container.desktop-two-column #editor,
+            main.container.desktop-two-column #whiteboard-container {
+                margin-bottom: 0; /* Remove bottom margin in grid layout */
+            }
+        }
+
+        /* Tablet and smaller devices */
+        @media (max-width: 768px) { 
+            .about-dev { flex-direction: column; text-align: center; } 
+            #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } 
+            .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center; } 
+            body.dark .mode-switcher { border-top-color: #555;}
+            .calendar-day-header, .calendar-date { font-size: 12px; padding: 5px 2px; min-height: 30px; }
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
             .blog-post h4 { font-size: 18px; }
-            .blog-post-footer-section > div {
-                flex: 1 1 100%; /* Single column on small screens */
-            }
         }
+        
+        /* Mobile phones */
         @media (max-width: 480px) {
             #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
             .mode-switcher button { padding: 8px 10px; font-size: 13px;}
+            .profile-container {
+                position: fixed; /* Keep it fixed on small mobile */
+                top: 10px;
+                right: 10px;
+            }
         }
 
     </style>
@@ -1095,29 +715,6 @@
   <a href="#contact-us-section" onclick="closeNavAndScroll('#contact-us-section')">Contact</a>
 </div>
 
-<div id="profile-container" class="profile-container hidden"> <!-- Initially hidden -->
-    <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
-    <div id="profile-dropdown" class="profile-dropdown hidden">
-        <div class="dropdown-header">
-            <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
-            <div>
-                <span id="userNameDisplay">User Name</span>
-                <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
-            </div>
-        </div>
-        <ul class="dropdown-menu">
-            <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
-            <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
-            <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
-            <li class="divider"></li>
-            <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
-            <li class="divider"></li>
-            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
-        </ul>
-    </div>
-</div>
-<input type="file" id="photoUpload" class="hidden" accept="image/*">
-
 <header>
     <span class="open-nav-btn" onclick="openNav()">☰</span>
     <div class="header-content">
@@ -1128,9 +725,31 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
+    <div id="profile-container" class="profile-container hidden"> <!-- Initially hidden -->
+        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+        <div id="profile-dropdown" class="profile-dropdown hidden">
+            <div class="dropdown-header">
+                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                <div>
+                    <span id="userNameDisplay">User Name</span>
+                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                </div>
+            </div>
+            <ul class="dropdown-menu">
+                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                <li class="divider"></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
 </header>
+<input type="file" id="photoUpload" class="hidden" accept="image/*">
 
-<main class="container">
+<main id="main-container" class="container">
     <div id="menu-bar">
         <button onclick="newDoc()">📝 New</button>
         <button onclick="saveNote()">💾 Save</button>
@@ -1310,31 +929,31 @@
         <h3>Frequently Asked Questions (FAQ)</h3>
         <div class="faq-item">
             <h4 class="faq-question">What is Note P@d?</h4>
-            <p class="faq-answer">Note P@d is a free, versatile online application offering a modern notepad, a digital whiteboard for drawing, a to-do list manager, and a calendar. It's designed to be fast, secure, work offline (as a PWA), and save your data locally in your browser for basic use. Optional account features provide extended capabilities like cloud sync.</p>
+            <div class="faq-answer"><p>Note P@d is a free, versatile online application offering a modern notepad, a digital whiteboard for drawing, a to-do list manager, and a calendar. It's designed to be fast, secure, work offline (as a PWA), and save your data locally in your browser for basic use. Optional account features provide extended capabilities like cloud sync.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">Is my data safe and private with Note P@d?</h4>
-            <p class="faq-answer">Yes, data privacy is a top priority. For users without an account, all notes and data are stored locally in your browser's localStorage and are never transmitted to any external server. This means your data remains 100% on your device. If you use account features, we employ security measures to protect your data as outlined in our Privacy Policy.</p>
+            <div class="faq-answer"><p>Yes, data privacy is a top priority. For users without an account, all notes and data are stored locally in your browser's localStorage and are never transmitted to any external server. This means your data remains 100% on your device. If you use account features, we employ security measures to protect your data as outlined in our Privacy Policy.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">Can I use Note P@d offline?</h4>
-            <p class="faq-answer">Absolutely! Note P@d is a Progressive Web App (PWA). After your first visit with an internet connection, it caches the necessary files, allowing you to use it offline. This makes it a reliable tool even when you don't have internet access.</p>
+            <div class="faq-answer"><p>Absolutely! Note P@d is a Progressive Web App (PWA). After your first visit with an internet connection, it caches the necessary files, allowing you to use it offline. This makes it a reliable tool even when you don't have internet access.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">Do I need to sign up or create an account?</h4>
-            <p class="faq-answer">No sign-up is required for basic local note-taking, whiteboard use, or to-do list management. You can start using these features immediately. An account is optional and provides benefits like multi-user profile management, potential cloud synchronization for premium users, and access to other advanced features.</p>
+            <div class="faq-answer"><p>No sign-up is required for basic local note-taking, whiteboard use, or to-do list management. You can start using these features immediately. An account is optional and provides benefits like multi-user profile management, potential cloud synchronization for premium users, and access to other advanced features.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">How do I export my notes or drawings?</h4>
-            <p class="faq-answer">You can easily export your content. Notepad entries can be exported as PDF files using the "PDF" button available with each saved note. Whiteboard drawings can be downloaded as PNG image files directly from the whiteboard interface.</p>
+            <div class="faq-answer"><p>You can easily export your content. Notepad entries can be exported as PDF files using the "PDF" button available with each saved note. Whiteboard drawings can be downloaded as PNG image files directly from the whiteboard interface.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">What are the premium features?</h4>
-            <p class="faq-answer">Premium features, such as Advanced Cloud Sync and Priority Support, are available for users who wish to enhance their Note P@d experience. These are typically offered via a subscription and require an account. You can find more details in the "Unlock Premium Features" section if you are logged in.</p>
+            <div class="faq-answer"><p>Premium features, such as Advanced Cloud Sync and Priority Support, are available for users who wish to enhance their Note P@d experience. These are typically offered via a subscription and require an account. You can find more details in the "Unlock Premium Features" section if you are logged in.</p></div>
         </div>
         <div class="faq-item">
             <h4 class="faq-question">How can I provide feedback or get support?</h4>
-            <p class="faq-answer">We welcome your feedback! You can contact us through the details provided in the <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a> section. For users with premium accounts, priority support options are available.</p>
+            <div class="faq-answer"><p>We welcome your feedback! You can contact us through the details provided in the <a href="#contact-us-section" onclick="scrollToSection('#contact-us-section')">Contact Us</a> section. For users with premium accounts, priority support options are available.</p></div>
         </div>
     </div>
 
@@ -1539,6 +1158,7 @@ let whiteboardState = { canvas: null, ctx: null, isDrawing: false, isErasing: fa
 
 let currentCalendarDate = new Date(); 
 
+const mainContainer = document.getElementById('main-container');
 const titleInput = document.getElementById('note-title');
 const textInput = document.getElementById('note-text');
 const noteList = document.getElementById('note-list');
@@ -1579,7 +1199,7 @@ const manageAccountBtn = document.getElementById('manageAccountBtn');
 
 const blogsSection = document.getElementById('blogs-section');
 const blogList = document.getElementById('blog-list'); 
-const blogMainHeading = document.getElementById('blog-main-heading'); // Added reference to the main blog heading
+const blogMainHeading = document.getElementById('blog-main-heading');
 
 const calendarContainer = document.getElementById('calendar-container');
 const currentMonthYearDisplay = document.getElementById('currentMonthYear');
@@ -1589,84 +1209,43 @@ const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); 
 
 const premiumFeaturesSection = document.getElementById('premium-features-section'); 
-const adsenseContainer = document.querySelector('.adsense-ad-container'); // Get AdSense container
+const adsenseContainer = document.querySelector('.adsense-ad-container');
 const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtjv/IMG-0120.jpg"; 
 
-// Global variable to track if a single blog post is currently expanded
 let singleBlogPostExpandedId = null;
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
-function openNav() {
-    document.getElementById("mySidenav").style.width = "280px"; // Slightly wider for more links
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
-
-function scrollToSection(selector) {
-    const element = document.querySelector(selector);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-function closeNavAndScroll(selector) {
-    closeNav();
-    // Use a timeout to ensure nav is closed before scrolling, avoids jitter
-    setTimeout(() => {
-        scrollToSection(selector);
-    }, 300); 
-}
-
-// New function to switch mode and then scroll
-function closeNavAndSwitchModeAndScroll(mode, selector) {
-    closeNav();
-    setTimeout(() => {
-        switchMode(mode); // First, switch the mode which handles section visibility
-        scrollToSection(selector); // Then, scroll to the newly visible section
-    }, 300); 
-}
-
-
-function closeAndScrollToTop() {
-    closeNav();
-    setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 300);
-}
-
-
-function refreshPage() {
-    window.location.reload();
-}
+function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
+function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+function scrollToSection(selector) { const element = document.querySelector(selector); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
+function closeNavAndScroll(selector) { closeNav(); setTimeout(() => scrollToSection(selector), 300); }
+function closeNavAndSwitchModeAndScroll(mode, selector) { closeNav(); setTimeout(() => { switchMode(mode); scrollToSection(selector); }, 300); }
+function closeAndScrollToTop() { closeNav(); setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 300); }
+function refreshPage() { window.location.reload(); }
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
-    // Don't show welcome/auth modal initially. Just check auth status.
     checkAuthStatus(); 
     attachEventListeners();
     initWhiteboard(); 
     if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
-    switchMode('notepad'); // Ensures notepad is the default active section on load
-    loadBlogPosts(); // Load blogs initially so data is ready for filtering etc.
+    switchMode('notepad'); 
+    loadBlogPosts();
     updateUIForPremiumFeatures();
-    document.getElementById('currentYear').textContent = new Date().getFullYear(); // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 });
 
 window.onload = function() {
-    // This check is important because gsi might not be loaded yet
     if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
         initGoogleSignIn();
     } else {
-        // Poll for Google Sign-In readiness if not immediately available
         let attempts = 0;
         const intervalId = setInterval(() => {
             attempts++;
             if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
                 initGoogleSignIn();
                 clearInterval(intervalId);
-            } else if (attempts > 20) { // Stop after 10 seconds
+            } else if (attempts > 20) {
                 console.error("Google Sign-In did not initialize in time.");
                 if(document.getElementById('googleSignInDiv')) {
                      document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
@@ -1677,7 +1256,6 @@ window.onload = function() {
     }
 };
 
-
 function attachEventListeners() {
     if (textInput) textInput.addEventListener('input', () => { updateAll(); recordState(); });
     if (titleInput) titleInput.addEventListener('input', saveDraft);
@@ -1687,12 +1265,10 @@ function attachEventListeners() {
     };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Removed direct display of welcomePopup/authModal on DOMContentLoaded, so this button also won't trigger it on load
     const getStartedBtn = document.getElementById('getStartedBtn');
     if (getStartedBtn) getStartedBtn.onclick = () => { 
         if(welcomePopup) welcomePopup.classList.add("hidden"); 
         if(authModal) authModal.classList.remove("hidden"); 
-        // localStorage.setItem("visited", "true"); // No longer strictly needed for this logic
     }; 
     
     if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
@@ -1727,35 +1303,35 @@ function attachEventListeners() {
     });
     if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
 
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            if (!answer || !answer.classList.contains('faq-answer')) return; // Ensure answer element exists
+    // FAQ Accordion Logic - DELEGATION
+    const faqContainer = document.getElementById('faq-section');
+    if (faqContainer) {
+        faqContainer.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question');
+            if (!question) return;
 
-            const isActive = question.classList.contains('active');
-
-            document.querySelectorAll('.faq-question.active').forEach(q => {
-                if (q !== question) {
-                    q.classList.remove('active');
-                    const otherAnswer = q.nextElementSibling;
-                    if (otherAnswer && otherAnswer.classList.contains('faq-answer')) {
-                         otherAnswer.classList.remove('show');
-                         otherAnswer.style.maxHeight = '0';
-                    }
+            const item = question.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            if (!answer) return;
+            
+            // Close all other open items
+            faqContainer.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.querySelector('.faq-question').classList.remove('active');
+                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
                 }
             });
 
-            if (isActive) {
+            // Toggle the clicked item
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
                 question.classList.remove('active');
-                answer.classList.remove('show');
-                answer.style.maxHeight = '0'; 
             } else {
                 question.classList.add('active');
-                answer.classList.add('show');
-                answer.style.maxHeight = answer.scrollHeight + "px"; 
+                answer.style.maxHeight = answer.scrollHeight + "px";
             }
         });
-    });
+    }
 
     if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => {
         currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
@@ -1769,28 +1345,20 @@ function attachEventListeners() {
 
     if (calendarGrid) calendarGrid.addEventListener('click', (e) => {
         if (e.target.classList.contains('calendar-date') && !e.target.classList.contains('empty')) {
-            document.querySelectorAll('.calendar-date.selected').forEach(date => {
-                date.classList.remove('selected');
-            });
+            document.querySelectorAll('.calendar-date.selected').forEach(date => date.classList.remove('selected'));
             e.target.classList.add('selected');
         }
     });
 
-    if (exitCalendarBtn) exitCalendarBtn.addEventListener('click', () => {
-        switchMode('notepad'); 
-    });
+    if (exitCalendarBtn) exitCalendarBtn.addEventListener('click', () => switchMode('notepad'));
     
     document.querySelectorAll('.premium-buy-btn').forEach(button => {
         button.addEventListener('click', () => {
-            const feature = button.getAttribute('data-feature');
-            // const price = button.getAttribute('data-price'); // Not used in current logic
-
             if (!getCurrentUserId()) {
                 alert("Please sign in to purchase premium features.");
-                if(authModal) authModal.classList.remove("hidden"); // Show auth modal
+                if(authModal) authModal.classList.remove("hidden");
                 return;
             }
-
             const card = button.closest('.premium-feature-card');
             if (card) {
                 const paymentInfo = card.querySelector('.manual-payment-info');
@@ -1801,17 +1369,31 @@ function attachEventListeners() {
             }
         });
     });
-}
 
-function toggleProfileDropdown() {
-    if(profileDropdown) profileDropdown.classList.toggle('hidden');
-}
+    // Newsletter Subscription Logic - DELEGATION
+    if (blogList) {
+        blogList.addEventListener('click', e => {
+            if (e.target && e.target.classList.contains('newsletter-btn')) {
+                e.preventDefault();
+                const container = e.target.closest('.blog-newsletter');
+                const emailInput = container.querySelector('.newsletter-email');
+                const email = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function closeDropdownOnClickOutside(event) {
-    if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) {
-        profileDropdown.classList.add('hidden');
+                if (email && emailRegex.test(email)) {
+                    alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`);
+                    emailInput.value = '';
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            }
+        });
     }
 }
+
+
+function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
+function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
 
 function checkAuthStatus() {
     const currentUserId = getCurrentUserId();
@@ -1819,15 +1401,13 @@ function checkAuthStatus() {
         showUserInfo();
         loadDraft();
         displayNotes();
-        if(textInput) { // Ensure textInput exists before calling updateAll and resetHistory
+        if(textInput) {
             updateAll();
             resetHistory(textInput.value);
         }
     } else {
-        // If not logged in, ensure profile container is hidden
         if(profileContainer) profileContainer.classList.add('hidden');
-        // No modal is shown on load if not signed in, user can use locally
-        displayNotes(); // Will show "Please sign in to see your saved notes." for notes list
+        displayNotes();
     }
     updateUIForPremiumFeatures();
 }
@@ -1838,41 +1418,34 @@ function showUserInfo() {
     const email = localStorage.getItem('userEmail');
     const isVerified = localStorage.getItem('emailVerified') === 'true';
 
-    if (!username || !profileContainer || !profileIcon || !userPic || !userNameDisplay || !userEmailDisplay || !emailVerifiedStatus || !verifyEmailBtn) {
-        // console.warn("Missing elements for user info display or no username.");
-        return;
-    }
-
+    if (!username || !profileContainer) return;
 
     profileContainer.classList.remove('hidden');
     
-    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; // Use initials if no pic
-    profileIcon.src = avatarUrl;
-    userPic.src = avatarUrl;
-    
-    userNameDisplay.textContent = username;
-    userEmailDisplay.textContent = email || '';
+    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
+    if(profileIcon) profileIcon.src = avatarUrl;
+    if(userPic) userPic.src = avatarUrl;
+    if(userNameDisplay) userNameDisplay.textContent = username;
+    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
 
-    if (isVerified) {
-        emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
-        verifyEmailBtn.style.opacity = '0.6';
-        verifyEmailBtn.style.cursor = 'default';
-    } else {
-        emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
-        verifyEmailBtn.style.opacity = '1';
-        verifyEmailBtn.style.cursor = 'pointer';
+    if (emailVerifiedStatus) {
+        if (isVerified) {
+            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
+            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
+        } else {
+            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
+            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
+        }
     }
-    // Ensure parent <li> is visible if button itself is
-    if(verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
-
+    
+    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
 
     const provider = localStorage.getItem('authProvider');
-    if (resetPasswordBtn) {
+    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
         if (provider === 'google') {
-            resetPasswordBtn.parentElement.style.display = 'none'; // Hide reset password for Google users
-            // Google emails are often pre-verified
-            if (localStorage.getItem('emailVerified') === 'true') {
-                if(verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'none'; // Hide verify if already verified (common for Google)
+            resetPasswordBtn.parentElement.style.display = 'none';
+            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
+                verifyEmailBtn.parentElement.style.display = 'none';
             }
         } else {
             resetPasswordBtn.parentElement.style.display = 'block';
@@ -1885,7 +1458,6 @@ function handleAuthSubmit() {
     const username = authUsername.value.trim();
     const password = authPassword.value.trim();
     if (!username || !password) { alert("Please fill in all fields"); return; }
-
     const users = JSON.parse(localStorage.getItem("users") || "{}");
     if (isSignUp) {
         if (users[username]) { alert("Username (email) already exists."); return; }
@@ -1895,16 +1467,14 @@ function handleAuthSubmit() {
         localStorage.setItem('userEmail', username);
         localStorage.setItem('emailVerified', 'false');
         localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username); // userId is username for email auth
+        loginSuccess(username, "", username);
     } else {
         if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; }
-        // Ensure email related flags are set if missing from older registrations
         if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username);
         if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email');
         if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false');
-
         localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username); // userId is username for email auth
+        loginSuccess(username, "", username);
     }
 }
 
@@ -1920,26 +1490,21 @@ function handleLogout(e) {
     if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
     
     if(profileContainer) profileContainer.classList.add('hidden');
-    if(profileDropdown && !profileDropdown.classList.contains('hidden')) {
-        profileDropdown.classList.add('hidden');
-    }
+    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
     
-    if(authModal) authModal.classList.remove("hidden"); // Show auth modal after logout
-    if(noteList) noteList.innerHTML = ''; // Clear notes when user logs out
-    newDoc(); // Clear editor
-    displayNotes(); // Will show "Please sign in to see your saved notes."
+    if(authModal) authModal.classList.remove("hidden");
+    if(noteList) noteList.innerHTML = '';
+    newDoc();
+    displayNotes();
     updateUIForPremiumFeatures(); 
 }
-
 
 function handlePhotoUpload(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (e) => {
-        const base64Image = e.target.result;
-        localStorage.setItem('userPic', base64Image);
+        localStorage.setItem('userPic', e.target.result);
         showUserInfo(); 
         alert("Profile photo updated!");
     };
@@ -1948,182 +1513,87 @@ function handlePhotoUpload(event) {
 
 function handleVerifyEmail(e) {
     e.preventDefault();
-    if (localStorage.getItem('emailVerified') === 'true') {
-        alert('Your email is already verified.');
-        return;
-    }
-    if (localStorage.getItem('authProvider') === 'google') {
-        alert('Google accounts are typically pre-verified or managed via Google.');
-        return;
-    }
+    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
+    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
     
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    // In a real app, this code would be sent to the user's email.
-    // For this demo, we alert it.
     alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
-
     const userCode = prompt("Please enter the 6-digit verification code:");
-
-    if (userCode === verificationCode) {
-        localStorage.setItem('emailVerified', 'true');
-        alert("Email verified successfully!");
-        showUserInfo(); 
-    } else if (userCode) { // if user entered something but it was wrong
-        alert("Incorrect code. Please try again.");
-    } else { // if user cancelled prompt
-        alert("Verification cancelled.");
-    }
+    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
+    else if (userCode) { alert("Incorrect code. Please try again."); } 
+    else { alert("Verification cancelled."); }
 }
 
 function handleResetPassword(e) {
     e.preventDefault();
-    if (localStorage.getItem('authProvider') === 'google') {
-        alert("Password reset is managed through your Google account.");
-        return;
-    }
-    if (!localStorage.getItem('currentUser')) {
-        alert("Please sign in to reset your password.");
-        return;
-    }
+    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
+    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
 
     const newPassword = prompt("Enter your new password (min 4 characters):");
-    if (!newPassword || newPassword.length < 4) {
-        if (newPassword !== null) alert("Password is too short."); // Only alert if not cancelled
-        return;
-    }
+    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
 
     const confirmPassword = prompt("Confirm your new password:");
-    if (newPassword !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-    }
+    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
 
-    const username = localStorage.getItem('userEmail'); // Use stored email
+    const username = localStorage.getItem('userEmail');
     if(!username) { alert("User email not found. Cannot reset password."); return;}
-
     const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (users[username]) {
-        users[username] = newPassword; 
-        localStorage.setItem("users", JSON.stringify(users));
-        alert("Your password has been reset successfully!");
-    } else {
-        alert("An error occurred. Could not find user to update password.");
-    }
+    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
+    else { alert("An error occurred. Could not find user to update password."); }
 }
 
-function handleManageAccount(e) {
-    e.preventDefault();
-    alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed.");
-}
+function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
 
 function loginSuccess(username, picUrl, userId) {
     localStorage.setItem("currentUserId", userId);
     if(picUrl) localStorage.setItem("userPic", picUrl);
-
     showUserInfo();
     if(authModal) authModal.classList.add("hidden");
     if(confetti) confetti.classList.remove("hidden");
-    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); // Use warn for non-critical errors
+    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
     setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200);
-    
     loadDraft();
     displayNotes();
-    if(textInput) { // Ensure textInput exists
-        updateAll();
-        resetHistory(textInput.value);
-    }
+    if(textInput) { updateAll(); resetHistory(textInput.value); }
     updateUIForPremiumFeatures(); 
 }
 
 function initGoogleSignIn() {
     try {
-        if (!google || !google.accounts || !google.accounts.id) {
-            console.error("Google Sign-In library not fully loaded.");
-             if(document.getElementById('googleSignInDiv')) {
-                 document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
-            }
-            return;
-        }
-        google.accounts.id.initialize({
-            client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", 
-            callback: handleGoogleSignIn
-        });
+        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; }
+        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
         const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
-        if (googleSignInButtonContainer) {
-            google.accounts.id.renderButton(
-                googleSignInButtonContainer,
-                { theme: "outline", size: "large", shape: "pill", width: "300" }
-            );
-        } else {
-            console.warn("Google Sign-In button container not found.");
-        }
+        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
+        else console.warn("Google Sign-In button container not found.");
     } catch (error) {
         console.error("Google GSI could not be initialized.", error);
         const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
-        if (googleSignInButtonContainer) {
-            googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
-        }
+        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
     }
 }
 
-function jwtDecode(token) {
-    try { return JSON.parse(atob(token.split('.')[1])); }
-    catch (e) { console.error("Failed to decode JWT", e); return null; }
-}
+function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
 
 function handleGoogleSignIn(response) {
     const data = jwtDecode(response.credential);
     if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
-
-    const name = data.name || data.email; // Fallback to email if name is not present
+    const name = data.name || data.email;
     const picture = data.picture || "";
-    const userId = data.sub; // Google's unique subject identifier
+    const userId = data.sub;
     const email = data.email;
-    const emailVerified = data.email_verified === true || data.email_verified === 'true'; // Ensure boolean
-
+    const emailVerified = data.email_verified === true || data.email_verified === 'true';
     localStorage.setItem("currentUser", name);
-    // localStorage.setItem("userPic", picture); // Set by loginSuccess
     localStorage.setItem('authProvider', 'google');
     localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified.toString()); // Store as string 'true'/'false'
-    
+    localStorage.setItem('emailVerified', emailVerified.toString());
     loginSuccess(name, picture, userId);
 }
 
-function switchModeAndScroll(mode, selector) {
-    switchMode(mode);
-    // Timeout to allow DOM updates from switchMode before scrolling
-    setTimeout(() => {
-        scrollToSection(selector);
-    }, 100); 
-}
+function switchModeAndScroll(mode, selector) { switchMode(mode); setTimeout(() => scrollToSection(selector), 100); }
 
-// Helper function to hide all major content sections
 function hideAllMainSections() {
-    const mainSections = [
-        editorSection,
-        whiteboardSection,
-        calendarContainer,
-        blogsSection, // This will be handled differently for blog mode
-        noteList.parentElement, // Selects the #notes div itself
-        premiumFeaturesSection,
-        document.getElementById('overview'),
-        document.getElementById('how-it-works'),
-        document.getElementById('about'), // Explicitly target about section
-        document.getElementById('privacy'),
-        document.getElementById('faq-section'),
-        document.getElementById('privacy-policy-section'),
-        document.getElementById('terms-of-service-section'),
-        document.getElementById('disclaimer-section'), // Added disclaimer section
-        document.getElementById('contact-us-section'),
-        adsenseContainer // The AdSense container
-    ];
-
-    mainSections.forEach(sec => {
-        if (sec) sec.classList.add('hidden');
-    });
-
-    // Also hide these specific elements if they're not part of the main sections above or need separate control
+    const mainSections = [editorSection, whiteboardSection, calendarContainer, blogsSection, document.getElementById('notes'), premiumFeaturesSection, document.getElementById('overview'), document.getElementById('how-it-works'), document.getElementById('about'), document.getElementById('privacy'), document.getElementById('faq-section'), document.getElementById('privacy-policy-section'), document.getElementById('terms-of-service-section'), document.getElementById('disclaimer-section'), document.getElementById('contact-us-section'), adsenseContainer];
+    mainSections.forEach(sec => { if (sec) sec.classList.add('hidden'); });
     if (todoListContainer) todoListContainer.classList.add('hidden');
     if (addTodoBtn) addTodoBtn.classList.add('hidden');
     if (titleInput) titleInput.classList.add('hidden');
@@ -2133,79 +1603,60 @@ function hideAllMainSections() {
 
 function switchMode(mode) {
     currentMode = mode;
-
-    hideAllMainSections(); // Hide everything first
-
-    // Remove active state from all mode buttons
+    hideAllMainSections();
     document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
     const modeButton = document.getElementById(`mode-${mode}`);
     if (modeButton) modeButton.classList.add('active-mode');
 
-    // Show sections based on the selected mode
+    // Add/remove layout classes for desktop view
+    const isAppMode = ['notepad', 'whiteboard', 'todo'].includes(mode);
+    if(mainContainer) {
+        mainContainer.classList.toggle('desktop-two-column', isAppMode);
+        mainContainer.classList.toggle('full-width-mode', mode === 'blog');
+    }
+
+    const showInfoSections = isAppMode || ['calendar', 'blog'].includes(mode);
+
     if (mode === 'notepad') {
         if(editorSection) editorSection.classList.remove('hidden');
         if(textInput) textInput.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
-        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
-        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
-        
-        // Show all general info sections when in "app" modes
-        document.getElementById('overview').classList.remove('hidden');
-        document.getElementById('how-it-works').classList.remove('hidden');
-        document.getElementById('about').classList.remove('hidden'); // Show About section
-        document.getElementById('privacy').classList.remove('hidden');
-        document.getElementById('faq-section').classList.remove('hidden');
-        document.getElementById('privacy-policy-section').classList.remove('hidden');
-        document.getElementById('terms-of-service-section').classList.remove('hidden');
-        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
-        document.getElementById('contact-us-section').classList.remove('hidden');
-        updateUIForPremiumFeatures(); // This function shows/hides premium-features-section based on login status
-
     } else if (mode === 'whiteboard') {
         if(whiteboardSection) whiteboardSection.classList.remove('hidden');
         if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden');
         resizeWhiteboard();
-        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
-        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
-
-        document.getElementById('overview').classList.remove('hidden');
-        document.getElementById('how-it-works').classList.remove('hidden');
-        document.getElementById('about').classList.remove('hidden'); // Show About section
-        document.getElementById('privacy').classList.remove('hidden');
-        document.getElementById('faq-section').classList.remove('hidden');
-        document.getElementById('privacy-policy-section').classList.remove('hidden');
-        document.getElementById('terms-of-service-section').classList.remove('hidden');
-        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
-        document.getElementById('contact-us-section').classList.remove('hidden');
-        updateUIForPremiumFeatures();
-
     } else if (mode === 'todo') {
         if(editorSection) editorSection.classList.remove('hidden'); 
         if(todoListContainer) todoListContainer.classList.remove('hidden');
         if(addTodoBtn) addTodoBtn.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
-        if(textInput) textInput.classList.add('hidden'); // Hide actual textarea
-        if(noteList.parentElement) noteList.parentElement.classList.remove('hidden'); // Show #notes div
-        if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // Show AdSense
+        if(textInput) textInput.classList.add('hidden');
+    } else if (mode === 'calendar') {
+        if(calendarContainer) calendarContainer.classList.remove('hidden');
+        if(currentMonthYearDisplay) renderCalendar(currentCalendarDate);
+    } else if (mode === 'blog') { 
+        if(blogsSection) blogsSection.classList.remove('hidden');
+        showBlogList();
+    }
+    
+    // Common sections to show in "app" modes
+    if (isAppMode) {
+        if(document.getElementById('notes')) document.getElementById('notes').classList.remove('hidden');
+        if(adsenseContainer) adsenseContainer.classList.remove('hidden');
+    }
 
+    // Always show these info sections unless it's a specific mode that hides them (like calendar)
+    if (mode !== 'calendar') {
         document.getElementById('overview').classList.remove('hidden');
         document.getElementById('how-it-works').classList.remove('hidden');
-        document.getElementById('about').classList.remove('hidden'); // Show About section
+        document.getElementById('about').classList.remove('hidden');
         document.getElementById('privacy').classList.remove('hidden');
         document.getElementById('faq-section').classList.remove('hidden');
         document.getElementById('privacy-policy-section').classList.remove('hidden');
         document.getElementById('terms-of-service-section').classList.remove('hidden');
-        document.getElementById('disclaimer-section').classList.remove('hidden'); // Show disclaimer
+        document.getElementById('disclaimer-section').classList.remove('hidden');
         document.getElementById('contact-us-section').classList.remove('hidden');
         updateUIForPremiumFeatures();
-
-    } else if (mode === 'calendar') {
-        if(calendarContainer) calendarContainer.classList.remove('hidden');
-        if(currentMonthYearDisplay) renderCalendar(currentCalendarDate);
-
-    } else if (mode === 'blog') { 
-        if(blogsSection) blogsSection.classList.remove('hidden');
-        showBlogList(); // Show all blog posts in their short form
     }
 }
 
@@ -2226,12 +1677,7 @@ function newDoc() {
 
 function saveNote() {
     const key = getUserNotesKey();
-    if (!key) { 
-        alert("Please sign in to save notes. Your current work will remain in the editor until you navigate away or refresh."); 
-        if(authModal) authModal.classList.remove("hidden"); // Show auth modal
-        return; 
-    }
-
+    if (!key) { alert("Please sign in to save notes. Your work will remain in the editor."); if(authModal) authModal.classList.remove("hidden"); return; }
     let title, content, type;
     if (currentMode === 'notepad') {
         if (!textInput || !textInput.value.trim()) { alert("Cannot save an empty note."); return; }
@@ -2241,98 +1687,57 @@ function saveNote() {
     } else if (currentMode === 'whiteboard') {
         title = whiteboardTitleInput ? whiteboardTitleInput.value || 'Untitled Whiteboard' : 'Untitled Whiteboard';
         if (!whiteboardState.canvas) { alert("Whiteboard not initialized."); return; }
-        content = whiteboardState.canvas.toDataURL(); // Default to PNG
+        content = whiteboardState.canvas.toDataURL();
         type = 'whiteboard';
     } else if (currentMode === 'todo') {
         if (!todoListContainer || todoListContainer.children.length === 0) { alert("Cannot save an empty to-do list."); return; }
         title = titleInput ? titleInput.value || 'Untitled To-Do List' : 'Untitled To-Do List';
         content = serializeTodoList();
         type = 'todo';
-    } else if (currentMode === 'calendar') {
-        alert("Calendar view does not support direct saving as a note. Manage events within the calendar interface if applicable.");
-        return; 
-    } else {
-        alert("Cannot save in current mode.");
-        return;
-    }
-
-
+    } else { alert("Cannot save in current mode."); return; }
     const notes = JSON.parse(localStorage.getItem(key)) || [];
     const timestamp = new Date().toLocaleString();
     if (editModeId) {
         const idx = notes.findIndex(n => n.id === editModeId);
-        if (idx > -1) {
-            notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; 
-        } else { // If editModeId was set but note not found, save as new
-             notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
-        }
-    } else {
-        notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
-    }
+        if (idx > -1) notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; 
+        else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
+    } else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
     localStorage.setItem(key, JSON.stringify(notes));
     displayNotes();
-    newDoc(); // Clears editor for next note
+    newDoc();
 }
 
 function displayNotes() {
     if(!noteList) return;
     const key = getUserNotesKey();
-    // Notes are only loaded/displayed if a user is logged in
     const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : [];
     
-    // Only display notes if logged in, otherwise show prompt
-    if (notes.length === 0 && key) {
-        noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>";
-    } else if (!key) {
-         noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>";
-    } else {
-        notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); // Pinned first, then by ID
-    
+    if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>";
+    else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>";
+    else {
+        notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id);
         noteList.innerHTML = notes.map(n => {
             let contentPreview = '';
-            const noteType = n.type || 'notepad'; // Default to notepad if type is missing
-
-            if (n.isLocked && n.passwordHash) { // Check for passwordHash to confirm it's truly locked
-                contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
-            } else if (noteType === 'whiteboard') {
-                contentPreview = `<img src="${n.text}" alt="Whiteboard Preview for ${n.title}" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`;
-            } else if (noteType === 'todo') {
+            const noteType = n.type || 'notepad';
+            if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
+            else if (noteType === 'whiteboard') contentPreview = `<img src="${n.text}" alt="Whiteboard Preview" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`;
+            else if (noteType === 'todo') {
                 try { 
                     const todoItems = JSON.parse(n.text);
                     const completedItems = todoItems.filter(item => item.checked).length;
                     contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`; 
                 }
                 catch { contentPreview = `<i>Corrupted To-Do List.</i>`}
-            } else { // Notepad
-                // Remove HTML tags from content preview to prevent XSS and malformed preview
+            } else {
                 const div = document.createElement('div');
                 div.innerHTML = n.text;
                 const plainText = div.textContent || div.innerText || '';
-                contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`; // Shorter preview
+                contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`;
             }
-
             const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
-            const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; // Use far for unpinned for visual cue
+            const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack';
             const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝');
-
-            return `
-            <div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}">
-                <h4>
-                    ${noteTypeIcon} 
-                    <span class="note-title-text">${n.title}</span>
-                    ${lockIcon}
-                </h4>
-                <p class="note-content-preview">${contentPreview}</p>
-                <small>Last updated: ${n.date}</small>
-                <div class="note-actions">
-                    <button onclick="editNote(${n.id})" aria-label="Edit note ${n.title}"><i class="fas fa-edit"></i> Edit</button>
-                    <button onclick="toggleLock(${n.id})" aria-label="${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'} note ${n.title}"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button>
-                    <button onclick="pinNote(${n.id})" aria-label="${n.pinned ? 'Unpin' : 'Pin'} note ${n.title}"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>
-                    ${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})" aria-label="Export note ${n.title} as PDF"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}
-                    <button onclick="deleteNote(${n.id})" aria-label="Delete note ${n.title}"><i class="fas fa-trash"></i> Delete</button>
-                </div>
-            </div>
-        `;
+            return `<div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}"><h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4><p class="note-content-preview">${contentPreview}</p><small>Last updated: ${n.date}</small><div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div></div>`;
         }).join('');
     }
 }
@@ -2342,56 +1747,37 @@ async function editNote(id) {
     const notes = JSON.parse(localStorage.getItem(key)) || [];
     const note = notes.find(n => n.id === id);
     if (!note) { alert("Note not found."); return;}
-
     if (note.isLocked && note.passwordHash) {
         const password = prompt("Enter password to unlock this note:");
-        if (password === null) return; // User cancelled
+        if (password === null) return;
         if (!password) {alert("Password cannot be empty."); return;}
         const hashed = await hashPassword(password);
         if (hashed !== note.passwordHash) { alert("Incorrect password."); return; }
     }
-
     newDoc(); 
     const noteType = note.type || 'notepad';
     switchMode(noteType); 
     editModeId = id;
-
     if (noteType === 'notepad') {
         if(titleInput) titleInput.value = note.title;
-        if(textInput) {
-            textInput.value = note.text;
-            resetHistory(note.text);
-        }
+        if(textInput) { textInput.value = note.text; resetHistory(note.text); }
     } else if (noteType === 'whiteboard') {
         if(whiteboardTitleInput) whiteboardTitleInput.value = note.title;
         if (whiteboardState.canvas && whiteboardState.ctx) {
             const img = new Image();
             img.onload = () => {
-                clearCanvas(); // Clear before drawing
-                // Scale image to fit canvas while maintaining aspect ratio
-                const canvasWidth = whiteboardState.canvas.width;
-                const canvasHeight = whiteboardState.canvas.height;
-                const hRatio = canvasWidth / img.width;
-                const vRatio = canvasHeight / img.height;
-                const ratio = Math.min(hRatio, vRatio);
-                const centerShift_x = (canvasWidth - img.width * ratio) / 2;
-                const centerShift_y = (canvasHeight - img.height * ratio) / 2;
-
-                whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height,
-                                          centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
-                // Store image data after drawing
+                clearCanvas();
+                const canvasWidth = whiteboardState.canvas.width, canvasHeight = whiteboardState.canvas.height, hRatio = canvasWidth / img.width, vRatio = canvasHeight / img.height, ratio = Math.min(hRatio, vRatio), centerShift_x = (canvasWidth - img.width * ratio) / 2, centerShift_y = (canvasHeight - img.height * ratio) / 2;
+                whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
                 whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, canvasWidth, canvasHeight);
             };
-            img.onerror = () => { alert("Failed to load whiteboard image for editing.");};
-            img.src = note.text; // This is a data URL
-        } else {
-            alert("Whiteboard component not ready for editing.");
-        }
+            img.onerror = () => alert("Failed to load whiteboard image for editing.");
+            img.src = note.text;
+        } else alert("Whiteboard component not ready for editing.");
     } else if (noteType === 'todo') {
         if(titleInput) titleInput.value = note.title;
         parseAndRenderTodoList(note.text);
     }
-    
     updateAll();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -2401,7 +1787,7 @@ function getUserNotesKey() { const userId = getCurrentUserId(); return userId ? 
 function getDraftKey() { const userId = getCurrentUserId(); return userId ? `draft_${userId}` : null; }
 function updateAll() { saveDraft(); updateCharCount(); updateWordCount(); }
 function updateCharCount() { if(charCount && textInput) charCount.textContent = `Character Count: ${textInput.value.length}`; }
-function updateWordCount() { if(wordCount && textInput) {const words = textInput.value.trim().split(/\s+/).filter(word => word.length > 0); wordCount.textContent = `Word Count: ${words.length === 1 && words[0] === '' ? 0 : words.length}`; }}
+function updateWordCount() { if(wordCount && textInput) {const words = textInput.value.trim().split(/\s+/).filter(Boolean); wordCount.textContent = `Word Count: ${words.length}`; }}
 function saveDraft() { const key = getDraftKey(); if (!key || !titleInput || !textInput) return; if (currentMode === 'notepad') localStorage.setItem(key, JSON.stringify({ title: titleInput.value, text: textInput.value })); }
 function loadDraft() { const key = getDraftKey(); if (!key || !titleInput || !textInput) return; const d = localStorage.getItem(key); if (d) { try {const { title, text } = JSON.parse(d); titleInput.value = title; textInput.value = text;} catch(e){console.error("Error parsing draft", e); localStorage.removeItem(key);}} }
 function clearDraft() { const key = getDraftKey(); if (key) localStorage.removeItem(key); }
@@ -2409,19 +1795,15 @@ function toggleDark() { document.body.classList.toggle('dark'); localStorage.set
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
 function changeFont() { const fontFamilySelect = document.getElementById('font-family'); if(textInput && fontFamilySelect) textInput.style.fontFamily = fontFamilySelect.value; }
 function changeFontSize() { const fontSizeSelect = document.getElementById('font-size'); if(textInput && fontSizeSelect) textInput.style.fontSize = fontSizeSelect.value; }
-async function hashPassword(password) { if (!password) return ''; try {const encoder = new TextEncoder(); const data = encoder.encode(password); const hashBuffer = await crypto.subtle.digest('SHA-256', data); const hashArray = Array.from(new Uint8Array(hashBuffer)); return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');} catch(e) { console.error("Password hashing failed", e); return 'error_hashing_password'; /* or throw e */}}
+async function hashPassword(password) { if (!password) return ''; try {const encoder = new TextEncoder(); const data = encoder.encode(password); const hashBuffer = await crypto.subtle.digest('SHA-256', data); const hashArray = Array.from(new Uint8Array(hashBuffer)); return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');} catch(e) { console.error("Password hashing failed", e); return 'error_hashing_password'; }}
 
 function initWhiteboard() { 
     if (!whiteboardCanvas) return;
     whiteboardState.canvas = whiteboardCanvas; 
-    whiteboardState.ctx = whiteboardCanvas.getContext('2d', { willReadFrequently: true }); // Important for getImageData performance
-    
-    // Set initial canvas background for consistent PNG export
+    whiteboardState.ctx = whiteboardCanvas.getContext('2d', { willReadFrequently: true });
     whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
     whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-
-    resizeWhiteboard(); // Initial resize
-    
+    resizeWhiteboard();
     whiteboardState.canvas.addEventListener('mousedown', startDrawing); 
     whiteboardState.canvas.addEventListener('mouseup', stopDrawing); 
     whiteboardState.canvas.addEventListener('mouseout', stopDrawing); 
@@ -2429,56 +1811,32 @@ function initWhiteboard() {
     whiteboardState.canvas.addEventListener('touchstart', startDrawing, { passive: false }); 
     whiteboardState.canvas.addEventListener('touchend', stopDrawing, { passive: false }); 
     whiteboardState.canvas.addEventListener('touchmove', draw, { passive: false }); 
-    
     const wbColorInput = document.getElementById('wb-color');
     if (wbColorInput) wbColorInput.onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.remove('active'); }; 
-    
     const wbSizeInput = document.getElementById('wb-size');
     if (wbSizeInput) wbSizeInput.onchange = (e) => whiteboardState.brushSize = e.target.value; 
-    
     const wbEraserBtn = document.getElementById('wb-eraser');
     if (wbEraserBtn) wbEraserBtn.onclick = toggleEraser; 
-    
     const wbClearBtn = document.getElementById('wb-clear');
     if (wbClearBtn) wbClearBtn.onclick = clearCanvas; 
-    
     const wbDownloadBtn = document.getElementById('wb-download');
     if (wbDownloadBtn) wbDownloadBtn.onclick = downloadCanvas; 
-    
     window.addEventListener('resize', resizeWhiteboard); 
 }
 function resizeWhiteboard() { 
     if (!whiteboardState.canvas || !whiteboardState.ctx || !whiteboardSection) return;
-
-    // Save current content before resizing only if canvas has dimensions
     if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) {
-        try { // Add try-catch for getImageData
-          whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-        } catch (e) {
-          console.error("Error getting image data during resize: ", e);
-          whiteboardState.imageData = null; // Reset if error occurs
-        }
+        try { whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); } 
+        catch (e) { console.error("Error getting image data during resize: ", e); whiteboardState.imageData = null; }
     }
-
-
-    const containerWidth = whiteboardSection.clientWidth - 50;  // Subtract padding
-    whiteboardState.canvas.width = Math.max(containerWidth, 300); // Minimum width
-    whiteboardState.canvas.height = Math.min(Math.max(containerWidth * 0.6, 200), window.innerHeight * 0.5); // Min/Max height and aspect ratio based
-
-    // Set canvas background color (important for consistent PNGs)
+    const containerWidth = whiteboardSection.clientWidth - 50;
+    whiteboardState.canvas.width = Math.max(containerWidth, 300);
+    whiteboardState.canvas.height = Math.min(Math.max(containerWidth * 0.6, 200), window.innerHeight * 0.5);
     whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
     whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-
-
-    // Restore content after resizing if available
     if (whiteboardState.imageData) {
-        try { // Add try-catch for putImageData
-            whiteboardState.ctx.putImageData(whiteboardState.imageData, 0, 0);
-        } catch(e) {
-            console.error("Error putting image data during resize: ", e);
-            // If putImageData fails, it might be due to size mismatch. Clear and log.
-            clearCanvas(); // Fallback to a clear canvas
-        }
+        try { whiteboardState.ctx.putImageData(whiteboardState.imageData, 0, 0); } 
+        catch(e) { console.error("Error putting image data during resize: ", e); clearCanvas(); }
     }
 }
 function getMousePos(e) { 
@@ -2491,36 +1849,31 @@ function getMousePos(e) {
     return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY }; 
 }
 function startDrawing(e) { e.preventDefault(); whiteboardState.isDrawing = true; const { x, y } = getMousePos(e); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
-function stopDrawing() { if (!whiteboardState.isDrawing) return; whiteboardState.isDrawing = false; whiteboardState.ctx.beginPath(); /* End current path */ if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); /* Save state after drawing */ }
+function stopDrawing() { if (!whiteboardState.isDrawing) return; whiteboardState.isDrawing = false; whiteboardState.ctx.beginPath(); if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); }
 function draw(e) { 
     e.preventDefault(); 
     if (!whiteboardState.isDrawing || !whiteboardState.ctx) return; 
     const { ctx, lastX, lastY, brushColor, brushSize, isErasing } = whiteboardState; 
     const { x, y } = getMousePos(e); 
     ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over'; 
-    ctx.strokeStyle = isErasing ? 'rgba(0,0,0,1)' : brushColor; // Eraser always uses opaque color for destination-out
+    ctx.strokeStyle = isErasing ? 'rgba(0,0,0,1)' : brushColor;
     ctx.lineWidth = brushSize; 
-    ctx.lineCap = 'round'; 
-    ctx.lineJoin = 'round'; 
-    ctx.beginPath(); 
-    ctx.moveTo(lastX, lastY); 
-    ctx.lineTo(x, y); 
-    ctx.stroke(); 
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; 
+    ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke(); 
     [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; 
 }
 function toggleEraser() { whiteboardState.isErasing = !whiteboardState.isErasing; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.toggle('active', whiteboardState.isErasing); }
 function clearCanvas() { 
     if (!whiteboardState.ctx || !whiteboardState.canvas) return;
     whiteboardState.ctx.clearRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); 
-    // Re-apply background after clearing for consistent PNG
     whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
     whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-    if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); // Save cleared state
+    if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
 }
 function downloadCanvas() { 
     if(!whiteboardState.canvas || !whiteboardTitleInput) return;
     const link = document.createElement('a'); 
-    link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`; // Sanitize filename
+    link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`;
     link.href = whiteboardState.canvas.toDataURL('image/png'); 
     link.click(); 
 }
@@ -2531,16 +1884,12 @@ function addTodoItem(text = '', checked = false) {
     itemDiv.className = 'todo-item'; 
     if (checked) itemDiv.classList.add('completed'); 
     const checkbox = document.createElement('input'); 
-    checkbox.type = 'checkbox'; 
-    checkbox.checked = checked; 
-    checkbox.onchange = () => { itemDiv.classList.toggle('completed', checkbox.checked); saveDraft(); /* Save ToDo draft on change */ }; 
+    checkbox.type = 'checkbox'; checkbox.checked = checked; 
+    checkbox.onchange = () => { itemDiv.classList.toggle('completed', checkbox.checked); saveDraft(); }; 
     const textSpan = document.createElement('span'); 
-    textSpan.className = 'todo-text'; 
-    textSpan.contentEditable = true; 
-    textSpan.textContent = text || 'New to-do...'; 
-    textSpan.onblur = () => saveDraft(); /* Save ToDo draft on change */
-    itemDiv.appendChild(checkbox); 
-    itemDiv.appendChild(textSpan); 
+    textSpan.className = 'todo-text'; textSpan.contentEditable = true; textSpan.textContent = text || 'New to-do...'; 
+    textSpan.onblur = () => saveDraft();
+    itemDiv.append(checkbox, textSpan);
     todoListContainer.appendChild(itemDiv); 
 }
 function serializeTodoList() { 
@@ -2549,9 +1898,7 @@ function serializeTodoList() {
     todoListContainer.querySelectorAll('.todo-item').forEach(item => { 
         const textElement = item.querySelector('.todo-text');
         const checkboxElement = item.querySelector('input[type="checkbox"]');
-        if (textElement && checkboxElement) { // Ensure elements exist
-            items.push({ text: textElement.textContent, checked: checkboxElement.checked }); 
-        }
+        if (textElement && checkboxElement) items.push({ text: textElement.textContent, checked: checkboxElement.checked }); 
     }); 
     return JSON.stringify(items); 
 }
@@ -2560,56 +1907,34 @@ function parseAndRenderTodoList(jsonString) {
     todoListContainer.innerHTML = ''; 
     try { 
         const items = JSON.parse(jsonString);
-        if (Array.isArray(items)) {
-            items.forEach(item => addTodoItem(item.text, item.checked)); 
-        } else {
-            console.error("Parsed To-Do list is not an array:", items);
-        }
-    } catch (e) { 
-        console.error("Failed to parse To-Do list", e); 
-        // Optionally, provide a default or error state in the UI
-        // todoListContainer.innerHTML = "<p>Error loading to-do list.</p>";
-    } 
+        if (Array.isArray(items)) items.forEach(item => addTodoItem(item.text, item.checked)); 
+        else console.error("Parsed To-Do list is not an array:", items);
+    } catch (e) { console.error("Failed to parse To-Do list", e); } 
 }
 
 function renderCalendar(dateToRender) {
     if(!currentMonthYearDisplay || !calendarGrid) return;
-
-    const year = dateToRender.getFullYear();
-    const month = dateToRender.getMonth(); 
-    
+    const year = dateToRender.getFullYear(), month = dateToRender.getMonth(); 
     currentMonthYearDisplay.textContent = dateToRender.toLocaleString('default', { month: 'long', year: 'numeric' });
-    
-    // Clear previous days, keeping headers (first 7 children: Sun-Sat)
-    while (calendarGrid.children.length > 7) {
-        calendarGrid.removeChild(calendarGrid.lastChild);
-    }
-
+    while (calendarGrid.children.length > 7) calendarGrid.removeChild(calendarGrid.lastChild);
     const firstDayOfMonthIndex = new Date(year, month, 1).getDay(); 
     const daysInMonth = new Date(year, month + 1, 0).getDate(); 
-
     const today = new Date();
     const isCurrentDisplayingTodayMonth = today.getFullYear() === year && today.getMonth() === month;
-
     for (let i = 0; i < firstDayOfMonthIndex; i++) {
         const emptyDiv = document.createElement('div');
         emptyDiv.classList.add('calendar-date', 'empty');
         calendarGrid.appendChild(emptyDiv);
     }
-
     for (let day = 1; day <= daysInMonth; day++) {
         const dateDiv = document.createElement('div');
         dateDiv.classList.add('calendar-date');
         dateDiv.textContent = day;
-        dateDiv.dataset.date = new Date(year, month, day).toISOString().split('T')[0]; // Store full date
-
-        if (isCurrentDisplayingTodayMonth && day === today.getDate()) {
-            dateDiv.classList.add('current-day');
-        }
+        dateDiv.dataset.date = new Date(year, month, day).toISOString().split('T')[0];
+        if (isCurrentDisplayingTodayMonth && day === today.getDate()) dateDiv.classList.add('current-day');
         calendarGrid.appendChild(dateDiv);
     }
 }
-
 
 function recordState() { 
     if(!textInput) return;
@@ -2618,76 +1943,45 @@ function recordState() {
         if (currentMode !== 'notepad') return; 
         const currentState = textInput.value; 
         if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) { 
-            undoStack.push(currentState); 
-            redoStack = []; 
+            undoStack.push(currentState); redoStack = []; 
             if (undoStack.length > 50) undoStack.shift(); 
         } 
     }, 500); 
 }
-function undo() { 
-    if(!textInput) return;
-    if (currentMode !== 'notepad' || undoStack.length < 2) return; 
-    redoStack.push(undoStack.pop()); 
-    textInput.value = undoStack[undoStack.length - 1] || ''; 
-    updateAll(); 
-}
-function redo() { 
-    if(!textInput) return;
-    if (currentMode !== 'notepad' || redoStack.length === 0) return; 
-    const nextState = redoStack.pop(); 
-    undoStack.push(nextState); 
-    textInput.value = nextState; 
-    updateAll(); 
-}
+function undo() { if(!textInput || currentMode !== 'notepad' || undoStack.length < 2) return; redoStack.push(undoStack.pop()); textInput.value = undoStack[undoStack.length - 1] || ''; updateAll(); }
+function redo() { if(!textInput || currentMode !== 'notepad' || redoStack.length === 0) return; const nextState = redoStack.pop(); undoStack.push(nextState); textInput.value = nextState; updateAll(); }
 function resetHistory(initialText = '') { undoStack = [initialText]; redoStack = []; }
 function cutText() { 
     if(!textInput || currentMode !== 'notepad' || textInput.selectionStart === textInput.selectionEnd) return; 
     try {
         navigator.clipboard.writeText(textInput.value.substring(textInput.selectionStart, textInput.selectionEnd)); 
-        // execCommand is deprecated, but common fallback.
-        // For modern browsers, manipulating selection directly is better.
-        const start = textInput.selectionStart;
-        const end = textInput.selectionEnd;
+        const start = textInput.selectionStart, end = textInput.selectionEnd;
         textInput.value = textInput.value.substring(0, start) + textInput.value.substring(end);
-        textInput.selectionStart = textInput.selectionEnd = start; // Move cursor
+        textInput.selectionStart = textInput.selectionEnd = start;
     } catch (e) {
-        console.warn("Clipboard API or text manipulation failed:", e);
-        // Fallback or just log
-        try { document.execCommand('delete', false, null); } catch (ex) { /* ignore fallback error */ }
+        console.warn("Clipboard API failed:", e);
+        try { document.execCommand('delete', false, null); } catch (ex) { /* ignore */ }
     }
-    updateAll(); 
-    recordState(); 
+    updateAll(); recordState(); 
 }
-function showFindReplace() { if (currentMode !== 'notepad' || !findReplaceDialog) return; findReplaceDialog.classList.remove('hidden'); const findInputEl = findReplaceDialog.querySelector('#find-input'); if(findInputEl) findInputEl.focus(); }
+function showFindReplace() { if (currentMode !== 'notepad' && findReplaceDialog) { findReplaceDialog.classList.remove('hidden'); findReplaceDialog.querySelector('#find-input')?.focus(); }}
 function closeFindReplace() { if(findReplaceDialog) findReplaceDialog.classList.add('hidden'); }
 function findAndReplace(replaceAll = false) { 
     if(!textInput) return;
     const findInputEl = document.getElementById('find-input');
     const replaceInputEl = document.getElementById('replace-input');
-
     if(!findInputEl || !replaceInputEl) return;
-
-    const findValue = findInputEl.value; 
-    const replaceValue = replaceInputEl.value; 
+    const findValue = findInputEl.value, replaceValue = replaceInputEl.value; 
     if (!findValue) return; 
-    
-    // Using try-catch for RegExp in case of invalid patterns
-    try {
-        const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); // Escape special regex chars
-        textInput.value = textInput.value.replace(regex, replaceValue); 
-    } catch(e) {
-        alert("Invalid find pattern. Please check your input.");
-        console.error("Regex error in findAndReplace: ", e);
-        return;
-    }
-    updateAll(); 
-    recordState(); 
+    try { const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); textInput.value = textInput.value.replace(regex, replaceValue); } 
+    catch(e) { alert("Invalid find pattern."); console.error("Regex error:", e); return; }
+    updateAll(); recordState(); 
 }
 
 function deleteNote(id) { 
     const key = getUserNotesKey(); 
     if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; }
-    if (!confirm("Are you sure you want to delete this note permanently? This action cannot be undone.")) return; 
+    if (!confirm("Are you sure you want to delete this note permanently?")) return; 
     let notes = JSON.parse(localStorage.getItem(key)) || []; 
     localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); 
     displayNotes(); 
@@ -2702,29 +1996,23 @@ function pinNote(id) {
     displayNotes(); 
 }
 async function toggleLock(id) { 
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in to lock/unlock notes."); if(authModal) authModal.classList.remove("hidden"); return; }
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in."); if(authModal) authModal.classList.remove("hidden"); return; }
     let notes = JSON.parse(localStorage.getItem(key)) || []; 
     const noteIndex = notes.findIndex(n => n.id === id); 
     if (noteIndex === -1) return; 
     const note = notes[noteIndex]; 
-
-    if (note.isLocked && note.passwordHash) { // Unlocking
-        const password = prompt("Enter password to unlock this note:"); 
-        if (password === null) return; // User cancelled prompt
+    if (note.isLocked && note.passwordHash) {
+        const password = prompt("Enter password to unlock:"); if (password === null) return;
         if (!password) { alert("Password cannot be empty."); return; }
         const hashed = await hashPassword(password); 
         if (hashed !== note.passwordHash) { alert("Incorrect password."); return; }
-        note.isLocked = false;
-        note.passwordHash = null; // Clear hash on unlock
+        note.isLocked = false; note.passwordHash = null;
         alert("Note unlocked successfully!");
-    } else { // Locking
-        const password = prompt("Enter a new password to lock this note (min 4 chars):"); 
-        if (password === null) return;
-        if (!password || password.length < 4) { alert("Password is too short or empty."); return; } 
-        const confirmPassword = prompt("Confirm password:"); 
-        if (password !== confirmPassword) { alert("Passwords do not match."); return; } 
-        note.isLocked = true; 
-        note.passwordHash = await hashPassword(password); 
+    } else {
+        const password = prompt("Enter a new password (min 4 chars):"); if (password === null) return;
+        if (!password || password.length < 4) { alert("Password is too short."); return; } 
+        const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } 
+        note.isLocked = true; note.passwordHash = await hashPassword(password); 
         alert("Note locked successfully!"); 
     } 
     notes[noteIndex] = note; 
@@ -2732,450 +2020,186 @@ async function toggleLock(id) {
     displayNotes(); 
 }
 async function exportPDF(id) { 
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in to export notes."); if(authModal) authModal.classList.remove("hidden"); return; }
+    const key = getUserNotesKey(); if (!key) { alert("Please sign in to export."); if(authModal) authModal.classList.remove("hidden"); return; }
     const notes = JSON.parse(localStorage.getItem(key)) || []; 
     const note = notes.find(n => n.id === id); 
-    if (!note) { alert("Note not found for PDF export."); return; }
-
+    if (!note) { alert("Note not found."); return; }
     if (note.isLocked && note.passwordHash) { 
-        const password = prompt("This note is locked. Enter password to export:"); 
-        if (password === null) return;
+        const password = prompt("Enter password to export:"); if (password === null) return;
         if (!password) { alert("Password cannot be empty."); return;}
         const hashed = await hashPassword(password); 
-        if (hashed !== note.passwordHash) { alert("Incorrect password. Cannot export."); return; } 
+        if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } 
     } 
-    
-    // Ensure jsPDF is loaded
-    if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
-        alert("PDF library (jsPDF) is not loaded. Cannot export PDF.");
-        console.error("jsPDF not loaded.");
-        return;
-    }
+    if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') { alert("PDF library not loaded."); return; }
     const { jsPDF } = window.jspdf; 
-
     try {
         const doc = new jsPDF(); 
-        doc.setFont("Helvetica", "bold"); 
-        doc.setFontSize(20); 
-        doc.text(note.title, 15, 20); 
-        doc.setFont("Helvetica", "normal"); 
-        doc.setFontSize(12); 
+        doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20); 
+        doc.setFont("Helvetica", "normal"); doc.setFontSize(12); 
         let contentToExport = note.text; 
         if (note.type === 'todo') { 
             try { contentToExport = JSON.parse(note.text).map(item => `${item.checked ? '[x]' : '[ ]'} ${item.text}`).join('\n'); } 
-            catch { contentToExport = "Error: Could not parse to-do list for PDF export."} 
+            catch { contentToExport = "Error parsing to-do list."} 
         } 
-        // Handle long text wrapping
-        const lines = doc.splitTextToSize(contentToExport, 180); // 180 is approx width in mm for A4 page with margins
+        const lines = doc.splitTextToSize(contentToExport, 180);
         doc.text(lines, 15, 30); 
-        doc.save(`${note.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_') || 'NoteP@d_Export'}.pdf`); // Sanitize filename
-    } catch (e) {
-        alert("An error occurred while generating the PDF. Please try again.");
-        console.error("PDF Export Error:", e);
-    }
+        doc.save(`${note.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_') || 'NoteP@d_Export'}.pdf`);
+    } catch (e) { alert("An error occurred generating the PDF."); console.error("PDF Export Error:", e); }
 }
 
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; if(installBtn) installBtn.classList.remove('hidden'); });
-if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); const { outcome } = await deferredInstallPrompt.userChoice; console.log(`User response to install prompt: ${outcome}`); deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
+if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
 
+// --- BLOG DATA AND FUNCTIONS ---
 const blogPostsData = [
-    {
-        id: 1,
-        title: "Unlock Your Productivity: The Power of a Digital Notepad",
-        date: "2024-07-25",
-        views: 1580,
-        author: "Bishal Mishra",
-        image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png",
-        content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively.",
-        fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, the benefits of the markdown editor (if implemented), and how to integrate Note P@d into your daily routine for peak performance. We'll delve into creating structured notes, using tags for better organization, and even some advanced tips for power users. Embrace the simplicity and power of digital note-taking with Note P@d! The ability to quickly jot down thoughts, create outlines, or draft longer pieces of text without worrying about about saving (thanks to auto-save and local storage) frees up mental bandwidth. Furthermore, features like font and size customization allow for a personalized writing environment, reducing eye strain and improving focus during long writing sessions. With Note P@d, your digital workspace adapts to you, not the other way around.",
-        tags: ["productivity", "notepad", "digital tools", "organization", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
-    },
-    {
-        id: 2,
-        title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d",
-        date: "2024-07-20",
-        views: 1120,
-        author: "Bishal Mishra",
-        image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png",
-        content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas and creating visual outlines.",
-        fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively (if collaboration is a feature). We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference, enhancing your ability to communicate visually and preserve your creative bursts.",
-        tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
-    },
-    {
-        id: 3,
-        title: "Conquer Your To-Do List: Effective Task Management with Note P@d",
-        date: "2024-07-15",
-        views: 1750,
-        author: "Bishal Mishra",
-        image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban",
-        content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the satisfaction of checking items off.",
-        fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels throughout the day. Discover techniques like creating actionable items, setting clear titles for your lists, and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity. Note P@d's to-do list is designed for clarity and ease of use, helping you stay on top of your commitments.",
-        tags: ["to-do list", "task management", "organization", "productivity", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
-    },
-    {
-        id: 4,
-        title: "The Seamless Offline Experience: Why Note P@d is Always Available",
-        date: "2024-07-10",
-        views: 950,
-        author: "Bishal Mishra",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-        content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains how this ensures your notes are always accessible.",
-        fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device, even if you can't reach our servers. This feature makes Note P@d a truly dependable tool for capturing thoughts anytime, anywhere.",
-        tags: ["offline", "PWA", "accessibility", "web technologies", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
-    },
-    {
-        id: 5,
-        title: "Your Privacy Matters: How Note P@d Protects Your Data Locally",
-        date: "2024-07-05",
-        views: 2100,
-        author: "Bishal Mishra",
-        image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI",
-        content: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's storage, never transmitted to any server by default, and remains on your device.",
-        fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, meaning it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach and why it's essential for a trustworthy note-taking application. Bishal Mishra shares his commitment to data security and user control. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.",
-        tags: ["privacy", "security", "local storage", "data protection", "Note Pad - Modern Online Notepad, Whitepad & To-Do List"]
-    },
-    {
-        id: 6,
-        title: "Class 10 (SEE) Result for the Academic Year 2081/2082: Check Your SEE Result!",
-        date: "2025-07-01", // Assuming a future date for this
-        views: 1574, // Will be updated as it's a new post
-        author: "Bishal Mishra",
-        image: "https://techsathi.com/wp-content/uploads/2022/07/SEE-Result-1-702x459.jpg", // Generic placeholder image for SEE result
-        content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.",
-        fullContent: `
-            <p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p>
-            <p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. It's a significant milestone for all students, marking the completion of their secondary education and opening doors to new academic pursuits. Ensure you have your symbol number and date of birth ready to retrieve your results. This year's examination saw a large number of students participating nationwide, and the NEB has worked diligently to ensure timely and fair evaluation. <br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p>
-            <p>We understand the anticipation and excitement surrounding the SEE results. To make the process as smooth as possible, we have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081. These websites ensure an easy and hassle-free process for accessing your results:</p>
-            <ul>
-                <li><a href="https://www.see.gov.np/" target="_blank" rel="noopener noreferrer">Official SEE Board Website: www.see.gov.np</a></li>
-                <li><a href="https://www.neb.gov.np/" target="_blank" rel="noopener noreferrer">National Examination Board Website: https://www.neb.gov.np/</a></li>
-                <li><a href="http://www.see.ntc.net.np/" target="_blank" rel="noopener noreferrer">NTC Result Portal: http://www.see.ntc.net.np/</a></li>
-                <li><a href="https://see.nicasiabank.com/" target="_blank" rel="noopener noreferrer">NIC Asia Bank Result Portal: https://see.nicasiabank.com/</a></li>
-                <li><a href="https://see.edusanjal.com/" target="_blank" rel="noopener noreferrer">Edusanjal Result Portal: https://see.edusanjal.com/</a></li>
-                <li><a href="https://ekantipur.com/" target="_blank" rel="noopener noreferrer">eKantipur Result Portal: https://ekantipur.com/</a></li>
-                <li><a href="https://www.theconnectplus.com/" target="_blank" rel="noopener noreferrer">The Connect Plus Result Portal: https://www.theconnectplus.com/</a></li>
-                <li><a href="https://khalti.com/app" target="_blank" rel="noopener noreferrer">Khalti Result Portal: https://khalti.com/app</a></li>
-                <li><a href="https://www.neemaacademy.com/" target="_blank" rel="noopener noreferrer">Neema Academy Result Portal: https://www.neemaacademy.com/</a></li>
-                <li><a href="https://mypay.com.np/" target="_blank" rel="noopener noreferrer">MyPay Result Portal: https://mypay.com.np/</a></li>
-                <li><a href="http://www.nepaleducationportal.com/" target="_blank" rel="noopener noreferrer">Nepal Education Portal: http://www.nepaleducationportal.com/</a></li>
-                <li><a href="http://www.ayoresult.com/" target="_blank" rel="noopener noreferrer">Ayo Result Portal: http://www.ayoresult.com/</a></li>
-                <li><a href="http://www.results.matraeducation.com/" target="_blank" rel="noopener noreferrer">Matra Education Result Portal: http://www.results.matraeducation.com/</a></li>
-                <li><a href="http://www.tuteeline.com/" target="_blank" rel="noopener noreferrer">Tuteeline Result Portal: http://www.tuteeline.com/</a></li>
-            </ul>
-            <p>Congratulations to all the students who have successfully completed their SEE examinations! Your hard work and dedication have paid off. We wish you all the very best for your future academic endeavors. Remember, the SEE result is just one step in your educational journey. Focus on what you've learned and how you can apply it in your next chapter. Good luck!</p>
-        `,
-        tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82", "education", "student life", "board exams", "SEE"]
-    }
+    { id: 1, title: "Unlock Your Productivity: The Power of a Digital Notepad", date: "2024-07-25", views: 1580, author: "Bishal Mishra", image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png", content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon...", fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, and how to integrate Note P@d into your daily routine for peak performance. The ability to quickly jot down thoughts without worrying about saving frees up mental bandwidth. With Note P@d, your digital workspace adapts to you, not the other way around.", tags: ["productivity", "notepad", "digital tools", "organization", "Note Pad"] },
+    { id: 2, title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d", date: "2024-07-20", views: 1120, author: "Bishal Mishra", image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow...", fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference.", tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad"] },
+    { id: 3, title: "Conquer Your To-Do List: Effective Task Management with Note P@d", date: "2024-07-15", views: 1750, author: "Bishal Mishra", image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature...", fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels. Discover techniques like creating actionable items and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity.", tags: ["to-do list", "task management", "organization", "productivity", "Note Pad"] },
+    { id: 4, title: "The Seamless Offline Experience: Why Note P@d is Always Available", date: "2024-07-10", views: 950, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is a Progressive Web App (PWA), ensuring your notes are always accessible...", fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device.", tags: ["offline", "PWA", "accessibility", "web tech", "Note Pad"] },
+    { id: 5, title: "Your Privacy Matters: How Note P@d Protects Your Data Locally", date: "2024-07-05", views: 2100, author: "Bishal Mishra", image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", content: "Your notes should remain private. Note P@d is built with a strong focus on privacy. This post details how your data is stored locally, never transmitted to a server by default...", fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, meaning it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.", tags: ["privacy", "security", "local storage", "data protection", "Note Pad"] },
+    { id: 6, title: "Class 10 (SEE) Result for 2081/2082: Check Your SEE Result!", date: "2025-07-01", views: 1574, author: "Bishal Mishra", image: "https://techsathi.com/wp-content/uploads/2022/07/SEE-Result-1-702x459.jpg", content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results...", fullContent: `<p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p><p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. Ensure you have your symbol number and date of birth ready to retrieve your results.<br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p><p>We have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081:</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82"] }
 ];
 
-// Function to generate tags HTML
-function generateTagsHTML(tags) {
-    if (!tags || tags.length === 0) return '';
-    return tags.map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join('');
-}
-
-// Function to generate recent posts HTML (excluding current post)
+function generateTagsHTML(tags) { if (!tags || tags.length === 0) return ''; return tags.map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join(''); }
 function generateRecentPostsHTML(currentPostId) {
     let recentPostsHtml = '';
-    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date desc
+    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
     let count = 0;
     for (const post of sortedPosts) {
-        if (post.id !== currentPostId && count < 3) { // Show up to 3 recent, excluding current
+        if (post.id !== currentPostId && count < 3) {
             recentPostsHtml += `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id}); scrollToSection('#blog-${post.id}');">${post.title}</a></li>`;
             count++;
         }
     }
     return recentPostsHtml ? `<ul>${recentPostsHtml}</ul>` : '<p>No other recent posts.</p>';
 }
-
-// Function to share post
 function sharePost(platform, postId, title) {
-    const postUrl = window.location.href.split('#')[0] + `#blog-${postId}`; // URL to the specific post
+    const postUrl = window.location.href.split('#')[0] + `#blog-${postId}`;
     let shareUrl = '';
-    if (platform === 'facebook') {
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}&quote=${encodeURIComponent(title)}`;
-    } else if (platform === 'whatsapp') {
-        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + postUrl)}`;
-    }
+    if (platform === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}&quote=${encodeURIComponent(title)}`;
+    else if (platform === 'whatsapp') shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + postUrl)}`;
     window.open(shareUrl, '_blank');
 }
-
-// Function to filter blog posts based on search query
 function filterBlogPosts(query) {
     const searchTerm = query.toLowerCase().trim();
     document.querySelectorAll('.blog-post').forEach(postElement => {
         const title = postElement.querySelector('h4 a').textContent.toLowerCase();
-        // Check for both short and full content
-        const shortContent = postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '';
-        const fullContent = postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || '';
-        const tagsContainer = postElement.querySelector('.blog-tags .tags-list');
-        const tags = tagsContainer ? tagsContainer.textContent.toLowerCase() : '';
-
-        if (title.includes(searchTerm) || shortContent.includes(searchTerm) || fullContent.includes(searchTerm) || tags.includes(searchTerm)) {
+        const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || '');
+        const tags = (postElement.querySelector('.tags-list')?.textContent.toLowerCase() || '');
+        postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || tags.includes(searchTerm)) ? 'block' : 'none';
+    });
+}
+function filterBlogPostsByTag(tag) {
+    if (blogMainHeading) blogMainHeading.classList.add('hidden');
+    let backButton = document.getElementById('back-to-blog-list-btn');
+    if (!backButton) {
+        backButton = document.createElement('button');
+        backButton.id = 'back-to-blog-list-btn';
+        backButton.textContent = '← Back to All Posts';
+        backButton.className = 'read-more-btn';
+        backButton.style.marginBottom = '20px';
+        backButton.onclick = showBlogList;
+        if (blogsSection) blogsSection.insertBefore(backButton, blogsSection.firstChild);
+    }
+    const searchTerm = tag.toLowerCase().trim();
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        const postTags = Array.from(postElement.querySelectorAll('.tags-list a')).map(a => a.textContent.toLowerCase());
+        if (postTags.includes(searchTerm)) {
             postElement.style.display = 'block';
+            const contentShort = postElement.querySelector('.blog-content-short'), contentFull = postElement.querySelector('.blog-content-full'), readMoreBtn = postElement.querySelector('.read-more-btn'), footerSection = postElement.querySelector('.blog-post-footer-section');
+            if (contentShort) contentShort.classList.remove('hidden');
+            if (contentFull) contentFull.classList.add('hidden');
+            if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
+            if (footerSection) footerSection.classList.add('hidden');
+        } else postElement.style.display = 'none';
+    });
+    setTimeout(() => { const blogSection = document.getElementById('blogs-section'); if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' }); }, 100);
+}
+function showBlogList() {
+    singleBlogPostExpandedId = null;
+    if (blogsSection) blogsSection.classList.remove('hidden');
+    if (blogMainHeading) blogMainHeading.classList.remove('hidden');
+    const backButton = document.getElementById('back-to-blog-list-btn');
+    if (backButton) backButton.remove();
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        postElement.style.display = 'block'; // Make sure post is visible
+        const contentShort = postElement.querySelector('.blog-content-short'), contentFull = postElement.querySelector('.blog-content-full'), readMoreBtn = postElement.querySelector('.read-more-btn'), footerSection = postElement.querySelector('.blog-post-footer-section');
+        if (contentShort) contentShort.classList.remove('hidden');
+        if (contentFull) contentFull.classList.add('hidden');
+        if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
+        if (footerSection) footerSection.classList.add('hidden');
+    });
+}
+function showSingleBlogPost(postId) {
+    singleBlogPostExpandedId = postId;
+    if (blogsSection) blogsSection.classList.remove('hidden');
+    if (blogMainHeading) blogMainHeading.classList.add('hidden');
+    let backButton = document.getElementById('back-to-blog-list-btn');
+    if (!backButton) {
+        backButton = document.createElement('button');
+        backButton.id = 'back-to-blog-list-btn';
+        backButton.textContent = '← Back to All Posts';
+        backButton.className = 'read-more-btn';
+        backButton.style.marginBottom = '20px';
+        backButton.onclick = showBlogList;
+        if (blogsSection) blogsSection.insertBefore(backButton, blogsSection.firstChild);
+    }
+    document.querySelectorAll('.blog-post').forEach(postElement => {
+        const currentPostId = parseInt(postElement.id.replace('blog-', ''), 10);
+        const contentShort = postElement.querySelector('.blog-content-short'), contentFull = postElement.querySelector('.blog-content-full'), readMoreBtn = postElement.querySelector('.read-more-btn'), footerSection = postElement.querySelector('.blog-post-footer-section');
+        if (currentPostId === postId) {
+            postElement.style.display = 'block';
+            if (contentShort) contentShort.classList.add('hidden');
+            if (contentFull) contentFull.classList.remove('hidden');
+            if (readMoreBtn) readMoreBtn.textContent = 'Show Less ←';
+            if (footerSection) footerSection.classList.remove('hidden');
         } else {
             postElement.style.display = 'none';
         }
     });
 }
-
-// Function to filter blog posts by tag (re-renders blog list or filters)
-function filterBlogPostsByTag(tag) {
-    // Hide the main blog heading when a tag filter is applied
-    if (blogMainHeading) blogMainHeading.classList.add('hidden');
-
-    // Show the 'Back to All Posts' button
-    let backButton = document.getElementById('back-to-blog-list-btn');
-    if (!backButton) {
-        backButton = document.createElement('button');
-        backButton.id = 'back-to-blog-list-btn';
-        backButton.textContent = '← Back to All Posts';
-        backButton.className = 'read-more-btn'; // Re-use button style
-        backButton.style.marginBottom = '20px';
-        backButton.onclick = showBlogList;
-        if (blogsSection) {
-             blogsSection.insertBefore(backButton, blogsSection.firstChild);
-        }
-    }
-
-
-    const searchTerm = tag.toLowerCase().trim();
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        const tagsContainer = postElement.querySelector('.blog-tags .tags-list');
-        if (!tagsContainer) {
-            postElement.style.display = 'none'; // Hide if no tags container
-            return;
-        }
-        // Get all individual tag texts
-        const postTags = Array.from(tagsContainer.querySelectorAll('a')).map(a => a.textContent.toLowerCase());
-
-        // Display the post if it contains the tag, and ensure it's in short view with hidden footer
-        if (postTags.includes(searchTerm)) {
-            postElement.style.display = 'block';
-            const contentShort = postElement.querySelector('.blog-content-short');
-            const contentFull = postElement.querySelector('.blog-content-full');
-            const readMoreBtn = postElement.querySelector('.read-more-btn');
-            const footerSection = postElement.querySelector('.blog-post-footer-section');
-
-            if (contentShort) contentShort.classList.remove('hidden');
-            if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
-            if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
-            if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
-        } else {
-            postElement.style.display = 'none'; // Hide posts that don't match the tag
-        }
-    });
-    // Scroll to blog section if filtering from outside
-    setTimeout(() => {
-        const blogSection = document.getElementById('blogs-section');
-        if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-}
-
-
-// Function to display all blog posts in their summarized view
-function showBlogList() {
-    singleBlogPostExpandedId = null; // Reset single post state
-
-    if (blogsSection) blogsSection.classList.remove('hidden'); // Ensure the main blog section is visible
-    if (blogMainHeading) blogMainHeading.classList.remove('hidden'); // Show the main blog heading
-
-    // Remove any 'back to all posts' button if present
-    const backButton = document.getElementById('back-to-blog-list-btn');
-    if (backButton) backButton.remove();
-
-    // Loop through all blog posts and show them in short view, hide their footers
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        postElement.classList.remove('hidden'); // Ensure post itself is visible
-        const contentShort = postElement.querySelector('.blog-content-short');
-        const contentFull = postElement.querySelector('.blog-content-full');
-        const readMoreBtn = postElement.querySelector('.read-more-btn');
-        const footerSection = postElement.querySelector('.blog-post-footer-section');
-
-        if (contentShort) contentShort.classList.remove('hidden');
-        if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
-        if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
-        if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
-    });
-}
-
-// Function to display only a single blog post in its expanded view
-function showSingleBlogPost(postId) {
-    singleBlogPostExpandedId = postId; // Set current expanded post
-
-    if (blogsSection) blogsSection.classList.remove('hidden');
-    if (blogMainHeading) blogMainHeading.classList.add('hidden'); // Hide the main blog heading
-
-    // Add a 'back to all posts' button
-    let backButton = document.getElementById('back-to-blog-list-btn');
-    if (!backButton) {
-        backButton = document.createElement('button');
-        backButton.id = 'back-to-blog-list-btn';
-        backButton.textContent = '← Back to All Posts';
-        backButton.className = 'read-more-btn'; // Re-use button style
-        backButton.style.marginBottom = '20px';
-        backButton.onclick = showBlogList;
-        if (blogsSection) {
-             blogsSection.insertBefore(backButton, blogsSection.firstChild);
-        }
-    }
-
-
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        const currentPostId = parseInt(postElement.id.replace('blog-', ''), 10);
-        const contentShort = postElement.querySelector('.blog-content-short');
-        const contentFull = postElement.querySelector('.blog-content-full');
-        const readMoreBtn = postElement.querySelector('.read-more-btn');
-        const footerSection = postElement.querySelector('.blog-post-footer-section');
-
-        if (currentPostId === postId) {
-            postElement.classList.remove('hidden'); // Make sure this specific post is visible
-            if (contentShort) contentShort.classList.add('hidden');
-            if (contentFull) contentFull.classList.remove('hidden'); // Show full content
-            if (readMoreBtn) readMoreBtn.textContent = 'Show Less ←'; // Change button text
-            if (footerSection) footerSection.classList.remove('hidden'); // Show footer for this post
-        } else {
-            postElement.classList.add('hidden'); // Hide all other posts
-            if (contentFull) contentFull.classList.add('hidden'); // Ensure full content is hidden
-            if (footerSection) footerSection.classList.add('hidden'); // Ensure footer is hidden
-        }
-    });
-}
-
 function toggleBlogContent(postId) {
-    // If the clicked post is already expanded, collapse it and show all posts
-    if (singleBlogPostExpandedId === postId) {
-        showBlogList();
-    } else {
-        // Otherwise, expand the clicked post and hide others
-        showSingleBlogPost(postId);
-    }
-    // Scroll to the top of the blogs section after toggling
-    setTimeout(() => {
-        const blogSection = document.getElementById('blogs-section');
-        if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    if (singleBlogPostExpandedId === postId) showBlogList();
+    else showSingleBlogPost(postId);
+    setTimeout(() => { const blogSection = document.getElementById('blogs-section'); if (blogSection) blogSection.scrollIntoView({ behavior: 'smooth' }); }, 100);
 }
-
-
 function loadBlogPosts() {
     if (!blogList) return;
     blogList.innerHTML = '';
-    if (blogPostsData.length === 0) {
-        blogList.innerHTML = "<p>No blog posts available at the moment. Check back soon!</p>";
-        return;
-    }
-
-    // Sort posts by date, most recent first
+    if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; }
     const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
-
     sortedBlogPosts.forEach(post => {
         const blogPostDiv = document.createElement('div');
         blogPostDiv.id = `blog-${post.id}`;
         blogPostDiv.classList.add('blog-post');
-
         const shortContentHTML = `<div class="blog-content-short">${post.content}</div>`;
-        const fullContentHTML = `<div class="blog-content-full hidden">${post.fullContent}</div>`; // Ensure full content is hidden initially
-
-        blogPostDiv.innerHTML = `
-            <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4>
-            <div class="blog-post-meta">
-                <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
-                <span><i class="fas fa-user"></i> By: ${post.author}</span>
-                <span><i class="fas fa-eye"></i> ${post.views} views</span>
-            </div>
-            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" width="600" height="350">` : ''}
-            <div class="blog-post-content">
-                ${shortContentHTML}
-                ${fullContentHTML}
-                <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>
-            </div>
-            <div class="blog-post-footer-section hidden"> <!-- ADDED HIDDEN CLASS HERE -->
-                <div class="blog-tags">
-                    <h5>TAGS</h5>
-                    <div class="tags-list">
-                        ${generateTagsHTML(post.tags)}
-                    </div>
-                </div>
-                <div class="blog-share">
-                    <h5>SHARE POST</h5>
-                    <button class="share-btn" onclick="sharePost('facebook', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-facebook"></i> Facebook</button>
-                    <button class="share-btn" onclick="sharePost('whatsapp', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-                </div>
-                <div class="blog-search">
-                    <h5>SEARCH</h5>
-                    <input type="text" placeholder="Search posts..." id="blog-search-input-${post.id}" onkeyup="filterBlogPosts(this.value)">
-                </div>
-                <div class="blog-recent-posts">
-                    <h5>RECENT POSTS</h5>
-                    <ul class="recent-posts-list">
-                        ${generateRecentPostsHTML(post.id)}
-                    </ul>
-                </div>
-                <div class="blog-newsletter">
-                    <h5>NEWSLETTER</h5>
-                    <input type="email" placeholder="Enter your e-mail and subscribe" class="newsletter-email">
-                    <button class="newsletter-btn">Subscribe</button>
-                </div>
-            </div>
-        `;
+        const fullContentHTML = `<div class="blog-content-full hidden">${post.fullContent}</div>`;
+        blogPostDiv.innerHTML = `<h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4><div class="blog-post-meta"><span><i class="fas fa-calendar-alt"></i> ${post.date}</span><span><i class="fas fa-user"></i> By: ${post.author}</span><span><i class="fas fa-eye"></i> ${post.views} views</span></div>${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" width="600" height="350">` : ''}<div class="blog-post-content">${shortContentHTML}${fullContentHTML}<button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button></div><div class="blog-post-footer-section hidden"><div class="blog-tags"><h5>TAGS</h5><div class="tags-list">${generateTagsHTML(post.tags)}</div></div><div class="blog-share"><h5>SHARE POST</h5><button class="share-btn" onclick="sharePost('facebook', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-facebook"></i> Facebook</button><button class="share-btn" onclick="sharePost('whatsapp', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-whatsapp"></i> WhatsApp</button></div><div class="blog-search"><h5>SEARCH</h5><input type="text" placeholder="Search posts..." id="blog-search-input-${post.id}" onkeyup="filterBlogPosts(this.value)"></div><div class="blog-recent-posts"><h5>RECENT POSTS</h5><ul class="recent-posts-list">${generateRecentPostsHTML(post.id)}</ul></div><div class="blog-newsletter"><h5>NEWSLETTER</h5><input type="email" placeholder="Enter your e-mail" class="newsletter-email"><button class="newsletter-btn">Subscribe</button></div></div>`;
         blogList.appendChild(blogPostDiv);
     });
 }
 
-function checkPremiumStatus(feature) {
-    // This is a placeholder. Real logic would involve checking server-side or secure local flags.
-    // return localStorage.getItem(`premium_${feature}_activated`) === 'true';
-    return false; // For now, assume no premium features are active by default
-}
-
+function checkPremiumStatus(feature) { return false; }
 function updateUIForPremiumFeatures() {
     if (!premiumFeaturesSection) return; 
-
-    // Only show premium section if user is logged in, for example
     const isLoggedIn = !!getCurrentUserId(); 
-    if (!isLoggedIn && !premiumFeaturesSection.classList.contains('hidden')) {
-         premiumFeaturesSection.classList.add('hidden'); // Hide if not logged in
-    } else if (isLoggedIn && premiumFeaturesSection.classList.contains('hidden')) {
-        // premiumFeaturesSection.classList.remove('hidden'); // Decide if it should be shown by default when logged in
-        // For AdSense, better to keep it less prominent initially. Let's keep it hidden unless a specific action shows it.
-    }
-
-
+    if (!isLoggedIn && !premiumFeaturesSection.classList.contains('hidden')) premiumFeaturesSection.classList.add('hidden');
     document.querySelectorAll('.premium-feature-card').forEach(card => {
         const buyButton = card.querySelector('.premium-buy-btn');
         const manualPaymentInfo = card.querySelector('.manual-payment-info');
-        
-        if (!buyButton || !manualPaymentInfo) {
-            console.warn("Missing elements in a premium card.");
-            return;
-        }
-
+        if (!buyButton || !manualPaymentInfo) return;
         const feature = buyButton.getAttribute('data-feature');
-
         if (checkPremiumStatus(feature)) {
             buyButton.style.display = 'none'; 
             manualPaymentInfo.style.display = 'flex'; 
             manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`;
         } else {
             buyButton.style.display = 'block'; 
-            
-            // Check if QR code and text are already there to avoid duplication
             if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]')) {
-                 manualPaymentInfo.innerHTML = `
-                    <p>Pay manually via Esewa:</p>
-                    <img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
-                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
-                    <p><strong>Esewa Number:</strong> 9827801575</p>
-                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
-                `;
+                 manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`;
             }
-            // By default, keep payment info hidden until "Upgrade" is clicked.
-            // The click handler for .premium-buy-btn will set display to 'flex'.
-            // If you want it always visible (once "Upgrade" button is shown), set it here:
-            // manualPaymentInfo.style.display = 'flex'; 
-             manualPaymentInfo.style.display = 'none'; // Keep hidden until button click
+             manualPaymentInfo.style.display = 'none';
         }
     });
 }
