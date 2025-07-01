@@ -40,7 +40,9 @@
     
     <!-- intl-tel-input CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.min.css" />
-    <!-- Google reCAPTCHA API -->
+    
+    <!-- Google reCAPTCHA API SCRIPT -->
+    <!-- This script MUST be included for reCAPTCHA to work -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
@@ -349,86 +351,11 @@
         }
 
 
-        /* ReCAPTCHA styling */
-        .recaptcha-container {
-            display: flex;
-            align-items: flex-start; /* Align items to the top to match reCAPTCHA box */
-            gap: 15px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-            background-color: var(--card-light);
-            box-shadow: 0 2px 5px var(--shadow-light);
-            max-width: 300px; /* Standard reCAPTCHA width */
-            margin-left: 0;
-            margin-right: auto;
-        }
-        body.dark .recaptcha-container {
-            background-color: var(--card-dark);
-            border-color: #444;
-            box-shadow: 0 2px 5px var(--shadow-dark);
-        }
-        .recaptcha-checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #555;
-            border-radius: 3px;
-            flex-shrink: 0; /* Prevent checkbox from shrinking */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fcfcfc;
-            cursor: pointer;
-            position: relative;
-        }
-        body.dark .recaptcha-checkbox {
-            background-color: #2b2b2b;
-            border-color: #777;
-        }
-        .recaptcha-checkbox::after {
-            content: '';
-            display: none;
-            width: 8px;
-            height: 14px;
-            border: solid #2196F3; /* Checkmark color */
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-        }
-        .recaptcha-checkbox.checked::after {
-            display: block;
-        }
-        .recaptcha-text {
-            font-size: 16px;
-            color: var(--text-light);
-            flex-grow: 1;
-            padding-top: 2px; /* Align text with checkbox */
-        }
-        body.dark .recaptcha-text {
-            color: var(--text-dark);
-        }
-        .recaptcha-logo {
-            flex-shrink: 0;
-            margin-left: auto;
-            text-align: right;
-            line-height: 1.2;
-            padding-left: 10px;
-        }
-        .recaptcha-logo img {
-            width: 30px;
-            height: auto;
-            display: block;
-            margin-left: auto; /* Align logo to the right within its flex item */
-            margin-bottom: 3px;
-        }
-        .recaptcha-logo small {
-            font-size: 10px;
-            color: #888;
-            display: block;
-            text-align: right;
-        }
-        body.dark .recaptcha-logo small {
-            color: #999;
+        /* Styles for the reCAPTCHA error message */
+        #recaptcha-error {
+            color: #dc3545; /* Red color for error */
+            margin-top: 5px; 
+            font-size: 14px;
         }
 
         button[type="submit"] {
@@ -448,6 +375,13 @@
         button[type="submit"]:hover {
             background-color: #45a049; /* Darker green on hover */
             transform: translateY(-2px);
+        }
+        
+        /* Style for disabled submit button */
+        button[type="submit"]:disabled {
+            background-color: #a0a0a0; /* Grey out disabled button */
+            cursor: not-allowed;
+            transform: none; /* No hover effect when disabled */
         }
 
         /* Google Maps Styling */
@@ -580,13 +514,6 @@
             input[type="text"], input[type="email"], textarea, .iti__selected-flag, .iti__search-input {
                 font-size: 14px;
             }
-            .recaptcha-container {
-                padding: 10px;
-                gap: 10px;
-            }
-            .recaptcha-text {
-                font-size: 14px;
-            }
             button[type="submit"] {
                 font-size: 16px;
                 padding: 10px 20px;
@@ -607,11 +534,6 @@
             .get-in-touch-form p { font-size: 14px; }
             input[type="text"], input[type="email"], textarea, .iti__selected-flag, .iti__search-input {
                 padding: 10px 12px;
-            }
-            .recaptcha-container {
-                max-width: 100%;
-                margin-left: auto;
-                margin-right: auto;
             }
             .google-maps iframe {
                 height: 250px;
@@ -690,18 +612,24 @@
                 <div class="form-group">
                     <textarea id="message" placeholder="Message *" required></textarea>
                 </div>
-                <div class="recaptcha-container">
-                    <!-- This is a visual representation mimicking reCAPTCHA v2 checkbox. 
-                         Actual reCAPTCHA requires a site key and backend verification. -->
-                    <div class="recaptcha-checkbox" id="recaptchaCheckbox"></div>
-                    <span class="recaptcha-text">I'm not a robot</span>
-                    <div class="recaptcha-logo">
-                        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA logo">
-                        <small>reCAPTCHA</small>
-                        <small>Privacy - Terms</small>
+                
+                <!-- START GOOGLE RECAPTCHA V2 INTEGRATION -->
+                <div class="form-group">
+                    <!-- This is the DIV where the "I'm not a robot" checkbox will appear -->
+                    <div id="recaptcha-widget" class="g-recaptcha"
+                         data-sitekey="6LeeSHQrAAAAALPfJynl9NFBeCpqcFiiMLLoJ4v_"
+                         <!-- YOU MUST REPLACE "PASTE_YOUR_SITE_KEY_HERE" with ONE of YOUR site keys here. -->
+                         <!-- Example: data-sitekey="6LeeSHQrAAAAALPfJynl9NFBeCpqcFiiMLLoJ4v_" -->
+                         <!-- Example: data-sitekey="6LeeSHQrAAAAANKFq7xJ35qoEjOaGpJ310r8m1Tn" -->
+                         data-callback="onRecaptchaSuccess"
+                         data-expired-callback="onRecaptchaExpired">
                     </div>
+                    <div id="recaptcha-error"></div> <!-- This will display reCAPTCHA-related errors -->
                 </div>
-                <button type="submit">Submit</button>
+                <!-- END GOOGLE RECAPTCHA V2 INTEGRATION -->
+
+                <!-- The submit button is initially disabled and will be enabled by JavaScript -->
+                <button type="submit" id="submitButton" disabled>Submit</button>
             </form>
         </div>
 
@@ -777,6 +705,9 @@
 // --- GLOBAL VARIABLES (minimal set for this static page) ---
 let isSignUp = false;
 
+// New global variable to store the reCAPTCHA token
+let recaptchaToken = null;
+
 const goToTopBtn = document.getElementById('goToTopBtn');
 const authModal = document.getElementById('authModal');
 const authTitle = document.getElementById('authTitle');
@@ -784,8 +715,8 @@ const authUsername = document.getElementById('authUsername');
 const authPassword = document.getElementById('authPassword');
 const authSubmit = document.getElementById('authSubmit');
 const switchAuthModeLink = document.getElementById('switchMode');
-const confetti = document.getElementById('confetti'); // Kept for consistency, though not triggered on this page
-const loginSound = document.getElementById('loginSound'); // Kept for consistency, though not triggered on this page
+const confetti = document.getElementById('confetti');
+const loginSound = document.getElementById('loginSound');
 
 const profileContainer = document.getElementById('profile-container');
 const profileIcon = document.getElementById('profile-icon');
@@ -801,10 +732,34 @@ const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
 const manageAccountBtn = document.getElementById('manageAccountBtn'); 
 
+// Get references to your submit button and the reCAPTCHA error message div
+const submitButton = document.getElementById('submitButton'); 
+const recaptchaErrorDiv = document.getElementById('recaptcha-error');
+
 // --- SIDENAV & NAVIGATION FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
 function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
+
+// --- GOOGLE RECAPTCHA CALLBACK FUNCTIONS ---
+// These functions are called by Google reCAPTCHA when the checkbox is interacted with.
+function onRecaptchaSuccess(token) {
+    recaptchaToken = token; // Store the reCAPTCHA token
+    submitButton.disabled = false; // Enable the submit button as reCAPTCHA is completed
+    recaptchaErrorDiv.textContent = ''; // Clear any previous error message
+    console.log('reCAPTCHA successful, token received:', token);
+}
+
+function onRecaptchaExpired() {
+    recaptchaToken = null; // Clear the token if it expires
+    submitButton.disabled = true; // Disable the submit button again
+    recaptchaErrorDiv.textContent = 'reCAPTCHA expired. Please re-verify.';
+    console.warn('reCAPTCHA expired.');
+    // You might also want to explicitly reset the reCAPTCHA widget here
+    if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) {
+        grecaptcha.reset();
+    }
+}
 
 // --- EVENT LISTENERS ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -816,41 +771,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize intl-tel-input
     const phoneInputField = document.querySelector("#phone");
     if (phoneInputField) {
-        // Store the instance in a global variable for potential access
         window.iti = intlTelInput(phoneInputField, {
             initialCountry: "np", // Set initial country to Nepal (NP for Nepal)
             preferredCountries: ["np", "in", "us", "gb", "ca"], // Prefer Nepal, India, US, UK, Canada
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js", // Required for formatting/validation
         });
 
-        // Add a check to confirm if the intl-tel-input was initialized properly
-        // The intl-tel-input library wraps the input in a div with class 'iti'
-        // If the 'iti' class is not present on a parent, it likely failed.
         if (!phoneInputField.closest('.iti')) {
             console.error("intl-tel-input failed to initialize on the #phone input.");
             console.error("This often happens when running directly from the file system (file:///...).");
             console.error("Please run the page using a local web server (e.g., http://localhost:8000) for full functionality.");
-            // Optionally, you can show an alert to the user here as well:
-            // alert("Phone number input features are not fully loaded. Please ensure you are viewing this page on a web server (e.g., http://localhost) and not directly from your file system (file:///).");
         } else {
             console.log("intl-tel-input initialized successfully.");
         }
     }
 
-    // Handle reCAPTCHA checkbox visual toggle
-    const recaptchaCheckbox = document.getElementById('recaptchaCheckbox');
-    if (recaptchaCheckbox) {
-        recaptchaCheckbox.addEventListener('click', () => {
-            recaptchaCheckbox.classList.toggle('checked');
-            // In a real scenario, this would trigger reCAPTCHA API verification
-            // alert("reCAPTCHA checkbox clicked! (No actual verification in this demo)");
-        });
-    }
-
     // Handle contact form submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
+        contactForm.addEventListener('submit', function(event) { // Keep as non-async for simplicity in this "easiest" version
             event.preventDefault(); // Prevent default form submission
 
             const fullName = document.getElementById('fullName').value.trim();
@@ -858,10 +797,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const subject = document.getElementById('subject').value.trim();
             const message = document.getElementById('message').value.trim();
             let phone = '';
-            if (window.iti && phoneInputField) { // Check if iti instance exists
-                phone = window.iti.getNumber(); // Get formatted phone number from the instance
+            if (window.iti && phoneInputField) { 
+                phone = window.iti.getNumber(); 
             }
-            const isRecaptchaChecked = recaptchaCheckbox ? recaptchaCheckbox.classList.contains('checked') : false;
+            
+            // --- CHECK RECAPTCHA TOKEN ON CLIENT-SIDE ---
+            if (!recaptchaToken) {
+                recaptchaErrorDiv.textContent = 'Please complete the reCAPTCHA.';
+                alert('Please complete the reCAPTCHA before submitting.');
+                return;
+            }
+            recaptchaErrorDiv.textContent = ''; // Clear error if reCAPTCHA is completed
 
             if (!fullName || !email || !subject || !message) {
                 alert('Please fill in all required fields (marked with *)');
@@ -873,49 +819,51 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Optional: Basic phone number validation (intl-tel-input provides more robust options)
-            if (window.iti && !window.iti.isValidNumber()) { // Use iti instance for validation
+            if (window.iti && !window.iti.isValidNumber()) { 
                 alert('Please enter a valid phone number.');
                 return;
             }
+            
+            // ********************************************************************************
+            // *** IMPORTANT SECURITY WARNING FOR "100% WORKING" RECAPTCHA ***
+            // ********************************************************************************
+            // The following `alert` simulates success. In a real application, you would:
+            // 1. Send the form data AND `recaptchaToken` to YOUR SERVER using `fetch`.
+            // 2. On your server, you would make a POST request to Google's reCAPTCHA API (https://www.google.com/recaptcha/api/siteverify)
+            //    using your PRIVATE SECRET KEY (NEVER expose this key in client-side code).
+            // 3. Your server would check if Google's response indicates successful verification.
+            // 4. ONLY IF THE SERVER VERIFICATION IS SUCCESSFUL, then your server would proceed
+            //    to send the email or save the data.
+            // 5. Your server would send a success/failure response back to THIS client-side code.
+            // ********************************************************************************
+            // FOR THIS DEMO, WE ARE SKIPPING THE SERVER-SIDE VERIFICATION FOR SIMPLICITY.
+            // THIS IS NOT SECURE FOR PRODUCTION USE.
+            // ********************************************************************************
 
-            if (!isRecaptchaChecked) {
-                alert('Please confirm you are not a robot.');
-                return;
-            }
-
-            // Simulate form submission
-            alert('Your message has been sent successfully! We will get back to you shortly.');
+            alert('Your message has been sent successfully! (NOTE: reCAPTCHA was only verified client-side in this demo. For real security, you NEED a server-side verification step.)');
             
             // Clear form fields
             contactForm.reset();
-            if (recaptchaCheckbox) {
-                recaptchaCheckbox.classList.remove('checked');
-            }
-            if (window.iti) { // Clear the phone number input using the iti instance
+            if (window.iti) { 
                 window.iti.setNumber(""); 
             }
             
-            // In a real application, you would send this data to your server:
-            /*
-            const formData = {
-                fullName,
-                email,
-                phone: phone, // Use the formatted phone number
-                subject,
-                message,
-                // recaptchaResponse: getRecaptchaResponse() // Actual reCAPTCHA token
-            };
-            console.log('Form Data:', formData);
-            // Example: fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
-            */
+            // Reset reCAPTCHA after submission (whether simulated or real)
+            // This prepares the widget for another submission
+            if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) {
+                grecaptcha.reset(); 
+            }
+            recaptchaToken = null; // Clear the stored token
+            submitButton.disabled = true; // Disable button until reCAPTCHA is re-completed
+
+            // If you later decide to use a backend, you'd re-introduce a fetch call here.
+            // For now, this is the "easiest" way to see it "work" without a backend.
         });
     }
 });
 
 window.onload = function() {
     // Only initialize Google Sign-In if the elements related to it exist and if the library is loaded.
-    // This reduces potential errors on pages where it's not the primary interaction point.
     if (document.getElementById('googleSignInDiv')) {
         if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
             initGoogleSignIn();
