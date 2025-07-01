@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <title>Terms of Service - Note Pad - Modern Online Notepad, Whiteboard & To-Do List</title>
+    
+    <meta name="description" content="Read the Terms of Service for Note Pad to understand the legal agreement between you and our service."/>
+    
+    <meta name="keywords" content="terms of service, terms and conditions, legal, user agreement, Note Pad"/>
+    
+    <meta name="author" content="Bishal Mishra">
+    <meta name="robots" content="index, follow"> 
+
+    <link rel="canonical" href="https://bishalmishra.com/terms-of-service.html">
+
+    <meta property="og:title" content="Terms of Service - Note Pad - Modern Online Notepad, Whiteboard & To-Do List" />
+    <meta property="og:description" content="Read the Terms of Service for Note Pad." />
+    <meta property="og:image" content="https://i.imgur.com/kR1k1jU.png" />
+    <meta property="og:url" content="https://bishalmishra.com/terms-of-service.html" />
+    <meta property="og:type" content="website" />
+    
+    <meta name="msvalidate.01" content="F28FD042305E7D060B4355FA59E662D8" />
+    <link rel="manifest" href="manifest.json">
+        
+    <meta name="yandex-verification" content="af349c5874d738ed" />
+   
+    <link rel="icon" type="image/png" href="images/favicon.png"> 
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- AdSense SCRIPT (typically in HEAD) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3010913100191778"
+         crossorigin="anonymous"></script>
+    <!-- End AdSense SCRIPT -->
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-light: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            --text-light: #333;
+            --card-light: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+
+            --bg-dark: linear-gradient(120deg, #2b2b2b 0%, #1e1e1e 100%);
+            --text-dark: #e0e0e0;
+            --card-dark: #2c2c2c;
+            --shadow-dark: rgba(0, 0, 0, 0.25);
+           
+            --primary: #8c53ff;
+            --primary-dark: #7042cc;
+            --primary-light-transparent: rgba(140, 83, 255, 0.1);
+            --radius: 12px;
+        }
+
+        html { height: 100%; scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.5s ease, color 0.5s ease; display: flex; flex-direction: column; min-height: 100vh; }
+        body.dark { background: var(--bg-dark); color: var(--text-dark); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; } 
+        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
+        header {
+            display: flex;
+            justify-content: flex-start; /* Default for mobile */
+            align-items: center;
+            position: relative;
+        }
+        .header-content {
+            text-align: center;
+            flex-grow: 1; /* Allows it to take center space */
+        }
+        body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
+        footer { margin-top: auto; padding: 20px;  }
+        footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        footer a:hover { opacity: 0.8; text-decoration: underline; }
+        footer p { margin-bottom: 10px; } 
+        
+        .sidenav {
+            height: 100%;
+            width: 0; 
+            position: fixed;
+            z-index: 1002; 
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        body.dark .sidenav {
+            background-color: rgba(30, 30, 30, 0.95);
+        }
+
+        .sidenav a {
+            padding: 10px 15px 10px 32px;
+            text-decoration: none;
+            font-size: 20px; 
+            font-weight: 600;
+            color: var(--text-light);
+            display: block;
+            transition: 0.3s;
+        }
+        body.dark .sidenav a {
+            color: var(--text-dark);
+        }
+
+        .sidenav a:hover {
+            color: var(--primary);
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .open-nav-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.2s;
+            position: absolute;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .open-nav-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Hide app-specific and blog section elements on static pages */
+        #menu-bar, #editor, #notes, #whiteboard-container, #calendar-container, 
+        #blogs-section, #faq-section, #premium-features-section, 
+        #overview, #how-it-works, #about { 
+            display: none; 
+        }
+
+        .info-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section, #contact-us-section
+        { 
+            background: var(--card-light); 
+            padding: 25px; 
+            border-radius: var(--radius); 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            margin-bottom: 25px; 
+            text-align: left; 
+        }
+        body.dark .info-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section, body.dark #contact-us-section { 
+            background: var(--card-dark); 
+            box-shadow: 0 4px 15px var(--shadow-dark); 
+        }
+       
+        h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
+        .info-section h3, #privacy-policy-section h3, #terms-of-service-section h3, #disclaimer-section h3 { text-align: left;  } 
+        .info-section p, .info-section ul, 
+        #privacy-policy-section p, #privacy-policy-section ul, 
+        #terms-of-service-section p, #terms-of-service-section ul, 
+        #disclaimer-section p, #disclaimer-section ul  { 
+            margin-bottom: 15px; 
+        }
+        .info-section ul { list-style: none; padding-left: 0; }
+        .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
+        .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
+        #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
+
+        /* Contact Us Styling */
+        #contact-us-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #contact-us-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        #contact-us-section h2 { text-align: left; margin-bottom: 20px; }
+        #contact-us-section ul { list-style: none; padding: 0; margin-top: 15px; }
+        #contact-us-section li { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; }
+        #contact-us-section li svg { width: 24px; height: 24px; margin-right: 12px; fill: var(--primary); }
+        #contact-us-section li a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        #contact-us-section li a:hover { text-decoration: underline; color: var(--primary-dark); }
+        #contact-us-section li span { color: var(--text-light); }
+        body.dark #contact-us-section li span { color: var(--text-dark); }
+
+        /* AdSense Container Style (Hidden on static pages unless specified otherwise) */
+        .adsense-ad-container { 
+            margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; 
+            background-color: var(--card-light); border-radius: var(--radius); 
+            box-shadow: 0 2px 8px var(--shadow-light); 
+            display: none; /* Explicitly hidden on static pages */
+        }
+        body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
+        
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .profile-container {
+            position: relative;
+            z-index: 999;
+            margin-left: auto; /* Push to the right in flex container */
+        }
+        #profile-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease-in-out;
+            object-fit: cover;
+        }
+        #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
+        .profile-dropdown {
+            position: absolute;
+            top: 55px; 
+            right: 0; 
+            width: 260px;
+            background: var(--card-light);
+            border-radius: var(--radius);
+            box-shadow: 0 8px 25px var(--shadow-light);
+            border: 1px solid #eee;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
+        .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
+        body.dark .dropdown-header { border-bottom-color: #444; }
+        .dropdown-header img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .dropdown-header span { font-weight: 600; font-size: 16px; word-break: break-all; }
+        body.dark .dropdown-header small { color: #bbb !important; }
+        .dropdown-menu { list-style: none; padding: 10px 0; margin: 0; }
+        .dropdown-menu li a { display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none; color: var(--text-light); font-size: 14px; transition: background-color 0.2s ease; }
+        body.dark .dropdown-menu li a { color: var(--text-dark); }
+        .dropdown-menu li a:hover { background-color: #f5f5f5; }
+        body.dark .dropdown-menu li a:hover { background-color: #3e3e3e; }
+        .dropdown-menu li.divider { height: 1px; margin: 8px 0; background: #e0e0e0; }
+        body.dark .dropdown-menu li.divider { background: #444; }
+        #emailVerifiedStatus .fa-check-circle { color: #28a745; } 
+        #emailVerifiedStatus .fa-times-circle { color: #dc3545; } 
+        
+        .modal, .welcome-popup { display: none; } /* Explicitly hide popups/modals */
+        #find-replace-dialog { display: none; } /* Explicitly hide find/replace */
+        
+        #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: all 0.3s ease-in-out; display: flex; align-items: center; justify-content: center; } 
+        #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } 
+        body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
+        
+        .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; display: none !important; } 
+        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+        /* --- MEDIA QUERIES --- */
+        
+        /* Desktop Layout */
+        @media (min-width: 1024px) {
+            header {
+                justify-content: space-between;
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+            .header-content {
+                flex-grow: 0; /* Don't grow to push profile icon */
+                margin: 0 auto; /* Center title */
+            }
+            .open-nav-btn {
+                position: relative; /* Take it out of absolute positioning */
+                left: auto;
+                top: auto;
+                transform: none;
+            }
+            .profile-container {
+                position: relative; /* Take it out of fixed positioning */
+                top: auto;
+                right: auto;
+                margin-left: 20px; /* Space from nav button */
+            }
+        }
+
+        /* Tablet and smaller devices */
+        @media (max-width: 768px) { 
+            .sidenav a { font-size: 18px; }
+            h2, h3 { font-size: 20px; }
+        }
+        
+        /* Mobile phones */
+        @media (max-width: 480px) {
+            .profile-container {
+                position: fixed; /* Keep it fixed on small mobile */
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="index.html" onclick="closeNavAndGoTo('index.html')">Home</a>
+  <a href="index.html#overview" onclick="closeNavAndGoTo('index.html#overview')">Overview</a>
+  <a href="about.html" onclick="closeNavAndGoTo('about.html')">About</a>
+  <a href="blogs.html" onclick="closeNavAndGoTo('blogs.html')">Blog</a>
+  <a href="index.html#faq-section" onclick="closeNavAndGoTo('index.html#faq-section')">FAQ</a>
+  <a href="privacy-policy.html" onclick="closeNavAndGoTo('privacy-policy.html')">Privacy Policy</a>
+  <a href="terms-of-service.html" onclick="closeNavAndGoTo('terms-of-service.html')">Terms of Service</a>
+  <a href="disclaimer.html" onclick="closeNavAndGoTo('disclaimer.html')">Disclaimer</a>
+  <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
+</div>
+
+<header>
+    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <div class="header-content">
+        <h1>
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                📝 NOTE_<span style="color:#ffc107">P@D</span>
+            </a>
+        </h1>
+        <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
+    </div>
+    <div id="profile-container" class="profile-container hidden">
+        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+        <div id="profile-dropdown" class="profile-dropdown hidden">
+            <div class="dropdown-header">
+                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                <div>
+                    <span id="userNameDisplay">User Name</span>
+                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                </div>
+            </div>
+            <ul class="dropdown-menu">
+                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                <li class="divider"></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<input type="file" id="photoUpload" class="hidden" accept="image/*">
+
+<main id="main-container" class="container">
+    <div id="terms-of-service-section" class="info-section">
+        <h3>Terms of Service for Note P@d</h3>
+        <p><strong>Last Updated:</strong> July 26, 2025</p>
+
+        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the [www.bishalmishra.com] website (the "Service") operated by Note P@d ("us", "we", or "our").</p>
+        <p>Your access to and use of the Service is conditioned upon your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who wish to access or use the Service.</p>
+        <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you do not have permission to access the Service.</p>
+
+        <h4>1. Accounts</h4>
+        <p>When you create an account with us, you guarantee that you are above the age of 13 (or the applicable age of majority in your jurisdiction) and that the information you provide us is accurate, complete, and current at all times. Inaccurate, incomplete, or obsolete information may result in the immediate termination of your account on the Service.</p>
+        <p>You are responsible for maintaining the confidentiality of your account and password, including but not limited to the restriction of access to your computer and/or account. You agree to accept responsibility for any and all activities or actions that occur under your account and/or password.</p>
+
+        <h4>2. Use of the Service</h4>
+        <p>Note P@d provides a platform for note-taking, whiteboard drawing, to-do list management, and calendaring. You agree not to use the Service:</p>
+        <ul>
+            <li>For any unlawful purpose or in any way that interrupts, damages, impairs or renders the Service less efficient.</li>
+            <li>To transmit, upload, or post any material which is defamatory, offensive, obscene, or otherwise illegal, or which may cause annoyance, inconvenience, or needless anxiety.</li>
+            <li>To attempt to gain unauthorized access to any part of the Service, or any systems or networks connected to the Service.</li>
+            <li>To store or share content that infringes on the intellectual property rights of others.</li>
+        </ul>
+        <p>We reserve the right to terminate or restrict your access to the Service if you violate these Terms, without notice.</p>
+        
+        <h4>3. Content Ownership and Responsibility</h4>
+        <p><strong>Your Content:</strong> You retain all ownership rights to the content you create, upload, or store using the Service ("User Content"). For content stored locally in your browser, it remains solely on your device. If you use cloud sync features (if available), you grant us a limited license to store, process, and display your User Content solely for the purpose of providing the Service to you.</p>
+        <p><strong>Our Content:</strong> The Service and its original content (excluding User Content), features, and functionality are and will remain the exclusive property of Note P@d and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.</p>
+
+        <h4>4. Premium Features and Payments</h4>
+        <p>Coming Soon</p>
+        <p>Certain features of the Service may be offered on a subscription basis ("Premium Features"). If you choose to purchase Premium Features, you agree to pay the fees specified. Payments are typically processed through third-party payment processors (e.g., Esewa). All payment terms will be disclosed to you prior to purchase.</p>
+        <p>We reserve the right to change our subscription plans or adjust pricing for our services in any manner and at any time as we may determine in our sole and absolute discretion. Any price changes or changes to your subscription plan will take effect following notice to you.</p>
+
+        <h4>5. Intellectual Property</h4>
+        <p>The Service and its original content, features, and functionality are owned by Bishal Mishra and are protected by copyright, trademark, and other intellectual property laws.</p>
+
+        <h4>6. Disclaimer of Warranties; Limitation of Liability</h4>
+        <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties, expressed or implied, regarding the operation or availability of the Service, or the information, content, materials, or products included thereon. To the fullest extent permissible by applicable law, we disclaim all warranties, express or implied, including, but not limited to, implied warranties of merchantability and fitness for a particular purpose.
+        <p>We will not be liable for any damages of any kind arising from the use of this Service, including, but not limited to direct, indirect, incidental, punitive, and consequential damages. You are responsible for backing up data stored locally. We are not responsible for any loss of data.</p>
+
+        <h4>7. Termination</h4>
+        <p>We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.</p>
+        <p>If you wish to terminate your account, you may simply discontinue using the Service or contact us to request account deletion.</p>
+
+        <h4>8. Governing Law</h4>
+        <p>These Terms shall be governed and construed in accordance with the laws of Nepal, without regard to its conflict of law provisions.</p>
+
+        <h4>9. Changes to Terms</h4>
+        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+        <p>By continuing to access or use our Service after any revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you are no longer authorized to use the Service.</p>
+
+        <h4>10. Contact Us</h4>
+        <p>If you have any questions about these Terms, please contact us using the details in the <a href="contact.html">Contact Us</a> section of this website.</p>
+    </div>
+</main>
+
+<!-- Auth Modal (Globally present but hidden by default for non-app pages) -->
+<div id="authModal" class="modal hidden"> 
+    <div class="modal-content"> 
+        <h2 id="authTitle">Sign In to Note P@d</h2> 
+        <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> 
+        <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> 
+        <button id="authSubmit">Sign In</button> 
+        <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> 
+        <a href="#" id="forgotPassword">Forgot Password?</a> 
+        <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> 
+    </div> 
+</div>
+<button id="goToTopBtn" title="Go to top" aria-label="Go to top">↑</button>
+<div id="confetti" class="confetti hidden">🎉</div>
+<audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+<footer>
+   <p>Copyright © <span id="currentYear"></span> <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Bishal Mishra</a> | All Rights Reserved.</p>
+   <div>
+        <a href="privacy-policy.html">Privacy Policy</a> |
+        <a href="terms-of-service.html">Terms of Service</a> |
+        <a href="disclaimer.html">Disclaimer</a> |
+        <a href="contact.html">Contact Us</a>
+   </div>
+</footer>
+
+<script>
+// --- GLOBAL VARIABLES (minimal set for this static page) ---
+let isSignUp = false;
+
+const goToTopBtn = document.getElementById('goToTopBtn');
+const authModal = document.getElementById('authModal');
+const authTitle = document.getElementById('authTitle');
+const authUsername = document.getElementById('authUsername');
+const authPassword = document.getElementById('authPassword');
+const authSubmit = document.getElementById('authSubmit');
+const switchAuthModeLink = document.getElementById('switchMode');
+const confetti = document.getElementById('confetti'); // Kept for consistency, though not triggered on this page
+const loginSound = document.getElementById('loginSound'); // Kept for consistency, though not triggered on this page
+
+const profileContainer = document.getElementById('profile-container');
+const profileIcon = document.getElementById('profile-icon');
+const profileDropdown = document.getElementById('profile-dropdown');
+const userPic = document.getElementById('userPic');
+const userNameDisplay = document.getElementById('userNameDisplay');
+const userEmailDisplay = document.getElementById('userEmailDisplay');
+const emailVerifiedStatus = document.getElementById('emailVerifiedStatus');
+const logoutBtn = document.getElementById('logoutBtn');
+const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
+const photoUploadInput = document.getElementById('photoUpload');
+const manageAccountBtn = document.getElementById('manageAccountBtn'); 
+
+// --- SIDENAV & NAVIGATION FUNCTIONS ---
+function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
+function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
+
+// --- EVENT LISTENERS ---
+document.addEventListener("DOMContentLoaded", () => {
+    loadDarkMode();
+    checkAuthStatus(); 
+    attachEventListeners();
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+});
+
+window.onload = function() {
+    // Only initialize Google Sign-In if the elements related to it exist and if the library is loaded.
+    // This reduces potential errors on pages where it's not the primary interaction point.
+    if (document.getElementById('googleSignInDiv')) {
+        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            initGoogleSignIn();
+        } else {
+            let attempts = 0;
+            const intervalId = setInterval(() => {
+                attempts++;
+                if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                    initGoogleSignIn();
+                    clearInterval(intervalId);
+                } else if (attempts > 20) {
+                    console.error("Google Sign-In did not initialize in time.");
+                    if(document.getElementById('googleSignInDiv')) {
+                         document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
+                    }
+                    clearInterval(intervalId);
+                }
+            }, 500);
+        }
+    }
+};
+
+function attachEventListeners() {
+    // Go-to-top button
+    window.onscroll = () => { 
+        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
+    };
+    if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Profile Dropdown functionality
+    if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
+    document.addEventListener('click', closeDropdownOnClickOutside);
+    
+    // Auth-related button handlers (these functions exist but won't be triggered by UI on this page)
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
+    if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
+    if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
+    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        if(photoUploadInput) photoUploadInput.click();
+    });
+    if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
+
+    // Auth modal specific handlers (these are for the modal itself, which is hidden)
+    if (authSubmit) authSubmit.onclick = handleAuthSubmit;
+    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
+        e.preventDefault(); 
+        isSignUp = !isSignUp; 
+        if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; 
+        if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; 
+        switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; 
+    };
+}
+
+// --- PROFILE & AUTHENTICATION FUNCTIONS (shared logic) ---
+function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
+function closeDropdownOnClickOutside(event) { 
+    if (profileContainer && !profileContainer.contains(event.target) && 
+        profileDropdown && !profileDropdown.classList.contains('hidden')) {
+        profileDropdown.classList.add('hidden');
+    }
+    // Also close authModal if open and clicked outside (though it should be hidden by default on static pages)
+    if (authModal && !authModal.contains(event.target) && !authModal.classList.contains('hidden')) {
+        authModal.classList.add('hidden');
+    }
+}
+
+function checkAuthStatus() {
+    const currentUserId = getCurrentUserId();
+    if (currentUserId) {
+        showUserInfo();
+    } else {
+        if(profileContainer) profileContainer.classList.add('hidden');
+    }
+}
+
+function showUserInfo() {
+    const username = localStorage.getItem('currentUser');
+    const picUrl = localStorage.getItem('userPic');
+    const email = localStorage.getItem('userEmail');
+    const isVerified = localStorage.getItem('emailVerified') === 'true';
+
+    if (!username || !profileContainer) return;
+
+    profileContainer.classList.remove('hidden');
+    
+    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
+    if(profileIcon) profileIcon.src = avatarUrl;
+    if(userPic) userPic.src = avatarUrl;
+    if(userNameDisplay) userNameDisplay.textContent = username;
+    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
+
+    if (emailVerifiedStatus) {
+        if (isVerified) {
+            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
+            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
+        } else {
+            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
+            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
+        }
+    }
+    
+    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
+
+    const provider = localStorage.getItem('authProvider');
+    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
+        if (provider === 'google') {
+            resetPasswordBtn.parentElement.style.display = 'none';
+            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
+                verifyEmailBtn.parentElement.style.display = 'none';
+            }
+        } else {
+            resetPasswordBtn.parentElement.style.display = 'block';
+        }
+    }
+}
+
+function handleAuthSubmit() {
+    // This function is present because it's part of the common auth script.
+    // On static pages, the auth modal should typically not be visible unless manually triggered.
+    if(!authUsername || !authPassword) return;
+    const username = authUsername.value.trim();
+    const password = authPassword.value.trim();
+    if (!username || !password) { alert("Please fill in all fields"); return; }
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    if (isSignUp) {
+        if (users[username]) { alert("Username (email) already exists."); return; }
+        users[username] = password; 
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem('authProvider', 'email');
+        localStorage.setItem('userEmail', username);
+        localStorage.setItem('emailVerified', 'false');
+        localStorage.setItem("currentUser", username);
+        loginSuccess(username, "", username);
+    } else {
+        if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; }
+        if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username);
+        if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email');
+        if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false');
+        localStorage.setItem("currentUser", username);
+        loginSuccess(username, "", username);
+    }
+}
+
+function handleLogout(e) {
+    if(e) e.preventDefault();
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userPic");
+    localStorage.removeItem("currentUserId");
+    localStorage.removeItem("emailVerified");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("authProvider");
+    
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+    }
+    
+    if(profileContainer) profileContainer.classList.add('hidden');
+    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
+    
+    // If the auth modal happened to be open, ensure it's hidden after logout
+    if(authModal) authModal.classList.add("hidden"); 
+}
+
+function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        localStorage.setItem('userPic', e.target.result);
+        showUserInfo(); 
+        alert("Profile photo updated!");
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleVerifyEmail(e) {
+    e.preventDefault();
+    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
+    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
+    
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
+    const userCode = prompt("Please enter the 6-digit verification code:");
+    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
+    else if (userCode) { alert("Incorrect code. Please try again."); } 
+    else { alert("Verification cancelled."); }
+}
+
+function handleResetPassword(e) {
+    e.preventDefault();
+    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
+    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
+
+    const newPassword = prompt("Enter your new password (min 4 characters):");
+    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
+
+    const confirmPassword = prompt("Confirm your new password:");
+    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
+
+    const username = localStorage.getItem('userEmail');
+    if(!username) { alert("User email not found. Cannot reset password."); return;}
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
+    else { alert("An error occurred. Could not find user to update password."); }
+}
+
+function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
+
+function loginSuccess(username, picUrl, userId) {
+    localStorage.setItem("currentUserId", userId);
+    if(picUrl) localStorage.setItem("userPic", picUrl);
+    showUserInfo();
+    if(authModal) authModal.classList.add("hidden"); // Ensure modal is hidden on successful login
+    if(confetti) { confetti.classList.remove("hidden"); setTimeout(() => { confetti.classList.add("hidden"); }, 1200); }
+    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
+}
+
+function initGoogleSignIn() {
+    try {
+        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); return; }
+        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
+        const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
+        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
+        else console.warn("Google Sign-In button container not found.");
+    } catch (error) {
+        console.error("Google GSI could not be initialized.", error);
+        const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
+        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
+    }
+}
+
+function jwtDecode(token) { 
+    try { 
+        return JSON.parse(atob(token.split('.')[1])); 
+    } catch (e) { 
+        console.error("Failed to decode JWT", e); 
+        return null; 
+    } 
+}
+
+function handleGoogleSignIn(response) {
+    const data = jwtDecode(response.credential);
+    if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
+    const name = data.name || data.email;
+    const picture = data.picture || "";
+    const userId = data.sub;
+    const email = data.email;
+    const emailVerified = data.email_verified === true || data.email_verified === 'true';
+    localStorage.setItem("currentUser", name);
+    localStorage.setItem('authProvider', 'google');
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('emailVerified', emailVerified.toString());
+    loginSuccess(name, picture, userId);
+}
+
+function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
+
+// --- DARK MODE ---
+function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
+function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('darkMode', document.body.classList.contains('dark')); }
+
+// --- UTILITY (Password Hashing for local storage, only used by auth) ---
+async function hashPassword(password) { 
+    if (!password) return ''; 
+    try {
+        const encoder = new TextEncoder(); 
+        const data = encoder.encode(password); 
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data); 
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); 
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch(e) { 
+        console.error("Password hashing failed", e); 
+        return 'error_hashing_password'; 
+    }
+}
+</script>
+</body>
+</html>
