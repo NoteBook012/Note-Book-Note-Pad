@@ -75,7 +75,7 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What is Note Pad?",
+            "name": "What is Note P@d?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Note P@d is a free, versatile online application offering a modern notepad, a digital whiteboard for drawing, a to-do list manager, and a calendar. It's designed to be fast, secure, work offline (as a PWA), and save your data locally in your browser for basic use. Optional account features provide extended capabilities like cloud sync."
@@ -653,6 +653,46 @@
         .adsense-ad-container { margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; background-color: var(--card-light); border-radius: var(--radius); box-shadow: 0 2px 8px var(--shadow-light); }
         body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
         
+        /* NEW STYLES FOR FEATURES SECTION */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid columns */
+            gap: 25px; /* Space between cards */
+            margin-top: 25px; /* Space from element above */
+            margin-bottom: 25px; /* Space from element below */
+        }
+
+        .feature-card {
+            text-align: center; /* Center the icon, title, and text */
+            padding: 30px; /* More padding for a spacious look */
+            margin-bottom: 0 !important; /* Override default .info-section margin-bottom, as gap handles it */
+        }
+
+        .feature-card .feature-icon {
+            font-size: 48px; /* Large icon size */
+            color: var(--primary); /* Use primary color for icons */
+            margin-bottom: 20px; /* Space between icon and title */
+            display: flex; /* Use flexbox to truly center the icon vertically */
+            justify-content: center;
+            align-items: center;
+            height: 60px; /* Fixed height for icon area to ensure consistency across cards */
+        }
+
+        .feature-card h3 {
+            text-align: center; /* Override specific info-section h3 alignment to keep it centered */
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-light); /* Inherit text color */
+        }
+
+        body.dark .feature-card p {
+            color: var(--text-dark); /* Dark mode adjustment for text */
+        }
+        /* END NEW STYLES */
+
         /* --- MEDIA QUERIES --- */
         
         /* Desktop Layout */
@@ -678,16 +718,22 @@
                 right: auto;
                 margin-left: 20px; /* Space from nav button */
             }
+            /* Apply desktop-two-column to the main content area that holds editor/notes/etc. */
             main.container.desktop-two-column {
                 display: grid;
                 grid-template-columns: 2fr 1.2fr;
                 gap: 25px;
                 align-items: flex-start;
             }
+            /* Remove bottom margin for items within the main desktop-two-column grid */
             main.container.desktop-two-column #notes,
             main.container.desktop-two-column #editor,
             main.container.desktop-two-column #whiteboard-container {
-                margin-bottom: 0; /* Remove bottom margin in grid layout */
+                margin-bottom: 0; 
+            }
+            /* Adjust calendar container if it's explicitly part of the two-column layout */
+            main.container.desktop-two-column #calendar-container {
+                 margin-bottom: 0; /* Adjust as needed for grid */
             }
         }
 
@@ -763,7 +809,7 @@
 </header>
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
-<main id="main-container" class="container desktop-two-column">
+<main id="main-container" class="container desktop-two-column"> <!-- main-container keeps desktop-two-column -->
     <div id="menu-bar">
         <button onclick="newDoc()">📝 New</button>
         <button onclick="saveNote()">💾 Save</button>
@@ -794,6 +840,7 @@
         </div>
     </div>
 
+    <!-- These sections are part of the desktop-two-column grid (editor/notepad tool and notes list) -->
     <div id="editor">
         <input type="text" id="note-title" placeholder="Your Note Title..." />
         <textarea id="note-text" placeholder="Start typing... your work is saved automatically." rows="10"></textarea>
@@ -858,6 +905,46 @@
         <div id="note-list"></div>
     </div>
    
+    <!-- NEW FEATURE SECTIONS START HERE (MOVED AFTER #notes) -->
+    <div class="features-grid">
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-pen-to-square"></i></div>
+            <h3>Simple Interface</h3>
+            <p>Nothing too fancy. Just a plain-text editor with a beautifully crafted minimalistic interface that helps you stay focused on what you need to write.</p>
+        </div>
+
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-cloud-arrow-down"></i></div>
+            <h3>Autosave</h3>
+            <p>Never lose your notes with its auto save feature. Every time you make changes, it will automatically store the data locally within your browser.</p>
+        </div>
+
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-bars"></i></div>
+            <h3>Word Count</h3>
+            <p>Track how many words there are in your text document with real-time word counter. The number of words will update as you type and make changes.</p>
+        </div>
+
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-arrows-rotate"></i></div>
+            <h3>Find & Replace</h3>
+            <p>Find and replace allows you to quickly search for a word or phrase in the whole page and substitute it with something else.</p>
+        </div>
+
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-spell-check"></i></div>
+            <h3>Spellcheck</h3>
+            <p>It takes advantage of your browser's native spellchecker to instantly find spelling mistakes. Simply right-click the red underlined word and choose the correct spelling.</p>
+        </div>
+
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-print"></i></div>
+            <h3>Print</h3>
+            <p>Getting a hard copy of your notes has never been easier. You can prepare the document for printing or save it as a PDF file with a single click of a button.</p>
+        </div>
+    </div>
+    <!-- NEW FEATURE SECTIONS END HERE -->
+
     <div class="info-section" id="overview">
         <h3>Welcome to Note P@d: Your All-in-One Digital Workspace</h3>
         <p>Note P@d is more than just an online notepad; it's your versatile, browser-based companion designed for modern productivity. Whether you're capturing fleeting ideas, journaling your thoughts, brainstorming new projects, drafting important content, sketching diagrams, or managing your daily tasks, Note P@d offers a fast, secure, and efficient experience. Forget bulky software installations – open Note P@d in your browser, and you're ready to create, organize, and achieve. It's lightweight, incredibly fast, and meticulously focused on providing a seamless, distraction-free environment for all your needs.</p>
@@ -951,6 +1038,7 @@
             <li><strong>No Tracking (Anonymous Use):</strong> We do not track your activity or content when you use the app anonymously.</li>
             <li><strong>Secure Account Data:</strong> If you choose to create an account for features like cloud sync, your account information (like email and hashed password) is stored securely. We use industry-standard practices for data protection.</li>
             <li><strong>User Control:</strong> You have control over your data. You can export your notes and drawings, and delete your account and associated data if you choose (subject to our full Privacy Policy).</li>
+            <li><strong>No third-party tracking cookies or pixel for personal data:</strong> Our focus is on providing a functional tool without infringing on your privacy. We use ads (Google AdSense) to support the free service, which may use cookies as per their policy, but we do not implement separate trackers for user profiling.</li>
         </ul>
         <p>We encourage you to read our full <a href="privacy-policy.html">Privacy Policy</a> for detailed information on how we collect, use, and protect your information. Your trust is important to us, and we strive to create a secure environment for your thoughts and ideas.</p>
     </div>
@@ -983,7 +1071,7 @@ let deferredInstallPrompt = null;
 let undoStack = [];
 let redoStack = [];
 let lastChangeTimeout = null;
-let currentAppMode = 'notepad'; // Changed from currentMode to currentAppMode for index.html specific logic
+let currentAppMode = 'notepad'; 
 let whiteboardState = { canvas: null, ctx: null, isDrawing: false, isErasing: false, lastX: 0, lastY: 0, brushColor: '#000000', brushSize: 5, imageData: null };
 
 let currentCalendarDate = new Date(); 
@@ -1027,11 +1115,6 @@ const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
 const manageAccountBtn = document.getElementById('manageAccountBtn'); 
 
-// Blog related variables are moved to blogs.html
-// const blogsSection = document.getElementById('blogs-section');
-// const blogList = document.getElementById('blog-list'); 
-// const blogMainHeading = document.getElementById('blog-main-heading');
-
 const calendarContainer = document.getElementById('calendar-container');
 const currentMonthYearDisplay = document.getElementById('currentMonthYear');
 const calendarGrid = document.querySelector('#calendar-container .calendar-grid'); 
@@ -1042,8 +1125,6 @@ const exitCalendarBtn = document.getElementById('exitCalendarBtn');
 const premiumFeaturesSection = document.getElementById('premium-features-section'); 
 const adsenseContainer = document.querySelector('.adsense-ad-container');
 const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtjv/IMG-0120.jpg"; 
-
-// let singleBlogPostExpandedId = null; // Moved to blogs.html
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
@@ -1059,13 +1140,25 @@ document.addEventListener("DOMContentLoaded", () => {
     attachEventListeners();
     initWhiteboard(); 
     if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
-    switchAppMode('notepad'); // Initial app mode for index.html
-    // loadBlogPosts(); // Not on index.html anymore
+    
+    // Explicitly ensure all home page main sections are visible on load
+    document.getElementById('editor')?.classList.remove('hidden'); // Notepad editor
+    document.getElementById('notes')?.classList.remove('hidden'); // Saved notes
+    document.querySelector('.features-grid')?.classList.remove('hidden'); // The new features grid
+    document.getElementById('overview')?.classList.remove('hidden'); // Welcome section
+    document.getElementById('premium-features-section')?.classList.remove('hidden'); // Premium section
+    document.getElementById('faq-section')?.classList.remove('hidden'); // FAQ section
+    document.getElementById('how-it-works')?.classList.remove('hidden'); // How it works
+    document.getElementById('privacy')?.classList.remove('hidden'); // Privacy
+    if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // AdSense container
+
+    // Then, set the initial app mode (this will hide whiteboard/calendar and configure editor)
+    switchAppMode('notepad'); 
+    
     updateUIForPremiumFeatures();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
     // Show welcome popup if no user logged in and it's the first visit (or similar logic)
-    // For simplicity, let's just make sure auth modal is hidden by default unless triggered.
     if (!getCurrentUserId() && !localStorage.getItem('visited_notepad_home')) {
         if(welcomePopup) welcomePopup.classList.remove('hidden');
         localStorage.setItem('visited_notepad_home', 'true');
@@ -1208,26 +1301,6 @@ function attachEventListeners() {
             }
         });
     });
-
-    // Newsletter Subscription Logic - DELEGATION (This might be better on blog.html)
-    // if (blogList) {
-    //     blogList.addEventListener('click', e => {
-    //         if (e.target && e.target.classList.contains('newsletter-btn')) {
-    //             e.preventDefault();
-    //             const container = e.target.closest('.blog-newsletter');
-    //             const emailInput = container.querySelector('.newsletter-email');
-    //             const email = emailInput.value.trim();
-    //             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    //             if (email && emailRegex.test(email)) {
-    //                 alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`);
-    //                 emailInput.value = '';
-    //             } else {
-    //                 alert('Please enter a valid email address.');
-    //             }
-    //         }
-    //     });
-    // }
 }
 
 
@@ -1428,61 +1501,59 @@ function handleGoogleSignIn(response) {
     loginSuccess(name, picture, userId);
 }
 
-// Renamed from switchMode to switchAppMode for clarity on index.html
+// IMPORTANT: This function is revised to ONLY control the app's interactive tools.
+// Informational sections (features-grid, notes, overview, etc.) are assumed to be
+// visible by default on the index.html page and are NOT hidden by this function.
 function switchAppMode(mode) {
     currentAppMode = mode;
-    // Hide all main app sections
-    const appSections = [editorSection, whiteboardSection, calendarContainer];
-    appSections.forEach(sec => { if (sec) sec.classList.add('hidden'); });
 
-    // Hide/Show specific editor elements
+    // Hide all main interactive app tool sections (editor, whiteboard, calendar)
+    const appToolSections = [editorSection, whiteboardSection, calendarContainer];
+    appToolSections.forEach(sec => { if (sec) sec.classList.add('hidden'); });
+
+    // Hide/Show specific editor elements for notepad vs todo within editorSection
     if (todoListContainer) todoListContainer.classList.add('hidden');
     if (addTodoBtn) addTodoBtn.classList.add('hidden');
     if (titleInput) titleInput.classList.add('hidden');
     if (textInput) textInput.classList.add('hidden');
     if (whiteboardTitleInput) whiteboardTitleInput.classList.add('hidden');
 
-    // Update active button styling
+    // Update active button styling in menu bar
     document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
     const modeButton = document.getElementById(`mode-${mode}`);
     if (modeButton) modeButton.classList.add('active-mode');
 
-    // Add/remove layout classes for desktop view
-    if(mainContainer) mainContainer.classList.toggle('desktop-two-column', true); // Always desktop-two-column for app features
-    
-    // Show selected app mode
+    // Show selected app tool mode
     if (mode === 'notepad') {
         if(editorSection) editorSection.classList.remove('hidden');
         if(textInput) textInput.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
+        // Ensure main container is desktop-two-column for notepad
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
     } else if (mode === 'whiteboard') {
         if(whiteboardSection) whiteboardSection.classList.remove('hidden');
         if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden');
         resizeWhiteboard();
+        // Ensure main container is desktop-two-column for whiteboard
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
     } else if (mode === 'todo') {
         if(editorSection) editorSection.classList.remove('hidden'); 
         if(todoListContainer) todoListContainer.classList.remove('hidden');
         if(addTodoBtn) addTodoBtn.classList.remove('hidden');
         if(titleInput) titleInput.classList.remove('hidden');
         if(textInput) textInput.classList.add('hidden'); // Hide text area for todo list
+        // Ensure main container is desktop-two-column for todo
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
     } else if (mode === 'calendar') {
         if(calendarContainer) calendarContainer.classList.remove('hidden');
         if(currentMonthYearDisplay) renderCalendar(currentCalendarDate);
-        if(mainContainer) mainContainer.classList.remove('desktop-two-column'); // Calendar often looks better full width
+        // Calendar often looks better full width, so remove two-column
+        if(mainContainer) mainContainer.classList.remove('desktop-two-column');
     }
     
-    // Ensure notes and adsense are visible with app features
-    if(document.getElementById('notes')) document.getElementById('notes').classList.remove('hidden');
-    if(adsenseContainer) adsenseContainer.classList.remove('hidden');
-
-    // Hide all "info" sections when an app mode is active
-    // The 'overview' and 'faq-section' are now always visible on index.html
-    document.getElementById('how-it-works')?.classList.add('hidden'); // This section is now on about.html
-    document.getElementById('privacy')?.classList.add('hidden');
-    document.getElementById('premium-features-section')?.classList.add('hidden'); // Re-evaluate if this should be shown by default
-
-    // If an info section is manually scrolled to, hide app modes (this might need specific handling if you want both)
-    // For now, assume a clean separation on the home page.
+    // #notes and adsenseContainer are now always visible on the homepage,
+    // their visibility is set explicitly in DOMContentLoaded, not controlled by switchAppMode.
+    // The same applies to .features-grid, #overview, #premium-features-section, #faq-section, #how-it-works, #privacy.
 }
 
 function newDoc() {
@@ -1875,8 +1946,6 @@ async function exportPDF(id) {
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; if(installBtn) installBtn.classList.remove('hidden'); });
 if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
-
-// BLOG DATA AND FUNCTIONS are moved to blogs.html
 
 function checkPremiumStatus(feature) { 
     // This is a placeholder function. In a real app, you would query a backend
