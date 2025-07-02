@@ -618,7 +618,10 @@
                     <!-- This is the DIV where the "I'm not a robot" checkbox will appear -->
                     <div id="recaptcha-widget" class="g-recaptcha"
                          data-sitekey="6LeeSHQrAAAAALPfJynl9NFBeCpqcFiiMLLoJ4v_"
-                         <!-- YOU MUST REPLACE "6LeeSHQrAAAAANKFq7xJ35qoEjOaGpJ310r8m1Tn" with ONE of YOUR site keys here. -->
+                         <!-- This is your reCAPTCHA v2 "I'm not a robot" site key. -->
+                         <!-- NOTE: For reCAPTCHA to work correctly, this page MUST be served from a web server (e.g., http://localhost) -->
+                         <!-- and NOT opened directly from the file system (e.g., file:///C:/...). -->
+                         <!-- Also, the site key must be registered for the domain you are using. -->
                         
                          data-callback="onRecaptchaSuccess"
                          data-expired-callback="onRecaptchaExpired">
@@ -627,7 +630,7 @@
                 </div>
                 <!-- END GOOGLE RECAPTCHA V2 INTEGRATION -->
 
-                <!-- The submit button is initially disabled and will be enabled by JavaScript -->
+                <!-- The submit button is initially disabled and will be enabled by JavaScript AFTER reCAPTCHA is completed -->
                 <button type="submit" id="submitButton" disabled>Submit</button>
             </form>
         </div>
@@ -635,7 +638,7 @@
         <div class="google-maps">
             <h2>Find Us On Map</h2>
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.066497334707!2d85.25997258931113!3d27.69176318465135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18129031d2e1%3A0xc3c51ed1c37b75f!2sKirtipur%2C%20Kathmandu%2044618!5e0!3m2!1sen!2snp!4v1717398123456!5m2!1sen!2snp" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.066497334707!2d85.25997258931113!3d27.69176318465135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18129031d2e1%3A0xc3c51ed1c37b75f!2sKirtipur%20Kathmandu%2044618!5e0!3m2!1sen!2snp!4v1717398123456!5m2!1sen!2snp" 
                 allowfullscreen="" 
                 loading="lazy" 
                 referrerpolicy="no-referrer-when-downgrade"
