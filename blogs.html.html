@@ -140,9 +140,33 @@
         }
         /* END: MODIFIED HEADER STYLES */
 
-        body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
-        footer { margin-top: auto; padding: 20px; text-align: center; }
-        footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        body.dark header { box-shadow: 0 4px 15px var(--shadow-dark); }
+        
+        /* MODIFIED FOOTER STYLES */
+        footer { 
+            margin-top: auto; 
+            padding: 20px; 
+            text-align: center; 
+            background: var(--primary); /* Explicitly set primary background */
+            color: white; /* Explicitly set white text */
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            transition: background 0.5s ease, color 0.5s ease; 
+        }
+        body.dark footer { 
+            background: var(--card-dark); /* Dark mode background for footer */
+            color: var(--text-dark); /* Dark mode text for footer */
+            box-shadow: 0 4px 15px var(--shadow-dark); 
+        }
+        footer a { 
+            color: white; /* Ensure white links in light mode */
+            font-weight: 600; 
+            text-decoration: none; 
+            transition: opacity 0.2s; 
+            margin: 0 10px;  
+        }
+        body.dark footer a {
+            color: var(--primary); /* Make links primary color in dark mode footer for contrast */
+        }
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
@@ -267,7 +291,12 @@
         /* END: 3uTools download section */
 
         /* START: Comments Section Styles */
-        .comments-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9e9e9; }
+        .comments-section { 
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid #e9e9e9; 
+            display: none; /* HIDDEN BY DEFAULT */
+        }
         body.dark .comments-section { border-top-color: #3a3a3a; }
         .comments-section h5 { font-size: 18px; color: var(--primary); margin-bottom: 20px; }
         .comment-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
@@ -853,15 +882,61 @@ const blogPostsData = [
 function filterBlogPosts(query) { const searchTerm = query.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const title = postElement.querySelector('h4 a').textContent.toLowerCase(); const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || ''); const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || ''; postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none'; }); }
 function filterBlogPostsByTag(tag) { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.add('hidden'); let backButton = document.getElementById('back-to-blog-list-btn'); const postsContainer = document.getElementById('blog-posts-container'); if (!backButton && postsContainer) { backButton = document.createElement('button'); backButton.id = 'back-to-blog-list-btn'; backButton.textContent = '← Back to All Posts'; backButton.className = 'read-more-btn'; backButton.style.marginBottom = '20px'; backButton.onclick = showBlogList; postsContainer.insertBefore(backButton, postsContainer.firstChild); } const searchTerm = tag.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id); const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : []; postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none'; }); if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' }); }
 function showBlogList() { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.remove('hidden'); const backButton = document.getElementById('back-to-blog-list-btn'); if (backButton) backButton.remove(); document.querySelectorAll('.blog-post').forEach(postElement => { postElement.style.display = 'block'; }); }
-function toggleBlogContent(postId) { const postElement = document.getElementById(`blog-${postId}`); if (!postElement) return; const contentShort = postElement.querySelector('.blog-content-short'); const contentFull = postElement.querySelector('.blog-content-full'); const readMoreBtn = postElement.querySelector('.read-more-btn'); const isExpanded = contentFull.style.display === 'block'; if (isExpanded) { contentFull.style.display = 'none'; contentShort.style.display = 'block'; readMoreBtn.textContent = 'Read More →'; } else { contentFull.style.display = 'block'; contentShort.style.display = 'none'; readMoreBtn.textContent = 'Show Less ←'; setTimeout(() => { postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100); } }
-function scrollToAndExpandPost(postId) { const postElement = document.getElementById(`blog-${postId}`); if (!postElement) return; postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); const contentShort = postElement.querySelector('.blog-content-short'); const contentFull = postElement.querySelector('.blog-content-full'); const readMoreBtn = postElement.querySelector('.read-more-btn'); if (contentFull.style.display !== 'block') { contentFull.style.display = 'block'; contentShort.style.display = 'none'; readMoreBtn.textContent = 'Show Less ←'; } }
+
+function toggleBlogContent(postId) { 
+    const postElement = document.getElementById(`blog-${postId}`); 
+    if (!postElement) return; 
+
+    const contentShort = postElement.querySelector('.blog-content-short');
+    const contentFull = postElement.querySelector('.blog-content-full');
+    const readMoreBtn = postElement.querySelector('.read-more-btn');
+    const commentsSection = postElement.querySelector('.comments-section'); // Get the comments section
+
+    const isExpanded = contentFull.style.display === 'block'; 
+
+    if (isExpanded) {
+        contentFull.style.display = 'none';
+        contentShort.style.display = 'block';
+        readMoreBtn.textContent = 'Read More →';
+        if (commentsSection) commentsSection.style.display = 'none'; // Hide comments
+    } else {
+        contentFull.style.display = 'block';
+        contentShort.style.display = 'none';
+        readMoreBtn.textContent = 'Show Less ←';
+        if (commentsSection) commentsSection.style.display = 'block'; // Show comments
+        setTimeout(() => { 
+            postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+        }, 100); 
+    } 
+}
+
+function scrollToAndExpandPost(postId) { 
+    const postElement = document.getElementById(`blog-${postId}`); 
+    if (!postElement) return; 
+
+    postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    const contentShort = postElement.querySelector('.blog-content-short');
+    const contentFull = postElement.querySelector('.blog-content-full');
+    const readMoreBtn = postElement.querySelector('.read-more-btn');
+    const commentsSection = postElement.querySelector('.comments-section'); // Get the comments section
+
+    if (contentFull.style.display !== 'block') { 
+        contentFull.style.display = 'block'; 
+        contentShort.style.display = 'none'; 
+        readMoreBtn.textContent = 'Show Less ←'; 
+        if (commentsSection) commentsSection.style.display = 'block'; // Show comments
+    } 
+}
+
 function populateBlogSidebar() { const recentPostsList = document.getElementById('sidebar-recent-posts'); const tagsCloud = document.getElementById('sidebar-tags-cloud'); if (!recentPostsList || !tagsCloud) return; const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); const recentPostsHtml = sortedPosts.slice(0, 5).map(post => `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`).join(''); recentPostsList.innerHTML = recentPostsHtml; const allTags = new Set(blogPostsData.flatMap(post => post.tags || [])); const tagsHtml = Array.from(allTags).sort().map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join(''); tagsCloud.innerHTML = tagsHtml; }
 
 function loadBlogPosts() { if (!blogList) return; blogList.innerHTML = ''; if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; } const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); sortedBlogPosts.forEach(post => { const blogPostDiv = document.createElement('div'); blogPostDiv.id = `blog-${post.id}`; blogPostDiv.classList.add('blog-post'); blogPostDiv.innerHTML = `<h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4><div class="blog-post-meta"><span><i class="fas fa-calendar-alt"></i> ${post.date}</span><span><i class="fas fa-user"></i> By: ${post.author}</span><span><i class="fas fa-eye"></i> ${post.views} views</span></div>${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}<div class="blog-post-content"><div class="blog-content-short">${post.content}</div><div class="blog-content-full">${post.fullContent}</div></div><button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button><div class="comments-section"><h5_>Comments</h5_><ul class="comment-list" id="comment-list-${post.id}"></ul><form class="comment-form" onsubmit="handleCommentSubmit(event, ${post.id})"><input type="text" name="commenter-name" placeholder="Your Name" required><textarea name="comment-text" rows="4" placeholder="Write your comment..." required></textarea><button type="submit">Post Comment</button></form></div>`; const postSchema = { "@context": "https://schema.org", "@type": "BlogPosting", "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` }, "headline": post.title, "description": post.content.replace(/<[^>]*>?/gm, ''), "image": post.image, "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" }, "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } }, "datePublished": post.date, "dateModified": post.date }; const schemaScript = document.createElement('script'); schemaScript.type = 'application/ld+json'; schemaScript.textContent = JSON.stringify(postSchema); blogPostDiv.appendChild(schemaScript); blogList.appendChild(blogPostDiv); loadComments(post.id); }); }
 
 // --- NEW COMMENT FUNCTIONS ---
 function loadComments(postId) { const commentList = document.getElementById(`comment-list-${postId}`); if (!commentList) return; const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); commentList.innerHTML = ''; comments.forEach(comment => { const commentEl = createCommentElement(comment); commentList.prepend(commentEl); }); }
-function createCommentElement(comment) { const li = document.createElement('li'); li.className = 'comment-item'; const escapedName = comment.name.replace(/</g, "<").replace(/>/g, ">"); const escapedText = comment.text.replace(/</g, "<").replace(/>/g, ">"); li.innerHTML = `<div class="comment-meta">${escapedName} <span>${new Date(comment.date).toLocaleString()}</span></div><p class="comment-text">${escapedText}</p>`; return li; }
+function createCommentElement(comment) { const li = document.createElement('li'); li.className = 'comment-item'; const escapedName = comment.name.replace(/</g, "<").replace(/>/g, ">"); // Fixed escaping
+const escapedText = comment.text.replace(/</g, "<").replace(/>/g, ">"); // Fixed escaping
+li.innerHTML = `<div class="comment-meta">${escapedName} <span>${new Date(comment.date).toLocaleString()}</span></div><p class="comment-text">${escapedText}</p>`; return li; }
 function handleCommentSubmit(event, postId) { event.preventDefault(); const form = event.target; const nameInput = form.querySelector('input[name="commenter-name"]'); const textInput = form.querySelector('textarea[name="comment-text"]'); const name = nameInput.value.trim(); const text = textInput.value.trim(); if (!name || !text) { alert('Please fill in both your name and comment.'); return; } const newComment = { name: name, text: text, date: new Date().toISOString() }; const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); comments.push(newComment); localStorage.setItem(`comments-post-${postId}`, JSON.stringify(comments)); const commentList = document.getElementById(`comment-list-${postId}`); const commentEl = createCommentElement(newComment); commentList.prepend(commentEl); form.reset(); }
 </script>
 </body>
