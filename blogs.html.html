@@ -136,10 +136,22 @@
         #live-clock {
             font-family: 'Inter', sans-serif;
         }
-        #live-weather i {
+        #live-weather i:first-child { /* Targets the main weather icon */
             margin-right: 8px;
             color: #ffc107;
         }
+        /* START: Added styles for weather refresh icon */
+        #weather-refresh-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        #weather-refresh-btn:hover {
+            color: #ffc107; /* Highlight on hover */
+            transform: scale(1.2) rotate(90deg);
+        }
+        /* END: Added styles for weather refresh icon */
 
         #blogs-section { background: var(--card-light); padding: 40px 5%; margin-bottom: 25px; text-align: left; }
         body.dark #blogs-section { background: var(--card-dark); }
@@ -338,10 +350,12 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
+    <!-- START: Modified live info container -->
     <div id="live-info-container">
-        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
         <span id="live-clock"></span>
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
     </div>
+    <!-- END: Modified live info container -->
     <div id="profile-container" class="profile-container hidden">
         <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
         <div id="profile-dropdown" class="profile-dropdown hidden">
@@ -478,7 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
     updateClock(); 
     setInterval(updateClock, 1000); 
-    fetchWeather(); // MODIFIED: This function is now updated
+    fetchWeather();
     checkAuthStatus(); 
     attachEventListeners();
     loadBlogPosts();
@@ -508,6 +522,16 @@ function attachEventListeners() {
     if (searchInput) { searchInput.addEventListener('keyup', () => filterBlogPosts(searchInput.value)); }
     const newsletterBtn = document.getElementById('sidebar-newsletter-btn');
     if (newsletterBtn) { newsletterBtn.addEventListener('click', () => { const emailInput = document.getElementById('sidebar-newsletter-email'); const email = emailInput.value.trim(); const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (email && emailRegex.test(email)) { alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`); emailInput.value = ''; } else { alert('Please enter a valid email address.'); } }); }
+
+    // START: Added event listener for dynamic weather refresh button
+    document.body.addEventListener('click', (event) => {
+        if (event.target && event.target.id === 'weather-refresh-btn') {
+            const icon = event.target;
+            icon.classList.add('fa-spin'); // Add spin animation for visual feedback
+            fetchWeather();
+        }
+    });
+    // END: Added event listener
 }
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
@@ -526,7 +550,7 @@ function handleGoogleSignIn(response) { const data = jwtDecode(response.credenti
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
 
 
-// --- CHANGED: Live Clock and Weather Functions (Now using OpenWeatherMap) ---
+// --- START: MODIFIED Live Clock and Weather Functions ---
 function updateClock() {
     const clockElement = document.getElementById('live-clock');
     if (!clockElement) return;
@@ -543,55 +567,79 @@ function updateClock() {
     clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
 }
 
-// NEW: This function now works with OpenWeatherMap weather condition IDs
 function getWeatherIconClass(weatherId) {
-    // Weather condition codes from OpenWeatherMap
     if (weatherId >= 200 && weatherId < 300) return 'fas fa-bolt'; // Thunderstorm
     if (weatherId >= 300 && weatherId < 400) return 'fas fa-cloud-rain'; // Drizzle
     if (weatherId >= 500 && weatherId < 600) return 'fas fa-cloud-showers-heavy'; // Rain
     if (weatherId >= 600 && weatherId < 700) return 'fas fa-snowflake'; // Snow
-    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere (fog, mist, etc.)
+    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere
     if (weatherId === 800) return 'fas fa-sun'; // Clear
     if (weatherId === 801) return 'fas fa-cloud-sun'; // Few clouds
-    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Scattered to Broken clouds
-    
-    return 'fas fa-question-circle'; // Default icon
+    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Clouds
+    return 'fas fa-question-circle'; // Default
 }
 
-// NEW: This function now uses OpenWeatherMap API with your key
-function fetchWeather() {
+function fetchWeatherData(lat, lon) {
     const weatherElement = document.getElementById('live-weather');
-    if (!weatherElement) return;
-    
-    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74'; // Your API Key
-    const lat = 27.7172; // Kathmandu Latitude
-    const lon = 85.3240; // Kathmandu Longitude
+    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74';
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
     fetch(apiUrl)
         .then(response => {
-            if (!response.ok) {
-                // If the response is not ok (e.g., 401 for bad API key), throw an error
-                throw new Error(`Weather API error: ${response.statusText}`);
-            }
+            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
             return response.json();
         })
         .then(data => {
-            // Check if the expected data is present
-            if (!data.main || !data.weather || !data.weather[0]) {
-                throw new Error('Invalid data received from Weather API');
+            if (!data.main || !data.weather || !data.weather[0] || !data.name) {
+                throw new Error('Invalid data from Weather API');
             }
             const temp = Math.round(data.main.temp);
             const weatherId = data.weather[0].id;
             const iconClass = getWeatherIconClass(weatherId);
-            weatherElement.innerHTML = `<i class="${iconClass}"></i> Kathmandu: ${temp}°C`;
+            const cityName = data.name;
+            
+            weatherElement.innerHTML = `
+                <i class="${iconClass}"></i> ${cityName}: ${temp}°C
+                <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Refresh weather"></i>`;
         })
         .catch(error => {
-            console.error('Error fetching weather:', error);
-            weatherElement.innerHTML = '<i class="fas fa-times-circle"></i> Weather unavailable';
+            console.error('Error fetching weather data:', error);
+            weatherElement.innerHTML = `
+                <i class="fas fa-times-circle"></i> Weather unavailable
+                <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Retry"></i>`;
         });
 }
-// --- END OF CHANGED SECTION ---
+
+function fetchWeather() {
+    const weatherElement = document.getElementById('live-weather');
+    if (!weatherElement) return;
+
+    // The refresh icon will have a spin class if clicked, so we show a general loading message
+    if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) {
+        weatherElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching weather...`;
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            // Success
+            (position) => {
+                fetchWeatherData(position.coords.latitude, position.coords.longitude);
+            },
+            // Error
+            () => {
+                console.warn("Geolocation failed or was denied. Falling back to default location.");
+                // Fallback to Kathmandu
+                fetchWeatherData(27.7172, 85.3240);
+            },
+            { timeout: 10000 } // Add a timeout for the request
+        );
+    } else {
+        // Geolocation not supported
+        console.warn("Geolocation is not supported. Falling back to default location.");
+        fetchWeatherData(27.7172, 85.3240);
+    }
+}
+// --- END: MODIFIED Live Clock and Weather Functions ---
 
 // --- BLOG DATA AND FUNCTIONS (specific to this page) ---
 const blogPostsData = [
