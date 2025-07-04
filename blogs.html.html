@@ -105,11 +105,43 @@
             padding: 20px 0; 
             flex-grow: 1; 
         } 
-        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
-        header { display: flex; justify-content: flex-start; align-items: center; position: relative; }
-        .header-content { text-align: center; flex-grow: 1; }
+        
+        /* START: MODIFIED HEADER STYLES */
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 5%; 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            z-index: 10; 
+            display: flex; 
+            justify-content: space-between; /* This is key for the layout */
+            align-items: center; 
+            position: relative;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1; /* Make left and right sections take up equal space */
+        }
+        
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-content { 
+            text-align: center; 
+            flex-grow: 0; /* Do not allow logo to grow, keeping it centered */
+        }
+        /* END: MODIFIED HEADER STYLES */
+
         body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
-        footer { margin-top: auto; padding: 20px;  }
+        footer { margin-top: auto; padding: 20px; text-align: center; }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
@@ -120,27 +152,27 @@
         body.dark .sidenav a { color: var(--text-dark); }
         .sidenav a:hover { color: var(--primary); }
         .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
-        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
-        .open-nav-btn:hover { transform: translateY(-50%) scale(1.1); }
+
+        /* MODIFIED: open-nav-btn positioning is handled by flexbox now */
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .open-nav-btn:hover { transform: scale(1.1); }
         
-        #live-info-container {
-            display: flex;
-            align-items: center;
-            gap: 25px;
+        #live-clock, #live-weather {
             color: white;
             font-size: 16px;
             font-weight: 600;
-            margin: 0 20px;
             white-space: nowrap;
         }
+
         #live-clock {
             font-family: 'Inter', sans-serif;
         }
+
         #live-weather i:first-child { /* Targets the main weather icon */
             margin-right: 8px;
             color: #ffc107;
         }
-        /* START: Added styles for weather refresh icon */
+        
         #weather-refresh-btn {
             margin-left: 10px;
             cursor: pointer;
@@ -151,15 +183,14 @@
             color: #ffc107; /* Highlight on hover */
             transform: scale(1.2) rotate(90deg);
         }
-        /* END: Added styles for weather refresh icon */
 
         #blogs-section { background: var(--card-light); padding: 40px 5%; margin-bottom: 25px; text-align: left; }
         body.dark #blogs-section { background: var(--card-dark); }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
-        h4 { font-size: 20px; } /* Consistent sizing for h4 inside posts */
-        ol { list-style-position: inside; padding-left: 10px; margin-bottom: 15px; } /* Better ol styling */
-        h4, h5, ol, ul { text-align: left; } /* Ensure text alignment is left for these elements */
+        h4 { font-size: 20px; } 
+        ol { list-style-position: inside; padding-left: 10px; margin-bottom: 15px; } 
+        h4, h5, ol, ul { text-align: left; } 
         #blog-main-heading { font-size: 28px; }
 
         .blog-layout-container { display: flex; gap: 30px; margin-top: 30px; }
@@ -270,7 +301,8 @@
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .profile-container { position: relative; z-index: 999; margin-left: auto; }
+        /* MODIFIED: Removed margin-left: auto; as parent handles alignment now */
+        .profile-container { position: relative; z-index: 999; }
         #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
         .profile-dropdown { position: absolute; top: 55px;  right: 0;  width: 260px; background: var(--card-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); border: 1px solid #eee; overflow: hidden; animation: fadeIn 0.3s ease; transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -301,16 +333,13 @@
         body.dark .adsense-ad-container { background-color: rgba(44, 44, 44, 0.5); }
         
         /* --- MEDIA QUERIES --- */
-        @media (min-width: 1024px) {
-            header { justify-content: space-between; padding-left: 5%; padding-right: 5%; }
-            .header-content { flex-grow: 0; margin: 0 auto; }
-            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
-            .profile-container { position: relative; top: auto; right: auto; margin-left: 20px; }
-        }
         @media (max-width: 992px) {
             .blog-layout-container { flex-direction: column; }
             #blog-sidebar { width: 100%; margin-top: 30px; }
-            #live-info-container { display: none; }
+            /* Hide clock and weather on smaller screens */
+            #live-clock, #live-weather { 
+                display: none; 
+            }
         }
         @media (max-width: 768px) { 
             h2, h3 { font-size: 22px; }
@@ -319,7 +348,18 @@
             .sidenav a { font-size: 18px; }
         }
         @media (max-width: 480px) {
-            .profile-container { position: fixed; top: 10px; right: 10px; }
+            .profile-container { 
+                position: fixed; 
+                top: 10px; 
+                right: 10px; 
+            }
+            .open-nav-btn {
+                /* On smallest screens, absolutely position the toggle */
+                position: absolute;
+                left: 5%;
+                top: 50%;
+                transform: translateY(-50%);
+            }
              #blogs-section { padding: 30px 5%; }
              .blog-post { padding-bottom: 20px; margin-bottom: 20px; }
         }
@@ -340,8 +380,13 @@
   <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
 </div>
 
+<!-- START: MODIFIED HEADER HTML STRUCTURE -->
 <header>
-    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <div class="header-left">
+        <span class="open-nav-btn" onclick="openNav()">☰</span>
+        <span id="live-clock"></span>
+    </div>
+
     <div class="header-content">
         <h1>
             <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -350,34 +395,34 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
-    <!-- START: Modified live info container -->
-    <div id="live-info-container">
-        <span id="live-clock"></span>
+
+    <div class="header-right">
         <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
-    </div>
-    <!-- END: Modified live info container -->
-    <div id="profile-container" class="profile-container hidden">
-        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
-        <div id="profile-dropdown" class="profile-dropdown hidden">
-            <div class="dropdown-header">
-                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
-                <div>
-                    <span id="userNameDisplay">User Name</span>
-                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+        <div id="profile-container" class="profile-container hidden">
+            <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+            <div id="profile-dropdown" class="profile-dropdown hidden">
+                <div class="dropdown-header">
+                    <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                    <div>
+                        <span id="userNameDisplay">User Name</span>
+                        <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                    </div>
                 </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                    <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                    <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                    <li class="divider"></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+                </ul>
             </div>
-            <ul class="dropdown-menu">
-                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
-                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
-                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
-                <li class="divider"></li>
-                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
-                <li class="divider"></li>
-                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
-            </ul>
         </div>
     </div>
 </header>
+<!-- END: MODIFIED HEADER HTML STRUCTURE -->
+
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <main id="main-container" class="container">
@@ -523,7 +568,7 @@ function attachEventListeners() {
     const newsletterBtn = document.getElementById('sidebar-newsletter-btn');
     if (newsletterBtn) { newsletterBtn.addEventListener('click', () => { const emailInput = document.getElementById('sidebar-newsletter-email'); const email = emailInput.value.trim(); const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (email && emailRegex.test(email)) { alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`); emailInput.value = ''; } else { alert('Please enter a valid email address.'); } }); }
 
-    // START: Added event listener for dynamic weather refresh button
+    // Event listener for dynamic weather refresh button
     document.body.addEventListener('click', (event) => {
         if (event.target && event.target.id === 'weather-refresh-btn') {
             const icon = event.target;
@@ -531,7 +576,6 @@ function attachEventListeners() {
             fetchWeather();
         }
     });
-    // END: Added event listener
 }
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
@@ -550,7 +594,7 @@ function handleGoogleSignIn(response) { const data = jwtDecode(response.credenti
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
 
 
-// --- START: MODIFIED Live Clock and Weather Functions ---
+// --- Live Clock and Weather Functions ---
 function updateClock() {
     const clockElement = document.getElementById('live-clock');
     if (!clockElement) return;
@@ -614,33 +658,26 @@ function fetchWeather() {
     const weatherElement = document.getElementById('live-weather');
     if (!weatherElement) return;
 
-    // The refresh icon will have a spin class if clicked, so we show a general loading message
     if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) {
         weatherElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching weather...`;
     }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            // Success
             (position) => {
                 fetchWeatherData(position.coords.latitude, position.coords.longitude);
             },
-            // Error
             () => {
                 console.warn("Geolocation failed or was denied. Falling back to default location.");
-                // Fallback to Kathmandu
-                fetchWeatherData(27.7172, 85.3240);
+                fetchWeatherData(27.7172, 85.3240); // Fallback to Kathmandu
             },
-            { timeout: 10000 } // Add a timeout for the request
+            { timeout: 10000 }
         );
     } else {
-        // Geolocation not supported
         console.warn("Geolocation is not supported. Falling back to default location.");
-        fetchWeatherData(27.7172, 85.3240);
+        fetchWeatherData(27.7172, 85.3240); // Fallback to Kathmandu
     }
 }
-// --- END: MODIFIED Live Clock and Weather Functions ---
-
 // --- BLOG DATA AND FUNCTIONS (specific to this page) ---
 const blogPostsData = [
     {
