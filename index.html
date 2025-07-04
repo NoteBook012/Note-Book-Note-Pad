@@ -153,7 +153,8 @@
         }
 
         html { height: 100%; scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.5s ease, color 0.5s ease; display: flex; flex-direction: column; min-height: 100vh; }
+        /* Adjusted transition for body for dark mode toggle */
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.3s ease, color 0.3s ease; display: flex; flex-direction: column; min-height: 100vh; }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -175,6 +176,7 @@
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
+        /* Adjusted transition for sidenav */
         .sidenav {
             height: 100%;
             width: 0; 
@@ -183,7 +185,7 @@
             top: 0;
             left: 0;
             overflow-x: hidden;
-            transition: 0.5s;
+            transition: 0.3s; /* Reduced from 0.5s */
             padding-top: 60px;
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
@@ -508,6 +510,7 @@
             object-fit: cover;
         }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
+        /* Adjusted transition for profile dropdown */
         .profile-dropdown {
             position: absolute;
             top: 55px; 
@@ -518,8 +521,8 @@
             box-shadow: 0 8px 25px var(--shadow-light);
             border: 1px solid #eee;
             overflow: hidden;
-            animation: fadeIn 0.3s ease;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 0.3s ease; /* Reduced from 0.5s */
+            transition: opacity 0.2s ease, transform 0.2s ease; /* Reduced from 0.3s */
         }
         body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
         .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
@@ -544,8 +547,9 @@
         .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } 
         .about-dev a:hover { text-decoration: underline; } 
         
+        /* Adjusted animation for modal and welcome popups */
         .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } 
-        .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.5s ease; border: 1px solid rgba(255, 255, 255, 0.1); } 
+        .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.3s ease; /* Reduced from 0.5s */ border: 1px solid rgba(255, 255, 255, 0.1); } 
         body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } 
         .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } 
         .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } 
@@ -604,13 +608,14 @@
             content: '\f068'; /* Font Awesome Minus Icon */
         }
 
+        /* Adjusted transition for FAQ answer */
         .faq-answer {
             font-size: 15px;
             color: var(--text-light);
             line-height: 1.6; 
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-in-out;
+            transition: max-height 0.3s ease-in-out; /* Reduced from 0.4s */
             padding: 0 20px; /* Side padding, top/bottom is 0 when collapsed */
         }
         .faq-answer p { padding-bottom: 15px; } /* Add padding to the content inside */
@@ -694,10 +699,11 @@
         /* END NEW STYLES */
 
         /* Animation for scrolling elements */
+        /* Reduced transition duration for fade-in-up */
         .fade-in-up {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             transition-delay: var(--animation-delay, 0s); /* Use a CSS variable for delay */
         }
         .fade-in-up.is-visible {
@@ -1146,9 +1152,7 @@ let scrollAnimationObserver;
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
 function scrollToSection(selector) { const element = document.getElementById(selector); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
-function closeNavAndScrollTo(sectionId) { closeNav(); setTimeout(() => scrollToSection(sectionId), 300); }
-function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
-
+function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); } // Adjusted delay for smoother transition
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
@@ -2014,7 +2018,7 @@ function updateUIForPremiumFeatures() {
             manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`;
         } else {
             buyButton.style.display = 'block'; 
-            if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]')) {
+            if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { // Added check for QR_CODE_IMAGE_URL
                  manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`;
             }
              manualPaymentInfo.style.display = 'none';
@@ -2076,7 +2080,7 @@ function setupScrollAnimations() {
                 // Only add animation class if it's a static section or the currently active editor/tool
                 if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) {
                     section.classList.add('fade-in-up');
-                    section.dataset.animationDelay = index * 0.1; // Stagger initial sections
+                    section.dataset.animationDelay = index * 0.05; // Reduced from 0.1 for faster initial staggering
                     scrollAnimationObserver.observe(section);
                     index++;
                 }
@@ -2087,7 +2091,7 @@ function setupScrollAnimations() {
         document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => {
             card.classList.add('fade-in-up');
             // Stagger feature cards, starting after main sections if desired, or with their own count
-            card.dataset.animationDelay = (index * 0.1) + (cardIndex * 0.05); 
+            card.dataset.animationDelay = (index * 0.05) + (cardIndex * 0.02); // Reduced from 0.05 for faster staggering
             scrollAnimationObserver.observe(card);
         });
 
