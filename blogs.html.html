@@ -8,7 +8,7 @@
     
     <meta name="description" content="Supercharge your productivity with expert tips from the Note Pad blog. Learn to master our free online notepad, whiteboard, and to-do list for better organization and efficiency. Read our latest articles."/>
     
-    <meta name="keywords" content="blog, productivity tips, Note Pad blog, online notepad, whiteboard, to-do list, organization, study tools, free productivity app, task management, mind mapping"/>
+    <meta name="keywords" content="blog, productivity tips, Note Pad blog, online notepad, whiteboard, to-do list, organization, study tools, free productivity app, task management, mind mapping, nepali fonts"/>
     
     <meta name="author" content="Bishal Mishra">
     <meta name="robots" content="index, follow">
@@ -106,16 +106,8 @@
             flex-grow: 1; 
         } 
         header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
-        header {
-            display: flex;
-            justify-content: flex-start; /* Default for mobile */
-            align-items: center;
-            position: relative;
-        }
-        .header-content {
-            text-align: center;
-            flex-grow: 1; /* Allows it to take center space */
-        }
+        header { display: flex; justify-content: flex-start; align-items: center; position: relative; }
+        .header-content { text-align: center; flex-grow: 1; }
         body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
         footer { margin-top: auto; padding: 20px;  }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
@@ -131,90 +123,25 @@
         .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
         .open-nav-btn:hover { transform: translateY(-50%) scale(1.1); }
         
-        #blogs-section {
-            background: var(--card-light);
-            padding: 40px 5%;
-            margin-bottom: 25px;
-            text-align: left;
-        }
+        #blogs-section { background: var(--card-light); padding: 40px 5%; margin-bottom: 25px; text-align: left; }
         body.dark #blogs-section { background: var(--card-dark); }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
         #blog-main-heading { font-size: 28px; }
 
-        /* --- NEW: Blog Layout Container --- */
-        .blog-layout-container {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        #blog-posts-container {
-            flex: 1; /* Takes up remaining space */
-            min-width: 0; /* Prevents flexbox overflow */
-        }
+        .blog-layout-container { display: flex; gap: 30px; margin-top: 30px; }
+        #blog-posts-container { flex: 1; min-width: 0; }
         
-        /* --- NEW: Blog Sidebar --- */
-        #blog-sidebar {
-            width: 300px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        .sidebar-widget {
-            background: var(--bg-light);
-            padding: 20px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 10px var(--shadow-light);
-            transition: background 0.5s ease;
-        }
-        body.dark .sidebar-widget {
-            background: #333;
-            box-shadow: 0 4px 15px var(--shadow-dark);
-        }
-        .sidebar-widget h5 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            font-weight: 700;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
+        #blog-sidebar { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 25px; }
+        .sidebar-widget { background: var(--bg-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 4px 10px var(--shadow-light); transition: background 0.5s ease; }
+        body.dark .sidebar-widget { background: #333; box-shadow: 0 4px 15px var(--shadow-dark); }
+        .sidebar-widget h5 { color: var(--primary); margin-bottom: 15px; font-size: 1.1em; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         body.dark .sidebar-widget h5 { border-bottom-color: #444; }
 
-        #blog-sidebar input[type="text"],
-        #blog-sidebar input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-            font-size: 15px;
-            background: var(--card-light);
-            color: var(--text-light);
-            transition: border-color 0.3s ease;
-        }
-        body.dark #blog-sidebar input[type="text"],
-        body.dark #blog-sidebar input[type="email"] {
-            background: #2b2b2b;
-            border-color: #555;
-            color: var(--text-dark);
-        }
-        #blog-sidebar input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        #sidebar-newsletter-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background 0.2s ease;
-            margin-top: 10px;
-        }
+        #blog-sidebar input[type="text"], #blog-sidebar input[type="email"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
+        body.dark #blog-sidebar input[type="text"], body.dark #blog-sidebar input[type="email"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
+        #blog-sidebar input:focus { outline: none; border-color: var(--primary); }
+        #sidebar-newsletter-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; width: 100%; transition: background 0.2s ease; margin-top: 10px; }
         #sidebar-newsletter-btn:hover { background: var(--primary-dark); }
 
         #sidebar-recent-posts { list-style: none; padding: 0; }
@@ -224,27 +151,11 @@
         #sidebar-recent-posts li a:hover { color: var(--primary); }
 
         #sidebar-tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-        #sidebar-tags-cloud a {
-            display: inline-block;
-            background-color: #e0e0e0;
-            color: #555;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
+        #sidebar-tags-cloud a { display: inline-block; background-color: #e0e0e0; color: #555; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 14px; transition: background-color 0.2s ease, color 0.2s ease; }
         body.dark #sidebar-tags-cloud a { background-color: #4a4a4a; color: #ccc; }
         #sidebar-tags-cloud a:hover { background-color: var(--primary); color: white; }
 
-        /* --- MODIFIED: Blog Post Styling --- */
-        .blog-post {
-            background: transparent;
-            padding-bottom: 25px;
-            margin-bottom: 25px;
-            text-align: left; 
-            border-bottom: 1px solid #e9e9e9;
-        }
+        .blog-post { background: transparent; padding-bottom: 25px; margin-bottom: 25px; text-align: left; border-bottom: 1px solid #e9e9e9; }
         body.dark .blog-post { border-bottom-color: #3a3a3a; }
         .blog-post:last-of-type { border-bottom: none; margin-bottom: 0; }
         
@@ -257,7 +168,7 @@
         body.dark .blog-post-content { color: var(--text-dark); }
         .blog-post-content p { margin-bottom: 15px; }
         .blog-post-content ul { list-style: disc; padding-left: 25px; margin-bottom: 15px; }
-        .blog-post-content ul li { margin-bottom: 8px; }
+        .blog-post-content li { margin-bottom: 8px; }
         .blog-post-content a { color: var(--primary); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
         .blog-post-content a:hover { color: var(--primary-dark); text-decoration: underline; }
         
@@ -270,15 +181,19 @@
         .read-more-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s ease-in-out; display: inline-block; margin-top: 10px; }
         .read-more-btn:hover { background: var(--primary-dark); }
 
-        .blog-post-content .see-result-btn {
-            display: block; width: fit-content; margin: 20px auto; background-color: #28a745; color: white; padding: 12px 25px; border-radius: var(--radius); text-decoration: none; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .blog-post-content .see-result-btn, .blog-post-content .download-btn {
+            display: block; width: fit-content; margin: 25px auto; color: white; padding: 12px 25px; border-radius: var(--radius); text-decoration: none; font-weight: bold; font-size: 1.1em; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;
         }
+        .blog-post-content .see-result-btn { background-color: #28a745; }
         .blog-post-content .see-result-btn:hover { background-color: #218838; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+
+        /* NEW Style for Download Button */
+        .blog-post-content .download-btn { background-color: #007bff; }
+        .blog-post-content .download-btn:hover { background-color: #0056b3; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
         
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Profile Dropdown (no changes) */
         .profile-container { position: relative; z-index: 999; margin-left: auto; }
         #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
@@ -306,7 +221,6 @@
         .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
-        /* AdSense Container Style */
         .adsense-ad-container { margin: 25px auto; padding: 10px; text-align: center; min-height: 50px; background-color: var(--primary-light-transparent); border-radius: var(--radius); width: 90%; max-width: 970px; }
         body.dark .adsense-ad-container { background-color: rgba(44, 44, 44, 0.5); }
         
@@ -317,30 +231,21 @@
             .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
             .profile-container { position: relative; top: auto; right: auto; margin-left: 20px; }
         }
-
         @media (max-width: 992px) {
-            .blog-layout-container {
-                flex-direction: column;
-            }
-            #blog-sidebar {
-                width: 100%;
-                margin-top: 30px; /* Add space when it stacks */
-            }
+            .blog-layout-container { flex-direction: column; }
+            #blog-sidebar { width: 100%; margin-top: 30px; }
         }
-
         @media (max-width: 768px) { 
             h2, h3 { font-size: 22px; }
             #blog-main-heading { font-size: 24px; }
             .blog-post h4 { font-size: 20px; }
             .sidenav a { font-size: 18px; }
         }
-        
         @media (max-width: 480px) {
             .profile-container { position: fixed; top: 10px; right: 10px; }
              #blogs-section { padding: 30px 5%; }
              .blog-post { padding-bottom: 20px; margin-bottom: 20px; }
         }
-
     </style>
 </head>
 <body>
@@ -466,7 +371,6 @@
 <script>
 // --- GLOBAL VARIABLES (minimal set for this page) ---
 let isSignUp = false;
-let singleBlogPostExpandedId = null;
 
 const goToTopBtn = document.getElementById('goToTopBtn');
 const authModal = document.getElementById('authModal');
@@ -486,81 +390,33 @@ document.addEventListener("DOMContentLoaded", () => {
     checkAuthStatus(); 
     attachEventListeners();
     loadBlogPosts();
-    populateBlogSidebar(); // NEW: Populate the sidebar on load
+    populateBlogSidebar();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 });
 
-window.onload = function() {
-    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-        initGoogleSignIn();
-    } else {
-        let attempts = 0;
-        const intervalId = setInterval(() => {
-            attempts++;
-            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-                initGoogleSignIn();
-                clearInterval(intervalId);
-            } else if (attempts > 20) {
-                console.error("Google Sign-In did not initialize in time.");
-                if(document.getElementById('googleSignInDiv')) {
-                     document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
-                }
-                clearInterval(intervalId);
-            }
-        }, 500);
-    }
-};
+window.onload = function() { if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { initGoogleSignIn(); } else { let attempts = 0; const intervalId = setInterval(() => { attempts++; if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { initGoogleSignIn(); clearInterval(intervalId); } else if (attempts > 20) { console.error("Google Sign-In did not initialize in time."); if(document.getElementById('googleSignInDiv')) { document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing."; } clearInterval(intervalId); } }, 500); } };
 
 function attachEventListeners() {
-    window.onscroll = () => { 
-        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
-    };
+    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-    
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
     document.addEventListener('click', closeDropdownOnClickOutside);
     if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
-    
     const verifyEmailBtn = document.getElementById('verifyEmailBtn');
     if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
-    
     const resetPasswordBtn = document.getElementById('resetPasswordBtn');
     if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
-
     const manageAccountBtn = document.getElementById('manageAccountBtn'); 
     if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
-    
     const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
-    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        const photoUploadInput = document.getElementById('photoUpload');
-        if(photoUploadInput) photoUploadInput.click();
-    });
+    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { e.preventDefault(); const photoUploadInput = document.getElementById('photoUpload'); if(photoUploadInput) photoUploadInput.click(); });
     const photoUploadInput = document.getElementById('photoUpload');
     if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
-
-    // NEW: Sidebar Event Listeners
     const searchInput = document.getElementById('blog-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', () => filterBlogPosts(searchInput.value));
-    }
-
+    if (searchInput) { searchInput.addEventListener('keyup', () => filterBlogPosts(searchInput.value)); }
     const newsletterBtn = document.getElementById('sidebar-newsletter-btn');
-    if (newsletterBtn) {
-        newsletterBtn.addEventListener('click', () => {
-            const emailInput = document.getElementById('sidebar-newsletter-email');
-            const email = emailInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email && emailRegex.test(email)) {
-                alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`);
-                emailInput.value = '';
-            } else {
-                alert('Please enter a valid email address.');
-            }
-        });
-    }
+    if (newsletterBtn) { newsletterBtn.addEventListener('click', () => { const emailInput = document.getElementById('sidebar-newsletter-email'); const email = emailInput.value.trim(); const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (email && emailRegex.test(email)) { alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`); emailInput.value = ''; } else { alert('Please enter a valid email address.'); } }); }
 }
-
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
 function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
@@ -580,180 +436,59 @@ function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') docum
 // --- BLOG DATA AND FUNCTIONS (specific to this page) ---
 const blogPostsData = [
     { id: 11, title: "How to Use Note P@d for Effective Study Sessions", date: "2024-07-28", views: 980, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&auto=format&fit=crop&q=60", content: "Transform your study habits from chaotic to streamlined. Note P@d isn't just for random notes; it's a powerful tool for academic success...", fullContent: "Transform your study habits from chaotic to streamlined. Note P@d isn't just for random notes; it's a powerful tool for academic success. Use the simple notepad to summarize chapters, creating concise revision notes. Leverage the to-do list to break down assignments into manageable tasks, and use the whiteboard to visualize complex concepts like chemical reactions or historical timelines. By combining these tools, you can create a centralized, digital study hub that's accessible anywhere, even offline. This approach reduces clutter and helps you focus on what truly matters: learning.", tags: ["study tips", "education", "student life", "organization", "Note Pad"] },
-    { id: 10, title: "Class 12 (XII) Result for 2081/2082: Check Your +2 Result!", date: "2024-07-01", views: 1874, author: "Bishal Mishra", image: "https://i.ibb.co/ycvw4J0g/class-12-results.png", content: "The National Examination Board (NEB), Nepal, has officially published the Class 12 results for the academic year 2081/2082. Thousands of students who appeared in the +2 board exams can now access their results online.", fullContent: `<p>These results reflect not only individual performance but also serve as a gateway to higher education and future career paths. Whether you are a regular or partial student, the result is equally important in shaping your academic future.</p><p>This year, NEB has made it convenient for students to check their results using multiple digital platforms. The primary method is online result checking, where students just need to enter their symbol number and date of birth on the designated websites. Due to high traffic, some servers may slow down, so having multiple options is very helpful. Make sure you double-check your credentials while entering the information to avoid errors.
-<p>In addition to the official NEB result portal, other popular educational and telecom partner sites are also hosting the result. These portals provide instant access to the marksheet, including subject-wise grades and GPA. Students are advised to keep a copy of their result for future use, especially for university applications, scholarships, and other academic planning.<br><br> <a href="https://neb.ntc.net.np" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check +2 Results 2081/82</a></p><p>We at bishalmishra.com have provided a compiled list of trusted and verified websites to check your Class 12 NEB result easily. Simply visit any of the links below and follow the instructions on the page. Best of luck to all the students — may this result open the door to your dreams and success!
-
-</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 12", "NEB", "Nepal education", "results 2081/82"] },
-    { id: 9, title: "Digital vs. Analog: Why a Hybrid Approach to Note-Taking Wins", date: "2024-07-26", views: 1150, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1455390587440-615c9115a814?w=600&auto=format&fit=crop&q=60", content: "In the debate between digital notepads and classic paper notebooks, why choose? A hybrid approach offers the best of both worlds...", fullContent: "While the convenience of digital tools like Note P@d is undeniable, the tactile experience of writing on paper has proven benefits for memory retention. This post explores how to combine the two for maximum productivity. Use your physical notebook for initial brainstorming and creative doodling. Then, transfer and organize those key ideas into Note P@d. Digitize your thoughts for easy searching, editing, and access across devices. This hybrid system allows for creative freedom while ensuring your important information is secure, organized, and always with you.", tags: ["note-taking", "digital tools", "analog", "productivity", "hybrid work"] },
+    // --- UPDATED BLOG POST ---
+    { 
+        id: 9, 
+        title: "Download 1000+ Nepali Fonts for Free: Preeti, Sagarmatha, and More!", 
+        date: "2024-07-27", 
+        views: 2530, 
+        author: "Bishal Mishra", 
+        image: "https://images.unsplash.com/photo-1593174241893-5858d4153549?w=600&auto=format&fit=crop&q=60", 
+        content: "Enhance your documents, designs, and digital content with our curated collection of over 1000+ free Nepali fonts. From the classic Preeti to modern Unicode fonts like Sagarmatha, find the perfect typeface for your needs...", 
+        fullContent: `<p>Whether you're drafting an official document, creating stunning graphics, or simply typing in Nepali, having the right font is crucial. We've gathered a massive collection of over 1000 Nepali fonts, including timeless classics and modern Unicode typefaces, all available in a single, free download.</p>
+                      <p>This pack includes everything you need for both professional and personal projects. You'll find popular fonts essential for government paperwork, creative fonts for design projects, and standard Unicode fonts for web and digital use.</p>
+                      <a href="https://www.nepalifonts.net/download-all-nepali-fonts.html" target="_blank" rel="noopener noreferrer" class="download-btn"><i class="fas fa-download" style="margin-right: 8px;"></i>Download 1000+ Nepali Fonts Now</a>
+                      <h4>How to Install Nepali Fonts</h4>
+                      <p>Installing the fonts is simple. Once you've downloaded and unzipped the file, follow these steps:</p>
+                      <ul>
+                        <li><strong>For Windows 10/11:</strong> Right-click on the font files you want to install and select 'Install' or 'Install for all users'. Alternatively, you can drag and drop the font files into the <strong>Control Panel > Appearance and Personalization > Fonts</strong> folder.</li>
+                        <li><strong>For macOS:</strong> Double-click the font file and click the "Install Font" button in the Font Book application. You can also drag the font files to the Font Book app icon in your dock.</li>
+                      </ul>
+                      <h4>Popular Fonts Included in the Pack:</h4>
+                      <p>This collection features a wide range of typefaces, including:</p>
+                      <ul>
+                        <li>Preeti</li>
+                        <li>Kantipur</li>
+                        <li>Sagarmatha</li>
+                        <li>Ganesh</li>
+                        <li>Himali</li>
+                        <li>And hundreds more...</li>
+                      </ul>
+                      <p>Stop searching for individual fonts and get everything you need in one place. Download the pack today and elevate your Nepali typing experience!</p>`, 
+        tags: ["Nepali fonts", "free download", "Preeti font", "Devanagari", "typing", "Nepal"] 
+    },
     { id: 1, title: "Unlock Your Productivity: The Power of a Digital Notepad", date: "2024-07-25", views: 1580, author: "Bishal Mishra", image: "https://www.seekink.com/wp-content/uploads/2024/01/%E5%9B%BE%E7%89%874-3.png", content: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon...", fullContent: "In today's fast-paced world, staying organized is key to productivity. A digital notepad like Note P@d can be your secret weapon. This blog post explores how using a simple yet powerful tool can help you capture fleeting ideas, organize your thoughts, and manage your daily tasks effectively. We'll cover strategies for leveraging notepads for everything from meeting minutes to personal journaling, ensuring no great idea slips away. Discover how to optimize your Note P@d for maximum efficiency. Learn about using different note types, and how to integrate Note P@d into your daily routine for peak performance. The ability to quickly jot down thoughts without worrying about saving frees up mental bandwidth. With Note P@d, your digital workspace adapts to you, not the other way around.", tags: ["productivity", "notepad", "digital tools", "organization", "Note Pad"] },
     { id: 8, title: "Keyboard Shortcuts to Supercharge Your Note P@d Workflow", date: "2024-07-24", views: 820, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1618423691234-877c8a61d15c?w=600&auto=format&fit=crop&q=60", content: "Work smarter, not harder. Mastering keyboard shortcuts can dramatically increase your efficiency, and Note P@d is no exception...", fullContent: "Work smarter, not harder. Mastering keyboard shortcuts can dramatically increase your efficiency. This post is your ultimate cheat sheet for Note P@d's hidden power-ups. Learn how to quickly save notes, switch between the notepad, whiteboard, and to-do list, and access other key features without ever touching your mouse. We'll provide a comprehensive list of shortcuts and tips on how to commit them to memory. Investing a few minutes to learn these commands will save you hours in the long run, making your workflow smoother and faster.", tags: ["shortcuts", "efficiency", "workflow", "tech tips", "Note Pad"] },
     { id: 2, title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d", date: "2024-07-20", views: 1120, author: "Bishal Mishra", image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow...", fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference.", tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad"] },
     { id: 3, title: "Conquer Your To-Do List: Effective Task Management with Note P@d", date: "2024-07-15", views: 1750, author: "Bishal Mishra", image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature...", fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels. Discover techniques like creating actionable items and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity.", tags: ["to-do list", "task management", "organization", "productivity", "Note Pad"] },
     { id: 4, title: "The Seamless Offline Experience: Why Note P@d is Always Available", date: "2024-07-10", views: 950, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is a Progressive Web App (PWA), ensuring your notes are always accessible...", fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device.", tags: ["offline", "PWA", "accessibility", "web tech", "Note Pad"] },
     { id: 5, title: "Your Privacy Matters: How Note P@d Protects Your Data Locally", date: "2024-07-05", views: 2100, author: "Bishal Mishra", image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", content: "Your notes should remain private. Note P@d is built with a strong focus on privacy. This post details how your data is stored locally, never transmitted to a server by default...", fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, a design choice that means it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.", tags: ["privacy", "security", "local storage", "data protection", "Note Pad"] },
+    { id: 10, title: "Class 12 (XII) Result for 2081/2082: Check Your +2 Result!", date: "2024-07-01", views: 1874, author: "Bishal Mishra", image: "https://i.ibb.co/ycvw4J0g/class-12-results.png", content: "The National Examination Board (NEB), Nepal, has officially published the Class 12 results for the academic year 2081/2082. Thousands of students who appeared in the +2 board exams can now access their results online.", fullContent: `<p>These results reflect not only individual performance but also serve as a gateway to higher education and future career paths. Whether you are a regular or partial student, the result is equally important in shaping your academic future.</p><p>This year, NEB has made it convenient for students to check their results using multiple digital platforms. The primary method is online result checking, where students just need to enter their symbol number and date of birth on the designated websites. Due to high traffic, some servers may slow down, so having multiple options is very helpful. Make sure you double-check your credentials while entering the information to avoid errors.
+<p>In addition to the official NEB result portal, other popular educational and telecom partner sites are also hosting the result. These portals provide instant access to the marksheet, including subject-wise grades and GPA. Students are advised to keep a copy of their result for future use, especially for university applications, scholarships, and other academic planning.<br><br> <a href="https://neb.ntc.net.np" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check +2 Results 2081/82</a></p><p>We at bishalmishra.com have provided a compiled list of trusted and verified websites to check your Class 12 NEB result easily. Simply visit any of the links below and follow the instructions on the page. Best of luck to all the students — may this result open the door to your dreams and success!
+
+</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 12", "NEB", "Nepal education", "results 2081/82"] },
     { id: 6, title: "Class 10 (SEE) Result for 2081/2082: Check Your SEE Result!", date: "2025-07-01", views: 1574, author: "Bishal Mishra", image: "https://techsathi.com/wp-content/uploads/2022/07/SEE-Result-1-702x459.jpg", content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results...", fullContent: `<p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p><p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. Ensure you have your symbol number and date of birth ready to retrieve your results.<br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p><p>We have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081:</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82"] },
     { id: 7, title: "Organizing Your Life: From Daily Chores to Long-Term Goals", date: "2024-06-29", views: 1890, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=600&auto=format&fit=crop&q=60", content: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. See how Note P@d can be the central hub for your entire life...", fullContent: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. Use Note P@d's to-do list for your daily groceries and chores. Create a separate note for your weekly meal plan. Use the whiteboard to map out your 5-year career goals. By creating dedicated notes and lists for different areas of your life (Personal, Work, Health, etc.), you can bring clarity and order to the chaos. This post provides a step-by-step guide to building a life organization system within Note P@d, helping you stay on track and achieve your dreams.", tags: ["life organization", "goal setting", "planning", "task management", "Note Pad"] }
 ];
 
-function filterBlogPosts(query) {
-    const searchTerm = query.toLowerCase().trim();
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        const title = postElement.querySelector('h4 a').textContent.toLowerCase();
-        const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || '');
-        const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || '';
-        postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none';
-    });
-}
-
-function filterBlogPostsByTag(tag) {
-    const blogMainHeading = document.getElementById('blog-main-heading');
-    if (blogMainHeading) blogMainHeading.classList.add('hidden');
-    
-    let backButton = document.getElementById('back-to-blog-list-btn');
-    const postsContainer = document.getElementById('blog-posts-container');
-    if (!backButton && postsContainer) {
-        backButton = document.createElement('button');
-        backButton.id = 'back-to-blog-list-btn';
-        backButton.textContent = '← Back to All Posts';
-        backButton.className = 'read-more-btn';
-        backButton.style.marginBottom = '20px';
-        backButton.onclick = showBlogList;
-        postsContainer.insertBefore(backButton, postsContainer.firstChild);
-    }
-
-    const searchTerm = tag.toLowerCase().trim();
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id);
-        const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : [];
-        postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none';
-    });
-    
-    if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' });
-}
-
-function showBlogList() {
-    const blogMainHeading = document.getElementById('blog-main-heading');
-    if (blogMainHeading) blogMainHeading.classList.remove('hidden');
-    
-    const backButton = document.getElementById('back-to-blog-list-btn');
-    if (backButton) backButton.remove();
-    
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        postElement.style.display = 'block';
-    });
-}
-
-function toggleBlogContent(postId) {
-    const postElement = document.getElementById(`blog-${postId}`);
-    if (!postElement) return;
-
-    const contentShort = postElement.querySelector('.blog-content-short');
-    const contentFull = postElement.querySelector('.blog-content-full');
-    const readMoreBtn = postElement.querySelector('.read-more-btn');
-
-    const isExpanded = contentFull.style.display === 'block';
-
-    if (isExpanded) {
-        contentFull.style.display = 'none';
-        contentShort.style.display = 'block';
-        readMoreBtn.textContent = 'Read More →';
-    } else {
-        contentFull.style.display = 'block';
-        contentShort.style.display = 'none';
-        readMoreBtn.textContent = 'Show Less ←';
-        setTimeout(() => { postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-    }
-}
-
-function scrollToAndExpandPost(postId) {
-    const postElement = document.getElementById(`blog-${postId}`);
-    if (!postElement) return;
-
-    // First, scroll to the post
-    postElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    // Now, ensure it's expanded
-    const contentShort = postElement.querySelector('.blog-content-short');
-    const contentFull = postElement.querySelector('.blog-content-full');
-    const readMoreBtn = postElement.querySelector('.read-more-btn');
-    
-    // Only expand if it's not already expanded
-    if (contentFull.style.display !== 'block') {
-        contentFull.style.display = 'block';
-        contentShort.style.display = 'none';
-        readMoreBtn.textContent = 'Show Less ←';
-    }
-}
-
-function populateBlogSidebar() {
-    const recentPostsList = document.getElementById('sidebar-recent-posts');
-    const tagsCloud = document.getElementById('sidebar-tags-cloud');
-    if (!recentPostsList || !tagsCloud) return;
-
-    // --- Populate Recent Posts (Top 5) ---
-    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
-    const recentPostsHtml = sortedPosts.slice(0, 5).map(post => 
-        `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`
-    ).join('');
-    recentPostsList.innerHTML = recentPostsHtml;
-
-    // --- Populate Tags Cloud ---
-    const allTags = new Set(blogPostsData.flatMap(post => post.tags || []));
-    const tagsHtml = Array.from(allTags).sort().map(tag =>
-        `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`
-    ).join('');
-    tagsCloud.innerHTML = tagsHtml;
-}
-
-
-function loadBlogPosts() {
-    if (!blogList) return;
-    blogList.innerHTML = '';
-    if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; }
-    
-    const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    sortedBlogPosts.forEach(post => {
-        const blogPostDiv = document.createElement('div');
-        blogPostDiv.id = `blog-${post.id}`;
-        blogPostDiv.classList.add('blog-post');
-        
-        blogPostDiv.innerHTML = `
-            <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4>
-            <div class="blog-post-meta">
-                <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
-                <span><i class="fas fa-user"></i> By: ${post.author}</span>
-                <span><i class="fas fa-eye"></i> ${post.views} views</span>
-            </div>
-            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}
-            <div class="blog-post-content">
-                <div class="blog-content-short">${post.content}</div>
-                <div class="blog-content-full">${post.fullContent}</div>
-            </div>
-            <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>`;
-        
-        // Add JSON-LD Schema for the blog post
-        const postSchema = {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` },
-            "headline": post.title,
-            "description": post.content.replace(/<[^>]*>?/gm, ''),
-            "image": post.image,
-            "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" },
-            "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } },
-            "datePublished": post.date,
-            "dateModified": post.date
-        };
-
-        const schemaScript = document.createElement('script');
-        schemaScript.type = 'application/ld+json';
-        schemaScript.textContent = JSON.stringify(postSchema);
-        blogPostDiv.appendChild(schemaScript);
-        
-        blogList.appendChild(blogPostDiv);
-    });
-}
+// --- JS Functions (No other changes needed) ---
+function filterBlogPosts(query) { const searchTerm = query.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const title = postElement.querySelector('h4 a').textContent.toLowerCase(); const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || ''); const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || ''; postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none'; }); }
+function filterBlogPostsByTag(tag) { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.add('hidden'); let backButton = document.getElementById('back-to-blog-list-btn'); const postsContainer = document.getElementById('blog-posts-container'); if (!backButton && postsContainer) { backButton = document.createElement('button'); backButton.id = 'back-to-blog-list-btn'; backButton.textContent = '← Back to All Posts'; backButton.className = 'read-more-btn'; backButton.style.marginBottom = '20px'; backButton.onclick = showBlogList; postsContainer.insertBefore(backButton, postsContainer.firstChild); } const searchTerm = tag.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id); const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : []; postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none'; }); if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' }); }
+function showBlogList() { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.remove('hidden'); const backButton = document.getElementById('back-to-blog-list-btn'); if (backButton) backButton.remove(); document.querySelectorAll('.blog-post').forEach(postElement => { postElement.style.display = 'block'; }); }
+function toggleBlogContent(postId) { const postElement = document.getElementById(`blog-${postId}`); if (!postElement) return; const contentShort = postElement.querySelector('.blog-content-short'); const contentFull = postElement.querySelector('.blog-content-full'); const readMoreBtn = postElement.querySelector('.read-more-btn'); const isExpanded = contentFull.style.display === 'block'; if (isExpanded) { contentFull.style.display = 'none'; contentShort.style.display = 'block'; readMoreBtn.textContent = 'Read More →'; } else { contentFull.style.display = 'block'; contentShort.style.display = 'none'; readMoreBtn.textContent = 'Show Less ←'; setTimeout(() => { postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100); } }
+function scrollToAndExpandPost(postId) { const postElement = document.getElementById(`blog-${postId}`); if (!postElement) return; postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); const contentShort = postElement.querySelector('.blog-content-short'); const contentFull = postElement.querySelector('.blog-content-full'); const readMoreBtn = postElement.querySelector('.read-more-btn'); if (contentFull.style.display !== 'block') { contentFull.style.display = 'block'; contentShort.style.display = 'none'; readMoreBtn.textContent = 'Show Less ←'; } }
+function populateBlogSidebar() { const recentPostsList = document.getElementById('sidebar-recent-posts'); const tagsCloud = document.getElementById('sidebar-tags-cloud'); if (!recentPostsList || !tagsCloud) return; const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); const recentPostsHtml = sortedPosts.slice(0, 5).map(post => `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`).join(''); recentPostsList.innerHTML = recentPostsHtml; const allTags = new Set(blogPostsData.flatMap(post => post.tags || [])); const tagsHtml = Array.from(allTags).sort().map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join(''); tagsCloud.innerHTML = tagsHtml; }
+function loadBlogPosts() { if (!blogList) return; blogList.innerHTML = ''; if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; } const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); sortedBlogPosts.forEach(post => { const blogPostDiv = document.createElement('div'); blogPostDiv.id = `blog-${post.id}`; blogPostDiv.classList.add('blog-post'); blogPostDiv.innerHTML = `<h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4><div class="blog-post-meta"><span><i class="fas fa-calendar-alt"></i> ${post.date}</span><span><i class="fas fa-user"></i> By: ${post.author}</span><span><i class="fas fa-eye"></i> ${post.views} views</span></div>${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}<div class="blog-post-content"><div class="blog-content-short">${post.content}</div><div class="blog-content-full">${post.fullContent}</div></div><button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>`; const postSchema = { "@context": "https://schema.org", "@type": "BlogPosting", "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` }, "headline": post.title, "description": post.content.replace(/<[^>]*>?/gm, ''), "image": post.image, "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" }, "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } }, "datePublished": post.date, "dateModified": post.date }; const schemaScript = document.createElement('script'); schemaScript.type = 'application/ld+json'; schemaScript.textContent = JSON.stringify(postSchema); blogPostDiv.appendChild(schemaScript); blogList.appendChild(blogPostDiv); }); }
 </script>
 </body>
 </html>
