@@ -693,6 +693,18 @@
         }
         /* END NEW STYLES */
 
+        /* Animation for scrolling elements */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: var(--animation-delay, 0s); /* Use a CSS variable for delay */
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- MEDIA QUERIES --- */
         
         /* Desktop Layout */
@@ -1126,6 +1138,10 @@ const premiumFeaturesSection = document.getElementById('premium-features-section
 const adsenseContainer = document.querySelector('.adsense-ad-container');
 const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtjv/IMG-0120.jpg"; 
 
+// --- SCROLL ANIMATION GLOBAL VARIABLE ---
+let scrollAnimationObserver;
+
+
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
@@ -1143,6 +1159,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Explicitly ensure all home page main sections are visible on load
     document.getElementById('editor')?.classList.remove('hidden'); // Notepad editor
+    document.getElementById('whiteboard-container')?.classList.remove('hidden');
+    document.getElementById('calendar-container')?.classList.remove('hidden');
     document.getElementById('notes')?.classList.remove('hidden'); // Saved notes
     document.querySelector('.features-grid')?.classList.remove('hidden'); // The new features grid
     document.getElementById('overview')?.classList.remove('hidden'); // Welcome section
@@ -1165,6 +1183,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         if(welcomePopup) welcomePopup.classList.add('hidden');
     }
+
+    // Initialize scroll animations
+    setupScrollAnimations();
 });
 
 window.onload = function() {
@@ -1608,11 +1629,19 @@ function displayNotes() {
     const key = getUserNotesKey();
     const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : [];
     
+    // Clear existing notes from the observer before re-rendering
+    if (scrollAnimationObserver) {
+        document.querySelectorAll('#note-list .note').forEach(noteElement => {
+            scrollAnimationObserver.unobserve(noteElement);
+            noteElement.classList.remove('is-visible'); // Reset visibility for re-render
+        });
+    }
+
     if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>";
     else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>";
     else {
         notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id);
-        noteList.innerHTML = notes.map(n => {
+        noteList.innerHTML = notes.map((n, index) => { // Pass index to map for staggered animation
             let contentPreview = '';
             const noteType = n.type || 'notepad';
             if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
@@ -1633,8 +1662,22 @@ function displayNotes() {
             const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
             const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack';
             const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝');
-            return `<div class="note ${n.pinned ? 'pinned' : ''}" id="note-${n.id}"><h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4><p class="note-content-preview">${contentPreview}</p><small>Last updated: ${n.date}</small><div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div></div>`;
+            
+            // Add fade-in-up class and data-animation-delay for individual note animation
+            return `<div class="note ${n.pinned ? 'pinned' : ''} fade-in-up" id="note-${n.id}" data-animation-delay="${index * 0.05}">` // Stagger notes slightly
+                + `<h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4>`
+                + `<p class="note-content-preview">${contentPreview}</p>`
+                + `<small>Last updated: ${n.date}</small>`
+                + `<div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div>`
+                + `</div>`;
         }).join('');
+
+        // Observe newly rendered notes after they are in the DOM
+        if (scrollAnimationObserver) {
+            document.querySelectorAll('#note-list .note').forEach(noteElement => {
+                scrollAnimationObserver.observe(noteElement);
+            });
+        }
     }
 }
 
@@ -1679,8 +1722,8 @@ async function editNote(id) {
 }
 
 function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
-function getUserNotesKey() { const userId = getCurrentUserId(); return userId ? `notes_${userId}` : null; }
-function getDraftKey() { const userId = getCurrentUserId(); return userId ? `draft_${userId}` : null; }
+function getUserNotesKey() { return getCurrentUserId() ? `notes_${getCurrentUserId()}` : null; }
+function getDraftKey() { return getCurrentUserId() ? `draft_${getCurrentUserId()}` : null; }
 function updateAll() { saveDraft(); updateCharCount(); updateWordCount(); }
 function updateCharCount() { if(charCount && textInput) charCount.textContent = `Character Count: ${textInput.value.length}`; }
 function updateWordCount() { if(wordCount && textInput) {const words = textInput.value.trim().split(/\s+/).filter(Boolean); wordCount.textContent = `Word Count: ${words.length}`; }}
@@ -1944,7 +1987,7 @@ async function exportPDF(id) {
 }
 
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; if(installBtn) installBtn.classList.remove('hidden'); });
-if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
+if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
 
 function checkPremiumStatus(feature) { 
@@ -1978,6 +2021,87 @@ function updateUIForPremiumFeatures() {
         }
     });
 }
+
+
+// --- NEW SCROLL ANIMATION LOGIC ---
+
+function setupScrollAnimations() {
+    if ('IntersectionObserver' in window) {
+        scrollAnimationObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    // Apply delay only if it hasn't been animated already
+                    if (!target.classList.contains('is-visible')) {
+                        const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0;
+                        target.style.setProperty('--animation-delay', `${delay}s`);
+                        target.classList.add('is-visible');
+                    }
+                    observer.unobserve(target); // Stop observing once it's visible
+                }
+            });
+        }, {
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when 10% of the item is visible
+        });
+
+        // Select all static sections that should animate
+        const sectionsToAnimate = [
+            document.getElementById('menu-bar'), // Add menu bar to animation
+            // Editor (will only be observed if it's the active mode on load)
+            document.getElementById('editor'),
+            document.getElementById('whiteboard-container'),
+            document.getElementById('calendar-container'),
+            
+            // Other content sections
+            adsenseContainer,
+            document.getElementById('notes'), // The notes container itself
+            document.getElementById('overview'),
+            document.getElementById('premium-features-section'),
+            document.getElementById('faq-section'),
+            document.getElementById('how-it-works'),
+            document.getElementById('privacy')
+        ];
+
+        let index = 0;
+        sectionsToAnimate.forEach(section => {
+            if (section) {
+                // Check if the section is not hidden by default (e.g., calendar/whiteboard on notepad mode)
+                // or if it's the currently active editor mode
+                const isCurrentlyActiveEditor = 
+                    (section.id === 'editor' && currentAppMode === 'notepad') ||
+                    (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') ||
+                    (section.id === 'calendar-container' && currentAppMode === 'calendar');
+
+                // Only add animation class if it's a static section or the currently active editor/tool
+                if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) {
+                    section.classList.add('fade-in-up');
+                    section.dataset.animationDelay = index * 0.1; // Stagger initial sections
+                    scrollAnimationObserver.observe(section);
+                    index++;
+                }
+            }
+        });
+
+        // Also observe individual feature cards within the features-grid
+        document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => {
+            card.classList.add('fade-in-up');
+            // Stagger feature cards, starting after main sections if desired, or with their own count
+            card.dataset.animationDelay = (index * 0.1) + (cardIndex * 0.05); 
+            scrollAnimationObserver.observe(card);
+        });
+
+    } else {
+        // Fallback for browsers that don't support Intersection Observer
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }
+}
+
+// END NEW SCROLL ANIMATION LOGIC
+
 </script>
 </body>
 </html>
