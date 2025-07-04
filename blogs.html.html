@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,253 +122,163 @@
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
-        .sidenav {
-            height: 100%;
-            width: 0; 
-            position: fixed;
-            z-index: 1002; 
-            top: 0;
-            left: 0;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        body.dark .sidenav {
-            background-color: rgba(30, 30, 30, 0.95);
-        }
-
-        .sidenav a {
-            padding: 10px 15px 10px 32px;
-            text-decoration: none;
-            font-size: 20px; 
-            font-weight: 600;
-            color: var(--text-light);
-            display: block;
-            transition: 0.3s;
-        }
-        body.dark .sidenav a {
-            color: var(--text-dark);
-        }
-
-        .sidenav a:hover {
-            color: var(--primary);
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        .open-nav-btn {
-            font-size: 28px;
-            cursor: pointer;
-            color: white;
-            transition: transform 0.2s;
-            position: absolute;
-            left: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .open-nav-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* Menu bar is not on blog.html, but styles are kept for consistency */
-        #menu-bar { display: none; }
+        .sidenav { height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; left: 0; overflow-x: hidden; transition: 0.5s; padding-top: 60px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+        body.dark .sidenav { background-color: rgba(30, 30, 30, 0.95); }
+        .sidenav a { padding: 10px 15px 10px 32px; text-decoration: none; font-size: 20px; font-weight: 600; color: var(--text-light); display: block; transition: 0.3s; }
+        body.dark .sidenav a { color: var(--text-dark); }
+        .sidenav a:hover { color: var(--primary); }
+        .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
+        .open-nav-btn:hover { transform: translateY(-50%) scale(1.1); }
         
-        /* App sections are not on blog.html, but styles are kept for consistency */
-        #editor, #notes, #whiteboard-container, #calendar-container { display: none; }
-
         #blogs-section {
             background: var(--card-light);
             padding: 40px 5%;
             margin-bottom: 25px;
             text-align: left;
         }
-
-        body.dark #blogs-section {
-            background: var(--card-dark);
-        }
+        body.dark #blogs-section { background: var(--card-dark); }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
         #blog-main-heading { font-size: 28px; }
 
-        /* Blog Styling */
-        .blog-post {
-            background: transparent; /* Parent section has the background now */
-            padding: 40px 0; /* Vertical padding, horizontal is handled by parent */
-            margin-bottom: 25px;
-            text-align: left; 
-            border-bottom: 1px solid #e9e9e9;
+        /* --- NEW: Blog Layout Container --- */
+        .blog-layout-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
         }
-        body.dark .blog-post {
-            border-bottom-color: #3a3a3a;
-        }
-        .blog-post:last-of-type {
-            border-bottom: none;
-            padding-bottom: 0;
+        #blog-posts-container {
+            flex: 1; /* Takes up remaining space */
+            min-width: 0; /* Prevents flexbox overflow */
         }
         
-        .blog-post h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .blog-post-meta {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 20px;
+        /* --- NEW: Blog Sidebar --- */
+        #blog-sidebar {
+            width: 300px;
+            flex-shrink: 0;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: center;
+            flex-direction: column;
+            gap: 25px;
         }
-        body.dark .blog-post-meta {
-            color: #aaa;
+        .sidebar-widget {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 10px var(--shadow-light);
+            transition: background 0.5s ease;
         }
-        .blog-post-meta i {
-            margin-right: 6px;
-            color: var(--primary); 
+        body.dark .sidebar-widget {
+            background: #333;
+            box-shadow: 0 4px 15px var(--shadow-dark);
         }
-        .blog-post-content {
-            font-size: 16px; 
-            line-height: 1.8; 
-            color: var(--text-light); 
+        .sidebar-widget h5 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
-        body.dark .blog-post-content {
+        body.dark .sidebar-widget h5 { border-bottom-color: #444; }
+
+        #blog-sidebar input[type="text"],
+        #blog-sidebar input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            font-size: 15px;
+            background: var(--card-light);
+            color: var(--text-light);
+            transition: border-color 0.3s ease;
+        }
+        body.dark #blog-sidebar input[type="text"],
+        body.dark #blog-sidebar input[type="email"] {
+            background: #2b2b2b;
+            border-color: #555;
             color: var(--text-dark);
         }
-        .blog-post-content p {
-            margin-bottom: 15px;
+        #blog-sidebar input:focus {
+            outline: none;
+            border-color: var(--primary);
         }
-        .blog-post-content ul {
-            list-style: disc;
-            padding-left: 25px;
-            margin-bottom: 15px;
-        }
-        .blog-post-content ul li {
-            margin-bottom: 8px;
-        }
-        .blog-post-content a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-        .blog-post-content a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-        .blog-post-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-            display: block; 
-            box-shadow: 0 8px 20px var(--shadow-light);
-        }
-        body.dark .blog-post-image {
-            box-shadow: 0 8px 25px var(--shadow-dark);
-        }
-
-        .blog-content-short {
-            display: -webkit-box;
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 15px; 
-        }
-        .blog-content-full {
-            display: none; /* Initially hidden */
-            margin-bottom: 15px;
-        }
-        .read-more-btn {
+        #sidebar-newsletter-btn {
             background: var(--primary);
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: var(--radius);
             cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.2s ease;
+            margin-top: 10px;
+        }
+        #sidebar-newsletter-btn:hover { background: var(--primary-dark); }
+
+        #sidebar-recent-posts { list-style: none; padding: 0; }
+        #sidebar-recent-posts li { margin-bottom: 12px; }
+        #sidebar-recent-posts li a { color: var(--text-light); text-decoration: none; transition: color 0.2s ease; font-size: 15px; font-weight: 500; }
+        body.dark #sidebar-recent-posts li a { color: var(--text-dark); }
+        #sidebar-recent-posts li a:hover { color: var(--primary); }
+
+        #sidebar-tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        #sidebar-tags-cloud a {
+            display: inline-block;
+            background-color: #e0e0e0;
+            color: #555;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
-            transition: background 0.2s ease-in-out;
-            display: inline-block; 
-            margin-top: 10px; 
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
-        .read-more-btn:hover {
-            background: var(--primary-dark);
+        body.dark #sidebar-tags-cloud a { background-color: #4a4a4a; color: #ccc; }
+        #sidebar-tags-cloud a:hover { background-color: var(--primary); color: white; }
+
+        /* --- MODIFIED: Blog Post Styling --- */
+        .blog-post {
+            background: transparent;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            text-align: left; 
+            border-bottom: 1px solid #e9e9e9;
         }
+        body.dark .blog-post { border-bottom-color: #3a3a3a; }
+        .blog-post:last-of-type { border-bottom: none; margin-bottom: 0; }
+        
+        .blog-post h4 { color: var(--primary); margin-bottom: 10px; font-size: 24px; font-weight: 700; }
+        .blog-post-meta { font-size: 14px; color: #888; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+        body.dark .blog-post-meta { color: #aaa; }
+        .blog-post-meta i { margin-right: 6px; color: var(--primary); }
+        
+        .blog-post-content { font-size: 16px; line-height: 1.8; color: var(--text-light); }
+        body.dark .blog-post-content { color: var(--text-dark); }
+        .blog-post-content p { margin-bottom: 15px; }
+        .blog-post-content ul { list-style: disc; padding-left: 25px; margin-bottom: 15px; }
+        .blog-post-content ul li { margin-bottom: 8px; }
+        .blog-post-content a { color: var(--primary); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+        .blog-post-content a:hover { color: var(--primary-dark); text-decoration: underline; }
+        
+        .blog-post-image { max-width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 20px; display: block; box-shadow: 0 8px 20px var(--shadow-light); }
+        body.dark .blog-post-image { box-shadow: 0 8px 25px var(--shadow-dark); }
+
+        .blog-content-short { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; margin-bottom: 15px; }
+        .blog-content-full { display: none; margin-bottom: 15px; }
+        
+        .read-more-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.2s ease-in-out; display: inline-block; margin-top: 10px; }
+        .read-more-btn:hover { background: var(--primary-dark); }
 
         .blog-post-content .see-result-btn {
-            display: block;
-            width: fit-content;
-            margin: 20px auto;
-            background-color: #28a745;
-            color: white;
-            padding: 12px 25px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: block; width: fit-content; margin: 20px auto; background-color: #28a745; color: white; padding: 12px 25px; border-radius: var(--radius); text-decoration: none; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        .blog-post-content .see-result-btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .blog-post-footer-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        body.dark .blog-post-footer-section { border-top-color: #3a3a3a; }
-        .blog-post-footer-section > div {
-            padding: 20px;
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            box-shadow: inset 0 1px 3px var(--shadow-light);
-            color: var(--text-light);
-        }
-        body.dark .blog-post-footer-section > div { background: #333; box-shadow: inset 0 1px 3px var(--shadow-dark); color: var(--text-dark); }
-        .blog-post-footer-section h5 { color: var(--primary); margin-bottom: 15px; font-size: 1.1em; font-weight: 700; }
-        .tags-list a { display: inline-block; background-color: #e0e0e0; color: #555; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin: 5px; font-size: 14px; transition: background-color 0.2s ease, color 0.2s ease; }
-        body.dark .tags-list a { background-color: #4a4a4a; color: #ccc; }
-        .tags-list a:hover { background-color: var(--primary); color: white; }
-        .blog-share button { background: #4267B2; color: white; border: none; padding: 8px 15px; border-radius: var(--radius); cursor: pointer; font-size: 15px; margin-right: 10px; transition: background 0.2s ease; }
-        .blog-share button:nth-of-type(2) { background: #25D366; }
-        .blog-share button:hover { opacity: 0.9; }
-        .blog-share button i { margin-right: 8px; }
-        .blog-search input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
-        body.dark .blog-search input[type="text"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
-        .blog-search input[type="text"]:focus { outline: none; border-color: var(--primary); }
-        .blog-recent-posts ul { list-style: none; padding: 0; }
-        .blog-recent-posts li { margin-bottom: 10px; }
-        .blog-recent-posts li a { color: var(--text-light); text-decoration: none; transition: color 0.2s ease; font-size: 15px; }
-        body.dark .blog-recent-posts li a { color: var(--text-dark); }
-        .blog-recent-posts li a:hover { color: var(--primary); text-decoration: underline; }
-        .blog-newsletter input[type="email"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; margin-bottom: 10px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
-        body.dark .blog-newsletter input[type="email"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
-        .blog-newsletter input[type="email"]:focus { outline: none; border-color: var(--primary); }
-        .blog-newsletter button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; width: 100%; transition: background 0.2s ease; }
-        .blog-newsletter button:hover { background: var(--primary-dark); }
-
+        .blog-post-content .see-result-btn:hover { background-color: #218838; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Profile Dropdown (no changes) */
         .profile-container { position: relative; z-index: 999; margin-left: auto; }
         #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
@@ -391,11 +300,9 @@
         #emailVerifiedStatus .fa-times-circle { color: #dc3545; } 
         
         .modal { display: none; }
-
         #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: all 0.3s ease-in-out; display: flex; align-items: center; justify-content: center; } 
         #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } 
         body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
-        
         .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
@@ -411,6 +318,16 @@
             .profile-container { position: relative; top: auto; right: auto; margin-left: 20px; }
         }
 
+        @media (max-width: 992px) {
+            .blog-layout-container {
+                flex-direction: column;
+            }
+            #blog-sidebar {
+                width: 100%;
+                margin-top: 30px; /* Add space when it stacks */
+            }
+        }
+
         @media (max-width: 768px) { 
             h2, h3 { font-size: 22px; }
             #blog-main-heading { font-size: 24px; }
@@ -421,7 +338,7 @@
         @media (max-width: 480px) {
             .profile-container { position: fixed; top: 10px; right: 10px; }
              #blogs-section { padding: 30px 5%; }
-             .blog-post { padding: 30px 0; }
+             .blog-post { padding-bottom: 20px; margin-bottom: 20px; }
         }
 
     </style>
@@ -478,8 +395,40 @@
 <main id="main-container" class="container">
     <div id="blogs-section"> 
         <h2 id="blog-main-heading"><i class="fas fa-blog" style="color: var(--primary); margin-right: 12px;"></i>Productivity Insights & Blog</h2>
-        <div id="blog-list">
-            <!-- Blog posts will be dynamically inserted here -->
+        
+        <div class="blog-layout-container">
+            <div id="blog-posts-container">
+                <div id="blog-list">
+                    <!-- Blog posts will be dynamically inserted here -->
+                </div>
+            </div>
+            <aside id="blog-sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget">
+                    <h5>Search</h5>
+                    <input type="text" id="blog-search-input" placeholder="Search posts...">
+                </div>
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h5>Recent Posts</h5>
+                    <ul id="sidebar-recent-posts">
+                        <!-- JS will populate this -->
+                    </ul>
+                </div>
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h5>Tags</h5>
+                    <div id="sidebar-tags-cloud">
+                        <!-- JS will populate this -->
+                    </div>
+                </div>
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget">
+                    <h5>Newsletter</h5>
+                    <input type="email" id="sidebar-newsletter-email" placeholder="Enter your e-mail">
+                    <button id="sidebar-newsletter-btn">Subscribe</button>
+                </div>
+            </aside>
         </div>
     </div>
     <!-- AdSense Ad Unit Start -->
@@ -537,6 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkAuthStatus(); 
     attachEventListeners();
     loadBlogPosts();
+    populateBlogSidebar(); // NEW: Populate the sidebar on load
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 });
 
@@ -589,21 +539,23 @@ function attachEventListeners() {
     const photoUploadInput = document.getElementById('photoUpload');
     if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
 
-    if (blogList) {
-        blogList.addEventListener('click', e => {
-            if (e.target && e.target.classList.contains('newsletter-btn')) {
-                e.preventDefault();
-                const container = e.target.closest('.blog-newsletter');
-                const emailInput = container.querySelector('.newsletter-email');
-                const email = emailInput.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // NEW: Sidebar Event Listeners
+    const searchInput = document.getElementById('blog-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', () => filterBlogPosts(searchInput.value));
+    }
 
-                if (email && emailRegex.test(email)) {
-                    alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`);
-                    emailInput.value = '';
-                } else {
-                    alert('Please enter a valid email address.');
-                }
+    const newsletterBtn = document.getElementById('sidebar-newsletter-btn');
+    if (newsletterBtn) {
+        newsletterBtn.addEventListener('click', () => {
+            const emailInput = document.getElementById('sidebar-newsletter-email');
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email && emailRegex.test(email)) {
+                alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`);
+                emailInput.value = '';
+            } else {
+                alert('Please enter a valid email address.');
             }
         });
     }
@@ -612,169 +564,17 @@ function attachEventListeners() {
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
 function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
-
-function checkAuthStatus() {
-    const currentUserId = localStorage.getItem('currentUserId');
-    if (currentUserId) {
-        showUserInfo();
-    } else {
-        if(profileContainer) profileContainer.classList.add('hidden');
-    }
-}
-
-function showUserInfo() {
-    const username = localStorage.getItem('currentUser');
-    const picUrl = localStorage.getItem('userPic');
-    const email = localStorage.getItem('userEmail');
-    const isVerified = localStorage.getItem('emailVerified') === 'true';
-    const profileIcon = document.getElementById('profile-icon');
-    const userPic = document.getElementById('userPic');
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    const userEmailDisplay = document.getElementById('userEmailDisplay');
-    const emailVerifiedStatus = document.getElementById('emailVerifiedStatus');
-    const verifyEmailBtn = document.getElementById('verifyEmailBtn');
-    const resetPasswordBtn = document.getElementById('resetPasswordBtn');
-
-    if (!username || !profileContainer) return;
-
-    profileContainer.classList.remove('hidden');
-    
-    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
-    if(profileIcon) profileIcon.src = avatarUrl;
-    if(userPic) userPic.src = avatarUrl;
-    if(userNameDisplay) userNameDisplay.textContent = username;
-    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
-
-    if (emailVerifiedStatus) {
-        if (isVerified) {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
-        } else {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
-        }
-    }
-    
-    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
-
-    const provider = localStorage.getItem('authProvider');
-    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
-        if (provider === 'google') {
-            resetPasswordBtn.parentElement.style.display = 'none';
-            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
-                verifyEmailBtn.parentElement.style.display = 'none';
-            }
-        } else {
-            resetPasswordBtn.parentElement.style.display = 'block';
-        }
-    }
-}
-
-function handleLogout(e) {
-    if(e) e.preventDefault();
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("userPic");
-    localStorage.removeItem("currentUserId");
-    localStorage.removeItem("emailVerified");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("authProvider");
-    
-    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
-    
-    if(profileContainer) profileContainer.classList.add('hidden');
-    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
-    
-    if(authModal) authModal.classList.remove("hidden");
-}
-
-function handlePhotoUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        localStorage.setItem('userPic', e.target.result);
-        showUserInfo(); 
-        alert("Profile photo updated!");
-    };
-    reader.readAsDataURL(file);
-}
-
-function handleVerifyEmail(e) {
-    e.preventDefault();
-    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
-    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
-    
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
-    const userCode = prompt("Please enter the 6-digit verification code:");
-    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
-    else if (userCode) { alert("Incorrect code. Please try again."); } 
-    else { alert("Verification cancelled."); }
-}
-
-function handleResetPassword(e) {
-    e.preventDefault();
-    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
-    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
-
-    const newPassword = prompt("Enter your new password (min 4 characters):");
-    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
-
-    const confirmPassword = prompt("Confirm your new password:");
-    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
-
-    const username = localStorage.getItem('userEmail');
-    if(!username) { alert("User email not found. Cannot reset password."); return;}
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
-    else { alert("An error occurred. Could not find user to update password."); }
-}
-
+function checkAuthStatus() { const currentUserId = localStorage.getItem('currentUserId'); if (currentUserId) { showUserInfo(); } else { if(profileContainer) profileContainer.classList.add('hidden'); } }
+function showUserInfo() { const username = localStorage.getItem('currentUser'); const picUrl = localStorage.getItem('userPic'); const email = localStorage.getItem('userEmail'); const isVerified = localStorage.getItem('emailVerified') === 'true'; const profileIcon = document.getElementById('profile-icon'); const userPic = document.getElementById('userPic'); const userNameDisplay = document.getElementById('userNameDisplay'); const userEmailDisplay = document.getElementById('userEmailDisplay'); const emailVerifiedStatus = document.getElementById('emailVerifiedStatus'); const verifyEmailBtn = document.getElementById('verifyEmailBtn'); const resetPasswordBtn = document.getElementById('resetPasswordBtn'); if (!username || !profileContainer) return; profileContainer.classList.remove('hidden'); const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; if(profileIcon) profileIcon.src = avatarUrl; if(userPic) userPic.src = avatarUrl; if(userNameDisplay) userNameDisplay.textContent = username; if(userEmailDisplay) userEmailDisplay.textContent = email || ''; if (emailVerifiedStatus) { if (isVerified) { emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; } } else { emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; } } } if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block'; const provider = localStorage.getItem('authProvider'); if (resetPasswordBtn && resetPasswordBtn.parentElement) { if (provider === 'google') { resetPasswordBtn.parentElement.style.display = 'none'; if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) { verifyEmailBtn.parentElement.style.display = 'none'; } } else { resetPasswordBtn.parentElement.style.display = 'block'; } } }
+function handleLogout(e) { if(e) e.preventDefault(); localStorage.removeItem("currentUser"); localStorage.removeItem("userPic"); localStorage.removeItem("currentUserId"); localStorage.removeItem("emailVerified"); localStorage.removeItem("userEmail"); localStorage.removeItem("authProvider"); if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); if(profileContainer) profileContainer.classList.add('hidden'); if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); if(authModal) authModal.classList.remove("hidden"); }
+function handlePhotoUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('userPic', e.target.result); showUserInfo(); alert("Profile photo updated!"); }; reader.readAsDataURL(file); }
+function handleVerifyEmail(e) { e.preventDefault(); if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; } if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; } const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`); const userCode = prompt("Please enter the 6-digit verification code:"); if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); }  else if (userCode) { alert("Incorrect code. Please try again."); }  else { alert("Verification cancelled."); } }
+function handleResetPassword(e) { e.preventDefault(); if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; } if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; } const newPassword = prompt("Enter your new password (min 4 characters):"); if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; } const confirmPassword = prompt("Confirm your new password:"); if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; } const username = localStorage.getItem('userEmail'); if(!username) { alert("User email not found. Cannot reset password."); return;} const users = JSON.parse(localStorage.getItem("users") || "{}"); if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); }  else { alert("An error occurred. Could not find user to update password."); } }
 function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
-
-function loginSuccess(username, picUrl, userId) {
-    localStorage.setItem("currentUserId", userId);
-    if(picUrl) localStorage.setItem("userPic", picUrl);
-    showUserInfo();
-    if(authModal) authModal.classList.add("hidden");
-    const confetti = document.getElementById('confetti');
-    const loginSound = document.getElementById('loginSound');
-    if(confetti) confetti.classList.remove("hidden");
-    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
-    setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200);
-}
-
-function initGoogleSignIn() {
-    try {
-        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; }
-        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
-        const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
-        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
-        else console.warn("Google Sign-In button container not found.");
-    } catch (error) {
-        console.error("Google GSI could not be initialized.", error);
-        const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
-        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
-    }
-}
-
+function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); const confetti = document.getElementById('confetti'); const loginSound = document.getElementById('loginSound'); if(confetti) confetti.classList.remove("hidden"); if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); }
+function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const googleSignInButtonContainer = document.getElementById("googleSignInDiv"); if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); else console.warn("Google Sign-In button container not found."); } catch (error) { console.error("Google GSI could not be initialized.", error); const googleSignInButtonContainer = document.getElementById('googleSignInDiv'); if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load."; } }
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
-
-function handleGoogleSignIn(response) {
-    const data = jwtDecode(response.credential);
-    if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
-    const name = data.name || data.email;
-    const picture = data.picture || "";
-    const userId = data.sub;
-    const email = data.email;
-    const emailVerified = data.email_verified === true || data.email_verified === 'true';
-    localStorage.setItem("currentUser", name);
-    localStorage.setItem('authProvider', 'google');
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified.toString());
-    loginSuccess(name, picture, userId);
-}
-
+function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
 
 // --- BLOG DATA AND FUNCTIONS (specific to this page) ---
@@ -795,103 +595,54 @@ const blogPostsData = [
     { id: 7, title: "Organizing Your Life: From Daily Chores to Long-Term Goals", date: "2024-06-29", views: 1890, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=600&auto=format&fit=crop&q=60", content: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. See how Note P@d can be the central hub for your entire life...", fullContent: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. Use Note P@d's to-do list for your daily groceries and chores. Create a separate note for your weekly meal plan. Use the whiteboard to map out your 5-year career goals. By creating dedicated notes and lists for different areas of your life (Personal, Work, Health, etc.), you can bring clarity and order to the chaos. This post provides a step-by-step guide to building a life organization system within Note P@d, helping you stay on track and achieve your dreams.", tags: ["life organization", "goal setting", "planning", "task management", "Note Pad"] }
 ];
 
-function generateTagsHTML(tags) { if (!tags || tags.length === 0) return ''; return tags.map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join(''); }
-function generateRecentPostsHTML(currentPostId) {
-    let recentPostsHtml = '';
-    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
-    let count = 0;
-    for (const post of sortedPosts) {
-        if (post.id !== currentPostId && count < 3) {
-            recentPostsHtml += `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></li>`;
-            count++;
-        }
-    }
-    return recentPostsHtml ? `<ul>${recentPostsHtml}</ul>` : '<p>No other recent posts.</p>';
-}
-function sharePost(platform, postId, title) {
-    const postUrl = window.location.href.split('#')[0] + `#blog-${postId}`;
-    let shareUrl = '';
-    if (platform === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}"e=${encodeURIComponent(title)}`;
-    else if (platform === 'whatsapp') shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + postUrl)}`;
-    window.open(shareUrl, '_blank');
-}
 function filterBlogPosts(query) {
     const searchTerm = query.toLowerCase().trim();
     document.querySelectorAll('.blog-post').forEach(postElement => {
         const title = postElement.querySelector('h4 a').textContent.toLowerCase();
         const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || '');
-        const tags = (postElement.querySelector('.tags-list')?.textContent.toLowerCase() || '');
-        postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || tags.includes(searchTerm)) ? 'block' : 'none';
+        const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || '';
+        postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none';
     });
 }
+
 function filterBlogPostsByTag(tag) {
     const blogMainHeading = document.getElementById('blog-main-heading');
     if (blogMainHeading) blogMainHeading.classList.add('hidden');
+    
     let backButton = document.getElementById('back-to-blog-list-btn');
-    const blogsSection = document.getElementById('blogs-section');
-    if (!backButton && blogsSection) {
+    const postsContainer = document.getElementById('blog-posts-container');
+    if (!backButton && postsContainer) {
         backButton = document.createElement('button');
         backButton.id = 'back-to-blog-list-btn';
         backButton.textContent = '← Back to All Posts';
         backButton.className = 'read-more-btn';
         backButton.style.marginBottom = '20px';
         backButton.onclick = showBlogList;
-        blogsSection.insertBefore(backButton, blogsSection.firstChild);
+        postsContainer.insertBefore(backButton, postsContainer.firstChild);
     }
+
     const searchTerm = tag.toLowerCase().trim();
     document.querySelectorAll('.blog-post').forEach(postElement => {
-        const postTags = Array.from(postElement.querySelectorAll('.tags-list a')).map(a => a.textContent.toLowerCase());
+        const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id);
+        const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : [];
         postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none';
     });
-    setTimeout(() => { if (blogsSection) blogsSection.scrollIntoView({ behavior: 'smooth' }); }, 100);
+    
+    if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' });
 }
+
 function showBlogList() {
-    singleBlogPostExpandedId = null;
-    const blogsSection = document.getElementById('blogs-section');
     const blogMainHeading = document.getElementById('blog-main-heading');
-    if (blogsSection) blogsSection.classList.remove('hidden');
     if (blogMainHeading) blogMainHeading.classList.remove('hidden');
+    
     const backButton = document.getElementById('back-to-blog-list-btn');
     if (backButton) backButton.remove();
+    
     document.querySelectorAll('.blog-post').forEach(postElement => {
         postElement.style.display = 'block';
-        const contentShort = postElement.querySelector('.blog-content-short'), contentFull = postElement.querySelector('.blog-content-full'), readMoreBtn = postElement.querySelector('.read-more-btn'), footerSection = postElement.querySelector('.blog-post-footer-section');
-        if (contentShort) contentShort.style.display = 'block';
-        if (contentFull) contentFull.style.display = 'none';
-        if (readMoreBtn) readMoreBtn.textContent = 'Read More →';
-        if (footerSection) footerSection.classList.add('hidden');
     });
 }
-function showSingleBlogPost(postId) {
-    singleBlogPostExpandedId = postId;
-    const blogsSection = document.getElementById('blogs-section');
-    const blogMainHeading = document.getElementById('blog-main-heading');
-    if (blogsSection) blogsSection.classList.remove('hidden');
-    if (blogMainHeading) blogMainHeading.classList.add('hidden');
-    let backButton = document.getElementById('back-to-blog-list-btn');
-    if (!backButton && blogsSection) {
-        backButton = document.createElement('button');
-        backButton.id = 'back-to-blog-list-btn';
-        backButton.textContent = '← Back to All Posts';
-        backButton.className = 'read-more-btn';
-        backButton.style.marginBottom = '20px';
-        backButton.onclick = showBlogList;
-        blogsSection.insertBefore(backButton, blogsSection.firstChild);
-    }
-    document.querySelectorAll('.blog-post').forEach(postElement => {
-        const currentPostId = parseInt(postElement.id.replace('blog-', ''), 10);
-        const contentShort = postElement.querySelector('.blog-content-short'), contentFull = postElement.querySelector('.blog-content-full'), readMoreBtn = postElement.querySelector('.read-more-btn'), footerSection = postElement.querySelector('.blog-post-footer-section');
-        if (currentPostId === postId) {
-            postElement.style.display = 'block';
-            if (contentShort) contentShort.style.display = 'none';
-            if (contentFull) contentFull.style.display = 'block';
-            if (readMoreBtn) readMoreBtn.textContent = 'Show Less ←';
-            if (footerSection) footerSection.classList.remove('hidden');
-        } else {
-            postElement.style.display = 'none';
-        }
-    });
-}
+
 function toggleBlogContent(postId) {
     const postElement = document.getElementById(`blog-${postId}`);
     if (!postElement) return;
@@ -899,7 +650,6 @@ function toggleBlogContent(postId) {
     const contentShort = postElement.querySelector('.blog-content-short');
     const contentFull = postElement.querySelector('.blog-content-full');
     const readMoreBtn = postElement.querySelector('.read-more-btn');
-    const footerSection = postElement.querySelector('.blog-post-footer-section');
 
     const isExpanded = contentFull.style.display === 'block';
 
@@ -907,63 +657,91 @@ function toggleBlogContent(postId) {
         contentFull.style.display = 'none';
         contentShort.style.display = 'block';
         readMoreBtn.textContent = 'Read More →';
-        footerSection.classList.add('hidden');
     } else {
         contentFull.style.display = 'block';
         contentShort.style.display = 'none';
         readMoreBtn.textContent = 'Show Less ←';
-        footerSection.classList.remove('hidden');
         setTimeout(() => { postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
     }
 }
+
+function scrollToAndExpandPost(postId) {
+    const postElement = document.getElementById(`blog-${postId}`);
+    if (!postElement) return;
+
+    // First, scroll to the post
+    postElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Now, ensure it's expanded
+    const contentShort = postElement.querySelector('.blog-content-short');
+    const contentFull = postElement.querySelector('.blog-content-full');
+    const readMoreBtn = postElement.querySelector('.read-more-btn');
+    
+    // Only expand if it's not already expanded
+    if (contentFull.style.display !== 'block') {
+        contentFull.style.display = 'block';
+        contentShort.style.display = 'none';
+        readMoreBtn.textContent = 'Show Less ←';
+    }
+}
+
+function populateBlogSidebar() {
+    const recentPostsList = document.getElementById('sidebar-recent-posts');
+    const tagsCloud = document.getElementById('sidebar-tags-cloud');
+    if (!recentPostsList || !tagsCloud) return;
+
+    // --- Populate Recent Posts (Top 5) ---
+    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const recentPostsHtml = sortedPosts.slice(0, 5).map(post => 
+        `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`
+    ).join('');
+    recentPostsList.innerHTML = recentPostsHtml;
+
+    // --- Populate Tags Cloud ---
+    const allTags = new Set(blogPostsData.flatMap(post => post.tags || []));
+    const tagsHtml = Array.from(allTags).sort().map(tag =>
+        `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`
+    ).join('');
+    tagsCloud.innerHTML = tagsHtml;
+}
+
+
 function loadBlogPosts() {
     if (!blogList) return;
     blogList.innerHTML = '';
     if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; }
+    
     const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+    
     sortedBlogPosts.forEach(post => {
         const blogPostDiv = document.createElement('div');
         blogPostDiv.id = `blog-${post.id}`;
         blogPostDiv.classList.add('blog-post');
-        const shortContentHTML = `<div class="blog-content-short">${post.content}</div>`;
-        const fullContentHTML = `<div class="blog-content-full">${post.fullContent}</div>`;
+        
         blogPostDiv.innerHTML = `
             <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4>
-            <div class="blog-post-meta"><span><i class="fas fa-calendar-alt"></i> ${post.date}</span><span><i class="fas fa-user"></i> By: ${post.author}</span><span><i class="fas fa-eye"></i> ${post.views} views</span></div>
+            <div class="blog-post-meta">
+                <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
+                <span><i class="fas fa-user"></i> By: ${post.author}</span>
+                <span><i class="fas fa-eye"></i> ${post.views} views</span>
+            </div>
             ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}
-            <div class="blog-post-content">${shortContentHTML}${fullContentHTML}</div>
-            <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>
-            <div class="blog-post-footer-section hidden">
-                <div class="blog-tags"><h5>TAGS</h5><div class="tags-list">${generateTagsHTML(post.tags)}</div></div>
-                <div class="blog-share"><h5>SHARE POST</h5><button class="share-btn" onclick="sharePost('facebook', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-facebook"></i> Facebook</button><button class="share-btn" onclick="sharePost('whatsapp', ${post.id}, '${encodeURIComponent(post.title)}')"><i class="fab fa-whatsapp"></i> WhatsApp</button></div>
-                <div class="blog-recent-posts"><h5>RECENT POSTS</h5><ul class="recent-posts-list">${generateRecentPostsHTML(post.id)}</ul></div>
-                <div class="blog-newsletter"><h5>NEWSLETTER</h5><input type="email" placeholder="Enter your e-mail" class="newsletter-email"><button class="newsletter-btn">Subscribe</button></div>
-            </div>`;
+            <div class="blog-post-content">
+                <div class="blog-content-short">${post.content}</div>
+                <div class="blog-content-full">${post.fullContent}</div>
+            </div>
+            <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>`;
         
         // Add JSON-LD Schema for the blog post
         const postSchema = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}`
-            },
+            "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` },
             "headline": post.title,
-            "description": post.content.replace(/<[^>]*>?/gm, ''), // Plain text description
+            "description": post.content.replace(/<[^>]*>?/gm, ''),
             "image": post.image,
-            "author": {
-                "@type": "Person",
-                "name": post.author,
-                "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "Note Pad by Bishal Mishra",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://bishalmishra.com/images/favicon.png"
-                }
-            },
+            "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" },
+            "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } },
             "datePublished": post.date,
             "dateModified": post.date
         };
