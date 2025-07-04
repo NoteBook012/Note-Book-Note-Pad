@@ -123,6 +123,24 @@
         .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
         .open-nav-btn:hover { transform: translateY(-50%) scale(1.1); }
         
+        #live-info-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 20px;
+            white-space: nowrap;
+        }
+        #live-clock {
+            font-family: 'Inter', sans-serif;
+        }
+        #live-weather i {
+            margin-right: 8px;
+            color: #ffc107;
+        }
+
         #blogs-section { background: var(--card-light); padding: 40px 5%; margin-bottom: 25px; text-align: left; }
         body.dark #blogs-section { background: var(--card-dark); }
        
@@ -280,6 +298,7 @@
         @media (max-width: 992px) {
             .blog-layout-container { flex-direction: column; }
             #blog-sidebar { width: 100%; margin-top: 30px; }
+            #live-info-container { display: none; }
         }
         @media (max-width: 768px) { 
             h2, h3 { font-size: 22px; }
@@ -318,6 +337,10 @@
             </a>
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
+    </div>
+    <div id="live-info-container">
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <span id="live-clock"></span>
     </div>
     <div id="profile-container" class="profile-container hidden">
         <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
@@ -453,6 +476,9 @@ function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.hre
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
+    updateClock(); 
+    setInterval(updateClock, 1000); 
+    fetchWeather(); // MODIFIED: This function is now updated
     checkAuthStatus(); 
     attachEventListeners();
     loadBlogPosts();
@@ -498,6 +524,74 @@ function initGoogleSignIn() { try { if (!google || !google.accounts || !google.a
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
 function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
+
+
+// --- CHANGED: Live Clock and Weather Functions (Now using OpenWeatherMap) ---
+function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    if (!clockElement) return;
+
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+
+    clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+// NEW: This function now works with OpenWeatherMap weather condition IDs
+function getWeatherIconClass(weatherId) {
+    // Weather condition codes from OpenWeatherMap
+    if (weatherId >= 200 && weatherId < 300) return 'fas fa-bolt'; // Thunderstorm
+    if (weatherId >= 300 && weatherId < 400) return 'fas fa-cloud-rain'; // Drizzle
+    if (weatherId >= 500 && weatherId < 600) return 'fas fa-cloud-showers-heavy'; // Rain
+    if (weatherId >= 600 && weatherId < 700) return 'fas fa-snowflake'; // Snow
+    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere (fog, mist, etc.)
+    if (weatherId === 800) return 'fas fa-sun'; // Clear
+    if (weatherId === 801) return 'fas fa-cloud-sun'; // Few clouds
+    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Scattered to Broken clouds
+    
+    return 'fas fa-question-circle'; // Default icon
+}
+
+// NEW: This function now uses OpenWeatherMap API with your key
+function fetchWeather() {
+    const weatherElement = document.getElementById('live-weather');
+    if (!weatherElement) return;
+    
+    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74'; // Your API Key
+    const lat = 27.7172; // Kathmandu Latitude
+    const lon = 85.3240; // Kathmandu Longitude
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                // If the response is not ok (e.g., 401 for bad API key), throw an error
+                throw new Error(`Weather API error: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Check if the expected data is present
+            if (!data.main || !data.weather || !data.weather[0]) {
+                throw new Error('Invalid data received from Weather API');
+            }
+            const temp = Math.round(data.main.temp);
+            const weatherId = data.weather[0].id;
+            const iconClass = getWeatherIconClass(weatherId);
+            weatherElement.innerHTML = `<i class="${iconClass}"></i> Kathmandu: ${temp}°C`;
+        })
+        .catch(error => {
+            console.error('Error fetching weather:', error);
+            weatherElement.innerHTML = '<i class="fas fa-times-circle"></i> Weather unavailable';
+        });
+}
+// --- END OF CHANGED SECTION ---
 
 // --- BLOG DATA AND FUNCTIONS (specific to this page) ---
 const blogPostsData = [
@@ -660,7 +754,7 @@ const blogPostsData = [
     },
     { id: 2, title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d", date: "2024-07-20", views: 1120, author: "Bishal Mishra", image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow...", fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference.", tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad"] },
     { id: 3, title: "Conquer Your To-Do List: Effective Task Management with Note P@d", date: "2024-07-15", views: 1750, author: "Bishal Mishra", image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature...", fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels. Discover techniques like creating actionable items and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity.", tags: ["to-do list", "task management", "organization", "productivity", "Note Pad"] },
-    { id: 4, title: "The Seamless Offline Experience: Why Note P@d is Always Available", date: "2024-07-10", views: 950, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is a Progressive Web App (PWA), ensuring your notes are always accessible...", fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device.", tags: ["offline", "PWA", "accessibility", "web tech", "Note Pad"] },
+    { id: 4, title: "The Seamless Offline Experience: Why Note P@d is Always Available", date: "2024-07-10", views: 950, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-151938Mishra.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", content: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is a Progressive Web App (PWA), ensuring your notes are always accessible...", fullContent: "In an era where connectivity is paramount, what happens when you're offline? Note P@d is designed to work seamlessly even without an internet connection, thanks to its Progressive Web App (PWA) nature. This article explains the technology behind offline access – primarily service workers and browser caching – and how it ensures your notes, whiteboard sketches, and to-do lists are always accessible, wherever you are. Bishal Mishra emphasizes the reliability this provides for users on the go or in areas with spotty internet. Once the app is loaded for the first time, its core components are stored locally, allowing you to launch and use it directly from your device.", tags: ["offline", "PWA", "accessibility", "web tech", "Note Pad"] },
     { id: 5, title: "Your Privacy Matters: How Note P@d Protects Your Data Locally", date: "2024-07-05", views: 2100, author: "Bishal Mishra", image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", content: "Your notes should remain private. Note P@d is built with a strong focus on privacy. This post details how your data is stored locally, never transmitted to a server by default...", fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, a design choice that means it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.", tags: ["privacy", "security", "local storage", "data protection", "Note Pad"] },
     { id: 10, title: "Class 12 (XII) Result for 2081/2082: Check Your +2 Result!", date: "2024-07-01", views: 1874, author: "Bishal Mishra", image: "https://i.ibb.co/ycvw4J0g/class-12-results.png", content: "The National Examination Board (NEB), Nepal, has officially published the Class 12 results for the academic year 2081/2082. Thousands of students who appeared in the +2 board exams can now access their results online.", fullContent: `<p>These results reflect not only individual performance but also serve as a gateway to higher education and future career paths. Whether you are a regular or partial student, the result is equally important in shaping your academic future.</p><p>This year, NEB has made it convenient for students to check their results using multiple digital platforms. The primary method is online result checking, where students just need to enter their symbol number and date of birth on the designated websites. Due to high traffic, some servers may slow down, so having multiple options is very helpful. Make sure you double-check your credentials while entering the information to avoid errors.
 <p>In addition to the official NEB result portal, other popular educational and telecom partner sites are also hosting the result. These portals provide instant access to the marksheet, including subject-wise grades and GPA. Students are advised to keep a copy of their result for future use, especially for university applications, scholarships, and other academic planning.<br><br> <a href="https://neb.ntc.net.np" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check +2 Results 2081/82</a></p><p>We at bishalmishra.com have provided a compiled list of trusted and verified websites to check your Class 12 NEB result easily. Simply visit any of the links below and follow the instructions on the page. Best of luck to all the students — may this result open the door to your dreams and success!
