@@ -62,167 +62,105 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; } 
-        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
-        header {
-            display: flex;
-            justify-content: flex-start; /* Default for mobile */
-            align-items: center;
+
+        /* START: MODIFIED HEADER STYLES */
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 5%; 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            z-index: 10; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
             position: relative;
         }
-        .header-content {
-            text-align: center;
-            flex-grow: 1; /* Allows it to take center space */
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
         }
-        body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
-        footer { margin-top: auto; padding: 20px;  }
+        
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-content { 
+            text-align: center; 
+            flex-grow: 0;
+        }
+        body.dark header { box-shadow: 0 4px 15px var(--shadow-dark); }
+        /* END: MODIFIED HEADER STYLES */
+
+        footer { margin-top: auto; padding: 20px; text-align: center; background: var(--primary); color: white; box-shadow: 0 4px 15px var(--shadow-light); }
+        body.dark footer { background: var(--card-dark); color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        body.dark footer a { color: var(--primary); }
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
-        .sidenav {
-            height: 100%;
-            width: 0; 
-            position: fixed;
-            z-index: 1002; 
-            top: 0;
-            left: 0;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        body.dark .sidenav {
-            background-color: rgba(30, 30, 30, 0.95);
-        }
-
-        .sidenav a {
-            padding: 10px 15px 10px 32px;
-            text-decoration: none;
-            font-size: 20px; 
-            font-weight: 600;
-            color: var(--text-light);
-            display: block;
-            transition: 0.3s;
-        }
-        body.dark .sidenav a {
-            color: var(--text-dark);
-        }
-
-        .sidenav a:hover {
-            color: var(--primary);
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        .open-nav-btn {
-            font-size: 28px;
-            cursor: pointer;
+        .sidenav { height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; left: 0; overflow-x: hidden; transition: 0.5s; padding-top: 60px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+        body.dark .sidenav { background-color: rgba(30, 30, 30, 0.95); }
+        .sidenav a { padding: 10px 15px 10px 32px; text-decoration: none; font-size: 20px; font-weight: 600; color: var(--text-light); display: block; transition: 0.3s; }
+        body.dark .sidenav a { color: var(--text-dark); }
+        .sidenav a:hover { color: var(--primary); }
+        .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
+        
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .open-nav-btn:hover { transform: scale(1.1); }
+        
+        /* START: CLOCK AND WEATHER STYLES */
+        #live-clock, #live-weather {
             color: white;
-            transition: transform 0.2s;
-            position: absolute;
-            left: 5%;
-            top: 50%;
-            transform: translateY(-50%);
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
         }
-        .open-nav-btn:hover {
-            transform: translateY(-50%) scale(1.1);
+        #live-clock {
+            font-family: 'Inter', sans-serif;
         }
+        #live-weather i:first-child {
+            margin-right: 8px;
+            color: #ffc107;
+        }
+        #weather-refresh-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        #weather-refresh-btn:hover {
+            color: #ffc107;
+            transform: scale(1.2) rotate(90deg);
+        }
+        /* END: CLOCK AND WEATHER STYLES */
 
-        /* Hide app-specific and blog section elements on static pages */
-        #menu-bar, #editor, #notes, #whiteboard-container, #calendar-container, 
-        #blogs-section, #faq-section, #premium-features-section, 
-        #overview, #how-it-works, #about { 
-            display: none; 
-        }
-
-        .info-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section, #contact-us-section
-        { 
-            background: var(--card-light); 
-            padding: 25px; 
-            border-radius: var(--radius); 
-            box-shadow: 0 4px 15px var(--shadow-light); 
-            margin-bottom: 25px; 
-            text-align: left; 
-        }
-        body.dark .info-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section, body.dark #contact-us-section { 
-            background: var(--card-dark); 
-            box-shadow: 0 4px 15px var(--shadow-dark); 
-        }
+        #privacy-policy-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: left; }
+        body.dark #privacy-policy-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
-        .info-section h3, #privacy-policy-section h3, #terms-of-service-section h3, #disclaimer-section h3 { text-align: left;  } 
-        .info-section p, .info-section ul, 
-        #privacy-policy-section p, #privacy-policy-section ul, 
-        #terms-of-service-section p, #terms-of-service-section ul, 
-        #disclaimer-section p, #disclaimer-section ul  { 
-            margin-bottom: 15px; 
-        }
-        .info-section ul { list-style: none; padding-left: 0; }
-        .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
-        .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
-        #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
+        #privacy-policy-section h3 { text-align: left;  } 
+        #privacy-policy-section p, #privacy-policy-section ul { margin-bottom: 15px; }
+        #privacy-policy-section ul { list-style: disc; padding-left: 25px; }
+        #privacy-policy-section ul li { margin-bottom: 10px; }
+        #privacy-policy-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 25px; margin-bottom: 10px; }
+        body.dark #privacy-policy-section h4 { color: var(--primary); }
+        #privacy-policy-section a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        #privacy-policy-section a:hover { text-decoration: underline; color: var(--primary-dark); }
 
-        /* Contact Us Styling */
-        #contact-us-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
-        body.dark #contact-us-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
-        #contact-us-section h2 { text-align: left; margin-bottom: 20px; }
-        #contact-us-section ul { list-style: none; padding: 0; margin-top: 15px; }
-        #contact-us-section li { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; }
-        #contact-us-section li svg { width: 24px; height: 24px; margin-right: 12px; fill: var(--primary); }
-        #contact-us-section li a { color: var(--primary); text-decoration: none; font-weight: 500; }
-        #contact-us-section li a:hover { text-decoration: underline; color: var(--primary-dark); }
-        #contact-us-section li span { color: var(--text-light); }
-        body.dark #contact-us-section li span { color: var(--text-dark); }
-
-        /* AdSense Container Style (Hidden on static pages unless specified otherwise) */
-        .adsense-ad-container { 
-            margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; 
-            background-color: var(--card-light); border-radius: var(--radius); 
-            box-shadow: 0 2px 8px var(--shadow-light); 
-            display: none; /* Explicitly hidden on static pages */
-        }
-        body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
-        
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .profile-container {
-            position: relative;
-            z-index: 999;
-            margin-left: auto; /* Push to the right in flex container */
-        }
-        #profile-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease-in-out;
-            object-fit: cover;
-        }
+        .profile-container { position: relative; z-index: 999; }
+        #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
-        .profile-dropdown {
-            position: absolute;
-            top: 55px; 
-            right: 0; 
-            width: 260px;
-            background: var(--card-light);
-            border-radius: var(--radius);
-            box-shadow: 0 8px 25px var(--shadow-light);
-            border: 1px solid #eee;
-            overflow: hidden;
-            animation: fadeIn 0.3s ease;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+        .profile-dropdown { position: absolute; top: 55px; right: 0; width: 260px; background: var(--card-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); border: 1px solid #eee; overflow: hidden; animation: fadeIn 0.3s ease; transition: opacity 0.3s ease, transform 0.3s ease; }
         body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
         .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
         body.dark .dropdown-header { border-bottom-color: #444; }
@@ -239,56 +177,27 @@
         #emailVerifiedStatus .fa-check-circle { color: #28a745; } 
         #emailVerifiedStatus .fa-times-circle { color: #dc3545; } 
         
-        .modal, .welcome-popup { display: none; } /* Explicitly hide popups/modals */
-        #find-replace-dialog { display: none; } /* Explicitly hide find/replace */
-        
+        .modal { display: none; }
         #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: all 0.3s ease-in-out; display: flex; align-items: center; justify-content: center; } 
         #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } 
         body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
+        .confetti { display: none !important; }
         
-        .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; display: none !important; } 
-        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
-
         /* --- MEDIA QUERIES --- */
-        
-        /* Desktop Layout */
         @media (min-width: 1024px) {
-            header {
-                justify-content: space-between;
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-            .header-content {
-                flex-grow: 0; /* Don't grow to push profile icon */
-                margin: 0 auto; /* Center title */
-            }
-            .open-nav-btn {
-                position: relative; /* Take it out of absolute positioning */
-                left: auto;
-                top: auto;
-                transform: none;
-            }
-            .profile-container {
-                position: relative; /* Take it out of fixed positioning */
-                top: auto;
-                right: auto;
-                margin-left: 20px; /* Space from nav button */
-            }
+            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
+            .profile-container { position: relative; top: auto; right: auto; margin-left: 0; }
         }
-
-        /* Tablet and smaller devices */
+        @media (max-width: 992px) {
+            #live-clock, #live-weather { display: none; }
+        }
         @media (max-width: 768px) { 
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
         }
-        
-        /* Mobile phones */
         @media (max-width: 480px) {
-            .profile-container {
-                position: fixed; /* Keep it fixed on small mobile */
-                top: 10px;
-                right: 10px;
-            }
+            .profile-container { position: fixed; top: 10px; right: 10px; }
+            .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
         }
     </style>
 </head>
@@ -297,18 +206,21 @@
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
   <a href="index.html" onclick="closeNavAndGoTo('index.html')">Home</a>
-  <a href="index.html#overview" onclick="closeNavAndGoTo('index.html#overview')">Overview</a>
   <a href="about.html" onclick="closeNavAndGoTo('about.html')">About</a>
   <a href="blogs.html" onclick="closeNavAndGoTo('blogs.html')">Blog</a>
-  <a href="index.html#faq-section" onclick="closeNavAndGoTo('index.html#faq-section')">FAQ</a>
   <a href="privacy-policy.html" onclick="closeNavAndGoTo('privacy-policy.html')">Privacy Policy</a>
   <a href="terms-of-service.html" onclick="closeNavAndGoTo('terms-of-service.html')">Terms of Service</a>
   <a href="disclaimer.html" onclick="closeNavAndGoTo('disclaimer.html')">Disclaimer</a>
   <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
 </div>
 
+<!-- START: MODIFIED HEADER HTML STRUCTURE -->
 <header>
-    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <div class="header-left">
+        <span class="open-nav-btn" onclick="openNav()">☰</span>
+        <span id="live-clock"></span>
+    </div>
+
     <div class="header-content">
         <h1>
             <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -317,28 +229,33 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
-    <div id="profile-container" class="profile-container hidden">
-        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
-        <div id="profile-dropdown" class="profile-dropdown hidden">
-            <div class="dropdown-header">
-                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
-                <div>
-                    <span id="userNameDisplay">User Name</span>
-                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+
+    <div class="header-right">
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <div id="profile-container" class="profile-container hidden">
+            <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+            <div id="profile-dropdown" class="profile-dropdown hidden">
+                <div class="dropdown-header">
+                    <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                    <div>
+                        <span id="userNameDisplay">User Name</span>
+                        <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                    </div>
                 </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                    <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                    <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                    <li class="divider"></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+                </ul>
             </div>
-            <ul class="dropdown-menu">
-                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
-                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
-                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
-                <li class="divider"></li>
-                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
-                <li class="divider"></li>
-                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
-            </ul>
         </div>
     </div>
 </header>
+<!-- END: MODIFIED HEADER HTML STRUCTURE -->
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <main id="main-container" class="container">
@@ -403,18 +320,7 @@
     </div>
 </main>
 
-<!-- Auth Modal (Globally present but hidden by default for non-app pages) -->
-<div id="authModal" class="modal hidden"> 
-    <div class="modal-content"> 
-        <h2 id="authTitle">Sign In to Note P@d</h2> 
-        <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> 
-        <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> 
-        <button id="authSubmit">Sign In</button> 
-        <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> 
-        <a href="#" id="forgotPassword">Forgot Password?</a> 
-        <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> 
-    </div> 
-</div>
+<div id="authModal" class="modal hidden"> <div class="modal-content"> <h2 id="authTitle">Sign In to Note P@d</h2> <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> <button id="authSubmit">Sign In</button> <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> <a href="#" id="forgotPassword">Forgot Password?</a> <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> </div> </div>
 <button id="goToTopBtn" title="Go to top" aria-label="Go to top">↑</button>
 <div id="confetti" class="confetti hidden">🎉</div>
 <audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
@@ -430,49 +336,29 @@
 </footer>
 
 <script>
-// --- GLOBAL VARIABLES (minimal set for this static page) ---
 let isSignUp = false;
 
 const goToTopBtn = document.getElementById('goToTopBtn');
 const authModal = document.getElementById('authModal');
-const authTitle = document.getElementById('authTitle');
-const authUsername = document.getElementById('authUsername');
-const authPassword = document.getElementById('authPassword');
-const authSubmit = document.getElementById('authSubmit');
-const switchAuthModeLink = document.getElementById('switchMode');
-const confetti = document.getElementById('confetti'); // Kept for consistency, though not triggered on this page
-const loginSound = document.getElementById('loginSound'); // Kept for consistency, though not triggered on this page
-
 const profileContainer = document.getElementById('profile-container');
 const profileIcon = document.getElementById('profile-icon');
 const profileDropdown = document.getElementById('profile-dropdown');
-const userPic = document.getElementById('userPic');
-const userNameDisplay = document.getElementById('userNameDisplay');
-const userEmailDisplay = document.getElementById('userEmailDisplay');
-const emailVerifiedStatus = document.getElementById('emailVerifiedStatus');
-const logoutBtn = document.getElementById('logoutBtn');
-const verifyEmailBtn = document.getElementById('verifyEmailBtn');
-const resetPasswordBtn = document.getElementById('resetPasswordBtn');
-const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
-const photoUploadInput = document.getElementById('photoUpload');
-const manageAccountBtn = document.getElementById('manageAccountBtn'); 
 
-// --- SIDENAV & NAVIGATION FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
 function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
 
-// --- EVENT LISTENERS ---
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
+    updateClock(); 
+    setInterval(updateClock, 1000); 
+    fetchWeather();
     checkAuthStatus(); 
     attachEventListeners();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 });
 
 window.onload = function() {
-    // Only initialize Google Sign-In if the elements related to it exist and if the library is loaded.
-    // This reduces potential errors on pages where it's not the primary interaction point.
     if (document.getElementById('googleSignInDiv')) {
         if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
             initGoogleSignIn();
@@ -484,10 +370,8 @@ window.onload = function() {
                     initGoogleSignIn();
                     clearInterval(intervalId);
                 } else if (attempts > 20) {
-                    console.error("Google Sign-In did not initialize in time.");
-                    if(document.getElementById('googleSignInDiv')) {
-                         document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
-                    }
+                    console.error("Google Sign-In failed to initialize.");
+                    if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load.";
                     clearInterval(intervalId);
                 }
             }, 500);
@@ -496,260 +380,54 @@ window.onload = function() {
 };
 
 function attachEventListeners() {
-    // Go-to-top button
-    window.onscroll = () => { 
-        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
-    };
+    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Profile Dropdown functionality
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
     document.addEventListener('click', closeDropdownOnClickOutside);
-    
-    // Auth-related button handlers (these functions exist but won't be triggered by UI on this page)
-    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
-    if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
-    if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
-    if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
-    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        if(photoUploadInput) photoUploadInput.click();
+    ['logoutBtn', 'verifyEmailBtn', 'resetPasswordBtn', 'manageAccountBtn', 'editProfilePhotoBtn', 'photoUpload', 'authSubmit', 'switchMode'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            if (id === 'photoUpload') el.addEventListener('change', handlePhotoUpload);
+            else el.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (id === 'logoutBtn') handleLogout(e);
+                else if (id === 'verifyEmailBtn') handleVerifyEmail(e);
+                else if (id === 'resetPasswordBtn') handleResetPassword(e);
+                else if (id === 'manageAccountBtn') handleManageAccount(e);
+                else if (id === 'editProfilePhotoBtn') document.getElementById('photoUpload')?.click();
+                else if (id === 'authSubmit') handleAuthSubmit();
+                else if (id === 'switchMode') {
+                    isSignUp = !isSignUp;
+                    const authTitle = document.getElementById('authTitle');
+                    const authSubmitBtn = document.getElementById('authSubmit');
+                    if(authTitle) authTitle.textContent = isSignUp ? "Create Account" : "Sign In";
+                    if(authSubmitBtn) authSubmitBtn.textContent = isSignUp ? "Sign Up" : "Sign In";
+                    el.innerHTML = isSignUp ? 'Have an account? <a href="#">Sign In</a>' : 'No account? <a href="#">Sign Up</a>';
+                }
+            });
+        }
     });
-    if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
-
-    // Auth modal specific handlers (these are for the modal itself, which is hidden)
-    if (authSubmit) authSubmit.onclick = handleAuthSubmit;
-    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
-        e.preventDefault(); 
-        isSignUp = !isSignUp; 
-        if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; 
-        if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; 
-        switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; 
-    };
+    document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
 }
 
-// --- PROFILE & AUTHENTICATION FUNCTIONS (shared logic) ---
+function updateClock() { const clockElement = document.getElementById('live-clock'); if (!clockElement) return; const now = new Date(); let hours = now.getHours(); const minutes = now.getMinutes().toString().padStart(2, '0'); const seconds = now.getSeconds().toString().padStart(2, '0'); const ampm = hours >= 12 ? 'PM' : 'AM'; hours = hours % 12; hours = hours ? hours : 12; clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`; }
+function getWeatherIconClass(id) { if (id >= 200 && id < 300) return 'fas fa-bolt'; if (id >= 300 && id < 400) return 'fas fa-cloud-rain'; if (id >= 500 && id < 600) return 'fas fa-cloud-showers-heavy'; if (id >= 600 && id < 700) return 'fas fa-snowflake'; if (id >= 700 && id < 800) return 'fas fa-smog'; if (id === 800) return 'fas fa-sun'; if (id === 801) return 'fas fa-cloud-sun'; if (id > 801 && id < 805) return 'fas fa-cloud'; return 'fas fa-question-circle'; }
+function fetchWeatherData(lat, lon) { const weatherElement = document.getElementById('live-weather'); const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74'; const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`; fetch(apiUrl).then(res => { if (!res.ok) throw new Error(`API Error: ${res.statusText}`); return res.json(); }).then(data => { if (!data.main || !data.weather || !data.weather[0] || !data.name) throw new Error('Invalid data from API'); const temp = Math.round(data.main.temp); const icon = getWeatherIconClass(data.weather[0].id); weatherElement.innerHTML = `<i class="${icon}"></i> ${data.name}: ${temp}°C <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Refresh weather"></i>`; }).catch(err => { console.error('Error fetching weather:', err); weatherElement.innerHTML = `<i class="fas fa-times-circle"></i> Weather unavailable <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Retry"></i>`; }); }
+function fetchWeather() { const el = document.getElementById('live-weather'); if (!el) return; if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) el.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching...`; if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(pos => fetchWeatherData(pos.coords.latitude, pos.coords.longitude), () => fetchWeatherData(27.7172, 85.3240), { timeout: 10000 }); } else { fetchWeatherData(27.7172, 85.3240); } }
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
-function closeDropdownOnClickOutside(event) { 
-    if (profileContainer && !profileContainer.contains(event.target) && 
-        profileDropdown && !profileDropdown.classList.contains('hidden')) {
-        profileDropdown.classList.add('hidden');
-    }
-    // Also close authModal if open and clicked outside (though it should be hidden by default on static pages)
-    if (authModal && !authModal.contains(event.target) && !authModal.classList.contains('hidden')) {
-        authModal.classList.add('hidden');
-    }
-}
-
-function checkAuthStatus() {
-    const currentUserId = getCurrentUserId();
-    if (currentUserId) {
-        showUserInfo();
-    } else {
-        if(profileContainer) profileContainer.classList.add('hidden');
-    }
-}
-
-function showUserInfo() {
-    const username = localStorage.getItem('currentUser');
-    const picUrl = localStorage.getItem('userPic');
-    const email = localStorage.getItem('userEmail');
-    const isVerified = localStorage.getItem('emailVerified') === 'true';
-
-    if (!username || !profileContainer) return;
-
-    profileContainer.classList.remove('hidden');
-    
-    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
-    if(profileIcon) profileIcon.src = avatarUrl;
-    if(userPic) userPic.src = avatarUrl;
-    if(userNameDisplay) userNameDisplay.textContent = username;
-    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
-
-    if (emailVerifiedStatus) {
-        if (isVerified) {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
-        } else {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
-        }
-    }
-    
-    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
-
-    const provider = localStorage.getItem('authProvider');
-    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
-        if (provider === 'google') {
-            resetPasswordBtn.parentElement.style.display = 'none';
-            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
-                verifyEmailBtn.parentElement.style.display = 'none';
-            }
-        } else {
-            resetPasswordBtn.parentElement.style.display = 'block';
-        }
-    }
-}
-
-function handleAuthSubmit() {
-    // This function is present because it's part of the common auth script.
-    // On static pages, the auth modal should typically not be visible unless manually triggered.
-    if(!authUsername || !authPassword) return;
-    const username = authUsername.value.trim();
-    const password = authPassword.value.trim();
-    if (!username || !password) { alert("Please fill in all fields"); return; }
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (isSignUp) {
-        if (users[username]) { alert("Username (email) already exists."); return; }
-        users[username] = password; 
-        localStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem('authProvider', 'email');
-        localStorage.setItem('userEmail', username);
-        localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    } else {
-        if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; }
-        if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username);
-        if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email');
-        if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    }
-}
-
-function handleLogout(e) {
-    if(e) e.preventDefault();
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("userPic");
-    localStorage.removeItem("currentUserId");
-    localStorage.removeItem("emailVerified");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("authProvider");
-    
-    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-        google.accounts.id.disableAutoSelect();
-    }
-    
-    if(profileContainer) profileContainer.classList.add('hidden');
-    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
-    
-    // If the auth modal happened to be open, ensure it's hidden after logout
-    if(authModal) authModal.classList.add("hidden"); 
-}
-
-function handlePhotoUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        localStorage.setItem('userPic', e.target.result);
-        showUserInfo(); 
-        alert("Profile photo updated!");
-    };
-    reader.readAsDataURL(file);
-}
-
-function handleVerifyEmail(e) {
-    e.preventDefault();
-    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
-    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
-    
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
-    const userCode = prompt("Please enter the 6-digit verification code:");
-    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
-    else if (userCode) { alert("Incorrect code. Please try again."); } 
-    else { alert("Verification cancelled."); }
-}
-
-function handleResetPassword(e) {
-    e.preventDefault();
-    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
-    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
-
-    const newPassword = prompt("Enter your new password (min 4 characters):");
-    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
-
-    const confirmPassword = prompt("Confirm your new password:");
-    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
-
-    const username = localStorage.getItem('userEmail');
-    if(!username) { alert("User email not found. Cannot reset password."); return;}
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
-    else { alert("An error occurred. Could not find user to update password."); }
-}
-
-function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
-
-function loginSuccess(username, picUrl, userId) {
-    localStorage.setItem("currentUserId", userId);
-    if(picUrl) localStorage.setItem("userPic", picUrl);
-    showUserInfo();
-    if(authModal) authModal.classList.add("hidden"); // Ensure modal is hidden on successful login
-    if(confetti) { confetti.classList.remove("hidden"); setTimeout(() => { confetti.classList.add("hidden"); }, 1200); }
-    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
-}
-
-function initGoogleSignIn() {
-    try {
-        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); return; }
-        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
-        const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
-        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
-        else console.warn("Google Sign-In button container not found.");
-    } catch (error) {
-        console.error("Google GSI could not be initialized.", error);
-        const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
-        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
-    }
-}
-
-function jwtDecode(token) { 
-    try { 
-        return JSON.parse(atob(token.split('.')[1])); 
-    } catch (e) { 
-        console.error("Failed to decode JWT", e); 
-        return null; 
-    } 
-}
-
-function handleGoogleSignIn(response) {
-    const data = jwtDecode(response.credential);
-    if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
-    const name = data.name || data.email;
-    const picture = data.picture || "";
-    const userId = data.sub;
-    const email = data.email;
-    const emailVerified = data.email_verified === true || data.email_verified === 'true';
-    localStorage.setItem("currentUser", name);
-    localStorage.setItem('authProvider', 'google');
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified.toString());
-    loginSuccess(name, picture, userId);
-}
-
-function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
-
-// --- DARK MODE ---
+function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
+function checkAuthStatus() { const userId = localStorage.getItem('currentUserId'); if (userId) showUserInfo(); else if (profileContainer) profileContainer.classList.add('hidden'); }
+function showUserInfo() { const username = localStorage.getItem('currentUser'); const picUrl = localStorage.getItem('userPic'); const email = localStorage.getItem('userEmail'); const isVerified = localStorage.getItem('emailVerified') === 'true'; if (!username || !profileContainer) return; profileContainer.classList.remove('hidden'); const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; const profileIconEl = document.getElementById('profile-icon'); const userPicEl = document.getElementById('userPic'); const userNameDisplayEl = document.getElementById('userNameDisplay'); const userEmailDisplayEl = document.getElementById('userEmailDisplay'); const emailVerifiedStatusEl = document.getElementById('emailVerifiedStatus'); const verifyEmailBtnEl = document.getElementById('verifyEmailBtn'); const resetPasswordBtnEl = document.getElementById('resetPasswordBtn'); if(profileIconEl) profileIconEl.src = avatarUrl; if(userPicEl) userPicEl.src = avatarUrl; if(userNameDisplayEl) userNameDisplayEl.textContent = username; if(userEmailDisplayEl) userEmailDisplayEl.textContent = email || ''; if (emailVerifiedStatusEl) { emailVerifiedStatusEl.innerHTML = isVerified ? '<i class="fas fa-check-circle" title="Verified"></i>' : '<i class="fas fa-times-circle" title="Not Verified"></i>'; } if(verifyEmailBtnEl) { verifyEmailBtnEl.style.opacity = isVerified ? '0.6' : '1'; verifyEmailBtnEl.style.cursor = isVerified ? 'default' : 'pointer'; } if (localStorage.getItem('authProvider') === 'google') { if(resetPasswordBtnEl) resetPasswordBtnEl.parentElement.style.display = 'none'; if(isVerified && verifyEmailBtnEl) verifyEmailBtnEl.parentElement.style.display = 'none'; } else { if(resetPasswordBtnEl) resetPasswordBtnEl.parentElement.style.display = 'block'; } }
+function handleLogout(e) { if(e) e.preventDefault(); localStorage.clear(); if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); if(profileContainer) profileContainer.classList.add('hidden'); if(authModal) authModal.classList.remove('hidden'); }
+function handlePhotoUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('userPic', e.target.result); showUserInfo(); alert("Photo updated!"); }; reader.readAsDataURL(file); }
+function handleVerifyEmail(e) { e.preventDefault(); alert("Email verification logic goes here."); }
+function handleResetPassword(e) { e.preventDefault(); alert("Password reset logic goes here."); }
+function handleManageAccount(e) { e.preventDefault(); alert("Account management logic goes here."); }
+function handleAuthSubmit() { alert("Authentication logic goes here."); }
+function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("GSI lib not loaded."); return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const btnContainer = document.getElementById("googleSignInDiv"); if (btnContainer) google.accounts.id.renderButton(btnContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); } catch (error) { console.error("GSI init failed.", error); } }
+function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("JWT decode failed", e); return null; } }
+function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) return; localStorage.setItem("currentUser", data.name || data.email); localStorage.setItem("currentUserId", data.sub); localStorage.setItem("userPic", data.picture || ""); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', data.email); localStorage.setItem('emailVerified', (data.email_verified === true || data.email_verified === 'true').toString()); showUserInfo(); if(authModal) authModal.classList.add('hidden'); }
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
-function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('darkMode', document.body.classList.contains('dark')); }
-
-// --- UTILITY (Password Hashing for local storage, only used by auth) ---
-async function hashPassword(password) { 
-    if (!password) return ''; 
-    try {
-        const encoder = new TextEncoder(); 
-        const data = encoder.encode(password); 
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data); 
-        const hashArray = Array.from(new Uint8Array(hashBuffer)); 
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    } catch(e) { 
-        console.error("Password hashing failed", e); 
-        return 'error_hashing_password'; 
-    }
-}
 </script>
 </body>
 </html>
