@@ -63,103 +63,87 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; transition: max-width 0.3s ease; } 
-        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
-        header {
-            display: flex;
-            justify-content: flex-start; /* Default for mobile */
-            align-items: center;
+
+        /* START: MODIFIED HEADER STYLES */
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 5%; 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            z-index: 10; 
+            display: flex; 
+            justify-content: space-between; /* This is key for the layout */
+            align-items: center; 
             position: relative;
         }
-        .header-content {
-            text-align: center;
-            flex-grow: 1; /* Allows it to take center space */
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1; /* Make left and right sections take up equal space */
         }
-        body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
-        footer { margin-top: auto; padding: 20px;  }
+        
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-content { 
+            text-align: center; 
+            flex-grow: 0; /* Do not allow logo to grow, keeping it centered */
+        }
+        body.dark header { box-shadow: 0 4px 15px var(--shadow-dark); }
+        /* END: MODIFIED HEADER STYLES */
+        
+        footer { margin-top: auto; padding: 20px; text-align: center; background: var(--primary); color: white; box-shadow: 0 4px 15px var(--shadow-light); }
+        body.dark footer { background: var(--card-dark); color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        body.dark footer a { color: var(--primary); }
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
-        .sidenav {
-            height: 100%;
-            width: 0; 
-            position: fixed;
-            z-index: 1002; 
-            top: 0;
-            left: 0;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        body.dark .sidenav {
-            background-color: rgba(30, 30, 30, 0.95);
-        }
-
-        .sidenav a {
-            padding: 10px 15px 10px 32px;
-            text-decoration: none;
-            font-size: 20px; 
-            font-weight: 600;
-            color: var(--text-light);
-            display: block;
-            transition: 0.3s;
-        }
-        body.dark .sidenav a {
-            color: var(--text-dark);
-        }
-
-        .sidenav a:hover {
-            color: var(--primary);
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        .open-nav-btn {
-            font-size: 28px;
-            cursor: pointer;
+        .sidenav { height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; left: 0; overflow-x: hidden; transition: 0.5s; padding-top: 60px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+        body.dark .sidenav { background-color: rgba(30, 30, 30, 0.95); }
+        .sidenav a { padding: 10px 15px 10px 32px; text-decoration: none; font-size: 20px; font-weight: 600; color: var(--text-light); display: block; transition: 0.3s; }
+        body.dark .sidenav a { color: var(--text-dark); }
+        .sidenav a:hover { color: var(--primary); }
+        .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
+        
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .open-nav-btn:hover { transform: scale(1.1); }
+        
+        /* START: CLOCK AND WEATHER STYLES */
+        #live-clock, #live-weather {
             color: white;
-            transition: transform 0.2s;
-            position: absolute;
-            left: 5%;
-            top: 50%;
-            transform: translateY(-50%);
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
         }
-        .open-nav-btn:hover {
-            transform: translateY(-50%) scale(1.1);
+        #live-clock {
+            font-family: 'Inter', sans-serif;
         }
+        #live-weather i:first-child { /* Targets the main weather icon */
+            margin-right: 8px;
+            color: #ffc107;
+        }
+        #weather-refresh-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        #weather-refresh-btn:hover {
+            color: #ffc107; /* Highlight on hover */
+            transform: scale(1.2) rotate(90deg);
+        }
+        /* END: CLOCK AND WEATHER STYLES */
 
-        #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; box-shadow: 0 4px 15px var(--shadow-light); }
-        #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
-        #menu-bar button:hover, #menu-bar select:hover { background-color: #e0e0e0; transform: translateY(-2px); }
-        body.dark #menu-bar { background: #252525; box-shadow: 0 4px 15px var(--shadow-dark); }
-        body.dark #menu-bar button, body.dark #menu-bar select { background-color: var(--card-dark); color: var(--text-dark); }
-        
-        .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; flex-wrap: wrap; }
-        body.dark .mode-switcher { border-left-color: #555; }
-        .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
-        body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
-        
-        .info-section, #testimonials-section { 
-            background: var(--card-light); 
-            padding: 25px; 
-            border-radius: var(--radius); 
-            box-shadow: 0 4px 15px var(--shadow-light); 
-            margin-bottom: 25px; 
-            text-align: left; 
-        }
-        body.dark .info-section, body.dark #testimonials-section { 
-            background: var(--card-dark); 
-            box-shadow: 0 4px 15px var(--shadow-dark); 
-        }
+        .info-section, #testimonials-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: left; }
+        body.dark .info-section, body.dark #testimonials-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
         .info-section h3, #testimonials-section h3 { text-align: left;  }
@@ -168,245 +152,56 @@
         .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
         
-        .about-dev-section {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 15px;
-            align-items: flex-start; /* Align items to start for desktop */
-        }
-        
-        .about-dev-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            background: var(--bg-light); /* Lighter background for the card */
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: inset 0 0 15px var(--shadow-light), 0 2px 10px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 700px; /* Limit width for readability */
-            margin: 0 auto; /* Center the card */
-            border: 1px solid #e7e7e7;
-            text-align: center;
-        }
-
-        body.dark .about-dev-card {
-            background: #333; /* Darker background for dark mode card */
-            box-shadow: inset 0 0 15px var(--shadow-dark), 0 2px 10px rgba(0,0,0,0.1);
-            border-color: #444;
-        }
-
-        .about-dev-image-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            padding: 5px; /* Gradient border */
-            box-shadow: 0 6px 20px var(--shadow-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        body.dark .about-dev-image-container {
-             box-shadow: 0 6px 20px var(--shadow-dark);
-        }
-
-        .about-dev-image-container img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--card-light); /* Inner border */
-        }
-        body.dark .about-dev-image-container img {
-            border-color: var(--card-dark);
-        }
-
+        .about-dev-section { display: flex; flex-direction: column; gap: 25px; margin-top: 15px; align-items: flex-start; }
+        .about-dev-card { display: flex; flex-direction: column; align-items: center; gap: 20px; background: var(--bg-light); padding: 25px; border-radius: var(--radius); box-shadow: inset 0 0 15px var(--shadow-light), 0 2px 10px rgba(0,0,0,0.05); width: 100%; max-width: 700px; margin: 0 auto; border: 1px solid #e7e7e7; text-align: center; }
+        body.dark .about-dev-card { background: #333; box-shadow: inset 0 0 15px var(--shadow-dark), 0 2px 10px rgba(0,0,0,0.1); border-color: #444; }
+        .about-dev-image-container { position: relative; width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(45deg, var(--primary), var(--primary-dark)); padding: 5px; box-shadow: 0 6px 20px var(--shadow-light); display: flex; align-items: center; justify-content: center; }
+        body.dark .about-dev-image-container { box-shadow: 0 6px 20px var(--shadow-dark); }
+        .about-dev-image-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid var(--card-light); }
+        body.dark .about-dev-image-container img { border-color: var(--card-dark); }
         .about-dev-text { flex: 1; text-align: center; } 
         .about-dev-text h4 { font-size: 28px; margin-bottom: 10px; color: var(--primary); }
         .about-dev-text p { margin-bottom: 15px; font-size: 16px; }
         .about-dev-text a { color: var(--primary); font-weight: 600; text-decoration: none; transition: color 0.2s ease, text-decoration 0.2s ease; } 
         .about-dev-text a:hover { text-decoration: underline; color: var(--primary-dark); } 
-
         .social-links { margin-top: 20px; display: flex; gap: 20px; justify-content: center; }
-        .social-links a {
-            font-size: 24px;
-            color: var(--primary);
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .social-links a:hover {
-            color: var(--primary-dark);
-            transform: scale(1.1);
-        }
+        .social-links a { font-size: 24px; color: var(--primary); transition: transform 0.2s ease, color 0.2s ease; }
+        .social-links a:hover { color: var(--primary-dark); transform: scale(1.1); }
 
-        /* Testimonials Section */
         #testimonials-section { text-align: center; }
         #testimonials-section h2 { margin-bottom: 30px; }
-        .testimonial-carousel-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            margin: 0 auto;
-            border-radius: var(--radius);
-            padding: 20px 0; /* Provide space for shadows */
-        }
-
-        .testimonial-carousel {
-            display: flex;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        .testimonial-item {
-            flex: 0 0 100%; /* Each item takes full width */
-            padding: 30px;
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            box-shadow: 0 8px 25px var(--shadow-light);
-            margin: 0 15px; /* Add margin to create gap between visible items */
-            box-sizing: border-box;
-            opacity: 0; /* Initially hidden */
-            transform: scale(0.9); /* Initially slightly smaller */
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-        }
-        body.dark .testimonial-item {
-            background: #333;
-            box-shadow: 0 8px 25px var(--shadow-dark);
-        }
-
-        .testimonial-item.active {
-            opacity: 1; /* Visible */
-            transform: scale(1); /* Full size */
-        }
-
-        .testimonial-item-content {
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: var(--text-light);
-            position: relative;
-            padding: 0 15px;
-        }
-        body.dark .testimonial-item-content {
-            color: var(--text-dark);
-        }
+        .testimonial-carousel-container { position: relative; overflow: hidden; width: 100%; margin: 0 auto; border-radius: var(--radius); padding: 20px 0; }
+        .testimonial-carousel { display: flex; transition: transform 0.8s ease-in-out; }
+        .testimonial-item { flex: 0 0 100%; padding: 30px; background: var(--bg-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); margin: 0 15px; box-sizing: border-box; opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; }
+        body.dark .testimonial-item { background: #333; box-shadow: 0 8px 25px var(--shadow-dark); }
+        .testimonial-item.active { opacity: 1; transform: scale(1); }
+        .testimonial-item-content { font-style: italic; margin-bottom: 20px; font-size: 18px; color: var(--text-light); position: relative; padding: 0 15px; }
+        body.dark .testimonial-item-content { color: var(--text-dark); }
         .testimonial-item-content::before,
-        .testimonial-item-content::after {
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 30px;
-            color: var(--primary-light-transparent);
-            position: absolute;
-        }
-        .testimonial-item-content::before { content: '\f10d'; top: 0; left: 0; } /* Left quote */
-        .testimonial-item-content::after { content: '\f10e'; bottom: 0; right: 0; } /* Right quote */
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .testimonial-author img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .testimonial-author-info {
-            text-align: left;
-        }
-        .testimonial-author-info strong {
-            display: block;
-            font-size: 18px;
-            color: var(--primary);
-        }
-        .testimonial-author-info small {
-            font-size: 14px;
-            color: #888;
-        }
-        body.dark .testimonial-author-info small {
-            color: #aaa;
-        }
-
-        .carousel-dots {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .carousel-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #ccc;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        .carousel-dot.active {
-            background-color: var(--primary);
-            transform: scale(1.2);
-        }
-
-        .carousel-nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            z-index: 10;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        .carousel-nav-arrow:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: translateY(-50%) scale(1.1);
-        }
+        .testimonial-item-content::after { font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 30px; color: var(--primary-light-transparent); position: absolute; }
+        .testimonial-item-content::before { content: '\f10d'; top: 0; left: 0; }
+        .testimonial-item-content::after { content: '\f10e'; bottom: 0; right: 0; }
+        .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 20px; }
+        .testimonial-author img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .testimonial-author-info { text-align: left; }
+        .testimonial-author-info strong { display: block; font-size: 18px; color: var(--primary); }
+        .testimonial-author-info small { font-size: 14px; color: #888; }
+        body.dark .testimonial-author-info small { color: #aaa; }
+        .carousel-dots { margin-top: 25px; display: flex; justify-content: center; gap: 10px; }
+        .carousel-dot { width: 12px; height: 12px; background-color: #ccc; border-radius: 50%; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; }
+        .carousel-dot.active { background-color: var(--primary); transform: scale(1.2); }
+        .carousel-nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-size: 24px; z-index: 10; transition: background 0.3s ease, transform 0.3s ease; }
+        .carousel-nav-arrow:hover { background: rgba(0, 0, 0, 0.7); transform: translateY(-50%) scale(1.1); }
         .carousel-nav-arrow.left { left: 10px; }
         .carousel-nav-arrow.right { right: 10px; }
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .profile-container {
-            position: relative;
-            z-index: 999;
-            margin-left: auto; /* Push to the right in flex container */
-        }
-        #profile-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease-in-out;
-            object-fit: cover;
-        }
+        .profile-container { position: relative; z-index: 999; }
+        #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
-        .profile-dropdown {
-            position: absolute;
-            top: 55px; 
-            right: 0; 
-            width: 260px;
-            background: var(--card-light);
-            border-radius: var(--radius);
-            box-shadow: 0 8px 25px var(--shadow-light);
-            border: 1px solid #eee;
-            overflow: hidden;
-            animation: fadeIn 0.3s ease;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+        .profile-dropdown { position: absolute; top: 55px; right: 0; width: 260px; background: var(--card-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); border: 1px solid #eee; overflow: hidden; animation: fadeIn 0.3s ease; transition: opacity 0.3s ease, transform 0.3s ease; }
         body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
         .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
         body.dark .dropdown-header { border-bottom-color: #444; }
@@ -440,61 +235,28 @@
         .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
-        /* AdSense Container Style */
         .adsense-ad-container { margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; background-color: var(--card-light); border-radius: var(--radius); box-shadow: 0 2px 8px var(--shadow-light); }
         body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
         
         /* --- MEDIA QUERIES --- */
-        
-        /* Desktop Layout */
         @media (min-width: 1024px) {
-            header {
-                justify-content: space-between;
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-            .header-content {
-                flex-grow: 0; /* Don't grow to push profile icon */
-                margin: 0 auto; /* Center title */
-            }
-            .open-nav-btn {
-                position: relative; /* Take it out of absolute positioning */
-                left: auto;
-                top: auto;
-                transform: none;
-            }
-            .profile-container {
-                position: relative; /* Take it out of fixed positioning */
-                top: auto;
-                right: auto;
-                margin-left: 20px; /* Space from nav button */
-            }
-            .about-dev-section {
-                flex-direction: row; /* For desktop, put image and text side-by-side */
-                align-items: flex-start;
-                text-align: left;
-            }
+            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
+            .profile-container { position: relative; top: auto; right: auto; margin-left: 0; }
+            .about-dev-section { flex-direction: row; align-items: flex-start; text-align: left; }
             .about-dev-text { text-align: left; }
-            .about-dev-image-container { margin: 0; } /* Remove center margin */
-            .social-links { justify-content: flex-start; } /* Align social links left */
-
-             .testimonial-item {
-                flex: 0 0 calc(100% - 60px); /* Adjust for margins to make them appear centered */
-                margin: 0 30px; /* Adjust margin for desktop to control spacing */
-            }
-            .testimonial-carousel-container {
-                max-width: 900px; /* Constrain carousel width on large screens */
-            }
+            .about-dev-image-container { margin: 0; }
+            .social-links { justify-content: flex-start; }
+            .testimonial-item { flex: 0 0 calc(100% - 60px); margin: 0 30px; }
+            .testimonial-carousel-container { max-width: 900px; }
             .carousel-nav-arrow.left { left: -50px; }
             .carousel-nav-arrow.right { right: -50px; }
         }
-
-        /* Tablet and smaller devices */
+        @media (max-width: 992px) {
+            #live-clock, #live-weather { display: none; }
+        }
         @media (max-width: 768px) { 
             .about-dev-section { flex-direction: column; text-align: center; } 
             .social-links { justify-content: center; }
-            .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center; } 
-            body.dark .mode-switcher { border-top-color: #555;}
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
             .testimonial-item-content { font-size: 16px; }
@@ -505,14 +267,9 @@
             .carousel-nav-arrow.left { left: 5px; }
             .carousel-nav-arrow.right { right: 5px; }
         }
-        
-        /* Mobile phones */
         @media (max-width: 480px) {
-            .profile-container {
-                position: fixed; /* Keep it fixed on small mobile */
-                top: 10px;
-                right: 10px;
-            }
+            .profile-container { position: fixed; top: 10px; right: 10px; }
+            .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
             .info-section { padding: 15px; }
             .about-dev-card { padding: 15px; gap: 15px; }
             .about-dev-image-container { width: 100px; height: 100px; }
@@ -546,8 +303,13 @@
   <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
 </div>
 
+<!-- START: MODIFIED HEADER HTML STRUCTURE -->
 <header>
-    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <div class="header-left">
+        <span class="open-nav-btn" onclick="openNav()">☰</span>
+        <span id="live-clock"></span>
+    </div>
+
     <div class="header-content">
         <h1>
             <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -556,28 +318,33 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
-    <div id="profile-container" class="profile-container hidden">
-        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
-        <div id="profile-dropdown" class="profile-dropdown hidden">
-            <div class="dropdown-header">
-                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
-                <div>
-                    <span id="userNameDisplay">User Name</span>
-                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+
+    <div class="header-right">
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <div id="profile-container" class="profile-container hidden">
+            <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+            <div id="profile-dropdown" class="profile-dropdown hidden">
+                <div class="dropdown-header">
+                    <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                    <div>
+                        <span id="userNameDisplay">User Name</span>
+                        <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                    </div>
                 </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                    <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                    <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                    <li class="divider"></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+                </ul>
             </div>
-            <ul class="dropdown-menu">
-                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
-                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
-                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
-                <li class="divider"></li>
-                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
-                <li class="divider"></li>
-                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
-            </ul>
         </div>
     </div>
 </header>
+<!-- END: MODIFIED HEADER HTML STRUCTURE -->
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
 <main id="main-container" class="container">
@@ -597,9 +364,8 @@
                 <div class="social-links">
                     <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Follow Bishal Mishra on Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://bishalmishra.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Bishal Mishra's Personal Website"><i class="fas fa-globe"></i></a>
-                    <!-- Add more social links as appropriate, e.g., LinkedIn, GitHub -->
-                    <!-- <a href="YOUR_LINKEDIN_URL" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn"><i class="fab fa-linkedin-in"></i></a> -->
-                    <!-- <a href="YOUR_GITHUB_URL" target="_blank" rel="noopener noreferrer" aria-label="Check out GitHub projects"><i class="fab fa-github"></i></a> -->
+                    <a href="https://github.com/BishalMishraGit" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/bishal-mishra-076a06287/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
@@ -646,7 +412,6 @@
     </section>
 </main>
 
-<!-- Welcome Popup and Auth Modal are now initially hidden and only appear if explicitly triggered (e.g., by save button) -->
 <div id="welcomePopup" class="welcome-popup hidden"> <div class="welcome-content"> <h2>Welcome to Note P@d!</h2> <p>Capture your ideas. Organize your thoughts. Let’s get started!</p> <button id="getStartedBtn">Get Started</button> </div> </div>
 <div id="authModal" class="modal hidden"> <div class="modal-content"> <h2 id="authTitle">Sign In to Note P@d</h2> <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> <button id="authSubmit">Sign In</button> <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> <a href="#" id="forgotPassword">Forgot Password?</a> <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> </div> </div>
 <button id="goToTopBtn" title="Go to top" aria-label="Go to top">↑</button>
@@ -693,34 +458,12 @@ const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
 const manageAccountBtn = document.getElementById('manageAccountBtn'); 
 
-// Testimonials data
 const testimonials = [
-    {
-        quote: "Note P@d has become my daily driver for jotting down ideas and managing my tasks. It's incredibly fast and the offline capability is a game-changer!",
-        author: "Sarah J.",
-        title: "Freelance Designer",
-        avatar: "https://i.ibb.co/hK7Jg8p/sarah-j.jpg" // Placeholder image for Sarah J.
-    },
-    {
-        quote: "The whiteboard feature is surprisingly powerful for quick sketches and brainstorming. I love that it's all in one place and keeps my data private.",
-        author: "Mark T.",
-        title: "Product Manager",
-        avatar: "https://i.ibb.co/5c5S1kC/mark-t.jpg" // Placeholder image for Mark T.
-    },
-    {
-        quote: "As a student, I need a reliable and free tool for notes and to-do lists. Note P@d ticks all the boxes and its simplicity is refreshing.",
-        author: "Emily R.",
-        title: "University Student",
-        avatar: "https://i.ibb.co/Y02v672/emily-r.jpg" // Placeholder image for Emily R.
-    },
-    {
-        quote: "Bishal's dedication to this app is evident. It's stable, intuitive, and the dark mode is perfect for late-night work sessions. Highly recommend!",
-        author: "David L.",
-        title: "Software Engineer",
-        avatar: "https://i.ibb.co/L5Vf51X/david-l.jpg" // Placeholder image for David L.
-    }
+    { quote: "Note P@d has become my daily driver for jotting down ideas and managing my tasks. It's incredibly fast and the offline capability is a game-changer!", author: "Sarah J.", title: "Freelance Designer", avatar: "https://i.ibb.co/hK7Jg8p/sarah-j.jpg" },
+    { quote: "The whiteboard feature is surprisingly powerful for quick sketches and brainstorming. I love that it's all in one place and keeps my data private.", author: "Mark T.", title: "Product Manager", avatar: "https://i.ibb.co/5c5S1kC/mark-t.jpg" },
+    { quote: "As a student, I need a reliable and free tool for notes and to-do lists. Note P@d ticks all the boxes and its simplicity is refreshing.", author: "Emily R.", title: "University Student", avatar: "https://i.ibb.co/Y02v672/emily-r.jpg" },
+    { quote: "Bishal's dedication to this app is evident. It's stable, intuitive, and the dark mode is perfect for late-night work sessions. Highly recommend!", author: "David L.", title: "Software Engineer", avatar: "https://i.ibb.co/L5Vf51X/david-l.jpg" }
 ];
-
 let currentTestimonialIndex = 0;
 let testimonialInterval;
 
@@ -733,6 +476,9 @@ function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.hre
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
+    updateClock(); 
+    setInterval(updateClock, 1000); 
+    fetchWeather();
     checkAuthStatus(); 
     attachEventListeners();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -762,315 +508,104 @@ window.onload = function() {
 };
 
 function attachEventListeners() {
-    window.onscroll = () => { 
-        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
-    };
+    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-    
     const getStartedBtn = document.getElementById('getStartedBtn');
-    if (getStartedBtn) getStartedBtn.onclick = () => { 
-        if(welcomePopup) welcomePopup.classList.add("hidden"); 
-        if(authModal) authModal.classList.remove("hidden"); 
-    }; 
-    
-    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
-        e.preventDefault(); 
-        isSignUp = !isSignUp; 
-        if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; 
-        if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; 
-        switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; 
-    };
-    
+    if (getStartedBtn) getStartedBtn.onclick = () => { if(welcomePopup) welcomePopup.classList.add("hidden"); if(authModal) authModal.classList.remove("hidden"); }; 
+    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
     if (authSubmit) authSubmit.onclick = handleAuthSubmit;
-    
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
     document.addEventListener('click', closeDropdownOnClickOutside);
     if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
     if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
     if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
     if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
-    
-    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        if(photoUploadInput) photoUploadInput.click();
-    });
+    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { e.preventDefault(); if(photoUploadInput) photoUploadInput.click(); });
     if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
-
-    // Testimonial Navigation
     const prevArrow = document.querySelector('.carousel-nav-arrow.left');
     const nextArrow = document.querySelector('.carousel-nav-arrow.right');
     if (prevArrow) prevArrow.addEventListener('click', () => showTestimonial(currentTestimonialIndex - 1));
     if (nextArrow) nextArrow.addEventListener('click', () => showTestimonial(currentTestimonialIndex + 1));
+    document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
 }
 
+// --- Live Clock and Weather Functions ---
+function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    if (!clockElement) return;
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+function getWeatherIconClass(weatherId) {
+    if (weatherId >= 200 && weatherId < 300) return 'fas fa-bolt'; // Thunderstorm
+    if (weatherId >= 300 && weatherId < 400) return 'fas fa-cloud-rain'; // Drizzle
+    if (weatherId >= 500 && weatherId < 600) return 'fas fa-cloud-showers-heavy'; // Rain
+    if (weatherId >= 600 && weatherId < 700) return 'fas fa-snowflake'; // Snow
+    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere
+    if (weatherId === 800) return 'fas fa-sun'; // Clear
+    if (weatherId === 801) return 'fas fa-cloud-sun'; // Few clouds
+    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Clouds
+    return 'fas fa-question-circle'; // Default
+}
+
+function fetchWeatherData(lat, lon) {
+    const weatherElement = document.getElementById('live-weather');
+    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => { if (!response.ok) throw new Error(`API Error: ${response.statusText}`); return response.json(); })
+        .then(data => {
+            if (!data.main || !data.weather || !data.weather[0] || !data.name) throw new Error('Invalid data from Weather API');
+            const temp = Math.round(data.main.temp);
+            const iconClass = getWeatherIconClass(data.weather[0].id);
+            weatherElement.innerHTML = `<i class="${iconClass}"></i> ${data.name}: ${temp}°C <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Refresh weather"></i>`;
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+            weatherElement.innerHTML = `<i class="fas fa-times-circle"></i> Weather unavailable <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Retry"></i>`;
+        });
+}
+
+function fetchWeather() {
+    const weatherElement = document.getElementById('live-weather');
+    if (!weatherElement) return;
+    if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) weatherElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching weather...`;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( (position) => fetchWeatherData(position.coords.latitude, position.coords.longitude), () => fetchWeatherData(27.7172, 85.3240), { timeout: 10000 });
+    } else { fetchWeatherData(27.7172, 85.3240); }
+}
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
 function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
-
-function checkAuthStatus() {
-    const currentUserId = getCurrentUserId();
-    if (currentUserId) {
-        showUserInfo();
-    } else {
-        if(profileContainer) profileContainer.classList.add('hidden');
-    }
-}
-
-function showUserInfo() {
-    const username = localStorage.getItem('currentUser');
-    const picUrl = localStorage.getItem('userPic');
-    const email = localStorage.getItem('userEmail');
-    const isVerified = localStorage.getItem('emailVerified') === 'true';
-
-    if (!username || !profileContainer) return;
-
-    profileContainer.classList.remove('hidden');
-    
-    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
-    if(profileIcon) profileIcon.src = avatarUrl;
-    if(userPic) userPic.src = avatarUrl;
-    if(userNameDisplay) userNameDisplay.textContent = username;
-    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
-
-    if (emailVerifiedStatus) {
-        if (isVerified) {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
-        } else {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
-        }
-    }
-    
-    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
-
-    const provider = localStorage.getItem('authProvider');
-    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
-        if (provider === 'google') {
-            resetPasswordBtn.parentElement.style.display = 'none';
-            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
-                verifyEmailBtn.parentElement.style.display = 'none';
-            }
-        } else {
-            resetPasswordBtn.parentElement.style.display = 'block';
-        }
-    }
-}
-
-function handleAuthSubmit() {
-    if(!authUsername || !authPassword) return;
-    const username = authUsername.value.trim();
-    const password = authPassword.value.trim();
-    if (!username || !password) { alert("Please fill in all fields"); return; }
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (isSignUp) {
-        if (users[username]) { alert("Username (email) already exists."); return; }
-        users[username] = password; 
-        localStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem('authProvider', 'email');
-        localStorage.setItem('userEmail', username);
-        localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    } else {
-        if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; }
-        if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username);
-        if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email');
-        if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    }
-}
-
-function handleLogout(e) {
-    if(e) e.preventDefault();
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("userPic");
-    localStorage.removeItem("currentUserId");
-    localStorage.removeItem("emailVerified");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("authProvider");
-    
-    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
-    
-    if(profileContainer) profileContainer.classList.add('hidden');
-    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
-    
-    if(authModal) authModal.classList.remove("hidden");
-    // No notes or editor on this page to clear
-}
-
-function handlePhotoUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        localStorage.setItem('userPic', e.target.result);
-        showUserInfo(); 
-        alert("Profile photo updated!");
-    };
-    reader.readAsDataURL(file);
-}
-
-function handleVerifyEmail(e) {
-    e.preventDefault();
-    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
-    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
-    
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
-    const userCode = prompt("Please enter the 6-digit verification code:");
-    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
-    else if (userCode) { alert("Incorrect code. Please try again."); } 
-    else { alert("Verification cancelled."); }
-}
-
-function handleResetPassword(e) {
-    e.preventDefault();
-    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
-    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
-
-    const newPassword = prompt("Enter your new password (min 4 characters):");
-    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
-
-    const confirmPassword = prompt("Confirm your new password:");
-    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
-
-    const username = localStorage.getItem('userEmail');
-    if(!username) { alert("User email not found. Cannot reset password."); return;}
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
-    else { alert("An error occurred. Could not find user to update password."); }
-}
-
+function checkAuthStatus() { const currentUserId = getCurrentUserId(); if (currentUserId) showUserInfo(); else if(profileContainer) profileContainer.classList.add('hidden'); }
+function showUserInfo() { const username = localStorage.getItem('currentUser'); const picUrl = localStorage.getItem('userPic'); const email = localStorage.getItem('userEmail'); const isVerified = localStorage.getItem('emailVerified') === 'true'; if (!username || !profileContainer) return; profileContainer.classList.remove('hidden'); const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; if(profileIcon) profileIcon.src = avatarUrl; if(userPic) userPic.src = avatarUrl; if(userNameDisplay) userNameDisplay.textContent = username; if(userEmailDisplay) userEmailDisplay.textContent = email || ''; if (emailVerifiedStatus) { if (isVerified) { emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; } } else { emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; } } } if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block'; const provider = localStorage.getItem('authProvider'); if (resetPasswordBtn && resetPasswordBtn.parentElement) { if (provider === 'google') { resetPasswordBtn.parentElement.style.display = 'none'; if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'none'; } else resetPasswordBtn.parentElement.style.display = 'block'; } }
+function handleAuthSubmit() { if(!authUsername || !authPassword) return; const username = authUsername.value.trim(); const password = authPassword.value.trim(); if (!username || !password) { alert("Please fill in all fields"); return; } const users = JSON.parse(localStorage.getItem("users") || "{}"); if (isSignUp) { if (users[username]) { alert("Username (email) already exists."); return; } users[username] = password; localStorage.setItem("users", JSON.stringify(users)); localStorage.setItem('authProvider', 'email'); localStorage.setItem('userEmail', username); localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } else { if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; } if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username); if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email'); if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } }
+function handleLogout(e) { if(e) e.preventDefault(); localStorage.removeItem("currentUser"); localStorage.removeItem("userPic"); localStorage.removeItem("currentUserId"); localStorage.removeItem("emailVerified"); localStorage.removeItem("userEmail"); localStorage.removeItem("authProvider"); if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); if(profileContainer) profileContainer.classList.add('hidden'); if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); if(authModal) authModal.classList.remove("hidden"); }
+function handlePhotoUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('userPic', e.target.result); showUserInfo(); alert("Profile photo updated!"); }; reader.readAsDataURL(file); }
+function handleVerifyEmail(e) { e.preventDefault(); if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; } if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; } const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`); const userCode = prompt("Please enter the 6-digit verification code:"); if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); }  else if (userCode) { alert("Incorrect code. Please try again."); }  else { alert("Verification cancelled."); } }
+function handleResetPassword(e) { e.preventDefault(); if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; } if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; } const newPassword = prompt("Enter your new password (min 4 characters):"); if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; } const confirmPassword = prompt("Confirm your new password:"); if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; } const username = localStorage.getItem('userEmail'); if(!username) { alert("User email not found. Cannot reset password."); return;} const users = JSON.parse(localStorage.getItem("users") || "{}"); if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); }  else { alert("An error occurred. Could not find user to update password."); } }
 function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
-
-function loginSuccess(username, picUrl, userId) {
-    localStorage.setItem("currentUserId", userId);
-    if(picUrl) localStorage.setItem("userPic", picUrl);
-    showUserInfo();
-    if(authModal) authModal.classList.add("hidden");
-    if(confetti) confetti.classList.remove("hidden");
-    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
-    setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200);
-    // No notes or editor on this page to load draft/display
-}
-
-function initGoogleSignIn() {
-    try {
-        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; }
-        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
-        const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
-        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
-        else console.warn("Google Sign-In button container not found.");
-    } catch (error) {
-        console.error("Google GSI could not be initialized.", error);
-        const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
-        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
-    }
-}
-
+function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); if(confetti) confetti.classList.remove("hidden"); if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); }
+function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const googleSignInButtonContainer = document.getElementById("googleSignInDiv"); if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); else console.warn("Google Sign-In button container not found."); } catch (error) { console.error("Google GSI could not be initialized.", error); const googleSignInButtonContainer = document.getElementById('googleSignInDiv'); if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load."; } }
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
-
-function handleGoogleSignIn(response) {
-    const data = jwtDecode(response.credential);
-    if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
-    const name = data.name || data.email;
-    const picture = data.picture || "";
-    const userId = data.sub;
-    const email = data.email;
-    const emailVerified = data.email_verified === true || data.email_verified === 'true';
-    localStorage.setItem("currentUser", name);
-    localStorage.setItem('authProvider', 'google');
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified.toString());
-    loginSuccess(name, picture, userId);
-}
-
+function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
 function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
-
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
 function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('darkMode', document.body.classList.contains('dark')); }
 async function hashPassword(password) { if (!password) return ''; try {const encoder = new TextEncoder(); const data = encoder.encode(password); const hashBuffer = await crypto.subtle.digest('SHA-256', data); const hashArray = Array.from(new Uint8Array(hashBuffer)); return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');} catch(e) { console.error("Password hashing failed", e); return 'error_hashing_password'; }}
-
-// --- Testimonial Carousel Functions ---
-function renderTestimonials() {
-    const carouselContainer = document.getElementById('testimonialCarousel');
-    const dotsContainer = document.getElementById('carouselDots');
-    if (!carouselContainer || !dotsContainer) return;
-
-    carouselContainer.innerHTML = '';
-    dotsContainer.innerHTML = '';
-
-    testimonials.forEach((testimonial, index) => {
-        const item = document.createElement('div');
-        item.classList.add('testimonial-item');
-        item.innerHTML = `
-            <p class="testimonial-item-content">"${testimonial.quote}"</p>
-            <div class="testimonial-author">
-                <img src="${testimonial.avatar}" alt="${testimonial.author} Avatar" width="60" height="60">
-                <div class="testimonial-author-info">
-                    <strong>${testimonial.author}</strong>
-                    <small>${testimonial.title}</small>
-                </div>
-            </div>
-        `;
-        carouselContainer.appendChild(item);
-
-        const dot = document.createElement('span');
-        dot.classList.add('carousel-dot');
-        dot.dataset.index = index;
-        dot.addEventListener('click', () => showTestimonial(index));
-        dotsContainer.appendChild(dot);
-    });
-
-    showTestimonial(currentTestimonialIndex); // Display the first testimonial
-}
-
-function showTestimonial(index) {
-    const items = document.querySelectorAll('.testimonial-item');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const carousel = document.getElementById('testimonialCarousel');
-
-    if (!items.length || !dots.length || !carousel) return;
-
-    // Loop around if index is out of bounds
-    if (index >= items.length) {
-        currentTestimonialIndex = 0;
-    } else if (index < 0) {
-        currentTestimonialIndex = items.length - 1;
-    } else {
-        currentTestimonialIndex = index;
-    }
-
-    // Reset all items and dots
-    items.forEach(item => item.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-
-    // Activate current item and dot
-    items[currentTestimonialIndex].classList.add('active');
-    dots[currentTestimonialIndex].classList.add('active');
-
-    // Adjust carousel scroll position
-    const itemWidth = items[currentTestimonialIndex].offsetWidth + 30; // Item width + 2*margin
-    carousel.style.transform = `translateX(-${currentTestimonialIndex * itemWidth}px)`;
-
-    // Restart the auto-slider
-    resetTestimonialSlider();
-}
-
-function nextTestimonial() {
-    showTestimonial(currentTestimonialIndex + 1);
-}
-
-function startTestimonialSlider() {
-    testimonialInterval = setInterval(nextTestimonial, 5000); // Change slide every 5 seconds
-}
-
-function resetTestimonialSlider() {
-    clearInterval(testimonialInterval);
-    startTestimonialSlider();
-}
+function renderTestimonials() { const carouselContainer = document.getElementById('testimonialCarousel'); const dotsContainer = document.getElementById('carouselDots'); if (!carouselContainer || !dotsContainer) return; carouselContainer.innerHTML = ''; dotsContainer.innerHTML = ''; testimonials.forEach((testimonial, index) => { const item = document.createElement('div'); item.classList.add('testimonial-item'); item.innerHTML = `<p class="testimonial-item-content">"${testimonial.quote}"</p><div class="testimonial-author"><img src="${testimonial.avatar}" alt="${testimonial.author} Avatar" width="60" height="60"><div class="testimonial-author-info"><strong>${testimonial.author}</strong><small>${testimonial.title}</small></div></div>`; carouselContainer.appendChild(item); const dot = document.createElement('span'); dot.classList.add('carousel-dot'); dot.dataset.index = index; dot.addEventListener('click', () => showTestimonial(index)); dotsContainer.appendChild(dot); }); showTestimonial(currentTestimonialIndex); }
+function showTestimonial(index) { const items = document.querySelectorAll('.testimonial-item'); const dots = document.querySelectorAll('.carousel-dot'); const carousel = document.getElementById('testimonialCarousel'); if (!items.length || !dots.length || !carousel) return; if (index >= items.length) currentTestimonialIndex = 0; else if (index < 0) currentTestimonialIndex = items.length - 1; else currentTestimonialIndex = index; items.forEach(item => item.classList.remove('active')); dots.forEach(dot => dot.classList.remove('active')); items[currentTestimonialIndex].classList.add('active'); dots[currentTestimonialIndex].classList.add('active'); const itemWidth = items[currentTestimonialIndex].offsetWidth + 30; carousel.style.transform = `translateX(-${currentTestimonialIndex * itemWidth}px)`; resetTestimonialSlider(); }
+function nextTestimonial() { showTestimonial(currentTestimonialIndex + 1); }
+function startTestimonialSlider() { testimonialInterval = setInterval(nextTestimonial, 5000); }
+function resetTestimonialSlider() { clearInterval(testimonialInterval); startTestimonialSlider(); }
 </script>
 </body>
 </html>
