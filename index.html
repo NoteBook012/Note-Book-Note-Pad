@@ -2080,7 +2080,7 @@ function setupScrollAnimations() {
                 // Only add animation class if it's a static section or the currently active editor/tool
                 if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) {
                     section.classList.add('fade-in-up');
-                    section.dataset.animationDelay = index * 0.05; // Reduced from 0.1 for faster initial staggering
+                    section.dataset.animationDelay = index * 0.02; // Reduced from 0.1 for faster initial staggering
                     scrollAnimationObserver.observe(section);
                     index++;
                 }
@@ -2091,7 +2091,7 @@ function setupScrollAnimations() {
         document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => {
             card.classList.add('fade-in-up');
             // Stagger feature cards, starting after main sections if desired, or with their own count
-            card.dataset.animationDelay = (index * 0.05) + (cardIndex * 0.02); // Reduced from 0.05 for faster staggering
+            card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); // Reduced from 0.05 for faster staggering
             scrollAnimationObserver.observe(card);
         });
 
