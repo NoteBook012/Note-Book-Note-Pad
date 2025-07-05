@@ -38,12 +38,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
-    <!-- intl-tel-input CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.min.css" />
-    
-    <!-- Google reCAPTCHA API SCRIPT -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
     <style>
         :root {
             --bg-light: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
@@ -154,14 +148,115 @@
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); }
         .info-section h3 { text-align: left;  }
-        .info-section p, .info-section ul { margin-bottom: 15px; }
+        .info-section p { margin-bottom: 15px; }
         .info-section ul { list-style: none; padding-left: 0; }
         .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
 
         /* Contact Us Styling */
-        #contact-us-section > h2 { text-align: left; margin-bottom: 20px; color: var(--text-light); font-size: 32px; }
+        #contact-us-section > h2 { text-align: left; margin-bottom: 10px; color: var(--text-light); font-size: 32px; }
         body.dark #contact-us-section > h2 { color: var(--text-dark); }
+        #contact-us-section > p { color: #777; margin-bottom: 25px; font-size: 18px; font-weight: 400; }
+        body.dark #contact-us-section > p { color: #bbb; }
+        
+        /* START: NEW CONTACT FORM STYLES */
+        .contact-form-wrapper {
+            margin-bottom: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        body.dark .contact-form-wrapper {
+            border-top-color: #444;
+        }
+        #contactForm {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 15px;
+        }
+        body.dark .form-group label {
+            color: var(--text-dark);
+        }
+        #contactForm input,
+        #contactForm textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            background-color: #f9f9f9;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        body.dark #contactForm input,
+        body.dark #contactForm textarea {
+            background-color: #333;
+            border-color: #555;
+            color: var(--text-dark);
+        }
+        #contactForm input:focus,
+        #contactForm textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light-transparent);
+        }
+        #contactForm textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        #contact-submit-btn {
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius);
+            background-color: var(--primary);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #contact-submit-btn:hover:not(:disabled) {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        #contact-submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: translateY(0);
+        }
+        body.dark #contact-submit-btn:disabled {
+            background-color: #555;
+        }
+        #form-status-message {
+            margin-bottom: 15px; 
+            padding: 12px; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-weight: 500;
+        }
+        #form-status-message.success {
+            background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;
+        }
+        #form-status-message.error {
+            background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+        }
+        /* END: NEW CONTACT FORM STYLES */
+
         #contact-us-section .contact-info { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
         body.dark #contact-us-section .contact-info { border-top-color: #444; }
         #contact-us-section .contact-info h2 { font-size: 24px; color: var(--primary); text-align: center; margin-bottom: 20px; }
@@ -172,35 +267,7 @@
         #contact-us-section .contact-info li a:hover { text-decoration: underline; color: var(--primary-dark); }
         #contact-us-section .contact-info li span { color: var(--text-light); }
         body.dark #contact-us-section .contact-info li span { color: var(--text-dark); }
-
-        .get-in-touch-form h2 { font-size: 32px; color: var(--text-light); margin-bottom: 8px; }
-        body.dark .get-in-touch-form h2 { color: var(--text-dark); }
-        .get-in-touch-form p { color: #777; margin-bottom: 25px; font-size: 18px; font-weight: 400; }
-        body.dark .get-in-touch-form p { color: #bbb; }
-        .form-group { margin-bottom: 15px; }
-        input[type="text"], input[type="email"], textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--input-border-green); border-radius: var(--radius); background-color: var(--input-bg-green); font-size: 16px; color: var(--text-light); transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s; outline: none; font-family: 'Poppins', sans-serif; }
-        body.dark input[type="text"], body.dark input[type="email"], body.dark textarea { background-color: #3a3a3a; border-color: #555; color: var(--text-dark); }
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light-transparent); }
-        textarea { resize: vertical; min-height: 120px; }
-        .iti { width: 100%; }
-        .iti__selected-flag { padding-left: 15px; background-color: var(--input-bg-green); border-right: 1px solid var(--input-border-green); border-radius: var(--radius) 0 0 var(--radius); height: 100%; display: flex !important; align-items: center; justify-content: center; }
-        body.dark .iti__selected-flag { background-color: #3a3a3a; border-right-color: #555; }
-        .iti__selected-flag:hover { background-color: rgba(144, 238, 144, 0.7); }
-        body.dark .iti__selected-flag:hover { background-color: #4a4a4a; }
-        .iti__country-list { border: 1px solid var(--input-border-green); box-shadow: 0 4px 15px var(--shadow-light); border-radius: var(--radius); background-color: var(--card-light); font-family: 'Poppins', sans-serif; z-index: 100; }
-        body.dark .iti__country-list { border-color: #555; box-shadow: 0 4px 15px var(--shadow-dark); background-color: var(--card-dark); }
-        .iti__dial-code { color: var(--text-light); margin-left: 8px; }
-        body.dark .iti__dial-code { color: var(--text-dark); }
-        .iti__search-input { width: calc(100% - 20px) !important; border: 1px solid var(--input-border-green); background-color: var(--input-bg-green); color: var(--text-light); margin: 10px; padding: 8px 10px; border-radius: 8px; }
-        body.dark .iti__search-input { background-color: #3a3a3a; border-color: #555; color: var(--text-dark); }
-        .iti__country { padding: 10px 15px; color: var(--text-light); }
-        body.dark .iti__country { color: var(--text-dark); }
-        .iti__country.highlight { background-color: var(--primary-light-transparent); }
-        .iti__country.highlight .iti__dial-code, .iti__country.highlight .iti__country-name { color: var(--primary); }
-        #recaptcha-error { color: #dc3545; margin-top: 5px; font-size: 14px; }
-        button[type="submit"] { background-color: #4CAF50; color: white; padding: 12px 25px; border: none; border-radius: var(--radius); font-size: 18px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; display: inline-block; margin-top: 10px; font-weight: 600; }
-        button[type="submit"]:hover { background-color: #45a049; transform: translateY(-2px); }
-        button[type="submit"]:disabled { background-color: #a0a0a0; cursor: not-allowed; transform: none; }
+        
         .google-maps { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: center; }
         body.dark .google-maps { border-top-color: #444; }
         .google-maps h2 { font-size: 24px; color: var(--primary); margin-bottom: 20px; }
@@ -237,28 +304,22 @@
         .confetti { display: none !important; }
         
         /* --- MEDIA QUERIES --- */
-        @media (min-width: 1024px) {
-            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
-            .profile-container { position: relative; top: auto; right: auto; margin-left: 0; }
-        }
         @media (max-width: 992px) {
             #live-clock, #live-weather { display: none; }
         }
         @media (max-width: 768px) { 
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
-            .get-in-touch-form h2 { font-size: 28px; }
-            .get-in-touch-form p { font-size: 16px; }
-            input[type="text"], input[type="email"], textarea, .iti__selected-flag, .iti__search-input { font-size: 14px; }
-            button[type="submit"] { font-size: 16px; padding: 10px 20px; }
+            #contact-us-section > h2 { font-size: 28px; }
+            #contact-us-section > p { font-size: 16px; }
             .google-maps iframe { height: 300px; }
+            .form-row { flex-direction: column; } /* Stacks form fields on mobile */
         }
         @media (max-width: 480px) {
             .profile-container { position: fixed; top: 10px; right: 10px; }
             .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
-            .get-in-touch-form h2 { font-size: 24px; }
-            .get-in-touch-form p { font-size: 14px; }
-            input[type="text"], input[type="email"], textarea, .iti__selected-flag, .iti__search-input { padding: 10px 12px; }
+            #contact-us-section > h2 { font-size: 24px; }
+            #contact-us-section > p { font-size: 14px; }
             .google-maps iframe { height: 250px; }
         }
     </style>
@@ -324,37 +385,35 @@
 
 <main id="main-container" class="container">
     <div id="contact-us-section" class="info-section"> 
-        <div class="get-in-touch-form">
-            <h2>Get In Touch</h2>
-            <p>We are Here For You. Can we Help ?</p>
-            <form id="contactForm">
-                <div class="form-group">
-                    <input type="text" id="fullName" placeholder="Full Name *" required>
+        <h2>Get In Touch</h2>
+        <p>We'd love to hear from you! Please fill out the form below or use one of the alternative methods to reach us.</p>
+        
+        <!-- START: NEW CONTACT FORM HTML -->
+        <div class="contact-form-wrapper">
+            <form id="contactForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name</label>
+                        <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="email" placeholder="Email *" required>
+                    <label for="contact-subject">Subject</label>
+                    <input type="text" id="contact-subject" name="subject" placeholder="Feedback about..." required>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="phone" placeholder="Phone Number">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" rows="6" placeholder="Your message here..." required></textarea>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="subject" placeholder="Subject *" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" placeholder="Message *" required></textarea>
-                </div>
-                <div class="form-group">
-                    <div id="recaptcha-widget" class="g-recaptcha" data-sitekey="6LeeSHQrAAAAALPfJynl9NFBeCpqcFiiMLLoJ4v_" data-callback="onRecaptchaSuccess" data-expired-callback="onRecaptchaExpired"></div>
-                    <div id="recaptcha-error"></div>
-                </div>
-                <button type="submit" id="submitButton" disabled>Submit</button>
+                <div id="form-status-message" style="display: none;"></div>
+                <button type="submit" id="contact-submit-btn">Send Message</button>
             </form>
         </div>
-
-        <div class="google-maps">
-            <h2>Find Us On Map</h2>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.066497334707!2d85.25997258931113!3d27.69176318465135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18129031d2e1%3A0xc3c51ed1c37b75f!2sKirtipur%20Kathmandu%2044618!5e0!3m2!1sen!2snp!4v1717398123456!5m2!1sen!2snp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps Location of Kirtipur, Kathmandu"></iframe>
-        </div>
+        <!-- END: NEW CONTACT FORM HTML -->
 
         <div class="contact-info">
             <h2>Our Contact Details</h2>
@@ -366,6 +425,12 @@
                 <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.67 3.26 8.56 7.6 9.74.56.1.77-.24.77-.53v-1.87c-3.1.67-3.75-1.49-3.75-1.49-.5-1.29-1.21-1.63-1.21-1.63-.99-.68.07-.67.07-.67 1.1.08 1.68 1.12 1.68 1.12.97 1.66 2.54 1.18 3.16.9.1-.7.38-1.18.69-1.45-2.47-.28-5.06-1.23-5.06-5.5 0-1.22.43-2.21 1.14-3-.12-.28-.49-1.41.11-2.94 0 0 .93-.3 3.05 1.15.88-.24 1.83-.36 2.77-.36.94 0 1.89.12 2.77.36 2.12-1.45 3.05-1.15 3.05-1.15.6 1.53.23 2.66.11 2.94.71.79 1.14 1.78 1.14 3 0 4.28-2.6 5.22-5.07 5.5.39.34.73 1.01.73 2.03v3c0 .29.21.63.78.52A10.004 10.004 0 0022 12c0-5.52-4.48-10-10-10z"/></svg><a href="https://bishalmishra.com" target="_blank" rel="noopener noreferrer">www.bishalmishra.com</a></li>
             </ul>
         </div>
+        
+        <div class="google-maps">
+            <h2>Find Us On Map</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.066497334707!2d85.25997258931113!3d27.69176318465135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18129031d2e1%3A0xc3c51ed1c37b75f!2sKirtipur%20Kathmandu%2044618!5e0!3m2!1sen!2snp!4v1717398123456!5m2!1sen!2snp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps Location of Kirtipur, Kathmandu"></iframe>
+        </div>
+
     </div>
 </main>
 
@@ -384,36 +449,19 @@
    </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
 
 <script>
 let isSignUp = false;
-let recaptchaToken = null;
 
 const goToTopBtn = document.getElementById('goToTopBtn');
 const authModal = document.getElementById('authModal');
 const profileContainer = document.getElementById('profile-container');
 const profileIcon = document.getElementById('profile-icon');
 const profileDropdown = document.getElementById('profile-dropdown');
-const submitButton = document.getElementById('submitButton'); 
-const recaptchaErrorDiv = document.getElementById('recaptcha-error');
 
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
 function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
-
-function onRecaptchaSuccess(token) {
-    recaptchaToken = token;
-    if (submitButton) submitButton.disabled = false;
-    if (recaptchaErrorDiv) recaptchaErrorDiv.textContent = '';
-}
-
-function onRecaptchaExpired() {
-    recaptchaToken = null;
-    if (submitButton) submitButton.disabled = true;
-    if (recaptchaErrorDiv) recaptchaErrorDiv.textContent = 'reCAPTCHA expired. Please re-verify.';
-    if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) grecaptcha.reset();
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
@@ -423,46 +471,6 @@ document.addEventListener("DOMContentLoaded", () => {
     checkAuthStatus(); 
     attachEventListeners();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-    const phoneInputField = document.querySelector("#phone");
-    if (phoneInputField) {
-        window.iti = intlTelInput(phoneInputField, {
-            initialCountry: "np",
-            preferredCountries: ["np", "in", "us", "gb", "ca"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
-        });
-    }
-
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (!recaptchaToken) {
-                if (recaptchaErrorDiv) recaptchaErrorDiv.textContent = 'Please complete the reCAPTCHA.';
-                alert('Please complete the reCAPTCHA before submitting.');
-                return;
-            }
-            if (recaptchaErrorDiv) recaptchaErrorDiv.textContent = '';
-            
-            const emailInput = document.getElementById('email');
-            if (!validateEmail(emailInput.value.trim())) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            if (window.iti && !window.iti.isValidNumber()) { 
-                alert('Please enter a valid phone number.');
-                return;
-            }
-            
-            alert('Your message has been sent successfully! (NOTE: This is a demo. For real security, server-side reCAPTCHA verification is required.)');
-            contactForm.reset();
-            if (window.iti) window.iti.setNumber(""); 
-            if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) grecaptcha.reset(); 
-            recaptchaToken = null;
-            if (submitButton) submitButton.disabled = true;
-        });
-    }
 });
 
 window.onload = function() {
@@ -486,7 +494,62 @@ window.onload = function() {
     }
 };
 
+// FUNCTION FOR CONTACT FORM
+function handleContactFormSubmit(event) {
+    event.preventDefault(); // Prevent actual form submission
+
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('contact-submit-btn');
+    const statusMsg = document.getElementById('form-status-message');
+
+    // Simple validation
+    const name = form.elements['name'].value.trim();
+    const email = form.elements['email'].value.trim();
+    const subject = form.elements['subject'].value.trim();
+    const message = form.elements['message'].value.trim();
+
+    if (!name || !email || !subject || !message) {
+        statusMsg.textContent = 'Please fill out all fields.';
+        statusMsg.className = 'error';
+        statusMsg.style.display = 'block';
+        return;
+    }
+
+    // Disable button and show sending status
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusMsg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending your message...';
+    statusMsg.className = ''; // Reset to neutral
+    statusMsg.style.display = 'block';
+
+
+    // Simulate API call (replace this with a real fetch to your backend or a service like Formspree)
+    setTimeout(() => {
+        // Show success message
+        statusMsg.textContent = 'Thank you! Your message has been sent successfully.';
+        statusMsg.className = 'success';
+        
+        // Reset form and re-enable button
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+
+        // Hide the status message after a few seconds
+        setTimeout(() => {
+            statusMsg.style.display = 'none';
+        }, 5000);
+
+    }, 2000); // 2-second delay to simulate sending
+}
+
 function attachEventListeners() {
+    // Event listener for the new contact form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactFormSubmit);
+    }
+    
+    // Existing event listeners
     window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
@@ -535,7 +598,6 @@ function initGoogleSignIn() { try { if (!google || !google.accounts || !google.a
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("JWT decode failed", e); return null; } }
 function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) return; localStorage.setItem("currentUser", data.name || data.email); localStorage.setItem("currentUserId", data.sub); localStorage.setItem("userPic", data.picture || ""); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', data.email); localStorage.setItem('emailVerified', (data.email_verified === true || data.email_verified === 'true').toString()); showUserInfo(); }
 function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
-function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase()); }
 </script>
 </body>
 </html>
