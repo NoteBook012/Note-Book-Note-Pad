@@ -208,8 +208,18 @@
             transform: scale(1.2) rotate(90deg);
         }
 
-        #blogs-section { background: var(--card-light); padding: 40px 5%; margin-bottom: 25px; text-align: left; }
-        body.dark #blogs-section { background: var(--card-dark); }
+        #blogs-section { 
+            background: var(--card-light); 
+            padding: 40px 5%; 
+            margin-bottom: 25px; 
+            text-align: left; 
+            border-radius: var(--radius); /* Added for consistency */
+            box-shadow: 0 4px 15px var(--shadow-light); /* Added for consistency */
+        }
+        body.dark #blogs-section { 
+            background: var(--card-dark); 
+            box-shadow: 0 4px 15px var(--shadow-dark); 
+        }
        
         h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
         h4 { font-size: 20px; } 
@@ -220,7 +230,22 @@
         .blog-layout-container { display: flex; gap: 30px; margin-top: 30px; }
         #blog-posts-container { flex: 1; min-width: 0; }
         
-        #blog-sidebar { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 25px; }
+        #blog-sidebar { 
+            width: 300px; 
+            flex-shrink: 0; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+            position: sticky; /* Make sidebar sticky */
+            top: 20px; /* Adjust as needed, considering header height */
+            align-self: flex-start; /* Ensure it sticks to the top of its container */
+            max-height: calc(100vh - 40px); /* Limit height to viewport - padding */
+            overflow-y: auto; /* Enable scrolling for long sidebars */
+        }
+        /* Hide scrollbar for aesthetics */
+        #blog-sidebar::-webkit-scrollbar { width: 0; }
+        #blog-sidebar { -ms-overflow-style: none; scrollbar-width: none; }
+
         .sidebar-widget { background: var(--bg-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 4px 10px var(--shadow-light); transition: background 0.5s ease; }
         body.dark .sidebar-widget { background: #333; box-shadow: 0 4px 15px var(--shadow-dark); }
         .sidebar-widget h5 { color: var(--primary); margin-bottom: 15px; font-size: 1.1em; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; }
@@ -360,14 +385,263 @@
 
         .adsense-ad-container { margin: 25px auto; padding: 10px; text-align: center; min-height: 50px; background-color: var(--primary-light-transparent); border-radius: var(--radius); width: 90%; max-width: 970px; }
         body.dark .adsense-ad-container { background-color: rgba(44, 44, 44, 0.5); }
+
+        /* New: Reading Progress Bar */
+        #reading-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 5px;
+            background-color: var(--primary);
+            z-index: 1001;
+            transition: width 0.1s linear;
+        }
+
+        /* New: Dark Mode Toggle */
+        #dark-mode-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            margin-left: 10px;
+        }
+        #dark-mode-toggle:hover {
+            color: #ffc107;
+            transform: scale(1.1);
+        }
+
+        /* New: Social Share Buttons */
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            justify-content: center;
+        }
+        body.dark .share-buttons { border-top-color: #3a3a3a; }
+        .share-buttons a {
+            color: #555;
+            font-size: 24px;
+            transition: color 0.2s ease, transform 0.2s ease;
+            text-decoration: none; /* Override default link styling */
+        }
+        body.dark .share-buttons a { color: #ccc; }
+        .share-buttons a:hover {
+            transform: scale(1.1);
+        }
+        .share-buttons a.facebook:hover { color: #3b5998; }
+        .share-buttons a.twitter:hover { color: #1da1f2; }
+        .share-buttons a.linkedin:hover { color: #0077b5; }
+        .share-buttons a.email:hover { color: #d44638; } /* Gmail red */
+        .share-buttons a.whatsapp:hover { color: #25d366; }
+
+        /* New: Author Box */
+        .author-box {
+            background: var(--primary-light-transparent);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+            display: flex; /* Use flex for layout */
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            text-align: left; /* Ensure text alignment is left within the box */
+        }
+        body.dark .author-box { background: rgba(60, 60, 60, 0.5); box-shadow: 0 2px 8px var(--shadow-dark); }
+        .author-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+        .author-info h5 {
+            margin: 0 0 5px;
+            color: var(--primary);
+            font-size: 1.2em;
+            border-bottom: none; /* Override sidebar widget h5 */
+            padding-bottom: 0;
+            text-align: left;
+        }
+        .author-info p {
+            margin: 0;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+        body.dark .author-info p { color: var(--text-dark); }
+        .author-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .author-info a:hover { color: var(--primary-dark); text-decoration: underline; }
+        
+        /* New: Related Posts */
+        .related-posts-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9e9e9;
+            display: none; /* Hidden until post is expanded */
+        }
+        body.dark .related-posts-section { border-top-color: #3a3a3a; }
+        .related-posts-section h5 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: left; /* Keep consistency */
+        }
+        .related-posts-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .related-posts-list li {
+            flex: 1 1 calc(33.33% - 10px); /* 3 items per row, adjust gap */
+            min-width: 250px;
+            background: var(--card-light);
+            padding: 15px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px var(--shadow-light);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        body.dark .related-posts-list li { background: #333; box-shadow: 0 2px 8px var(--shadow-dark); }
+        .related-posts-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+        body.dark .related-posts-list li:hover { box-shadow: 0 4px 12px var(--shadow-dark); }
+        .related-posts-list li a {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.2s ease;
+        }
+        body.dark .related-posts-list li a { color: var(--text-dark); }
+        .related-posts-list li a:hover { color: var(--primary); }
+        .related-posts-list li small {
+            font-size: 13px;
+            color: #888;
+        }
+        body.dark .related-posts-list li small { color: #aaa; }
+
+        /* New: Table of Contents */
+        .blog-toc {
+            background: var(--primary-light-transparent);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            position: sticky;
+            top: 10px; /* Adjust sticky position */
+            z-index: 5;
+            max-width: 300px;
+            float: right; /* Float right for desktop */
+            margin-left: 20px; /* Space between content and TOC */
+        }
+        body.dark .blog-toc { background: rgba(60, 60, 60, 0.5); box-shadow: 0 2px 8px var(--shadow-dark); }
+        .blog-toc h6 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.05em;
+            font-weight: 700;
+        }
+        .blog-toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .blog-toc ul li {
+            margin-bottom: 5px;
+        }
+        .blog-toc ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.2s ease;
+        }
+        body.dark .blog-toc ul li a { color: var(--text-dark); }
+        .blog-toc ul li a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        .blog-toc ul li.h5-level { margin-left: 15px; font-size: 0.9em; }
+
+        /* New: Helpful Feedback */
+        .feedback-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9e9e9;
+            text-align: center;
+            display: none; /* Hidden until post is expanded */
+        }
+        body.dark .feedback-section { border-top-color: #3a3a3a; }
+        .feedback-section p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .feedback-buttons button {
+            background: #f0f0f0;
+            color: #555;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: all 0.2s ease;
+        }
+        body.dark .feedback-buttons button { background: #444; color: #eee; border-color: #555; }
+        .feedback-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .feedback-buttons button.yes:hover { background: #28a745; color: white; border-color: #28a745; }
+        .feedback-buttons button.no:hover { background: #dc3545; color: white; border-color: #dc3545; }
+        .feedback-buttons button.clicked {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            cursor: default;
+        }
+        .feedback-buttons button.clicked.yes { background: #28a745; border-color: #28a745; }
+        .feedback-buttons button.clicked.no { background: #dc3545; border-color: #dc3545; }
         
         /* --- MEDIA QUERIES --- */
         @media (max-width: 992px) {
             .blog-layout-container { flex-direction: column; }
-            #blog-sidebar { width: 100%; margin-top: 30px; }
+            #blog-sidebar { 
+                width: 100%; 
+                margin-top: 30px; 
+                position: static; /* Disable sticky on smaller screens */
+                max-height: none; /* Remove height limit */
+                overflow-y: visible; /* Remove overflow */
+            }
             /* Hide clock and weather on smaller screens */
             #live-clock, #live-weather { 
                 display: none; 
+            }
+            .blog-toc {
+                float: none;
+                margin: 0 auto 20px;
+                max-width: 100%;
+                width: 100%;
+            }
+            .related-posts-list li {
+                flex: 1 1 calc(50% - 10px); /* 2 items per row */
             }
         }
         @media (max-width: 768px) { 
@@ -375,6 +649,9 @@
             #blog-main-heading { font-size: 24px; }
             .blog-post h4 { font-size: 20px; }
             .sidenav a { font-size: 18px; }
+            .related-posts-list li {
+                flex: 1 1 100%; /* 1 item per row on very small screens */
+            }
         }
         @media (max-width: 480px) {
             .profile-container { 
@@ -391,10 +668,16 @@
             }
              #blogs-section { padding: 30px 5%; }
              .blog-post { padding-bottom: 20px; margin-bottom: 20px; }
+             .header-content h1 { font-size: 1.5em; }
+             .header-content p { font-size: 0.8em; }
+             .author-box { flex-direction: column; text-align: center; }
+             .author-box img { margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
+
+<div id="reading-progress-bar"></div> <!-- NEW: Reading Progress Bar -->
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -406,7 +689,7 @@
   <a href="privacy-policy.html" onclick="closeNavAndGoTo('privacy-policy.html')">Privacy Policy</a>
   <a href="terms-of-service.html" onclick="closeNavAndGoTo('terms-of-service.html')">Terms of Service</a>
   <a href="disclaimer.html" onclick="closeNavAndGoTo('disclaimer.html')">Disclaimer</a>
-  <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
+  <a href="contact.html">Contact</a>
 </div>
 
 <!-- START: MODIFIED HEADER HTML STRUCTURE -->
@@ -427,6 +710,9 @@
 
     <div class="header-right">
         <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
         <div id="profile-container" class="profile-container hidden">
             <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
             <div id="profile-dropdown" class="profile-dropdown hidden">
@@ -461,7 +747,7 @@
         <div class="blog-layout-container">
             <div id="blog-posts-container">
                 <div id="blog-list">
-                    <!-- Blog posts will be dynamically inserted here -->
+                    <!-- Blog posts will be dynamically inserted here by JavaScript -->
                 </div>
             </div>
             <aside id="blog-sidebar">
@@ -569,15 +855,38 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchWeather();
     checkAuthStatus(); 
     attachEventListeners();
-    loadBlogPosts();
+    loadBlogPosts(); // Loads initial blog posts on page load
     populateBlogSidebar();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
+    updateReadingProgressBar(); // Initial call for progress bar
 });
 
-window.onload = function() { if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { initGoogleSignIn(); } else { let attempts = 0; const intervalId = setInterval(() => { attempts++; if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { initGoogleSignIn(); clearInterval(intervalId); } else if (attempts > 20) { console.error("Google Sign-In did not initialize in time."); if(document.getElementById('googleSignInDiv')) { document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing."; } clearInterval(intervalId); } }, 500); } };
+window.onload = function() { 
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { 
+        initGoogleSignIn(); 
+    } else { 
+        let attempts = 0; 
+        const intervalId = setInterval(() => { 
+            attempts++; 
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) { 
+                initGoogleSignIn(); 
+                clearInterval(intervalId); 
+            } else if (attempts > 20) { 
+                console.error("Google Sign-In did not initialize in time."); 
+                if(document.getElementById('googleSignInDiv')) { 
+                    document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing."; 
+                } 
+                clearInterval(intervalId); 
+            } 
+        }, 500); 
+    } 
+};
 
 function attachEventListeners() {
-    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
+    window.onscroll = () => { 
+        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
+        updateReadingProgressBar(); // NEW: Update progress bar on scroll
+    };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
     document.addEventListener('click', closeDropdownOnClickOutside);
@@ -596,6 +905,12 @@ function attachEventListeners() {
     if (searchInput) { searchInput.addEventListener('keyup', () => filterBlogPosts(searchInput.value)); }
     const newsletterBtn = document.getElementById('sidebar-newsletter-btn');
     if (newsletterBtn) { newsletterBtn.addEventListener('click', () => { const emailInput = document.getElementById('sidebar-newsletter-email'); const email = emailInput.value.trim(); const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (email && emailRegex.test(email)) { alert(`Thank you for subscribing, ${email}! You'll receive our latest posts.`); emailInput.value = ''; } else { alert('Please enter a valid email address.'); } }); }
+    
+    // NEW: Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
 
     // Event listener for dynamic weather refresh button
     document.body.addEventListener('click', (event) => {
@@ -616,11 +931,43 @@ function handlePhotoUpload(event) { const file = event.target.files[0]; if (!fil
 function handleVerifyEmail(e) { e.preventDefault(); if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; } if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; } const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`); const userCode = prompt("Please enter the 6-digit verification code:"); if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); }  else if (userCode) { alert("Incorrect code. Please try again."); }  else { alert("Verification cancelled."); } }
 function handleResetPassword(e) { e.preventDefault(); if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; } if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; } const newPassword = prompt("Enter your new password (min 4 characters):"); if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; } const confirmPassword = prompt("Confirm your new password:"); if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; } const username = localStorage.getItem('userEmail'); if(!username) { alert("User email not found. Cannot reset password."); return;} const users = JSON.parse(localStorage.getItem("users") || "{}"); if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); }  else { alert("An error occurred. Could not find user to update password."); } }
 function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
-function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); const confetti = document.getElementById('confetti'); const loginSound = document.getElementById('loginSound'); if(confetti) confetti.classList.remove("hidden"); if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); }
+function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); const confetti = document.getElementById('confetti'); const loginSound = document.getElementById('loginSound'); if(confetti) loginSound?.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); }
 function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const googleSignInButtonContainer = document.getElementById("googleSignInDiv"); if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); else console.warn("Google Sign-In button container not found."); } catch (error) { console.error("Google GSI could not be initialized.", error); const googleSignInButtonContainer = document.getElementById('googleSignInDiv'); if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load."; } }
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
 function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
-function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
+
+// NEW: Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    const isDarkMode = document.body.classList.contains('dark');
+    localStorage.setItem('darkMode', isDarkMode);
+    const toggleIcon = document.getElementById('dark-mode-toggle')?.querySelector('i');
+    if (toggleIcon) {
+        if (isDarkMode) {
+            toggleIcon.classList.remove('fa-moon');
+            toggleIcon.classList.add('fa-sun');
+        } else {
+            toggleIcon.classList.remove('fa-sun');
+            toggleIcon.classList.add('fa-moon');
+        }
+    }
+}
+function loadDarkMode() { 
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark');
+    }
+    const toggleIcon = document.getElementById('dark-mode-toggle')?.querySelector('i');
+    if (toggleIcon) {
+        if (isDarkMode) {
+            toggleIcon.classList.remove('fa-moon');
+            toggleIcon.classList.add('fa-sun');
+        } else {
+            toggleIcon.classList.remove('fa-sun');
+            toggleIcon.classList.add('fa-moon');
+        }
+    }
+}
 
 
 // --- Live Clock and Weather Functions ---
@@ -715,10 +1062,11 @@ const blogPostsData = [
         date: "2024-07-29", 
         views: 4200, 
         author: "Bishal Mishra", 
+        author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */
+        author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.",
         image: "https://techprasar.com/wp-content/uploads/2023/08/How-To-Create-Payoneer-Account-In-Nepal-and-Get-Mastercard_.jpg", 
         content: "A step-by-step guide for freelancers and professionals in Nepal to create a Payoneer account. Learn how to sign up, link your local bank, and meet the requirements to order your own Payoneer Mastercard for global payments...", 
-        fullContent: `<p>For freelancers, online entrepreneurs, and digital professionals in Nepal, receiving international payments can be a major hurdle. Payoneer solves this problem by providing a fast, secure, and low-cost way to get paid by global clients and marketplaces. This guide will walk you through the entire process of setting up a Payoneer account from Nepal and how you can get your hands on a physical Payoneer Mastercard.</p>
-                      <h4>What You'll Need Before You Start:</h4>
+        fullContent: `<h4>What You'll Need Before You Start:</h4>
                       <ul>
                           <li>A valid government-issued ID (Citizenship, Passport, or National ID Card).</li>
                           <li>Your full address in Nepal (for verification and card delivery).</li>
@@ -764,6 +1112,8 @@ const blogPostsData = [
         date: "2024-07-27", 
         views: 2530, 
         author: "Bishal Mishra", 
+        author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */
+        author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.",
         image: "https://i0.wp.com/www.nepalitrends.com/wp-content/uploads/2019/03/best-nepali-fonts.jpg?fit=1000%2C600&ssl=1", 
         content: "Enhance your documents, designs, and digital content with our curated collection of over 1000+ free Nepali fonts. From the classic Preeti to modern Unicode fonts like Sagarmatha, find the perfect typeface for your needs...", 
         fullContent: `<p>Whether you're drafting an official document, creating stunning graphics, or simply typing in Nepali, having the right font is crucial. We've gathered a massive collection of over 1000 Nepali fonts, including timeless classics and modern Unicode typefaces, all available in a single, free download.</p>
@@ -776,7 +1126,6 @@ const blogPostsData = [
                         <li><strong>For macOS:</strong> Double-click the font file and click the "Install Font" button in the Font Book application. You can also drag the font files to the Font Book app icon in your dock.</li>
                       </ul>
                       <h4>Popular Fonts Included in the Pack:</h4>
-                      <p>This collection features a wide range of typefaces, including:</p>
                       <ul>
                         <li>Preeti</li>
                         <li>Kantipur</li>
@@ -794,6 +1143,8 @@ const blogPostsData = [
         date: "2024-07-25", 
         views: 3500, 
         author: "Bishal Mishra", 
+        author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */
+        author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.",
         image: "https://techprasar.com/wp-content/uploads/2022/11/How-To-Download-Typeshala-For-Windows-jpg.jpg", 
         content: "Looking to improve your Nepali typing speed and accuracy? Typeshala is the classic, go-to software for learners. This guide shows you how to download and install it on your Windows PC...", 
         fullContent: `<p>Typeshala is a legendary Nepali typing tutor software that has helped countless users master Nepali keyboard layouts, including both traditional and Romanized formats. It's a lightweight, effective tool that's perfect for students, government employees, and anyone looking to become proficient in Nepali typing. This guide provides a direct download link and a step-by-step installation walkthrough.</p>
@@ -829,6 +1180,8 @@ const blogPostsData = [
         date: "2024-07-24", 
         views: 3150, 
         author: "Bishal Mishra", 
+        author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */
+        author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.",
         image: "https://3utools.id/wp-content/uploads/2025/03/3utools-for-windows.webp", 
         content: "Discover 3uTools, the ultimate all-in-one solution for managing your iOS devices. This comprehensive guide covers its powerful features and provides direct download links for both Windows and macOS...", 
         fullContent: `
@@ -872,6 +1225,8 @@ const blogPostsData = [
         date: "2024-07-28", 
         views: 4500, 
         author: "Bishal Mishra", 
+        author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */
+        author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.",
         image: "https://onlinekhabar.com/wp-content/uploads/2023/07/MDMS-NTA.jpg", 
         content: "Understanding Nepal's MDMS system is crucial for smartphone users. This guide provides a detailed walkthrough on how to register your IMEI number to ensure your device functions legally...", 
         fullContent: `
@@ -931,43 +1286,192 @@ const blogPostsData = [
         `, 
         tags: ["IMEI registration", "MDMS Nepal", "NTA", "smartphone", "Nepal tech", "device registration"] 
     },
-    { id: 2, title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d", date: "2024-07-20", views: 1120, author: "Bishal Mishra", image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow...", fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference.", tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad"] },
-    { id: 3, title: "Conquer Your To-Do List: Effective Task Management with Note P@d", date: "2024-07-15", views: 1750, author: "Bishal Mishra", image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature...", fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels. Discover techniques like creating actionable items and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity.", tags: ["to-do list", "task management", "organization", "productivity", "Note Pad"] },
-    { id: 5, title: "Your Privacy Matters: How Note P@d Protects Your Data Locally", date: "2024-07-05", views: 2100, author: "Bishal Mishra", image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", content: "Your notes should remain private. Note P@d is built with a strong focus on privacy. This post details how your data is stored locally, never transmitted to a server by default...", fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, a design choice that means it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.", tags: ["privacy", "security", "local storage", "data protection", "Note Pad"] },
-    { id: 10, title: "Class 12 (XII) Result for 2081/2082: Check Your +2 Result!", date: "2024-07-01", views: 1874, author: "Bishal Mishra", image: "https://i.ibb.co/ycvw4J0g/class-12-results.png", content: "The National Examination Board (NEB), Nepal, has officially published the Class 12 results for the academic year 2081/2082. Thousands of students who appeared in the +2 board exams can now access their results online.", fullContent: `<p>These results reflect not only individual performance but also serve as a gateway to higher education and future career paths. Whether you are a regular or partial student, the result is equally important in shaping your academic future.</p><p>This year, NEB has made it convenient for students to check their results using multiple digital platforms. The primary method is online result checking, where students just need to enter their symbol number and date of birth on the designated websites. Due to high traffic, some servers may slow down, so having multiple options is very helpful. Make sure you double-check your credentials while entering the information to avoid errors.
+    { id: 2, title: "Beyond Text: Harnessing the Whiteboard Feature in Note P@d", date: "2024-07-20", views: 1120, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://nextdayanimations.com/wp-content/uploads/2022/12/why_whiteboard_videos_blog_post-fb.png", content: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow...", fullContent: "Sometimes, words aren't enough. Visual thinking is crucial for brainstorming, mind-mapping, and problem-solving. Discover how Note P@d's integrated whiteboard feature can transform your workflow. Learn tips for sketching out ideas, creating visual outlines, and collaborating more effectively. We’ll show you how to make the most of the drawing tools – varying colors and brush sizes – to bring your concepts to life, making complex ideas instantly understandable. Explore the use of the eraser tool for quick corrections and the clear canvas option for a fresh start. Consider how to save and export your whiteboard creations as PNG images for sharing, presentations, or later reference.", tags: ["whiteboard", "visual thinking", "drawing", "brainstorming", "Note Pad"] },
+    { id: 3, title: "Conquer Your To-Do List: Effective Task Management with Note P@d", date: "2024-07-15", views: 1750, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://images.ctfassets.net/lzny33ho1g45/4dBmz2qbCdUEQ8Z5Zr2jQH/86ea25e7ba44580d252b092f8a68dbd4/kanban", content: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature...", fullContent: "A messy to-do list can feel overwhelming. This post dives into practical strategies for managing your tasks using Note P@d's dedicated To-Do List feature. Learn about prioritizing tasks, breaking down large projects, and the psychological benefits of checking items off your list. We’ll explore how to use Note P@d to create a system that reduces stress and boosts your accomplishment levels. Discover techniques like creating actionable items and regularly reviewing your progress. The simple act of marking a task as complete provides a sense of achievement and momentum, encouraging further productivity.", tags: ["to-do list", "task management", "organization", "productivity", "Note Pad"] },
+    { id: 5, title: "Your Privacy Matters: How Note P@d Protects Your Data Locally", date: "2024-07-05", views: 2100, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://media.licdn.com/dms/image/v2/D4E12AQHg_nJFQiivgg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1682504783369?e=2147483647&v=beta&t=V6mZOMfpK7IKPasLUGnZBRacpl6_9KF3G3K5jgPmqxI", content: "Your notes should remain private. Note P@d is built with a strong focus on privacy. This post details how your data is stored locally, never transmitted to a server by default...", fullContent: "Your notes are your thoughts, and they should remain private. Note P@d is built with a strong focus on user privacy. This post details how your data is stored locally in your browser's localStorage for anonymous users, a design choice that means it's never transmitted to any external server by default and remains completely on your device. Learn about the security implications of this local-first approach. Understand that this also means responsibility rests with you to back up important data (e.g., via PDF export) if you're not using account-based sync features, as clearing browser data will erase local notes. For account holders, data is handled as per our comprehensive Privacy Policy.", tags: ["privacy", "security", "local storage", "data protection", "Note Pad"] },
+    { id: 10, title: "Class 12 (XII) Result for 2081/2082: Check Your +2 Result!", date: "2024-07-01", views: 1874, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://i.ibb.co/ycvw4J0g/class-12-results.png", content: "The National Examination Board (NEB), Nepal, has officially published the Class 12 results for the academic year 2081/2082. Thousands of students who appeared in the +2 board exams can now access their results online.", fullContent: `<p>These results reflect not only individual performance but also serve as a gateway to higher education and future career paths. Whether you are a regular or partial student, the result is equally important in shaping your academic future.</p><p>This year, NEB has made it convenient for students to check their results using multiple digital platforms. The primary method is online result checking, where students just need to enter their symbol number and date of birth on the designated websites. Due to high traffic, some servers may slow down, so having multiple options is very helpful. Make sure you double-check your credentials while entering the information to avoid errors.
 <p>In addition to the official NEB result portal, other popular educational and telecom partner sites are also hosting the result. These portals provide instant access to the marksheet, including subject-wise grades and GPA. Students are advised to keep a copy of their result for future use, especially for university applications, scholarships, and other academic planning.<br><br> <a href="https://neb.ntc.net.np" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check +2 Results 2081/82</a></p><p>We at bishalmishra.com have provided a compiled list of trusted and verified websites to check your Class 12 NEB result easily. Simply visit any of the links below and follow the instructions on the page. Best of luck to all the students — may this result open the door to your dreams and success!
 
 </p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 12", "NEB", "Nepal education", "results 2081/82"] },
-    { id: 6, title: "Class 10 (SEE) Result for 2081/2082: Check Your SEE Result!", date: "2025-07-01", views: 1574, author: "Bishal Mishra", image: "https://techsathi.com/wp-content/uploads/2022/07/SEE-Result-1-702x459.jpg", content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results...", fullContent: `<p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p><p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. Ensure you have your symbol number and date of birth ready to retrieve your results.<br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p><p>We have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081:</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82"] },
-    { id: 7, title: "Organizing Your Life: From Daily Chores to Long-Term Goals", date: "2024-06-29", views: 1890, author: "Bishal Mishra", image: "https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=600&auto=format&fit=crop&q=60", content: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. See how Note P@d can be the central hub for your entire life...", fullContent: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. Use Note P@d's to-do list for your daily groceries and chores. Create a separate note for your weekly meal plan. Use the whiteboard to map out your 5-year career goals. By creating dedicated notes and lists for different areas of your life (Personal, Work, Health, etc.), you can bring clarity and order to the chaos. This post provides a step-by-step guide to building a life organization system within Note P@d, helping you stay on track and achieve your dreams.", tags: ["life organization", "goal setting", "planning", "task management", "Note Pad"] }
+    { id: 6, title: "Class 10 (SEE) Result for 2081/2082: Check Your SEE Result!", date: "2025-07-01", views: 1574, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://techsathi.com/wp-content/uploads/2022/07/SEE-Result-1-702x459.jpg", content: "The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results...", fullContent: `<p>The moment you've been eagerly awaiting is finally here! The National Examination Board (NEB) is set to release the Class 10 Secondary Education Examination (SEE) results for the academic year 2081/2082. This guide will walk you through various methods to check your results quickly and easily.</p><p>Students, parents, and guardians can now access the full mark sheets and individual subject grades. Ensure you have your symbol number and date of birth ready to retrieve your results.<br><br> <a href="https://see.ntc.net.np/results/grade" target="_blank" rel="noopener noreferrer" class="see-result-btn">Click to check SEE Results 2081/82</a></p><p>We have compiled a comprehensive list of websites where you can conveniently check your SEE result 2081:</p><ul><li><a href="https://www.see.gov.np/" target="_blank">Official SEE Board: www.see.gov.np</a></li><li><a href="https://www.neb.gov.np/" target="_blank">NEB Website: www.neb.gov.np</a></li><li><a href="http://www.see.ntc.net.np/" target="_blank">NTC Result Portal: www.see.ntc.net.np</a></li><li><a href="https://see.edusanjal.com/" target="_blank">Edusanjal: see.edusanjal.com</a></li></ul><p>Congratulations to all students! We wish you all the very best for your future academic endeavors.</p>`, tags: ["SEE result", "Class 10", "NEB", "Nepal education", "results 2081/82"] },
+    { id: 7, title: "Organizing Your Life: From Daily Chores to Long-Term Goals", date: "2024-06-29", views: 1890, author: "Bishal Mishra", author_pic: "https://i.imgur.com/kR1k1jU.png", /* Example placeholder */ author_bio: "Bishal Mishra is the founder of Note Pad, a web developer, and a tech enthusiast passionate about making complex technology accessible. He frequently shares insights on productivity, web development, and digital tools.", image: "https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=600&auto=format&fit=crop&q=60", content: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. See how Note P@d can be the central hub for your entire life...", fullContent: "Life can get complicated. Juggling daily tasks, weekly errands, and long-term ambitions requires a solid system. Use Note P@d's to-do list for your daily groceries and chores. Create a separate note for your weekly meal plan. Use the whiteboard to map out your 5-year career goals. By creating dedicated notes and lists for different areas of your life (Personal, Work, Health, etc.), you can bring clarity and order to the chaos. This post provides a step-by-step guide to building a life organization system within Note P@d, helping you stay on track and achieve your dreams.", tags: ["life organization", "goal setting", "planning", "task management", "Note Pad"] }
 ];
 
 // --- JS Functions ---
-function filterBlogPosts(query) { const searchTerm = query.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const title = postElement.querySelector('h4 a').textContent.toLowerCase(); const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || ''); const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || ''; postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none'; }); }
-function filterBlogPostsByTag(tag) { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.add('hidden'); let backButton = document.getElementById('back-to-blog-list-btn'); const postsContainer = document.getElementById('blog-posts-container'); if (!backButton && postsContainer) { backButton = document.createElement('button'); backButton.id = 'back-to-blog-list-btn'; backButton.textContent = '← Back to All Posts'; backButton.className = 'read-more-btn'; backButton.style.marginBottom = '20px'; backButton.onclick = showBlogList; postsContainer.insertBefore(backButton, postsContainer.firstChild); } const searchTerm = tag.toLowerCase().trim(); document.querySelectorAll('.blog-post').forEach(postElement => { const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id); const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : []; postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none'; }); if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' }); }
-function showBlogList() { const blogMainHeading = document.getElementById('blog-main-heading'); if (blogMainHeading) blogMainHeading.classList.remove('hidden'); const backButton = document.getElementById('back-to-blog-list-btn'); if (backButton) backButton.remove(); document.querySelectorAll('.blog-post').forEach(postElement => { postElement.style.display = 'block'; }); }
+function filterBlogPosts(query) { 
+    const searchTerm = query.toLowerCase().trim(); 
+    document.querySelectorAll('.blog-post').forEach(postElement => { 
+        const title = postElement.querySelector('h4 a').textContent.toLowerCase(); 
+        const content = (postElement.querySelector('.blog-content-short')?.textContent.toLowerCase() || '') + (postElement.querySelector('.blog-content-full')?.textContent.toLowerCase() || ''); 
+        const postTags = blogPostsData.find(p => `blog-${p.id}` === postElement.id)?.tags.join(' ').toLowerCase() || ''; 
+        postElement.style.display = (title.includes(searchTerm) || content.includes(searchTerm) || postTags.includes(searchTerm)) ? 'block' : 'none'; 
+    }); 
+}
+
+function filterBlogPostsByTag(tag) { 
+    const blogMainHeading = document.getElementById('blog-main-heading'); 
+    if (blogMainHeading) blogMainHeading.classList.add('hidden'); 
+    
+    let backButton = document.getElementById('back-to-blog-list-btn'); 
+    const postsContainer = document.getElementById('blog-posts-container'); 
+    
+    if (!backButton && postsContainer) { 
+        backButton = document.createElement('button'); 
+        backButton.id = 'back-to-blog-list-btn'; 
+        backButton.textContent = '← Back to All Posts'; 
+        backButton.className = 'read-more-btn'; 
+        backButton.style.marginBottom = '20px'; 
+        backButton.onclick = showBlogList; 
+        postsContainer.insertBefore(backButton, postsContainer.firstChild); 
+    } 
+    
+    const searchTerm = tag.toLowerCase().trim(); 
+    document.querySelectorAll('.blog-post').forEach(postElement => { 
+        const postData = blogPostsData.find(p => `blog-${p.id}` === postElement.id); 
+        const postTags = postData ? postData.tags.map(t => t.toLowerCase()) : []; 
+        postElement.style.display = postTags.includes(searchTerm) ? 'block' : 'none'; 
+    }); 
+    if (postsContainer) postsContainer.scrollIntoView({ behavior: 'smooth' }); 
+}
+
+function showBlogList() { 
+    const blogMainHeading = document.getElementById('blog-main-heading'); 
+    if (blogMainHeading) blogMainHeading.classList.remove('hidden'); 
+    const backButton = document.getElementById('back-to-blog-list-btn'); 
+    if (backButton) backButton.remove(); 
+    document.querySelectorAll('.blog-post').forEach(postElement => { 
+        postElement.style.display = 'block'; 
+        // Also ensure full content and extra sections are hidden when returning to list view
+        postElement.querySelector('.blog-content-short').style.display = 'block';
+        postElement.querySelector('.blog-content-full').style.display = 'none';
+        postElement.querySelector('.read-more-btn').textContent = 'Read More →';
+        postElement.querySelector('.comments-section').style.display = 'none';
+        const authorBox = postElement.querySelector('.author-box');
+        if (authorBox) authorBox.style.display = 'none';
+        const relatedPostsSection = postElement.querySelector('.related-posts-section');
+        if (relatedPostsSection) relatedPostsSection.style.display = 'none';
+        const feedbackSection = postElement.querySelector('.feedback-section');
+        if (feedbackSection) feedbackSection.style.display = 'none';
+        const blogToc = postElement.querySelector('.blog-toc');
+        if (blogToc) blogToc.remove(); // Remove TOC element when collapsing
+    }); 
+}
+
+// NEW: Calculate Reading Time
+function getReadingTime(text) {
+    const wordsPerMinute = 200; // Average reading speed
+    const textWithoutHtml = text.replace(/<[^>]*>?/gm, ''); // Strip HTML tags
+    const wordCount = textWithoutHtml.split(/\s+/).filter(word => word.length > 0).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return minutes === 0 ? "Less than 1 min" : `${minutes} min read`;
+}
+
+// NEW: Update Reading Progress Bar
+function updateReadingProgressBar() {
+    const progressBar = document.getElementById('reading-progress-bar');
+    if (!progressBar) return;
+
+    // Get the main content area for calculation
+    const mainContent = document.getElementById('blog-posts-container'); 
+    if (!mainContent) return;
+
+    const mainContentHeight = mainContent.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    // Calculate how much of the main content is visible relative to the viewport
+    const totalScrollableHeight = mainContentHeight - viewportHeight + mainContent.offsetTop;
+
+    if (totalScrollableHeight <= 0) { // Content is shorter than viewport or not scrollable
+        progressBar.style.width = '100%'; 
+        return;
+    }
+
+    const scrolledRelative = scrollTop - mainContent.offsetTop;
+    const progress = Math.min(100, Math.max(0, (scrolledRelative / totalScrollableHeight) * 100));
+    progressBar.style.width = `${progress}%`;
+}
+
 
 function toggleBlogContent(postId) { 
     const postElement = document.getElementById(`blog-${postId}`); 
     if (!postElement) return; 
 
     const contentShort = postElement.querySelector('.blog-content-short');
-    const contentFull = postElement.querySelector('.blog-content-full');
+    const contentFullContainer = postElement.querySelector('.blog-content-full'); // This is the container for full content
     const readMoreBtn = postElement.querySelector('.read-more-btn');
-    const commentsSection = postElement.querySelector('.comments-section'); // Get the comments section
+    const commentsSection = postElement.querySelector('.comments-section');
+    const authorBox = postElement.querySelector('.author-box');
+    const relatedPostsSection = postElement.querySelector('.related-posts-section');
+    const feedbackSection = postElement.querySelector('.feedback-section');
+    let blogToc = postElement.querySelector('.blog-toc');
 
-    const isExpanded = contentFull.style.display === 'block'; 
+    const isExpanded = contentFullContainer.style.display === 'block'; 
 
     if (isExpanded) {
-        contentFull.style.display = 'none';
+        // Collapse state
+        contentFullContainer.style.display = 'none';
         contentShort.style.display = 'block';
         readMoreBtn.textContent = 'Read More →';
-        if (commentsSection) commentsSection.style.display = 'none'; // Hide comments
+        if (commentsSection) commentsSection.style.display = 'none'; 
+        if (authorBox) authorBox.style.display = 'none';
+        if (relatedPostsSection) relatedPostsSection.style.display = 'none';
+        if (feedbackSection) feedbackSection.style.display = 'none';
+        if (blogToc) blogToc.remove(); // Remove TOC element when collapsing
+        // Reset full content HTML to prevent duplicate IDs if it was previously dynamically loaded
+        contentFullContainer.innerHTML = '';
     } else {
-        contentFull.style.display = 'block';
+        // Expand state
+        contentFullContainer.style.display = 'block';
         contentShort.style.display = 'none';
         readMoreBtn.textContent = 'Show Less ←';
-        if (commentsSection) commentsSection.style.display = 'block'; // Show comments
+
+        // Find the full content data
+        const postData = blogPostsData.find(p => p.id === postId);
+        if (!postData) return;
+
+        // **CRITICAL: Generate full content and TOC dynamically ON EXPAND**
+        // 1. Set the full content HTML
+        contentFullContainer.innerHTML = postData.fullContent;
+
+        // 2. Generate TOC AFTER content is in DOM (or a temp DOM fragment)
+        const headings = contentFullContainer.querySelectorAll('h4, h5');
+        let tocHtml = '';
+        if (headings.length > 0) {
+            tocHtml = `
+                <div class="blog-toc">
+                    <h6>Table of Contents</h6>
+                    <ul>
+            `;
+            headings.forEach((heading, index) => {
+                const headingText = heading.textContent;
+                // Generate a unique ID for each heading within this post
+                const headingId = `post-${postId}-heading-${index}`;
+                heading.id = headingId; // Assign ID to the actual heading in the DOM
+                const isH5 = heading.tagName.toLowerCase() === 'h5' ? ' h5-level' : '';
+                tocHtml += `<li class="${isH5}"><a href="#${headingId}">${headingText}</a></li>`;
+            });
+            tocHtml += `</ul></div>`;
+        }
+        
+        // Prepend TOC to the full content container
+        if (tocHtml) {
+            const tocElement = document.createElement('div');
+            tocElement.innerHTML = tocHtml;
+            contentFullContainer.prepend(tocElement.firstChild); // Insert the generated TOC div
+        }
+
+        // Show other sections
+        if (commentsSection) commentsSection.style.display = 'block';
+        if (authorBox) authorBox.style.display = 'flex'; // Use flex for author box
+        if (relatedPostsSection) relatedPostsSection.style.display = 'block';
+        if (feedbackSection) feedbackSection.style.display = 'block';
+        
+        // NEW: Populate Related Posts and feedback when expanded
+        populateRelatedPosts(postId);
+        loadFeedbackStatus(postId);
+
+        // Scroll to the top of the expanded post for better UX
         setTimeout(() => { 
             postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
         }, 100); 
@@ -978,30 +1482,276 @@ function scrollToAndExpandPost(postId) {
     const postElement = document.getElementById(`blog-${postId}`); 
     if (!postElement) return; 
 
-    postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
-    const contentShort = postElement.querySelector('.blog-content-short');
-    const contentFull = postElement.querySelector('.blog-content-full');
-    const readMoreBtn = postElement.querySelector('.read-more-btn');
-    const commentsSection = postElement.querySelector('.comments-section'); // Get the comments section
-
-    if (contentFull.style.display !== 'block') { 
-        contentFull.style.display = 'block'; 
-        contentShort.style.display = 'none'; 
-        readMoreBtn.textContent = 'Show Less ←'; 
-        if (commentsSection) commentsSection.style.display = 'block'; // Show comments
-    } 
+    // Ensure it's expanded if not already
+    const contentFullContainer = postElement.querySelector('.blog-content-full');
+    if (contentFullContainer.style.display !== 'block') { 
+        toggleBlogContent(postId); // This will handle showing all sections
+    }
+    
+    // Scroll to the top of the post after it's expanded
+    setTimeout(() => { 
+        postElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    }, 100); 
 }
 
-function populateBlogSidebar() { const recentPostsList = document.getElementById('sidebar-recent-posts'); const tagsCloud = document.getElementById('sidebar-tags-cloud'); if (!recentPostsList || !tagsCloud) return; const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); const recentPostsHtml = sortedPosts.slice(0, 5).map(post => `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`).join(''); recentPostsList.innerHTML = recentPostsHtml; const allTags = new Set(blogPostsData.flatMap(post => post.tags || [])); const tagsHtml = Array.from(allTags).sort().map(tag => `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}', true); return false;">${tag}</a>`).join(''); tagsCloud.innerHTML = tagsHtml; }
+function populateBlogSidebar() { 
+    const recentPostsList = document.getElementById('sidebar-recent-posts'); 
+    const tagsCloud = document.getElementById('sidebar-tags-cloud'); 
+    if (!recentPostsList || !tagsCloud) return; 
+    
+    const sortedPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); 
+    
+    const recentPostsHtml = sortedPosts.slice(0, 5).map(post => 
+        `<li><a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">${post.title}</a></li>`
+    ).join(''); 
+    recentPostsList.innerHTML = recentPostsHtml; 
+    
+    const allTags = new Set(blogPostsData.flatMap(post => post.tags || [])); 
+    const tagsHtml = Array.from(allTags).sort().map(tag => 
+        `<a href="#" onclick="filterBlogPostsByTag('${tag.replace(/'/g, "\\'")}'); return false;">${tag}</a>`
+    ).join(''); 
+    tagsCloud.innerHTML = tagsHtml; 
+}
 
-function loadBlogPosts() { if (!blogList) return; blogList.innerHTML = ''; if (blogPostsData.length === 0) { blogList.innerHTML = "<p>No blog posts available.</p>"; return; } const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); sortedBlogPosts.forEach(post => { const blogPostDiv = document.createElement('div'); blogPostDiv.id = `blog-${post.id}`; blogPostDiv.classList.add('blog-post'); blogPostDiv.innerHTML = `<h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4><div class="blog-post-meta"><span><i class="fas fa-calendar-alt"></i> ${post.date}</span><span><i class="fas fa-user"></i> By: ${post.author}</span><span><i class="fas fa-eye"></i> ${post.views} views</span></div>${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}<div class="blog-post-content"><div class="blog-content-short">${post.content}</div><div class="blog-content-full">${post.fullContent}</div></div><button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button><div class="comments-section"><h5_>Comments</h5_><ul class="comment-list" id="comment-list-${post.id}"></ul><form class="comment-form" onsubmit="handleCommentSubmit(event, ${post.id})"><input type="text" name="commenter-name" placeholder="Your Name" required><textarea name="comment-text" rows="4" placeholder="Write your comment..." required></textarea><button type="submit">Post Comment</button></form></div>`; const postSchema = { "@context": "https://schema.org", "@type": "BlogPosting", "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` }, "headline": post.title, "description": post.content.replace(/<[^>]*>?/gm, ''), "image": post.image, "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" }, "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } }, "datePublished": post.date, "dateModified": post.date }; const schemaScript = document.createElement('script'); schemaScript.type = 'application/ld+json'; schemaScript.textContent = JSON.stringify(postSchema); blogPostDiv.appendChild(schemaScript); blogList.appendChild(blogPostDiv); loadComments(post.id); }); }
+function loadBlogPosts() { 
+    if (!blogList) return; 
+    blogList.innerHTML = ''; 
+    if (blogPostsData.length === 0) { 
+        blogList.innerHTML = "<p>No blog posts available.</p>"; 
+        return; 
+    } 
+    const sortedBlogPosts = [...blogPostsData].sort((a, b) => new Date(b.date) - new Date(a.date)); 
+    sortedBlogPosts.forEach(post => { 
+        const readingTime = getReadingTime(post.fullContent); // NEW: Get reading time
+        
+        // NEW: Social Share Buttons
+        const shareTitle = encodeURIComponent(post.title);
+        const shareUrl = encodeURIComponent(`https://bishalmishra.com/blogs.html#blog-${post.id}`);
+        const shareButtonsHtml = `
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer" class="facebook" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noopener noreferrer" class="twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noopener noreferrer" class="linkedin" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:?subject=${shareTitle}&body=Check out this article: ${shareUrl}" class="email" aria-label="Share via Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://api.whatsapp.com/send?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer" class="whatsapp" aria-label="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        `;
+
+        // NEW: Author Box
+        const authorPic = post.author_pic || `https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=random&color=fff`;
+        const authorBio = post.author_bio || `The author, ${post.author}, is a passionate writer and contributor to the Note Pad blog, sharing valuable insights on various topics.`;
+        const authorBoxHtml = `
+            <div class="author-box" style="display: none;">
+                <img src="${authorPic}" alt="${post.author}">
+                <div class="author-info">
+                    <h5>About ${post.author}</h5>
+                    <p>${authorBio}</p>
+                    <p><a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Connect on Facebook</a></p>
+                </div>
+            </div>
+        `;
+
+        // NEW: Helpful Feedback Section
+        const feedbackSectionHtml = `
+            <div class="feedback-section" style="display: none;">
+                <p>Was this article helpful?</p>
+                <div class="feedback-buttons">
+                    <button class="yes" onclick="handleFeedback(event, ${post.id}, 'yes')">Yes <span id="feedback-yes-${post.id}"></span></button>
+                    <button class="no" onclick="handleFeedback(event, ${post.id}, 'no')">No <span id="feedback-no-${post.id}"></span></button>
+                </div>
+            </div>
+        `;
+
+        // NEW: Related Posts Section (initially empty, populated on expand)
+        const relatedPostsSectionHtml = `
+            <div class="related-posts-section" style="display: none;">
+                <h5>Related Posts</h5>
+                <ul class="related-posts-list" id="related-posts-${post.id}">
+                    <!-- Related posts will be injected here -->
+                </ul>
+            </div>
+        `;
+
+        const blogPostDiv = document.createElement('div'); 
+        blogPostDiv.id = `blog-${post.id}`; 
+        blogPostDiv.classList.add('blog-post'); 
+        blogPostDiv.innerHTML = `
+            <h4><a href="#blog-${post.id}" onclick="event.preventDefault(); toggleBlogContent(${post.id});">${post.title}</a></h4>
+            <div class="blog-post-meta">
+                <span><i class="fas fa-calendar-alt"></i> ${post.date}</span>
+                <span><i class="fas fa-user"></i> By: ${post.author}</span>
+                <span><i class="fas fa-eye"></i> ${post.views} views</span>
+                <span><i class="fas fa-clock"></i> ${readingTime}</span> <!-- NEW: Reading Time -->
+            </div>
+            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-post-image" loading="lazy" width="600" height="350">` : ''}
+            <div class="blog-post-content">
+                <div class="blog-content-short">${post.content}</div>
+                <div class="blog-content-full">
+                    <!-- Full content and TOC will be dynamically loaded/modified here on expand -->
+                </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleBlogContent(${post.id});">Read More →</button>
+            ${shareButtonsHtml} <!-- NEW: Share Buttons -->
+            ${authorBoxHtml} <!-- NEW: Author Box -->
+            ${feedbackSectionHtml} <!-- NEW: Feedback Section -->
+            ${relatedPostsSectionHtml} <!-- NEW: Related Posts Section -->
+            <div class="comments-section">
+                <h5>Comments</h5>
+                <ul class="comment-list" id="comment-list-${post.id}"></ul>
+                <form class="comment-form" onsubmit="handleCommentSubmit(event, ${post.id})">
+                    <input type="text" name="commenter-name" placeholder="Your Name" required>
+                    <textarea name="comment-text" rows="4" placeholder="Write your comment..." required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        `; 
+        const postSchema = { "@context": "https://schema.org", "@type": "BlogPosting", "mainEntityOfPage": { "@type": "WebPage", "@id": `https://bishalmishra.com/blogs.html#blog-${post.id}` }, "headline": post.title, "description": post.content.replace(/<[^>]*>?/gm, ''), "image": post.image, "author": { "@type": "Person", "name": post.author, "url": "https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" }, "publisher": { "@type": "Organization", "name": "Note Pad by Bishal Mishra", "logo": { "@type": "ImageObject", "url": "https://bishalmishra.com/images/favicon.png" } }, "datePublished": post.date, "dateModified": post.date }; 
+        const schemaScript = document.createElement('script'); 
+        schemaScript.type = 'application/ld+json'; 
+        schemaScript.textContent = JSON.stringify(postSchema); 
+        blogPostDiv.appendChild(schemaScript); 
+        blogList.appendChild(blogPostDiv); 
+        loadComments(post.id); 
+    }); 
+}
 
 // --- NEW COMMENT FUNCTIONS ---
-function loadComments(postId) { const commentList = document.getElementById(`comment-list-${postId}`); if (!commentList) return; const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); commentList.innerHTML = ''; comments.forEach(comment => { const commentEl = createCommentElement(comment); commentList.prepend(commentEl); }); }
-function createCommentElement(comment) { const li = document.createElement('li'); li.className = 'comment-item'; const escapedName = comment.name.replace(/</g, "<").replace(/>/g, ">"); // Fixed escaping
-const escapedText = comment.text.replace(/</g, "<").replace(/>/g, ">"); // Fixed escaping
-li.innerHTML = `<div class="comment-meta">${escapedName} <span>${new Date(comment.date).toLocaleString()}</span></div><p class="comment-text">${escapedText}</p>`; return li; }
-function handleCommentSubmit(event, postId) { event.preventDefault(); const form = event.target; const nameInput = form.querySelector('input[name="commenter-name"]'); const textInput = form.querySelector('textarea[name="comment-text"]'); const name = nameInput.value.trim(); const text = textInput.value.trim(); if (!name || !text) { alert('Please fill in both your name and comment.'); return; } const newComment = { name: name, text: text, date: new Date().toISOString() }; const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); comments.push(newComment); localStorage.setItem(`comments-post-${postId}`, JSON.stringify(comments)); const commentList = document.getElementById(`comment-list-${postId}`); const commentEl = createCommentElement(newComment); commentList.prepend(commentEl); form.reset(); }
+function loadComments(postId) { 
+    const commentList = document.getElementById(`comment-list-${postId}`); 
+    if (!commentList) return; 
+    const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); 
+    commentList.innerHTML = ''; 
+    comments.forEach(comment => { 
+        const commentEl = createCommentElement(comment); 
+        commentList.prepend(commentEl); 
+    }); 
+}
+
+function createCommentElement(comment) { 
+    const li = document.createElement('li'); 
+    li.className = 'comment-item'; 
+    // Properly escape user-submitted content to prevent XSS
+    const escapedName = comment.name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); 
+    const escapedText = comment.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); 
+    li.innerHTML = `<div class="comment-meta">${escapedName} <span>${new Date(comment.date).toLocaleString()}</span></div><p class="comment-text">${escapedText}</p>`; 
+    return li; 
+}
+
+function handleCommentSubmit(event, postId) { 
+    event.preventDefault(); 
+    const form = event.target; 
+    const nameInput = form.querySelector('input[name="commenter-name"]'); 
+    const textInput = form.querySelector('textarea[name="comment-text"]'); 
+    const name = nameInput.value.trim(); 
+    const text = textInput.value.trim(); 
+    if (!name || !text) { 
+        alert('Please fill in both your name and comment.'); 
+        return; 
+    } 
+    const newComment = { name: name, text: text, date: new Date().toISOString() }; 
+    const comments = JSON.parse(localStorage.getItem(`comments-post-${postId}`) || '[]'); 
+    comments.push(newComment); 
+    localStorage.setItem(`comments-post-${postId}`, JSON.stringify(comments)); 
+    const commentList = document.getElementById(`comment-list-${postId}`); 
+    const commentEl = createCommentElement(newComment); 
+    commentList.prepend(commentEl); // Add new comment to the top
+    form.reset(); 
+}
+
+// NEW: Related Posts Functionality
+function populateRelatedPosts(currentPostId) {
+    const currentPost = blogPostsData.find(p => p.id === currentPostId);
+    if (!currentPost) return;
+
+    const relatedPostsContainer = document.getElementById(`related-posts-${currentPostId}`);
+    if (!relatedPostsContainer) return;
+
+    // Filter out the current post and find posts with common tags
+    const potentialRelated = blogPostsData.filter(post => 
+        post.id !== currentPostId && 
+        currentPost.tags.some(tag => post.tags.includes(tag))
+    );
+
+    // Sort by relevance (number of common tags) then by date
+    potentialRelated.sort((a, b) => {
+        const commonTagsA = currentPost.tags.filter(tag => a.tags.includes(tag)).length;
+        const commonTagsB = currentPost.tags.filter(tag => b.tags.includes(tag)).length;
+        if (commonTagsA !== commonTagsB) {
+            return commonTagsB - commonTagsA; // More common tags first
+        }
+        return new Date(b.date) - new Date(a.date); // Then by most recent
+    });
+
+    const relatedHtml = potentialRelated.slice(0, 3).map(post => `
+        <li>
+            <a href="#blog-${post.id}" onclick="event.preventDefault(); scrollToAndExpandPost(${post.id});">
+                ${post.title}
+            </a>
+            <small><i class="fas fa-calendar-alt"></i> ${post.date}</small>
+        </li>
+    `).join('');
+
+    relatedPostsContainer.innerHTML = relatedHtml.length > 0 ? relatedHtml : '<li>No related posts found.</li>';
+}
+
+// NEW: Helpful Feedback Functionality
+function handleFeedback(event, postId, type) {
+    const feedbackKey = `feedback-post-${postId}`;
+    let feedback = JSON.parse(localStorage.getItem(feedbackKey) || '{}');
+
+    // Check if user has already voted for this post (local storage only)
+    if (feedback.voted) {
+        alert('You have already provided feedback for this article!');
+        return;
+    }
+
+    feedback.yes = feedback.yes || 0;
+    feedback.no = feedback.no || 0;
+
+    if (type === 'yes') {
+        feedback.yes++;
+    } else {
+        feedback.no++;
+    }
+    feedback.voted = true; // Mark as voted
+
+    localStorage.setItem(feedbackKey, JSON.stringify(feedback));
+    updateFeedbackDisplay(postId, feedback);
+
+    // Disable buttons after vote
+    const postElement = document.getElementById(`blog-${postId}`);
+    const yesBtn = postElement.querySelector(`.feedback-buttons .yes`);
+    const noBtn = postElement.querySelector(`.feedback-buttons .no`);
+    if (yesBtn) yesBtn.classList.add('clicked');
+    if (noBtn) noBtn.classList.add('clicked');
+}
+
+function loadFeedbackStatus(postId) {
+    const feedbackKey = `feedback-post-${postId}`;
+    const feedback = JSON.parse(localStorage.getItem(feedbackKey) || '{}');
+    updateFeedbackDisplay(postId, feedback);
+
+    // Disable buttons if already voted
+    const postElement = document.getElementById(`blog-${postId}`);
+    const yesBtn = postElement.querySelector(`.feedback-buttons .yes`);
+    const noBtn = postElement.querySelector(`.feedback-buttons .no`);
+    if (yesBtn && noBtn) { // Ensure buttons exist before trying to modify
+        if (feedback.voted) {
+            yesBtn.classList.add('clicked');
+            noBtn.classList.add('clicked');
+        } else {
+            yesBtn.classList.remove('clicked');
+            noBtn.classList.remove('clicked');
+        }
+    }
+}
+
+function updateFeedbackDisplay(postId, feedback) {
+    const yesSpan = document.getElementById(`feedback-yes-${postId}`);
+    const noSpan = document.getElementById(`feedback-no-${postId}`);
+    if (yesSpan) yesSpan.textContent = `(${feedback.yes || 0})`;
+    if (noSpan) noSpan.textContent = `(${feedback.no || 0})`;
+}
 </script>
 </body>
 </html>
