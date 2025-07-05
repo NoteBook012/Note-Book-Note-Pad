@@ -153,86 +153,89 @@
         }
 
         html { height: 100%; scroll-behavior: smooth; }
-        /* Adjusted transition for body for dark mode toggle */
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.3s ease, color 0.3s ease; display: flex; flex-direction: column; min-height: 100vh; }
         body.dark { background: var(--bg-dark); color: var(--text-dark); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; transition: max-width 0.3s ease; } 
-        header, footer { background: var(--primary); color: white; padding: 15px 5%; text-align: center; box-shadow: 0 4px 15px var(--shadow-light); z-index: 10; }
-        header {
-            display: flex;
-            justify-content: flex-start; /* Default for mobile */
-            align-items: center;
+
+        /* START: MODIFIED HEADER STYLES */
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 5%; 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            z-index: 10; 
+            display: flex; 
+            justify-content: space-between; /* This is key for the layout */
+            align-items: center; 
             position: relative;
         }
-        .header-content {
-            text-align: center;
-            flex-grow: 1; /* Allows it to take center space */
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1; /* Make left and right sections take up equal space */
         }
-        body.dark header, body.dark footer { box-shadow: 0 4px 15px var(--shadow-dark); }
-        footer { margin-top: auto; padding: 20px;  }
+        
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-content { 
+            text-align: center; 
+            flex-grow: 0; /* Do not allow logo to grow, keeping it centered */
+        }
+        body.dark header { box-shadow: 0 4px 15px var(--shadow-dark); }
+        /* END: MODIFIED HEADER STYLES */
+        
+        footer { margin-top: auto; padding: 20px; text-align: center; background: var(--primary); color: white; box-shadow: 0 4px 15px var(--shadow-light); transition: background 0.5s ease, color 0.5s ease;  }
+        body.dark footer { background: var(--card-dark); color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
         footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        body.dark footer a { color: var(--primary); }
         footer a:hover { opacity: 0.8; text-decoration: underline; }
         footer p { margin-bottom: 10px; } 
         
-        /* Adjusted transition for sidenav */
-        .sidenav {
-            height: 100%;
-            width: 0; 
-            position: fixed;
-            z-index: 1002; 
-            top: 0;
-            left: 0;
-            overflow-x: hidden;
-            transition: 0.3s; /* Reduced from 0.5s */
-            padding-top: 60px;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        body.dark .sidenav {
-            background-color: rgba(30, 30, 30, 0.95);
-        }
-
-        .sidenav a {
-            padding: 10px 15px 10px 32px;
-            text-decoration: none;
-            font-size: 20px; 
-            font-weight: 600;
-            color: var(--text-light);
-            display: block;
-            transition: 0.3s;
-        }
-        body.dark .sidenav a {
-            color: var(--text-dark);
-        }
-
-        .sidenav a:hover {
-            color: var(--primary);
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        .open-nav-btn {
-            font-size: 28px;
-            cursor: pointer;
+        .sidenav { height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; left: 0; overflow-x: hidden; transition: 0.3s; padding-top: 60px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+        body.dark .sidenav { background-color: rgba(30, 30, 30, 0.95); }
+        .sidenav a { padding: 10px 15px 10px 32px; text-decoration: none; font-size: 20px; font-weight: 600; color: var(--text-light); display: block; transition: 0.3s; }
+        body.dark .sidenav a { color: var(--text-dark); }
+        .sidenav a:hover { color: var(--primary); }
+        .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
+        
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .open-nav-btn:hover { transform: scale(1.1); }
+        
+        /* START: CLOCK AND WEATHER STYLES */
+        #live-clock, #live-weather {
             color: white;
-            transition: transform 0.2s;
-            position: absolute;
-            left: 5%;
-            top: 50%;
-            transform: translateY(-50%);
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
         }
-        .open-nav-btn:hover {
-            transform: translateY(-50%) scale(1.1);
+        #live-clock {
+            font-family: 'Inter', sans-serif;
         }
+        #live-weather i:first-child { /* Targets the main weather icon */
+            margin-right: 8px;
+            color: #ffc107;
+        }
+        #weather-refresh-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        #weather-refresh-btn:hover {
+            color: #ffc107; /* Highlight on hover */
+            transform: scale(1.2) rotate(90deg);
+        }
+        /* END: CLOCK AND WEATHER STYLES */
 
         #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; box-shadow: 0 4px 15px var(--shadow-light); }
         #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
@@ -306,177 +309,27 @@
         .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
         #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
 
-        /* Blog Styling */
-        main.container.full-width-mode {
-            max-width: 100%;
-            padding: 20px 3%; /* More padding on the sides */
-        }
-        .full-width-mode .blog-post {
-            max-width: 900px; /* Keep content readable */
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .blog-post {
-            background: var(--card-light);
-            padding: 25px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 15px var(--shadow-light);
-            margin-bottom: 25px;
-            text-align: left; 
-        }
-        body.dark .blog-post {
-            background: var(--card-dark);
-            box-shadow: 0 4px 15px var(--shadow-dark);
-        }
-        .blog-post h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 22px;
-            font-weight: 700;
-        }
-        .blog-post-meta {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-        body.dark .blog-post-meta {
-            color: #aaa;
-        }
-        .blog-post-meta i {
-            margin-right: 5px;
-            color: var(--primary); 
-        }
-        .blog-post-content {
-            font-size: 16px; /* Slightly larger font */
-            line-height: 1.8; /* Increased line height */
-            color: var(--text-light); 
-        }
-        body.dark .blog-post-content {
-            color: var(--text-dark);
-        }
-        .blog-post-content p {
-            margin-bottom: 15px;
-        }
-        .blog-post-content ul {
-            list-style: disc;
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-        .blog-post-content ul li {
-            margin-bottom: 5px;
-        }
-        .blog-post-content a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-        .blog-post-content a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-        .blog-post-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--radius);
-            margin-bottom: 15px;
-            display: block; 
-        }
-        .blog-content-short {
-            display: -webkit-box;
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-height: calc(1.7em * 3); 
-            margin-bottom: 15px; 
-        }
-        .blog-content-full {
-            display: block; 
-            max-height: none; 
-            margin-bottom: 15px;
-        }
-        .read-more-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s ease-in-out;
-            display: inline-block; 
-            margin-top: 10px; 
-        }
-        .read-more-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .blog-post-content .see-result-btn {
-            display: block;
-            width: fit-content;
-            margin: 15px auto;
-            background-color: #28a745;
-            color: white;
-            padding: 12px 25px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .blog-post-content .see-result-btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .blog-post-footer-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        body.dark .blog-post-footer-section { border-top-color: #3a3a3a; }
-        .blog-post-footer-section > div {
-            padding: 15px;
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            box-shadow: 0 2px 10px var(--shadow-light);
-            color: var(--text-light);
-        }
-        body.dark .blog-post-footer-section > div { background: #333; box-shadow: 0 2px 10px var(--shadow-dark); color: var(--text-dark); }
-        .blog-post-footer-section h5 { color: var(--primary); margin-bottom: 15px; font-size: 1.1em; font-weight: 700; }
-        .tags-list a { display: inline-block; background-color: #e0e0e0; color: #555; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin: 5px; font-size: 14px; transition: background-color 0.2s ease, color 0.2s ease; }
-        body.dark .tags-list a { background-color: #4a4a4a; color: #ccc; }
-        .tags-list a:hover { background-color: var(--primary); color: white; }
-        .blog-share button { background: #4267B2; color: white; border: none; padding: 8px 15px; border-radius: var(--radius); cursor: pointer; font-size: 15px; margin-right: 10px; transition: background 0.2s ease; }
-        .blog-share button:nth-of-type(2) { background: #25D366; }
-        .blog-share button:hover { opacity: 0.9; }
-        .blog-share button i { margin-right: 8px; }
-        .blog-search input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
-        body.dark .blog-search input[type="text"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
-        .blog-search input[type="text"]:focus { outline: none; border-color: var(--primary); }
-        .blog-recent-posts ul { list-style: none; padding: 0; }
-        .blog-recent-posts li { margin-bottom: 10px; }
-        .blog-recent-posts li a { color: var(--text-light); text-decoration: none; transition: color 0.2s ease; font-size: 15px; }
-        body.dark .blog-recent-posts li a { color: var(--text-dark); }
-        .blog-recent-posts li a:hover { color: var(--primary); text-decoration: underline; }
-        .blog-newsletter input[type="email"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: var(--radius); font-size: 15px; margin-bottom: 10px; background: var(--card-light); color: var(--text-light); transition: border-color 0.3s ease; }
-        body.dark .blog-newsletter input[type="email"] { background: #2b2b2b; border-color: #555; color: var(--text-dark); }
-        .blog-newsletter input[type="email"]:focus { outline: none; border-color: var(--primary); }
-        .blog-newsletter button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; width: 100%; transition: background 0.2s ease; }
-        .blog-newsletter button:hover { background: var(--primary-dark); }
-
-
+        .blog-post { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: left; }
+        body.dark .blog-post { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        .blog-post h4 { color: var(--primary); margin-bottom: 5px; font-size: 22px; font-weight: 700; }
+        .blog-post-meta { font-size: 13px; color: #888; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        body.dark .blog-post-meta { color: #aaa; }
+        .blog-post-meta i { margin-right: 5px; color: var(--primary);  }
+        .blog-post-content { font-size: 16px; line-height: 1.8; color: var(--text-light); }
+        body.dark .blog-post-content { color: var(--text-dark); }
+        .blog-post-content p { margin-bottom: 15px; }
+        .blog-post-content ul { list-style: disc; padding-left: 20px; margin-bottom: 15px; }
+        .blog-post-content ul li { margin-bottom: 5px; }
+        .blog-post-content a { color: var(--primary); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+        .blog-post-content a:hover { color: var(--primary-dark); text-decoration: underline; }
+        .blog-post-image { max-width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 15px; display: block;  }
+        .blog-content-short { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-height: calc(1.7em * 3); margin-bottom: 15px; }
+        .blog-content-full { display: block; max-height: none; margin-bottom: 15px; }
+        .read-more-btn { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: var(--radius); cursor: pointer; font-size: 14px; transition: background 0.2s ease-in-out; display: inline-block; margin-top: 10px; }
+        .read-more-btn:hover { background: var(--primary-dark); }
+        .blog-post-content .see-result-btn { display: block; width: fit-content; margin: 15px auto; background-color: #28a745; color: white; padding: 12px 25px; border-radius: var(--radius); text-decoration: none; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .blog-post-content .see-result-btn:hover { background-color: #218838; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        
         .premium-offerings { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
         .premium-feature-card { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); text-align: center; flex: 1 1 280px; max-width: 300px; }
         body.dark .premium-feature-card { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
@@ -494,36 +347,10 @@
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .profile-container {
-            position: relative;
-            z-index: 999;
-            margin-left: auto; /* Push to the right in flex container */
-        }
-        #profile-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s ease-in-out;
-            object-fit: cover;
-        }
+        .profile-container { position: relative; z-index: 999; }
+        #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
         #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
-        /* Adjusted transition for profile dropdown */
-        .profile-dropdown {
-            position: absolute;
-            top: 55px; 
-            right: 0; 
-            width: 260px;
-            background: var(--card-light);
-            border-radius: var(--radius);
-            box-shadow: 0 8px 25px var(--shadow-light);
-            border: 1px solid #eee;
-            overflow: hidden;
-            animation: fadeIn 0.3s ease; /* Reduced from 0.5s */
-            transition: opacity 0.2s ease, transform 0.2s ease; /* Reduced from 0.3s */
-        }
+        .profile-dropdown { position: absolute; top: 55px; right: 0; width: 260px; background: var(--card-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); border: 1px solid #eee; overflow: hidden; animation: fadeIn 0.3s ease; transition: opacity 0.2s ease, transform 0.2s ease; }
         body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
         .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
         body.dark .dropdown-header { border-bottom-color: #444; }
@@ -547,9 +374,8 @@
         .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } 
         .about-dev a:hover { text-decoration: underline; } 
         
-        /* Adjusted animation for modal and welcome popups */
         .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } 
-        .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.3s ease; /* Reduced from 0.5s */ border: 1px solid rgba(255, 255, 255, 0.1); } 
+        .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1); } 
         body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } 
         .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } 
         .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } 
@@ -572,57 +398,16 @@
         .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
         @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
-        /* FAQ Styling - UPDATED */
-        .faq-item {
-            margin-bottom: 10px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid #f0f0f0;
-        }
+        .faq-item { margin-bottom: 10px; border-radius: var(--radius); overflow: hidden; border: 1px solid #f0f0f0; }
         body.dark .faq-item { border-color: #3a3a3a; }
-
-        .faq-question {
-            font-size: 18px;
-            color: var(--primary);
-            padding: 15px 20px;
-            cursor: pointer; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600; 
-            transition: background-color 0.3s ease;
-        }
-        .faq-question.active {
-            background-color: var(--primary-light-transparent);
-        }
-
-        .faq-question::after {
-            content: '\f067'; /* Font Awesome Plus Icon */
-            font-family: 'Font Awesome 6 Free'; 
-            font-weight: 900; 
-            font-size: 16px;
-            transition: transform 0.3s ease;
-        }
-        .faq-question.active::after {
-            transform: rotate(45deg); /* Rotates plus to a 'x' like close icon */
-            content: '\f068'; /* Font Awesome Minus Icon */
-        }
-
-        /* Adjusted transition for FAQ answer */
-        .faq-answer {
-            font-size: 15px;
-            color: var(--text-light);
-            line-height: 1.6; 
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out; /* Reduced from 0.4s */
-            padding: 0 20px; /* Side padding, top/bottom is 0 when collapsed */
-        }
-        .faq-answer p { padding-bottom: 15px; } /* Add padding to the content inside */
+        .faq-question { font-size: 18px; color: var(--primary); padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; transition: background-color 0.3s ease; }
+        .faq-question.active { background-color: var(--primary-light-transparent); }
+        .faq-question::after { content: '\f067'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 16px; transition: transform 0.3s ease; }
+        .faq-question.active::after { transform: rotate(45deg); content: '\f068'; }
+        .faq-answer { font-size: 15px; color: var(--text-light); line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; padding: 0 20px; }
+        .faq-answer p { padding-bottom: 15px; }
         body.dark .faq-answer { color: var(--text-dark); }
-        /* End FAQ Styling */
 
-        /* Calendar Styling */
         #calendar-container { padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: center; }
         body.dark #calendar-container { box-shadow: 0 4px 15px var(--shadow-dark); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -642,7 +427,6 @@
         #exitCalendarBtn { margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: var(--radius); cursor: pointer; font-size: 16px; transition: background-color 0.2s ease, transform 0.2s ease; }
         #exitCalendarBtn:hover { background-color: #c82333; transform: translateY(-2px); }
 
-        /* Contact Us Styling */
         #contact-us-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
         body.dark #contact-us-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
         #contact-us-section h2 { text-align: left; margin-bottom: 20px; }
@@ -654,108 +438,32 @@
         #contact-us-section li span { color: var(--text-light); }
         body.dark #contact-us-section li span { color: var(--text-dark); }
 
-        /* AdSense Container Style */
         .adsense-ad-container { margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; background-color: var(--card-light); border-radius: var(--radius); box-shadow: 0 2px 8px var(--shadow-light); }
         body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
         
-        /* NEW STYLES FOR FEATURES SECTION */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid columns */
-            gap: 25px; /* Space between cards */
-            margin-top: 25px; /* Space from element above */
-            margin-bottom: 25px; /* Space from element below */
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 25px; margin-bottom: 25px; }
+        .feature-card { text-align: center; padding: 30px; margin-bottom: 0 !important; }
+        .feature-card .feature-icon { font-size: 48px; color: var(--primary); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; height: 60px; }
+        .feature-card h3 { text-align: center; }
+        .feature-card p { font-size: 16px; line-height: 1.7; color: var(--text-light); }
+        body.dark .feature-card p { color: var(--text-dark); }
 
-        .feature-card {
-            text-align: center; /* Center the icon, title, and text */
-            padding: 30px; /* More padding for a spacious look */
-            margin-bottom: 0 !important; /* Override default .info-section margin-bottom, as gap handles it */
-        }
-
-        .feature-card .feature-icon {
-            font-size: 48px; /* Large icon size */
-            color: var(--primary); /* Use primary color for icons */
-            margin-bottom: 20px; /* Space between icon and title */
-            display: flex; /* Use flexbox to truly center the icon vertically */
-            justify-content: center;
-            align-items: center;
-            height: 60px; /* Fixed height for icon area to ensure consistency across cards */
-        }
-
-        .feature-card h3 {
-            text-align: center; /* Override specific info-section h3 alignment to keep it centered */
-        }
-
-        .feature-card p {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--text-light); /* Inherit text color */
-        }
-
-        body.dark .feature-card p {
-            color: var(--text-dark); /* Dark mode adjustment for text */
-        }
-        /* END NEW STYLES */
-
-        /* Animation for scrolling elements */
-        /* Reduced transition duration for fade-in-up */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transition-delay: var(--animation-delay, 0s); /* Use a CSS variable for delay */
-        }
-        .fade-in-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-in-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-delay: var(--animation-delay, 0s); }
+        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
 
         /* --- MEDIA QUERIES --- */
-        
-        /* Desktop Layout */
         @media (min-width: 1024px) {
-            header {
-                justify-content: space-between;
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-            .header-content {
-                flex-grow: 0; /* Don't grow to push profile icon */
-                margin: 0 auto; /* Center title */
-            }
-            .open-nav-btn {
-                position: relative; /* Take it out of absolute positioning */
-                left: auto;
-                top: auto;
-                transform: none;
-            }
-            .profile-container {
-                position: relative; /* Take it out of fixed positioning */
-                top: auto;
-                right: auto;
-                margin-left: 20px; /* Space from nav button */
-            }
-            /* Apply desktop-two-column to the main content area that holds editor/notes/etc. */
-            main.container.desktop-two-column {
-                display: grid;
-                grid-template-columns: 2fr 1.2fr;
-                gap: 25px;
-                align-items: flex-start;
-            }
-            /* Remove bottom margin for items within the main desktop-two-column grid */
+            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
+            .profile-container { position: relative; top: auto; right: auto; margin-left: 0; }
+            main.container.desktop-two-column { display: grid; grid-template-columns: 2fr 1.2fr; gap: 25px; align-items: flex-start; }
             main.container.desktop-two-column #notes,
             main.container.desktop-two-column #editor,
-            main.container.desktop-two-column #whiteboard-container {
-                margin-bottom: 0; 
-            }
-            /* Adjust calendar container if it's explicitly part of the two-column layout */
-            main.container.desktop-two-column #calendar-container {
-                 margin-bottom: 0; /* Adjust as needed for grid */
-            }
+            main.container.desktop-two-column #whiteboard-container,
+            main.container.desktop-two-column #calendar-container { margin-bottom: 0; }
         }
-
-        /* Tablet and smaller devices */
+        @media (max-width: 992px) {
+            #live-clock, #live-weather { display: none; }
+        }
         @media (max-width: 768px) { 
             .about-dev { flex-direction: column; text-align: center; } 
             #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } 
@@ -766,18 +474,12 @@
             h2, h3 { font-size: 20px; }
             .blog-post h4 { font-size: 18px; }
         }
-        
-        /* Mobile phones */
         @media (max-width: 480px) {
             #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
             .mode-switcher button { padding: 8px 10px; font-size: 13px;}
-            .profile-container {
-                position: fixed; /* Keep it fixed on small mobile */
-                top: 10px;
-                right: 10px;
-            }
+            .profile-container { position: fixed; top: 10px; right: 10px; }
+            .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
         }
-
     </style>
 </head>
 <body>
@@ -793,8 +495,13 @@
   <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
 </div>
 
+<!-- START: MODIFIED HEADER HTML STRUCTURE -->
 <header>
-    <span class="open-nav-btn" onclick="openNav()">☰</span>
+    <div class="header-left">
+        <span class="open-nav-btn" onclick="openNav()">☰</span>
+        <span id="live-clock"></span>
+    </div>
+
     <div class="header-content">
         <h1>
             <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -803,31 +510,36 @@
         </h1>
         <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
     </div>
-    <div id="profile-container" class="profile-container hidden">
-        <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
-        <div id="profile-dropdown" class="profile-dropdown hidden">
-            <div class="dropdown-header">
-                <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
-                <div>
-                    <span id="userNameDisplay">User Name</span>
-                    <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+
+    <div class="header-right">
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <div id="profile-container" class="profile-container hidden">
+            <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+            <div id="profile-dropdown" class="profile-dropdown hidden">
+                <div class="dropdown-header">
+                    <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                    <div>
+                        <span id="userNameDisplay">User Name</span>
+                        <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                    </div>
                 </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                    <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                    <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                    <li class="divider"></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+                </ul>
             </div>
-            <ul class="dropdown-menu">
-                <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
-                <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
-                <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
-                <li class="divider"></li>
-                <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
-                <li class="divider"></li>
-                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
-            </ul>
         </div>
     </div>
 </header>
+<!-- END: MODIFIED HEADER HTML STRUCTURE -->
 <input type="file" id="photoUpload" class="hidden" accept="image/*">
 
-<main id="main-container" class="container desktop-two-column"> <!-- main-container keeps desktop-two-column -->
+<main id="main-container" class="container desktop-two-column"> 
     <div id="menu-bar">
         <button onclick="newDoc()">📝 New</button>
         <button onclick="saveNote()">💾 Save</button>
@@ -858,7 +570,6 @@
         </div>
     </div>
 
-    <!-- These sections are part of the desktop-two-column grid (editor/notepad tool and notes list) -->
     <div id="editor">
         <input type="text" id="note-title" placeholder="Your Note Title..." />
         <textarea id="note-text" placeholder="Start typing... your work is saved automatically." rows="10"></textarea>
@@ -903,9 +614,7 @@
         <button id="exitCalendarBtn">Exit Calendar</button>
     </div>
 
-    <!-- AdSense Ad Unit Start -->
     <div class="adsense-ad-container">
-        <!-- Note Pad -->
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-3010913100191778"
@@ -916,52 +625,44 @@
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
     </div>
-    <!-- AdSense Ad Unit End -->
 
     <div id="notes"> 
         <h3 style="text-align: center;"><i class="fas fa-star" style="color: gold; margin-right: 8px;"></i>Your Saved Notes</h3>
         <div id="note-list"></div>
     </div>
    
-    <!-- NEW FEATURE SECTIONS START HERE (MOVED AFTER #notes) -->
     <div class="features-grid">
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-pen-to-square"></i></div>
             <h3>Simple Interface</h3>
             <p>Nothing too fancy. Just a plain-text editor with a beautifully crafted minimalistic interface that helps you stay focused on what you need to write.</p>
         </div>
-
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-cloud-arrow-down"></i></div>
             <h3>Autosave</h3>
             <p>Never lose your notes with its auto save feature. Every time you make changes, it will automatically store the data locally within your browser.</p>
         </div>
-
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-bars"></i></div>
             <h3>Word Count</h3>
             <p>Track how many words there are in your text document with real-time word counter. The number of words will update as you type and make changes.</p>
         </div>
-
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-arrows-rotate"></i></div>
             <h3>Find & Replace</h3>
             <p>Find and replace allows you to quickly search for a word or phrase in the whole page and substitute it with something else.</p>
         </div>
-
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-spell-check"></i></div>
             <h3>Spellcheck</h3>
             <p>It takes advantage of your browser's native spellchecker to instantly find spelling mistakes. Simply right-click the red underlined word and choose the correct spelling.</p>
         </div>
-
         <div class="info-section feature-card">
             <div class="feature-icon"><i class="fas fa-print"></i></div>
             <h3>Print</h3>
             <p>Getting a hard copy of your notes has never been easier. You can prepare the document for printing or save it as a PDF file with a single click of a button.</p>
         </div>
     </div>
-    <!-- NEW FEATURE SECTIONS END HERE -->
 
     <div class="info-section" id="overview">
         <h3>Welcome to Note P@d: Your All-in-One Digital Workspace</h3>
@@ -979,7 +680,7 @@
                 <button class="premium-buy-btn" data-feature="cloud-sync" data-price="100">Upgrade to Premium</button>
                 <div class="manual-payment-info">
                     <p>Pay manually via Esewa:</p>
-                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
+                    <img src="https://i.ibb.co/L8nCNtj/IMG_0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
                     <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
                     <p><strong>Esewa Number:</strong> 9827801575</p>
                     <small>After payment, please contact us with your transaction ID to activate your feature.</small>
@@ -992,7 +693,7 @@
                 <button class="premium-buy-btn" data-feature="priority-support" data-price="50">Upgrade to Premium</button>
                 <div class="manual-payment-info">
                     <p>Pay manually via Esewa:</p>
-                    <img src="https://i.ibb.co/L8nCNtjv/IMG-0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
+                    <img src="https://i.ibb.co/L8nCNtj/IMG_0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
                     <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
                     <p><strong>Esewa Number:</strong> 9827801575</p>
                     <small>After payment, please contact us with your transaction ID to activate your feature.</small>
@@ -1001,7 +702,6 @@
         </div>
     </div>
 
-    <!-- Moved FAQ section here -->
     <div class="info-section" id="faq-section">
         <h3>Frequently Asked Questions (FAQ)</h3>
         <div class="faq-item">
@@ -1033,7 +733,6 @@
             <div class="faq-answer"><p>We welcome your feedback! You can contact us through the details provided in the <a href="contact.html">Contact Us</a> section. For users with premium accounts, priority support options are available.</p></div>
         </div>
     </div>
-    <!-- End of moved FAQ section -->
 
     <div class="info-section" id="how-it-works">
         <h3>How Note P@d Works: Secure, Offline, and In Your Browser</h3>
@@ -1062,7 +761,6 @@
     </div>
 </main>
 
-<!-- Welcome Popup and Auth Modal are now initially hidden and only appear if explicitly triggered (e.g., by save button) -->
 <div id="welcomePopup" class="welcome-popup hidden"> <div class="welcome-content"> <h2>Welcome to Note P@d!</h2> <p>Capture your ideas. Organize your thoughts. Let’s get started!</p> <button id="getStartedBtn">Get Started</button> </div> </div>
 <div id="authModal" class="modal hidden"> <div class="modal-content"> <h2 id="authTitle">Sign In to Note P@d</h2> <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> <button id="authSubmit">Sign In</button> <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> <a href="#" id="forgotPassword">Forgot Password?</a> <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> </div> </div>
 <div id="find-replace-dialog" class="hidden"> <input type="text" id="find-input" placeholder="Find..."> <input type="text" id="replace-input" placeholder="Replace with..."> <button id="replace-btn">Replace</button> <button id="replace-all-btn">Replace All</button> <button id="close-find-replace" class="close-btn" title="Close">×</button> </div>
@@ -1091,9 +789,7 @@ let redoStack = [];
 let lastChangeTimeout = null;
 let currentAppMode = 'notepad'; 
 let whiteboardState = { canvas: null, ctx: null, isDrawing: false, isErasing: false, lastX: 0, lastY: 0, brushColor: '#000000', brushSize: 5, imageData: null };
-
 let currentCalendarDate = new Date(); 
-
 const mainContainer = document.getElementById('main-container');
 const titleInput = document.getElementById('note-title');
 const textInput = document.getElementById('note-text');
@@ -1118,7 +814,6 @@ const authSubmit = document.getElementById('authSubmit');
 const switchAuthModeLink = document.getElementById('switchMode');
 const confetti = document.getElementById('confetti');
 const loginSound = document.getElementById('loginSound');
-
 const profileContainer = document.getElementById('profile-container');
 const profileIcon = document.getElementById('profile-icon');
 const profileDropdown = document.getElementById('profile-dropdown');
@@ -1132,63 +827,56 @@ const resetPasswordBtn = document.getElementById('resetPasswordBtn');
 const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
 const photoUploadInput = document.getElementById('photoUpload');
 const manageAccountBtn = document.getElementById('manageAccountBtn'); 
-
 const calendarContainer = document.getElementById('calendar-container');
 const currentMonthYearDisplay = document.getElementById('currentMonthYear');
 const calendarGrid = document.querySelector('#calendar-container .calendar-grid'); 
 const prevMonthBtn = document.getElementById('prevMonthBtn');
 const nextMonthBtn = document.getElementById('nextMonthBtn');
 const exitCalendarBtn = document.getElementById('exitCalendarBtn'); 
-
 const premiumFeaturesSection = document.getElementById('premium-features-section'); 
 const adsenseContainer = document.querySelector('.adsense-ad-container');
-const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtjv/IMG-0120.jpg"; 
-
-// --- SCROLL ANIMATION GLOBAL VARIABLE ---
+const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtj/IMG_0120.jpg"; 
 let scrollAnimationObserver;
-
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
 function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
 function scrollToSection(selector) { const element = document.getElementById(selector); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
-function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); } // Adjusted delay for smoother transition
+function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
 
 document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode();
+    updateClock(); 
+    setInterval(updateClock, 1000); 
+    fetchWeather();
     checkAuthStatus(); 
     attachEventListeners();
     initWhiteboard(); 
     if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
     
-    // Explicitly ensure all home page main sections are visible on load
-    document.getElementById('editor')?.classList.remove('hidden'); // Notepad editor
+    document.getElementById('editor')?.classList.remove('hidden');
     document.getElementById('whiteboard-container')?.classList.remove('hidden');
     document.getElementById('calendar-container')?.classList.remove('hidden');
-    document.getElementById('notes')?.classList.remove('hidden'); // Saved notes
-    document.querySelector('.features-grid')?.classList.remove('hidden'); // The new features grid
-    document.getElementById('overview')?.classList.remove('hidden'); // Welcome section
-    document.getElementById('premium-features-section')?.classList.remove('hidden'); // Premium section
-    document.getElementById('faq-section')?.classList.remove('hidden'); // FAQ section
-    document.getElementById('how-it-works')?.classList.remove('hidden'); // How it works
-    document.getElementById('privacy')?.classList.remove('hidden'); // Privacy
-    if(adsenseContainer) adsenseContainer.classList.remove('hidden'); // AdSense container
+    document.getElementById('notes')?.classList.remove('hidden');
+    document.querySelector('.features-grid')?.classList.remove('hidden');
+    document.getElementById('overview')?.classList.remove('hidden');
+    document.getElementById('premium-features-section')?.classList.remove('hidden');
+    document.getElementById('faq-section')?.classList.remove('hidden');
+    document.getElementById('how-it-works')?.classList.remove('hidden');
+    document.getElementById('privacy')?.classList.remove('hidden');
+    if(adsenseContainer) adsenseContainer.classList.remove('hidden');
 
-    // Then, set the initial app mode (this will hide whiteboard/calendar and configure editor)
     switchAppMode('notepad'); 
     
     updateUIForPremiumFeatures();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    // Show welcome popup if no user logged in and it's the first visit (or similar logic)
     if (!getCurrentUserId() && !localStorage.getItem('visited_notepad_home')) {
         if(welcomePopup) welcomePopup.classList.remove('hidden');
         localStorage.setItem('visited_notepad_home', 'true');
     } else {
         if(welcomePopup) welcomePopup.classList.add('hidden');
     }
-
-    // Initialize scroll animations
     setupScrollAnimations();
 });
 
@@ -1216,515 +904,117 @@ window.onload = function() {
 function attachEventListeners() {
     if (textInput) textInput.addEventListener('input', () => { updateAll(); recordState(); });
     if (titleInput) titleInput.addEventListener('input', saveDraft);
-    
-    window.onscroll = () => { 
-        if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; 
-    };
+    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
     if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-    
     const getStartedBtn = document.getElementById('getStartedBtn');
-    if (getStartedBtn) getStartedBtn.onclick = () => { 
-        if(welcomePopup) welcomePopup.classList.add("hidden"); 
-        if(authModal) authModal.classList.remove("hidden"); 
-    }; 
-    
-    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { 
-        e.preventDefault(); 
-        isSignUp = !isSignUp; 
-        if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; 
-        if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; 
-        switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; 
-    };
-    
+    if (getStartedBtn) getStartedBtn.onclick = () => { if(welcomePopup) welcomePopup.classList.add("hidden"); if(authModal) authModal.classList.remove("hidden"); }; 
+    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
     if (authSubmit) authSubmit.onclick = handleAuthSubmit;
-    
     const closeFindReplaceBtn = document.getElementById('close-find-replace');
     if (closeFindReplaceBtn) closeFindReplaceBtn.onclick = closeFindReplace;
-    
     const replaceBtn = document.getElementById('replace-btn');
     if (replaceBtn) replaceBtn.onclick = () => findAndReplace(false);
-    
     const replaceAllBtn = document.getElementById('replace-all-btn');
     if (replaceAllBtn) replaceAllBtn.onclick = () => findAndReplace(true);
-
     if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
     document.addEventListener('click', closeDropdownOnClickOutside);
     if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
     if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
     if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
     if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
-    
-    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        if(photoUploadInput) photoUploadInput.click();
-    });
+    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { e.preventDefault(); if(photoUploadInput) photoUploadInput.click();});
     if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
-
-    // FAQ Accordion Logic - DELEGATION
     const faqContainer = document.getElementById('faq-section');
     if (faqContainer) {
         faqContainer.addEventListener('click', (e) => {
-            const question = e.target.closest('.faq-question');
-            if (!question) return;
-
-            const item = question.parentElement;
-            const answer = item.querySelector('.faq-answer');
-            if (!answer) return;
-            
-            // Close all other open items
-            faqContainer.querySelectorAll('.faq-item').forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.querySelector('.faq-question').classList.remove('active');
-                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
-                }
-            });
-
-            // Toggle the clicked item
-            if (answer.style.maxHeight) {
-                answer.style.maxHeight = null;
-                question.classList.remove('active');
-            } else {
-                question.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + "px";
-            }
+            const question = e.target.closest('.faq-question'); if (!question) return;
+            const item = question.parentElement; const answer = item.querySelector('.faq-answer'); if (!answer) return;
+            faqContainer.querySelectorAll('.faq-item').forEach(otherItem => { if (otherItem !== item) { otherItem.querySelector('.faq-question').classList.remove('active'); otherItem.querySelector('.faq-answer').style.maxHeight = null; }});
+            if (answer.style.maxHeight) { answer.style.maxHeight = null; question.classList.remove('active'); } 
+            else { question.classList.add('active'); answer.style.maxHeight = answer.scrollHeight + "px"; }
         });
     }
-
-    if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => {
-        currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-        renderCalendar(currentCalendarDate);
-    });
-
-    if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => {
-        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-        renderCalendar(currentCalendarDate);
-    });
-
-    if (calendarGrid) calendarGrid.addEventListener('click', (e) => {
-        if (e.target.classList.contains('calendar-date') && !e.target.classList.contains('empty')) {
-            document.querySelectorAll('.calendar-date.selected').forEach(date => date.classList.remove('selected'));
-            e.target.classList.add('selected');
-        }
-    });
-
+    if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); renderCalendar(currentCalendarDate); });
+    if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1); renderCalendar(currentCalendarDate); });
+    if (calendarGrid) calendarGrid.addEventListener('click', (e) => { if (e.target.classList.contains('calendar-date') && !e.target.classList.contains('empty')) { document.querySelectorAll('.calendar-date.selected').forEach(date => date.classList.remove('selected')); e.target.classList.add('selected'); } });
     if (exitCalendarBtn) exitCalendarBtn.addEventListener('click', () => switchAppMode('notepad'));
-    
-    document.querySelectorAll('.premium-buy-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            if (!getCurrentUserId()) {
-                alert("Please sign in to purchase premium features.");
-                if(authModal) authModal.classList.remove("hidden");
-                return;
-            }
-            const card = button.closest('.premium-feature-card');
-            if (card) {
-                const paymentInfo = card.querySelector('.manual-payment-info');
-                if (paymentInfo) {
-                    paymentInfo.style.display = 'flex'; 
-                    paymentInfo.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-    });
+    document.querySelectorAll('.premium-buy-btn').forEach(button => { button.addEventListener('click', () => { if (!getCurrentUserId()) { alert("Please sign in to purchase premium features."); if(authModal) authModal.classList.remove("hidden"); return; } const card = button.closest('.premium-feature-card'); if (card) { const paymentInfo = card.querySelector('.manual-payment-info'); if (paymentInfo) { paymentInfo.style.display = 'flex'; paymentInfo.scrollIntoView({ behavior: 'smooth' }); } } }); });
+    document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
 }
 
+// --- Live Clock and Weather Functions ---
+function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    if (!clockElement) return;
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+function getWeatherIconClass(weatherId) {
+    if (weatherId >= 200 && weatherId < 300) return 'fas fa-bolt'; // Thunderstorm
+    if (weatherId >= 300 && weatherId < 400) return 'fas fa-cloud-rain'; // Drizzle
+    if (weatherId >= 500 && weatherId < 600) return 'fas fa-cloud-showers-heavy'; // Rain
+    if (weatherId >= 600 && weatherId < 700) return 'fas fa-snowflake'; // Snow
+    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere
+    if (weatherId === 800) return 'fas fa-sun'; // Clear
+    if (weatherId === 801) return 'fas fa-cloud-sun'; // Few clouds
+    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Clouds
+    return 'fas fa-question-circle'; // Default
+}
+
+function fetchWeatherData(lat, lon) {
+    const weatherElement = document.getElementById('live-weather');
+    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => { if (!response.ok) throw new Error(`API Error: ${response.statusText}`); return response.json(); })
+        .then(data => {
+            if (!data.main || !data.weather || !data.weather[0] || !data.name) throw new Error('Invalid data from Weather API');
+            const temp = Math.round(data.main.temp);
+            const iconClass = getWeatherIconClass(data.weather[0].id);
+            weatherElement.innerHTML = `<i class="${iconClass}"></i> ${data.name}: ${temp}°C <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Refresh weather"></i>`;
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+            weatherElement.innerHTML = `<i class="fas fa-times-circle"></i> Weather unavailable <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Retry"></i>`;
+        });
+}
+
+function fetchWeather() {
+    const weatherElement = document.getElementById('live-weather');
+    if (!weatherElement) return;
+    if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) weatherElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching weather...`;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( (position) => fetchWeatherData(position.coords.latitude, position.coords.longitude), () => fetchWeatherData(27.7172, 85.3240), { timeout: 10000 });
+    } else { fetchWeatherData(27.7172, 85.3240); }
+}
 
 function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
 function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
-
-function checkAuthStatus() {
-    const currentUserId = getCurrentUserId();
-    if (currentUserId) {
-        showUserInfo();
-        loadDraft();
-        displayNotes();
-        if(textInput) {
-            updateAll();
-            resetHistory(textInput.value);
-        }
-    } else {
-        if(profileContainer) profileContainer.classList.add('hidden');
-        displayNotes();
-    }
-    updateUIForPremiumFeatures();
-}
-
-function showUserInfo() {
-    const username = localStorage.getItem('currentUser');
-    const picUrl = localStorage.getItem('userPic');
-    const email = localStorage.getItem('userEmail');
-    const isVerified = localStorage.getItem('emailVerified') === 'true';
-
-    if (!username || !profileContainer) return;
-
-    profileContainer.classList.remove('hidden');
-    
-    const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`;
-    if(profileIcon) profileIcon.src = avatarUrl;
-    if(userPic) userPic.src = avatarUrl;
-    if(userNameDisplay) userNameDisplay.textContent = username;
-    if(userEmailDisplay) userEmailDisplay.textContent = email || '';
-
-    if (emailVerifiedStatus) {
-        if (isVerified) {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; }
-        } else {
-            emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>';
-            if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; }
-        }
-    }
-    
-    if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block';
-
-    const provider = localStorage.getItem('authProvider');
-    if (resetPasswordBtn && resetPasswordBtn.parentElement) {
-        if (provider === 'google') {
-            resetPasswordBtn.parentElement.style.display = 'none';
-            if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) {
-                verifyEmailBtn.parentElement.style.display = 'none';
-            }
-        } else {
-            resetPasswordBtn.parentElement.style.display = 'block';
-        }
-    }
-}
-
-function handleAuthSubmit() {
-    if(!authUsername || !authPassword) return;
-    const username = authUsername.value.trim();
-    const password = authPassword.value.trim();
-    if (!username || !password) { alert("Please fill in all fields"); return; }
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (isSignUp) {
-        if (users[username]) { alert("Username (email) already exists."); return; }
-        users[username] = password; 
-        localStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem('authProvider', 'email');
-        localStorage.setItem('userEmail', username);
-        localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    } else {
-        if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; }
-        if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username);
-        if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email');
-        if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false');
-        localStorage.setItem("currentUser", username);
-        loginSuccess(username, "", username);
-    }
-}
-
-function handleLogout(e) {
-    if(e) e.preventDefault();
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("userPic");
-    localStorage.removeItem("currentUserId");
-    localStorage.removeItem("emailVerified");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("authProvider");
-    
-    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect();
-    
-    if(profileContainer) profileContainer.classList.add('hidden');
-    if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
-    
-    if(authModal) authModal.classList.remove("hidden");
-    if(noteList) noteList.innerHTML = '';
-    newDoc();
-    displayNotes();
-    updateUIForPremiumFeatures(); 
-}
-
-function handlePhotoUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        localStorage.setItem('userPic', e.target.result);
-        showUserInfo(); 
-        alert("Profile photo updated!");
-    };
-    reader.readAsDataURL(file);
-}
-
-function handleVerifyEmail(e) {
-    e.preventDefault();
-    if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; }
-    if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; }
-    
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`);
-    const userCode = prompt("Please enter the 6-digit verification code:");
-    if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); } 
-    else if (userCode) { alert("Incorrect code. Please try again."); } 
-    else { alert("Verification cancelled."); }
-}
-
-function handleResetPassword(e) {
-    e.preventDefault();
-    if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; }
-    if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; }
-
-    const newPassword = prompt("Enter your new password (min 4 characters):");
-    if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; }
-
-    const confirmPassword = prompt("Confirm your new password:");
-    if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; }
-
-    const username = localStorage.getItem('userEmail');
-    if(!username) { alert("User email not found. Cannot reset password."); return;}
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-    if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); } 
-    else { alert("An error occurred. Could not find user to update password."); }
-}
-
+function checkAuthStatus() { const currentUserId = getCurrentUserId(); if (currentUserId) { showUserInfo(); loadDraft(); displayNotes(); if(textInput) { updateAll(); resetHistory(textInput.value); } } else { if(profileContainer) profileContainer.classList.add('hidden'); displayNotes(); } updateUIForPremiumFeatures(); }
+function showUserInfo() { const username = localStorage.getItem('currentUser'); const picUrl = localStorage.getItem('userPic'); const email = localStorage.getItem('userEmail'); const isVerified = localStorage.getItem('emailVerified') === 'true'; if (!username || !profileContainer) return; profileContainer.classList.remove('hidden'); const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; if(profileIcon) profileIcon.src = avatarUrl; if(userPic) userPic.src = avatarUrl; if(userNameDisplay) userNameDisplay.textContent = username; if(userEmailDisplay) userEmailDisplay.textContent = email || ''; if (emailVerifiedStatus) { if (isVerified) { emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; } } else { emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; } } } if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block'; const provider = localStorage.getItem('authProvider'); if (resetPasswordBtn && resetPasswordBtn.parentElement) { if (provider === 'google') { resetPasswordBtn.parentElement.style.display = 'none'; if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'none'; } else resetPasswordBtn.parentElement.style.display = 'block'; } }
+function handleAuthSubmit() { if(!authUsername || !authPassword) return; const username = authUsername.value.trim(); const password = authPassword.value.trim(); if (!username || !password) { alert("Please fill in all fields"); return; } const users = JSON.parse(localStorage.getItem("users") || "{}"); if (isSignUp) { if (users[username]) { alert("Username (email) already exists."); return; } users[username] = password; localStorage.setItem("users", JSON.stringify(users)); localStorage.setItem('authProvider', 'email'); localStorage.setItem('userEmail', username); localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } else { if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; } if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username); if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email'); if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } }
+function handleLogout(e) { if(e) e.preventDefault(); localStorage.removeItem("currentUser"); localStorage.removeItem("userPic"); localStorage.removeItem("currentUserId"); localStorage.removeItem("emailVerified"); localStorage.removeItem("userEmail"); localStorage.removeItem("authProvider"); if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); if(profileContainer) profileContainer.classList.add('hidden'); if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); if(authModal) authModal.classList.remove("hidden"); if(noteList) noteList.innerHTML = ''; newDoc(); displayNotes(); updateUIForPremiumFeatures();  }
+function handlePhotoUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('userPic', e.target.result); showUserInfo(); alert("Profile photo updated!"); }; reader.readAsDataURL(file); }
+function handleVerifyEmail(e) { e.preventDefault(); if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; } if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; } const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`); const userCode = prompt("Please enter the 6-digit verification code:"); if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); }  else if (userCode) { alert("Incorrect code. Please try again."); }  else { alert("Verification cancelled."); } }
+function handleResetPassword(e) { e.preventDefault(); if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; } if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; } const newPassword = prompt("Enter your new password (min 4 characters):"); if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; } const confirmPassword = prompt("Confirm your new password:"); if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; } const username = localStorage.getItem('userEmail'); if(!username) { alert("User email not found. Cannot reset password."); return;} const users = JSON.parse(localStorage.getItem("users") || "{}"); if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); }  else { alert("An error occurred. Could not find user to update password."); } }
 function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
-
-function loginSuccess(username, picUrl, userId) {
-    localStorage.setItem("currentUserId", userId);
-    if(picUrl) localStorage.setItem("userPic", picUrl);
-    showUserInfo();
-    if(authModal) authModal.classList.add("hidden");
-    if(confetti) confetti.classList.remove("hidden");
-    if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e));
-    setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200);
-    loadDraft();
-    displayNotes();
-    if(textInput) { updateAll(); resetHistory(textInput.value); }
-    updateUIForPremiumFeatures(); 
-}
-
-function initGoogleSignIn() {
-    try {
-        if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; }
-        google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn });
-        const googleSignInButtonContainer = document.getElementById("googleSignInDiv");
-        if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" });
-        else console.warn("Google Sign-In button container not found.");
-    } catch (error) {
-        console.error("Google GSI could not be initialized.", error);
-        const googleSignInButtonContainer = document.getElementById('googleSignInDiv');
-        if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load.";
-    }
-}
-
+function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); if(confetti) confetti.classList.remove("hidden"); if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); loadDraft(); displayNotes(); if(textInput) { updateAll(); resetHistory(textInput.value); } updateUIForPremiumFeatures();  }
+function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const googleSignInButtonContainer = document.getElementById("googleSignInDiv"); if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); else console.warn("Google Sign-In button container not found."); } catch (error) { console.error("Google GSI could not be initialized.", error); const googleSignInButtonContainer = document.getElementById('googleSignInDiv'); if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load."; } }
 function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
-
-function handleGoogleSignIn(response) {
-    const data = jwtDecode(response.credential);
-    if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;}
-    const name = data.name || data.email;
-    const picture = data.picture || "";
-    const userId = data.sub;
-    const email = data.email;
-    const emailVerified = data.email_verified === true || data.email_verified === 'true';
-    localStorage.setItem("currentUser", name);
-    localStorage.setItem('authProvider', 'google');
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('emailVerified', emailVerified.toString());
-    loginSuccess(name, picture, userId);
-}
-
-// IMPORTANT: This function is revised to ONLY control the app's interactive tools.
-// Informational sections (features-grid, notes, overview, etc.) are assumed to be
-// visible by default on the index.html page and are NOT hidden by this function.
-function switchAppMode(mode) {
-    currentAppMode = mode;
-
-    // Hide all main interactive app tool sections (editor, whiteboard, calendar)
-    const appToolSections = [editorSection, whiteboardSection, calendarContainer];
-    appToolSections.forEach(sec => { if (sec) sec.classList.add('hidden'); });
-
-    // Hide/Show specific editor elements for notepad vs todo within editorSection
-    if (todoListContainer) todoListContainer.classList.add('hidden');
-    if (addTodoBtn) addTodoBtn.classList.add('hidden');
-    if (titleInput) titleInput.classList.add('hidden');
-    if (textInput) textInput.classList.add('hidden');
-    if (whiteboardTitleInput) whiteboardTitleInput.classList.add('hidden');
-
-    // Update active button styling in menu bar
-    document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
-    const modeButton = document.getElementById(`mode-${mode}`);
-    if (modeButton) modeButton.classList.add('active-mode');
-
-    // Show selected app tool mode
-    if (mode === 'notepad') {
-        if(editorSection) editorSection.classList.remove('hidden');
-        if(textInput) textInput.classList.remove('hidden');
-        if(titleInput) titleInput.classList.remove('hidden');
-        // Ensure main container is desktop-two-column for notepad
-        if(mainContainer) mainContainer.classList.add('desktop-two-column');
-    } else if (mode === 'whiteboard') {
-        if(whiteboardSection) whiteboardSection.classList.remove('hidden');
-        if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden');
-        resizeWhiteboard();
-        // Ensure main container is desktop-two-column for whiteboard
-        if(mainContainer) mainContainer.classList.add('desktop-two-column');
-    } else if (mode === 'todo') {
-        if(editorSection) editorSection.classList.remove('hidden'); 
-        if(todoListContainer) todoListContainer.classList.remove('hidden');
-        if(addTodoBtn) addTodoBtn.classList.remove('hidden');
-        if(titleInput) titleInput.classList.remove('hidden');
-        if(textInput) textInput.classList.add('hidden'); // Hide text area for todo list
-        // Ensure main container is desktop-two-column for todo
-        if(mainContainer) mainContainer.classList.add('desktop-two-column');
-    } else if (mode === 'calendar') {
-        if(calendarContainer) calendarContainer.classList.remove('hidden');
-        if(currentMonthYearDisplay) renderCalendar(currentCalendarDate);
-        // Calendar often looks better full width, so remove two-column
-        if(mainContainer) mainContainer.classList.remove('desktop-two-column');
-    }
-    
-    // #notes and adsenseContainer are now always visible on the homepage,
-    // their visibility is set explicitly in DOMContentLoaded, not controlled by switchAppMode.
-    // The same applies to .features-grid, #overview, #premium-features-section, #faq-section, #how-it-works, #privacy.
-}
-
-function newDoc() {
-    editModeId = null;
-    if(titleInput) titleInput.value = '';
-    if(textInput) textInput.value = '';
-    if(whiteboardTitleInput) whiteboardTitleInput.value = '';
-    if(todoListContainer) todoListContainer.innerHTML = '';
-    clearCanvas();
-    updateAll();
-    clearDraft();
-    resetHistory();
-    if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
-    switchAppMode('notepad'); 
-    if(titleInput) titleInput.focus();
-}
-
-function saveNote() {
-    const key = getUserNotesKey();
-    if (!key) { alert("Please sign in to save notes. Your work will remain in the editor."); if(authModal) authModal.classList.remove("hidden"); return; }
-    let title, content, type;
-    if (currentAppMode === 'notepad') {
-        if (!textInput || !textInput.value.trim()) { alert("Cannot save an empty note."); return; }
-        title = titleInput ? titleInput.value || 'Untitled Note' : 'Untitled Note';
-        content = textInput.value;
-        type = 'notepad';
-    } else if (currentAppMode === 'whiteboard') {
-        title = whiteboardTitleInput ? whiteboardTitleInput.value || 'Untitled Whiteboard' : 'Untitled Whiteboard';
-        if (!whiteboardState.canvas) { alert("Whiteboard not initialized."); return; }
-        content = whiteboardState.canvas.toDataURL();
-        type = 'whiteboard';
-    } else if (currentAppMode === 'todo') {
-        if (!todoListContainer || todoListContainer.children.length === 0) { alert("Cannot save an empty to-do list."); return; }
-        title = titleInput ? titleInput.value || 'Untitled To-Do List' : 'Untitled To-Do List';
-        content = serializeTodoList();
-        type = 'todo';
-    } else { alert("Cannot save in current mode."); return; }
-    const notes = JSON.parse(localStorage.getItem(key)) || [];
-    const timestamp = new Date().toLocaleString();
-    if (editModeId) {
-        const idx = notes.findIndex(n => n.id === editModeId);
-        if (idx > -1) notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; 
-        else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
-    } else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null });
-    localStorage.setItem(key, JSON.stringify(notes));
-    displayNotes();
-    newDoc();
-}
-
-function displayNotes() {
-    if(!noteList) return;
-    const key = getUserNotesKey();
-    const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : [];
-    
-    // Clear existing notes from the observer before re-rendering
-    if (scrollAnimationObserver) {
-        document.querySelectorAll('#note-list .note').forEach(noteElement => {
-            scrollAnimationObserver.unobserve(noteElement);
-            noteElement.classList.remove('is-visible'); // Reset visibility for re-render
-        });
-    }
-
-    if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>";
-    else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>";
-    else {
-        notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id);
-        noteList.innerHTML = notes.map((n, index) => { // Pass index to map for staggered animation
-            let contentPreview = '';
-            const noteType = n.type || 'notepad';
-            if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`;
-            else if (noteType === 'whiteboard') contentPreview = `<img src="${n.text}" alt="Whiteboard Preview" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`;
-            else if (noteType === 'todo') {
-                try { 
-                    const todoItems = JSON.parse(n.text);
-                    const completedItems = todoItems.filter(item => item.checked).length;
-                    contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`; 
-                }
-                catch { contentPreview = `<i>Corrupted To-Do List.</i>`}
-            } else {
-                const div = document.createElement('div');
-                div.innerHTML = n.text;
-                const plainText = div.textContent || div.innerText || '';
-                contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`;
-            }
-            const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : '';
-            const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack';
-            const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝');
-            
-            // Add fade-in-up class and data-animation-delay for individual note animation
-            return `<div class="note ${n.pinned ? 'pinned' : ''} fade-in-up" id="note-${n.id}" data-animation-delay="${index * 0.05}">` // Stagger notes slightly
-                + `<h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4>`
-                + `<p class="note-content-preview">${contentPreview}</p>`
-                + `<small>Last updated: ${n.date}</small>`
-                + `<div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div>`
-                + `</div>`;
-        }).join('');
-
-        // Observe newly rendered notes after they are in the DOM
-        if (scrollAnimationObserver) {
-            document.querySelectorAll('#note-list .note').forEach(noteElement => {
-                scrollAnimationObserver.observe(noteElement);
-            });
-        }
-    }
-}
-
-async function editNote(id) {
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in to edit notes."); if(authModal) authModal.classList.remove("hidden"); return; }
-    const notes = JSON.parse(localStorage.getItem(key)) || [];
-    const note = notes.find(n => n.id === id);
-    if (!note) { alert("Note not found."); return;}
-    if (note.isLocked && note.passwordHash) {
-        const password = prompt("Enter password to unlock this note:");
-        if (password === null) return;
-        if (!password) {alert("Password cannot be empty."); return;}
-        const hashed = await hashPassword(password);
-        if (hashed !== note.passwordHash) { alert("Incorrect password."); return; }
-    }
-    newDoc(); 
-    const noteType = note.type || 'notepad';
-    switchAppMode(noteType); // Use switchAppMode here
-    editModeId = id;
-    if (noteType === 'notepad') {
-        if(titleInput) titleInput.value = note.title;
-        if(textInput) { textInput.value = note.text; resetHistory(note.text); }
-    } else if (noteType === 'whiteboard') {
-        if(whiteboardTitleInput) whiteboardTitleInput.value = note.title;
-        if (whiteboardState.canvas && whiteboardState.ctx) {
-            const img = new Image();
-            img.onload = () => {
-                clearCanvas();
-                const canvasWidth = whiteboardState.canvas.width, canvasHeight = whiteboardState.canvas.height, hRatio = canvasWidth / img.width, vRatio = canvasHeight / img.height, ratio = Math.min(hRatio, vRatio), centerShift_x = (canvasWidth - img.width * ratio) / 2, centerShift_y = (canvasHeight - img.height * ratio) / 2;
-                whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
-                whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, canvasWidth, canvasHeight);
-            };
-            img.onerror = () => alert("Failed to load whiteboard image for editing.");
-            img.src = note.text;
-        } else alert("Whiteboard component not ready for editing.");
-    } else if (noteType === 'todo') {
-        if(titleInput) titleInput.value = note.title;
-        parseAndRenderTodoList(note.text);
-    }
-    updateAll();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
+function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
+function switchAppMode(mode) { currentAppMode = mode; const appToolSections = [editorSection, whiteboardSection, calendarContainer]; appToolSections.forEach(sec => { if (sec) sec.classList.add('hidden'); }); if (todoListContainer) todoListContainer.classList.add('hidden'); if (addTodoBtn) addTodoBtn.classList.add('hidden'); if (titleInput) titleInput.classList.add('hidden'); if (textInput) textInput.classList.add('hidden'); if (whiteboardTitleInput) whiteboardTitleInput.classList.add('hidden'); document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode')); const modeButton = document.getElementById(`mode-${mode}`); if (modeButton) modeButton.classList.add('active-mode'); if (mode === 'notepad') { if(editorSection) editorSection.classList.remove('hidden'); if(textInput) textInput.classList.remove('hidden'); if(titleInput) titleInput.classList.remove('hidden'); if(mainContainer) mainContainer.classList.add('desktop-two-column'); } else if (mode === 'whiteboard') { if(whiteboardSection) whiteboardSection.classList.remove('hidden'); if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden'); resizeWhiteboard(); if(mainContainer) mainContainer.classList.add('desktop-two-column'); } else if (mode === 'todo') { if(editorSection) editorSection.classList.remove('hidden');  if(todoListContainer) todoListContainer.classList.remove('hidden'); if(addTodoBtn) addTodoBtn.classList.remove('hidden'); if(titleInput) titleInput.classList.remove('hidden'); if(textInput) textInput.classList.add('hidden'); if(mainContainer) mainContainer.classList.add('desktop-two-column'); } else if (mode === 'calendar') { if(calendarContainer) calendarContainer.classList.remove('hidden'); if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); if(mainContainer) mainContainer.classList.remove('desktop-two-column'); } }
+function newDoc() { editModeId = null; if(titleInput) titleInput.value = ''; if(textInput) textInput.value = ''; if(whiteboardTitleInput) whiteboardTitleInput.value = ''; if(todoListContainer) todoListContainer.innerHTML = ''; clearCanvas(); updateAll(); clearDraft(); resetHistory(); if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); switchAppMode('notepad'); if(titleInput) titleInput.focus(); }
+function saveNote() { const key = getUserNotesKey(); if (!key) { alert("Please sign in to save notes. Your work will remain in the editor."); if(authModal) authModal.classList.remove("hidden"); return; } let title, content, type; if (currentAppMode === 'notepad') { if (!textInput || !textInput.value.trim()) { alert("Cannot save an empty note."); return; } title = titleInput ? titleInput.value || 'Untitled Note' : 'Untitled Note'; content = textInput.value; type = 'notepad'; } else if (currentAppMode === 'whiteboard') { title = whiteboardTitleInput ? whiteboardTitleInput.value || 'Untitled Whiteboard' : 'Untitled Whiteboard'; if (!whiteboardState.canvas) { alert("Whiteboard not initialized."); return; } content = whiteboardState.canvas.toDataURL(); type = 'whiteboard'; } else if (currentAppMode === 'todo') { if (!todoListContainer || todoListContainer.children.length === 0) { alert("Cannot save an empty to-do list."); return; } title = titleInput ? titleInput.value || 'Untitled To-Do List' : 'Untitled To-Do List'; content = serializeTodoList(); type = 'todo'; } else { alert("Cannot save in current mode."); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const timestamp = new Date().toLocaleString(); if (editModeId) { const idx = notes.findIndex(n => n.id === editModeId); if (idx > -1) notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); } else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); newDoc(); }
+function displayNotes() { if(!noteList) return; const key = getUserNotesKey(); const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : []; if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.unobserve(noteElement); noteElement.classList.remove('is-visible'); }); } if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>"; else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>"; else { notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); noteList.innerHTML = notes.map((n, index) => { let contentPreview = ''; const noteType = n.type || 'notepad'; if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`; else if (noteType === 'whiteboard') contentPreview = `<img src="${n.text}" alt="Whiteboard Preview" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`; else if (noteType === 'todo') { try {  const todoItems = JSON.parse(n.text); const completedItems = todoItems.filter(item => item.checked).length; contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`;  } catch { contentPreview = `<i>Corrupted To-Do List.</i>`} } else { const div = document.createElement('div'); div.innerHTML = n.text; const plainText = div.textContent || div.innerText || ''; contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`; } const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : ''; const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝'); return `<div class="note ${n.pinned ? 'pinned' : ''} fade-in-up" id="note-${n.id}" data-animation-delay="${index * 0.05}">` + `<h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4>` + `<p class="note-content-preview">${contentPreview}</p>` + `<small>Last updated: ${n.date}</small>` + `<div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div>` + `</div>`; }).join(''); if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.observe(noteElement); }); } } }
+async function editNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to edit notes."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) { alert("Note not found."); return;} if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to unlock this note:"); if (password === null) return; if (!password) {alert("Password cannot be empty."); return;} const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } newDoc(); const noteType = note.type || 'notepad'; switchAppMode(noteType); editModeId = id; if (noteType === 'notepad') { if(titleInput) titleInput.value = note.title; if(textInput) { textInput.value = note.text; resetHistory(note.text); } } else if (noteType === 'whiteboard') { if(whiteboardTitleInput) whiteboardTitleInput.value = note.title; if (whiteboardState.canvas && whiteboardState.ctx) { const img = new Image(); img.onload = () => { clearCanvas(); const canvasWidth = whiteboardState.canvas.width, canvasHeight = whiteboardState.canvas.height, hRatio = canvasWidth / img.width, vRatio = canvasHeight / img.height, ratio = Math.min(hRatio, vRatio), centerShift_x = (canvasWidth - img.width * ratio) / 2, centerShift_y = (canvasHeight - img.height * ratio) / 2; whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio); whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, canvasWidth, canvasHeight); }; img.onerror = () => alert("Failed to load whiteboard image for editing."); img.src = note.text; } else alert("Whiteboard component not ready for editing."); } else if (noteType === 'todo') { if(titleInput) titleInput.value = note.title; parseAndRenderTodoList(note.text); } updateAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
 function getUserNotesKey() { return getCurrentUserId() ? `notes_${getCurrentUserId()}` : null; }
 function getDraftKey() { return getCurrentUserId() ? `draft_${getCurrentUserId()}` : null; }
@@ -1739,373 +1029,37 @@ function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') docum
 function changeFont() { const fontFamilySelect = document.getElementById('font-family'); if(textInput && fontFamilySelect) textInput.style.fontFamily = fontFamilySelect.value; }
 function changeFontSize() { const fontSizeSelect = document.getElementById('font-size'); if(textInput && fontSizeSelect) textInput.style.fontSize = fontSizeSelect.value; }
 async function hashPassword(password) { if (!password) return ''; try {const encoder = new TextEncoder(); const data = encoder.encode(password); const hashBuffer = await crypto.subtle.digest('SHA-256', data); const hashArray = Array.from(new Uint8Array(hashBuffer)); return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');} catch(e) { console.error("Password hashing failed", e); return 'error_hashing_password'; }}
-
-function initWhiteboard() { 
-    if (!whiteboardCanvas) return;
-    whiteboardState.canvas = whiteboardCanvas; 
-    whiteboardState.ctx = whiteboardCanvas.getContext('2d', { willReadFrequently: true });
-    whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
-    whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-    resizeWhiteboard();
-    whiteboardState.canvas.addEventListener('mousedown', startDrawing); 
-    whiteboardState.canvas.addEventListener('mouseup', stopDrawing); 
-    whiteboardState.canvas.addEventListener('mouseout', stopDrawing); 
-    whiteboardState.canvas.addEventListener('mousemove', draw); 
-    whiteboardState.canvas.addEventListener('touchstart', startDrawing, { passive: false }); 
-    whiteboardState.canvas.addEventListener('touchend', stopDrawing, { passive: false }); 
-    whiteboardState.canvas.addEventListener('touchmove', draw, { passive: false }); 
-    const wbColorInput = document.getElementById('wb-color');
-    if (wbColorInput) wbColorInput.onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.remove('active'); }; 
-    const wbSizeInput = document.getElementById('wb-size');
-    if (wbSizeInput) wbSizeInput.onchange = (e) => whiteboardState.brushSize = e.target.value; 
-    const wbEraserBtn = document.getElementById('wb-eraser');
-    if (wbEraserBtn) wbEraserBtn.onclick = toggleEraser; 
-    const wbClearBtn = document.getElementById('wb-clear');
-    if (wbClearBtn) wbClearBtn.onclick = clearCanvas; 
-    const wbDownloadBtn = document.getElementById('wb-download');
-    if (wbDownloadBtn) wbDownloadBtn.onclick = downloadCanvas; 
-    window.addEventListener('resize', resizeWhiteboard); 
-}
-function resizeWhiteboard() { 
-    if (!whiteboardState.canvas || !whiteboardState.ctx || !whiteboardSection) return;
-    if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) {
-        try { whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); } 
-        catch (e) { console.error("Error getting image data during resize: ", e); whiteboardState.imageData = null; }
-    }
-    const containerWidth = whiteboardSection.clientWidth - 50;
-    whiteboardState.canvas.width = Math.max(containerWidth, 300);
-    whiteboardState.canvas.height = Math.min(Math.max(containerWidth * 0.6, 200), window.innerHeight * 0.5);
-    whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
-    whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-    if (whiteboardState.imageData) {
-        try { whiteboardState.ctx.putImageData(whiteboardState.imageData, 0, 0); } 
-        catch(e) { console.error("Error putting image data during resize: ", e); clearCanvas(); }
-    }
-}
-function getMousePos(e) { 
-    if(!whiteboardState.canvas) return { x: 0, y: 0 };
-    const rect = whiteboardState.canvas.getBoundingClientRect(); 
-    const scaleX = whiteboardState.canvas.width / rect.width; 
-    const scaleY = whiteboardState.canvas.height / rect.height; 
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX; 
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY; 
-    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY }; 
-}
+function initWhiteboard() { if (!whiteboardCanvas) return; whiteboardState.canvas = whiteboardCanvas; whiteboardState.ctx = whiteboardCanvas.getContext('2d', { willReadFrequently: true }); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); resizeWhiteboard(); whiteboardState.canvas.addEventListener('mousedown', startDrawing); whiteboardState.canvas.addEventListener('mouseup', stopDrawing); whiteboardState.canvas.addEventListener('mouseout', stopDrawing); whiteboardState.canvas.addEventListener('mousemove', draw); whiteboardState.canvas.addEventListener('touchstart', startDrawing, { passive: false }); whiteboardState.canvas.addEventListener('touchend', stopDrawing, { passive: false }); whiteboardState.canvas.addEventListener('touchmove', draw, { passive: false }); const wbColorInput = document.getElementById('wb-color'); if (wbColorInput) wbColorInput.onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.remove('active'); }; const wbSizeInput = document.getElementById('wb-size'); if (wbSizeInput) wbSizeInput.onchange = (e) => whiteboardState.brushSize = e.target.value; const wbEraserBtn = document.getElementById('wb-eraser'); if (wbEraserBtn) wbEraserBtn.onclick = toggleEraser; const wbClearBtn = document.getElementById('wb-clear'); if (wbClearBtn) wbClearBtn.onclick = clearCanvas; const wbDownloadBtn = document.getElementById('wb-download'); if (wbDownloadBtn) wbDownloadBtn.onclick = downloadCanvas; window.addEventListener('resize', resizeWhiteboard);  }
+function resizeWhiteboard() { if (!whiteboardState.canvas || !whiteboardState.ctx || !whiteboardSection) return; if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) { try { whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); } catch (e) { console.error("Error getting image data during resize: ", e); whiteboardState.imageData = null; } } const containerWidth = whiteboardSection.clientWidth - 50; whiteboardState.canvas.width = Math.max(containerWidth, 300); whiteboardState.canvas.height = Math.min(Math.max(containerWidth * 0.6, 200), window.innerHeight * 0.5); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); if (whiteboardState.imageData) { try { whiteboardState.ctx.putImageData(whiteboardState.imageData, 0, 0); } catch(e) { console.error("Error putting image data during resize: ", e); clearCanvas(); } } }
+function getMousePos(e) { if(!whiteboardState.canvas) return { x: 0, y: 0 }; const rect = whiteboardState.canvas.getBoundingClientRect(); const scaleX = whiteboardState.canvas.width / rect.width; const scaleY = whiteboardState.canvas.height / rect.height; const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };  }
 function startDrawing(e) { e.preventDefault(); whiteboardState.isDrawing = true; const { x, y } = getMousePos(e); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
 function stopDrawing() { if (!whiteboardState.isDrawing) return; whiteboardState.isDrawing = false; whiteboardState.ctx.beginPath(); if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); }
-function draw(e) { 
-    e.preventDefault(); 
-    if (!whiteboardState.isDrawing || !whiteboardState.ctx) return; 
-    const { ctx, lastX, lastY, brushColor, brushSize, isErasing } = whiteboardState; 
-    const { x, y } = getMousePos(e); 
-    ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over'; 
-    ctx.strokeStyle = isErasing ? 'rgba(0,0,0,1)' : brushColor;
-    ctx.lineWidth = brushSize; 
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; 
-    ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke(); 
-    [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; 
-}
+function draw(e) { e.preventDefault(); if (!whiteboardState.isDrawing || !whiteboardState.ctx) return; const { ctx, lastX, lastY, brushColor, brushSize, isErasing } = whiteboardState; const { x, y } = getMousePos(e); ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over'; ctx.strokeStyle = isErasing ? 'rgba(0,0,0,1)' : brushColor; ctx.lineWidth = brushSize; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke(); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
 function toggleEraser() { whiteboardState.isErasing = !whiteboardState.isErasing; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.toggle('active', whiteboardState.isErasing); }
-function clearCanvas() { 
-    if (!whiteboardState.ctx || !whiteboardState.canvas) return;
-    whiteboardState.ctx.clearRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); 
-    whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff';
-    whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-    if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height);
-}
-function downloadCanvas() { 
-    if(!whiteboardState.canvas || !whiteboardTitleInput) return;
-    const link = document.createElement('a'); 
-    link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`;
-    link.href = whiteboardState.canvas.toDataURL('image/png'); 
-    link.click(); 
-}
-
-function addTodoItem(text = '', checked = false) { 
-    if(!todoListContainer) return;
-    const itemDiv = document.createElement('div'); 
-    itemDiv.className = 'todo-item'; 
-    if (checked) itemDiv.classList.add('completed'); 
-    const checkbox = document.createElement('input'); 
-    checkbox.type = 'checkbox'; checkbox.checked = checked; 
-    checkbox.onchange = () => { itemDiv.classList.toggle('completed', checkbox.checked); saveDraft(); }; 
-    const textSpan = document.createElement('span'); 
-    textSpan.className = 'todo-text'; textSpan.contentEditable = true; textSpan.textContent = text || 'New to-do...'; 
-    textSpan.onblur = () => saveDraft();
-    itemDiv.append(checkbox, textSpan);
-    todoListContainer.appendChild(itemDiv); 
-}
-function serializeTodoList() { 
-    if(!todoListContainer) return JSON.stringify([]);
-    const items = []; 
-    todoListContainer.querySelectorAll('.todo-item').forEach(item => { 
-        const textElement = item.querySelector('.todo-text');
-        const checkboxElement = item.querySelector('input[type="checkbox"]');
-        if (textElement && checkboxElement) items.push({ text: textElement.textContent, checked: checkboxElement.checked }); 
-    }); 
-    return JSON.stringify(items); 
-}
-function parseAndRenderTodoList(jsonString) { 
-    if(!todoListContainer) return;
-    todoListContainer.innerHTML = ''; 
-    try { 
-        const items = JSON.parse(jsonString);
-        if (Array.isArray(items)) items.forEach(item => addTodoItem(item.text, item.checked)); 
-        else console.error("Parsed To-Do list is not an array:", items);
-    } catch (e) { console.error("Failed to parse To-Do list", e); } 
-}
-
-function renderCalendar(dateToRender) {
-    if(!currentMonthYearDisplay || !calendarGrid) return;
-    const year = dateToRender.getFullYear(), month = dateToRender.getMonth(); 
-    currentMonthYearDisplay.textContent = dateToRender.toLocaleString('default', { month: 'long', year: 'numeric' });
-    while (calendarGrid.children.length > 7) calendarGrid.removeChild(calendarGrid.lastChild);
-    const firstDayOfMonthIndex = new Date(year, month, 1).getDay(); 
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); 
-    const today = new Date();
-    const isCurrentDisplayingTodayMonth = today.getFullYear() === year && today.getMonth() === month;
-    for (let i = 0; i < firstDayOfMonthIndex; i++) {
-        const emptyDiv = document.createElement('div');
-        emptyDiv.classList.add('calendar-date', 'empty');
-        calendarGrid.appendChild(emptyDiv);
-    }
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateDiv = document.createElement('div');
-        dateDiv.classList.add('calendar-date');
-        dateDiv.textContent = day;
-        dateDiv.dataset.date = new Date(year, month, day).toISOString().split('T')[0];
-        if (isCurrentDisplayingTodayMonth && day === today.getDate()) dateDiv.classList.add('current-day');
-        calendarGrid.appendChild(dateDiv);
-    }
-}
-
-function recordState() { 
-    if(!textInput) return;
-    clearTimeout(lastChangeTimeout); 
-    lastChangeTimeout = setTimeout(() => { 
-        if (currentAppMode !== 'notepad') return; 
-        const currentState = textInput.value; 
-        if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) { 
-            undoStack.push(currentState); redoStack = []; 
-            if (undoStack.length > 50) undoStack.shift(); 
-        } 
-    }, 500); 
-}
+function clearCanvas() { if (!whiteboardState.ctx || !whiteboardState.canvas) return; whiteboardState.ctx.clearRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); }
+function downloadCanvas() { if(!whiteboardState.canvas || !whiteboardTitleInput) return; const link = document.createElement('a'); link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`; link.href = whiteboardState.canvas.toDataURL('image/png'); link.click();  }
+function addTodoItem(text = '', checked = false) { if(!todoListContainer) return; const itemDiv = document.createElement('div'); itemDiv.className = 'todo-item'; if (checked) itemDiv.classList.add('completed'); const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = checked; checkbox.onchange = () => { itemDiv.classList.toggle('completed', checkbox.checked); saveDraft(); }; const textSpan = document.createElement('span'); textSpan.className = 'todo-text'; textSpan.contentEditable = true; textSpan.textContent = text || 'New to-do...'; textSpan.onblur = () => saveDraft(); itemDiv.append(checkbox, textSpan); todoListContainer.appendChild(itemDiv); }
+function serializeTodoList() { if(!todoListContainer) return JSON.stringify([]); const items = []; todoListContainer.querySelectorAll('.todo-item').forEach(item => { const textElement = item.querySelector('.todo-text'); const checkboxElement = item.querySelector('input[type="checkbox"]'); if (textElement && checkboxElement) items.push({ text: textElement.textContent, checked: checkboxElement.checked }); }); return JSON.stringify(items); }
+function parseAndRenderTodoList(jsonString) { if(!todoListContainer) return; todoListContainer.innerHTML = ''; try { const items = JSON.parse(jsonString); if (Array.isArray(items)) items.forEach(item => addTodoItem(item.text, item.checked)); else console.error("Parsed To-Do list is not an array:", items); } catch (e) { console.error("Failed to parse To-Do list", e); }  }
+function renderCalendar(dateToRender) { if(!currentMonthYearDisplay || !calendarGrid) return; const year = dateToRender.getFullYear(), month = dateToRender.getMonth(); currentMonthYearDisplay.textContent = dateToRender.toLocaleString('default', { month: 'long', year: 'numeric' }); while (calendarGrid.children.length > 7) calendarGrid.removeChild(calendarGrid.lastChild); const firstDayOfMonthIndex = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const today = new Date(); const isCurrentDisplayingTodayMonth = today.getFullYear() === year && today.getMonth() === month; for (let i = 0; i < firstDayOfMonthIndex; i++) { const emptyDiv = document.createElement('div'); emptyDiv.classList.add('calendar-date', 'empty'); calendarGrid.appendChild(emptyDiv); } for (let day = 1; day <= daysInMonth; day++) { const dateDiv = document.createElement('div'); dateDiv.classList.add('calendar-date'); dateDiv.textContent = day; dateDiv.dataset.date = new Date(year, month, day).toISOString().split('T')[0]; if (isCurrentDisplayingTodayMonth && day === today.getDate()) dateDiv.classList.add('current-day'); calendarGrid.appendChild(dateDiv); } }
+function recordState() { if(!textInput) return; clearTimeout(lastChangeTimeout); lastChangeTimeout = setTimeout(() => { if (currentAppMode !== 'notepad') return; const currentState = textInput.value; if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) { undoStack.push(currentState); redoStack = []; if (undoStack.length > 50) undoStack.shift(); } }, 500); }
 function undo() { if(!textInput || currentAppMode !== 'notepad' || undoStack.length < 2) return; redoStack.push(undoStack.pop()); textInput.value = undoStack[undoStack.length - 1] || ''; updateAll(); }
 function redo() { if(!textInput || currentAppMode !== 'notepad' || redoStack.length === 0) return; const nextState = redoStack.pop(); undoStack.push(nextState); textInput.value = nextState; updateAll(); }
 function resetHistory(initialText = '') { undoStack = [initialText]; redoStack = []; }
-function cutText() { 
-    if(!textInput || currentAppMode !== 'notepad' || textInput.selectionStart === textInput.selectionEnd) return; 
-    try {
-        navigator.clipboard.writeText(textInput.value.substring(textInput.selectionStart, textInput.selectionEnd)); 
-        const start = textInput.selectionStart, end = textInput.selectionEnd;
-        textInput.value = textInput.value.substring(0, start) + textInput.value.substring(end);
-        textInput.selectionStart = textInput.selectionEnd = start;
-    } catch (e) {
-        console.warn("Clipboard API failed:", e);
-        try { document.execCommand('delete', false, null); } catch (ex) { /* ignore */ }
-    }
-    updateAll(); recordState(); 
-}
+function cutText() { if(!textInput || currentAppMode !== 'notepad' || textInput.selectionStart === textInput.selectionEnd) return; try { navigator.clipboard.writeText(textInput.value.substring(textInput.selectionStart, textInput.selectionEnd)); const start = textInput.selectionStart, end = textInput.selectionEnd; textInput.value = textInput.value.substring(0, start) + textInput.value.substring(end); textInput.selectionStart = textInput.selectionEnd = start; } catch (e) { console.warn("Clipboard API failed:", e); try { document.execCommand('delete', false, null); } catch (ex) { /* ignore */ } } updateAll(); recordState();  }
 function showFindReplace() { if (currentAppMode !== 'notepad' && findReplaceDialog) { findReplaceDialog.classList.remove('hidden'); findReplaceDialog.querySelector('#find-input')?.focus(); }}
 function closeFindReplace() { if(findReplaceDialog) findReplaceDialog.classList.add('hidden'); }
-function findAndReplace(replaceAll = false) { 
-    if(!textInput) return;
-    const findInputEl = document.getElementById('find-input');
-    const replaceInputEl = document.getElementById('replace-input');
-    if(!findInputEl || !replaceInputEl) return;
-    const findValue = findInputEl.value, replaceValue = replaceInputEl.value; 
-    if (!findValue) return; 
-    try { const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); textInput.value = textInput.value.replace(regex, replaceValue); } 
-    catch(e) { alert("Invalid find pattern."); console.error("Regex error:", e); return; }
-    updateAll(); recordState(); 
-}
-
-function deleteNote(id) { 
-    const key = getUserNotesKey(); 
-    if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; }
-    if (!confirm("Are you sure you want to delete this note permanently?")) return; 
-    let notes = JSON.parse(localStorage.getItem(key)) || []; 
-    localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); 
-    displayNotes(); 
-    if (editModeId === id) newDoc(); 
-}
-function pinNote(id) { 
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in to pin notes."); if(authModal) authModal.classList.remove("hidden"); return; }
-    const notes = JSON.parse(localStorage.getItem(key)) || []; 
-    const note = notes.find(n => n.id === id); 
-    if (note) note.pinned = !note.pinned; 
-    localStorage.setItem(key, JSON.stringify(notes)); 
-    displayNotes(); 
-}
-async function toggleLock(id) { 
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in."); if(authModal) authModal.classList.remove("hidden"); return; }
-    let notes = JSON.parse(localStorage.getItem(key)) || []; 
-    const noteIndex = notes.findIndex(n => n.id === id); 
-    if (noteIndex === -1) return; 
-    const note = notes[noteIndex]; 
-    if (note.isLocked && note.passwordHash) {
-        const password = prompt("Enter password to unlock:"); if (password === null) return;
-        if (!password) { alert("Password cannot be empty."); return; }
-        const hashed = await hashPassword(password); 
-        if (hashed !== note.passwordHash) { alert("Incorrect password."); return; }
-        note.isLocked = false; note.passwordHash = null;
-        alert("Note unlocked successfully!");
-    } else {
-        const password = prompt("Enter a new password (min 4 chars):"); if (password === null) return;
-        if (!password || password.length < 4) { alert("Password is too short."); return; } 
-        const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } 
-        note.isLocked = true; note.passwordHash = await hashPassword(password); 
-        alert("Note locked successfully!"); 
-    } 
-    notes[noteIndex] = note; 
-    localStorage.setItem(key, JSON.stringify(notes)); 
-    displayNotes(); 
-}
-async function exportPDF(id) { 
-    const key = getUserNotesKey(); if (!key) { alert("Please sign in to export."); if(authModal) authModal.classList.remove("hidden"); return; }
-    const notes = JSON.parse(localStorage.getItem(key)) || []; 
-    const note = notes.find(n => n.id === id); 
-    if (!note) { alert("Note not found."); return; }
-    if (note.isLocked && note.passwordHash) { 
-        const password = prompt("Enter password to export:"); if (password === null) return;
-        if (!password) { alert("Password cannot be empty."); return;}
-        const hashed = await hashPassword(password); 
-        if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } 
-    } 
-    if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') { alert("PDF library not loaded."); return; }
-    const { jsPDF } = window.jspdf; 
-    try {
-        const doc = new jsPDF(); 
-        doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20); 
-        doc.setFont("Helvetica", "normal"); doc.setFontSize(12); 
-        let contentToExport = note.text; 
-        if (note.type === 'todo') { 
-            try { contentToExport = JSON.parse(note.text).map(item => `${item.checked ? '[x]' : '[ ]'} ${item.text}`).join('\n'); } 
-            catch { contentToExport = "Error parsing to-do list."} 
-        } 
-        const lines = doc.splitTextToSize(contentToExport, 180);
-        doc.text(lines, 15, 30); 
-        doc.save(`${note.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_') || 'NoteP@d_Export'}.pdf`);
-    } catch (e) { alert("An error occurred generating the PDF."); console.error("PDF Export Error:", e); }
-}
-
+function findAndReplace(replaceAll = false) { if(!textInput) return; const findInputEl = document.getElementById('find-input'); const replaceInputEl = document.getElementById('replace-input'); if(!findInputEl || !replaceInputEl) return; const findValue = findInputEl.value, replaceValue = replaceInputEl.value; if (!findValue) return; try { const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); textInput.value = textInput.value.replace(regex, replaceValue); } catch(e) { alert("Invalid find pattern."); console.error("Regex error:", e); return; } updateAll(); recordState(); }
+function deleteNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; } if (!confirm("Are you sure you want to delete this note permanently?")) return; let notes = JSON.parse(localStorage.getItem(key)) || []; localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); displayNotes(); if (editModeId === id) newDoc(); }
+function pinNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to pin notes."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (note) note.pinned = !note.pinned; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
+async function toggleLock(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in."); if(authModal) authModal.classList.remove("hidden"); return; } let notes = JSON.parse(localStorage.getItem(key)) || []; const noteIndex = notes.findIndex(n => n.id === id); if (noteIndex === -1) return; const note = notes[noteIndex]; if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to unlock:"); if (password === null) return; if (!password) { alert("Password cannot be empty."); return; } const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } note.isLocked = false; note.passwordHash = null; alert("Note unlocked successfully!"); } else { const password = prompt("Enter a new password (min 4 chars):"); if (password === null) return; if (!password || password.length < 4) { alert("Password is too short."); return; } const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } note.isLocked = true; note.passwordHash = await hashPassword(password); alert("Note locked successfully!"); } notes[noteIndex] = note; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
+async function exportPDF(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to export."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) { alert("Note not found."); return; } if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to export:"); if (password === null) return; if (!password) { alert("Password cannot be empty."); return;} const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') { alert("PDF library not loaded."); return; } const { jsPDF } = window.jspdf; try { const doc = new jsPDF(); doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20); doc.setFont("Helvetica", "normal"); doc.setFontSize(12); let contentToExport = note.text; if (note.type === 'todo') { try { contentToExport = JSON.parse(note.text).map(item => `${item.checked ? '[x]' : '[ ]'} ${item.text}`).join('\n'); } catch { contentToExport = "Error parsing to-do list."} } const lines = doc.splitTextToSize(contentToExport, 180); doc.text(lines, 15, 30); doc.save(`${note.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_') || 'NoteP@d_Export'}.pdf`); } catch (e) { alert("An error occurred generating the PDF."); console.error("PDF Export Error:", e); } }
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; if(installBtn) installBtn.classList.remove('hidden'); });
 if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
-
-function checkPremiumStatus(feature) { 
-    // This is a placeholder function. In a real app, you would query a backend
-    // or check a user's subscription status from their authenticated session.
-    // For this local-only example, we'll always return false.
-    return false; 
-}
-
-function updateUIForPremiumFeatures() {
-    if (!premiumFeaturesSection) return; 
-    const isLoggedIn = !!getCurrentUserId(); 
-    if (!isLoggedIn) premiumFeaturesSection.classList.add('hidden');
-    else premiumFeaturesSection.classList.remove('hidden'); // Show premium section if logged in
-
-    document.querySelectorAll('.premium-feature-card').forEach(card => {
-        const buyButton = card.querySelector('.premium-buy-btn');
-        const manualPaymentInfo = card.querySelector('.manual-payment-info');
-        if (!buyButton || !manualPaymentInfo) return;
-        const feature = buyButton.getAttribute('data-feature');
-        if (checkPremiumStatus(feature)) {
-            buyButton.style.display = 'none'; 
-            manualPaymentInfo.style.display = 'flex'; 
-            manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`;
-        } else {
-            buyButton.style.display = 'block'; 
-            if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { // Added check for QR_CODE_IMAGE_URL
-                 manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`;
-            }
-             manualPaymentInfo.style.display = 'none';
-        }
-    });
-}
-
-
-// --- NEW SCROLL ANIMATION LOGIC ---
-
-function setupScrollAnimations() {
-    if ('IntersectionObserver' in window) {
-        scrollAnimationObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = entry.target;
-                    // Apply delay only if it hasn't been animated already
-                    if (!target.classList.contains('is-visible')) {
-                        const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0;
-                        target.style.setProperty('--animation-delay', `${delay}s`);
-                        target.classList.add('is-visible');
-                    }
-                    observer.unobserve(target); // Stop observing once it's visible
-                }
-            });
-        }, {
-            rootMargin: '0px',
-            threshold: 0.1 // Trigger when 10% of the item is visible
-        });
-
-        // Select all static sections that should animate
-        const sectionsToAnimate = [
-            document.getElementById('menu-bar'), // Add menu bar to animation
-            // Editor (will only be observed if it's the active mode on load)
-            document.getElementById('editor'),
-            document.getElementById('whiteboard-container'),
-            document.getElementById('calendar-container'),
-            
-            // Other content sections
-            adsenseContainer,
-            document.getElementById('notes'), // The notes container itself
-            document.getElementById('overview'),
-            document.getElementById('premium-features-section'),
-            document.getElementById('faq-section'),
-            document.getElementById('how-it-works'),
-            document.getElementById('privacy')
-        ];
-
-        let index = 0;
-        sectionsToAnimate.forEach(section => {
-            if (section) {
-                // Check if the section is not hidden by default (e.g., calendar/whiteboard on notepad mode)
-                // or if it's the currently active editor mode
-                const isCurrentlyActiveEditor = 
-                    (section.id === 'editor' && currentAppMode === 'notepad') ||
-                    (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') ||
-                    (section.id === 'calendar-container' && currentAppMode === 'calendar');
-
-                // Only add animation class if it's a static section or the currently active editor/tool
-                if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) {
-                    section.classList.add('fade-in-up');
-                    section.dataset.animationDelay = index * 0.02; // Reduced from 0.1 for faster initial staggering
-                    scrollAnimationObserver.observe(section);
-                    index++;
-                }
-            }
-        });
-
-        // Also observe individual feature cards within the features-grid
-        document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => {
-            card.classList.add('fade-in-up');
-            // Stagger feature cards, starting after main sections if desired, or with their own count
-            card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); // Reduced from 0.05 for faster staggering
-            scrollAnimationObserver.observe(card);
-        });
-
-    } else {
-        // Fallback for browsers that don't support Intersection Observer
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        });
-    }
-}
-
-// END NEW SCROLL ANIMATION LOGIC
-
+function checkPremiumStatus(feature) { return false; }
+function updateUIForPremiumFeatures() { if (!premiumFeaturesSection) return; const isLoggedIn = !!getCurrentUserId(); if (!isLoggedIn) premiumFeaturesSection.classList.add('hidden'); else premiumFeaturesSection.classList.remove('hidden'); document.querySelectorAll('.premium-feature-card').forEach(card => { const buyButton = card.querySelector('.premium-buy-btn'); const manualPaymentInfo = card.querySelector('.manual-payment-info'); if (!buyButton || !manualPaymentInfo) return; const feature = buyButton.getAttribute('data-feature'); if (checkPremiumStatus(feature)) { buyButton.style.display = 'none'; manualPaymentInfo.style.display = 'flex'; manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`; } else { buyButton.style.display = 'block'; if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`; } manualPaymentInfo.style.display = 'none'; } }); }
+function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
 </script>
 </body>
 </html>
