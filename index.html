@@ -237,10 +237,14 @@
         }
         /* END: CLOCK AND WEATHER STYLES */
 
-        #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; box-shadow: 0 4px 15px var(--shadow-light); }
+        #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; animation: glowing-border-light 4s ease-in-out infinite; }
         #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
+        #menu-bar button i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
         #menu-bar button:hover, #menu-bar select:hover { background-color: #e0e0e0; transform: translateY(-2px); }
-        body.dark #menu-bar { background: #252525; box-shadow: 0 4px 15px var(--shadow-dark); }
+        body.dark #menu-bar { background: #252525; animation-name: glowing-border-dark; }
         body.dark #menu-bar button, body.dark #menu-bar select { background-color: var(--card-dark); color: var(--text-dark); }
         
         .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; flex-wrap: wrap; }
@@ -450,6 +454,18 @@
 
         .fade-in-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-delay: var(--animation-delay, 0s); }
         .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+        
+        @keyframes glowing-border-light {
+            0% { box-shadow: 0 4px 15px var(--shadow-light); }
+            50% { box-shadow: 0 6px 25px var(--shadow-light), 0 0 15px var(--primary); }
+            100% { box-shadow: 0 4px 15px var(--shadow-light); }
+        }
+
+        @keyframes glowing-border-dark {
+            0% { box-shadow: 0 4px 15px var(--shadow-dark); }
+            50% { box-shadow: 0 6px 25px var(--shadow-dark), 0 0 15px var(--primary); }
+            100% { box-shadow: 0 4px 15px var(--shadow-dark); }
+        }
 
         /* --- MEDIA QUERIES --- */
         @media (min-width: 1024px) {
@@ -543,8 +559,8 @@
     <div id="menu-bar">
         <button onclick="newDoc()">📝 New</button>
         <button onclick="saveNote()">💾 Save</button>
-        <button onclick="undo()" title="Undo (Ctrl+Z)">↩️ Undo</button>
-        <button onclick="redo()" title="Redo (Ctrl+Y)">↪️ Redo</button>
+        <button onclick="undo()" title="Undo (Ctrl+Z)"><i class="fas fa-undo"></i> Undo</button>
+        <button onclick="redo()" title="Redo (Ctrl+Y)"><i class="fas fa-redo"></i> Redo</button>
         <button onclick="cutText()">✂️ Cut</button>
         <button onclick="showFindReplace()">🔍 Find/Replace</button>
         <button id="installBtn" class="hidden">💻 Install App</button>
