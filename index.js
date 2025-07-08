@@ -11,7 +11,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(bodyParser.json());
 
-const genAI = new GoogleGenerativeAI(process.env.AIzaSyAoC64OSCnJXsWFy1XftAwmyQzzvlT4WH8);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post("/generate", async (req, res) => {
   try {
