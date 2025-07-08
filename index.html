@@ -467,6 +467,59 @@
             100% { box-shadow: 0 4px 15px var(--shadow-dark); }
         }
 
+        /* --- START: COOKIE CONSENT BANNER STYLES --- */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-light);
+            color: var(--text-light);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 15px var(--shadow-light);
+            z-index: 2000; /* High z-index to be on top */
+            transition: background 0.3s ease, color 0.3s ease, transform 0.5s ease-out;
+            transform: translateY(120%); /* Start off-screen */
+        }
+        #cookie-consent-banner.show {
+            transform: translateY(0);
+        }
+        body.dark #cookie-consent-banner {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            box-shadow: 0 -4px 15px var(--shadow-dark);
+        }
+        #cookie-consent-banner p {
+            margin: 0;
+            flex-grow: 1;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        #cookie-consent-banner a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        #cookie-consent-banner button {
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            flex-shrink: 0; /* Prevents button from shrinking */
+        }
+        #cookie-consent-banner button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        /* --- END: COOKIE CONSENT BANNER STYLES --- */
+
         /* --- MEDIA QUERIES --- */
         @media (min-width: 1024px) {
             .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
@@ -489,6 +542,8 @@
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
             .blog-post h4 { font-size: 18px; }
+            #cookie-consent-banner { flex-direction: column; text-align: center; gap: 15px; }
+            #cookie-consent-banner p { margin-right: 0; margin-bottom: 10px; }
         }
         @media (max-width: 480px) {
             #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
@@ -784,6 +839,14 @@
 <div id="confetti" class="confetti hidden">🎉</div>
 <audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
+<!-- START: COOKIE CONSENT BANNER HTML -->
+<div id="cookie-consent-banner" class="hidden">
+    <p>We use cookies to enhance your experience, serve personalized ads, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. <a href="privacy-policy.html">Read our Privacy Policy</a>.</p>
+    <button id="accept-cookies-btn">Accept All</button>
+</div>
+<!-- END: COOKIE CONSENT BANNER HTML -->
+
+
 <footer>
    <p>Copyright © <span id="currentYear"></span> <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Bishal Mishra</a> | All Rights Reserved.</p>
    <div>
@@ -853,6 +916,10 @@ const premiumFeaturesSection = document.getElementById('premium-features-section
 const adsenseContainer = document.querySelector('.adsense-ad-container');
 const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtj/IMG_0120.jpg"; 
 let scrollAnimationObserver;
+// START: New variables for Cookie Banner
+const cookieBanner = document.getElementById('cookie-consent-banner');
+const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
+// END: New variables
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
@@ -865,6 +932,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateClock(); 
     setInterval(updateClock, 1000); 
     fetchWeather();
+    checkCookieConsent(); // Check for cookie consent on load
     checkAuthStatus(); 
     attachEventListeners();
     initWhiteboard(); 
@@ -956,7 +1024,39 @@ function attachEventListeners() {
     if (exitCalendarBtn) exitCalendarBtn.addEventListener('click', () => switchAppMode('notepad'));
     document.querySelectorAll('.premium-buy-btn').forEach(button => { button.addEventListener('click', () => { if (!getCurrentUserId()) { alert("Please sign in to purchase premium features."); if(authModal) authModal.classList.remove("hidden"); return; } const card = button.closest('.premium-feature-card'); if (card) { const paymentInfo = card.querySelector('.manual-payment-info'); if (paymentInfo) { paymentInfo.style.display = 'flex'; paymentInfo.scrollIntoView({ behavior: 'smooth' }); } } }); });
     document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
+    // START: Add event listener for cookie button
+    if (acceptCookiesBtn) {
+        acceptCookiesBtn.addEventListener('click', handleAcceptCookies);
+    }
+    // END: Add event listener
 }
+
+// --- START: NEW COOKIE BANNER FUNCTIONS ---
+function checkCookieConsent() {
+    if (!localStorage.getItem('cookie_consent_given')) {
+        if (cookieBanner) {
+            cookieBanner.classList.remove('hidden'); // Make it participate in layout
+            // Use a timeout to allow the initial state to render before transitioning
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 500); // A slight delay to ensure it's visible after page load
+        }
+    }
+}
+
+function handleAcceptCookies() {
+    localStorage.setItem('cookie_consent_given', 'true');
+    if (cookieBanner) {
+        cookieBanner.classList.remove('show');
+        // After the transition ends, add the 'hidden' class to remove it from the accessibility tree
+        cookieBanner.addEventListener('transitionend', () => {
+            cookieBanner.classList.add('hidden');
+        }, { once: true });
+    }
+    // You can add any logic here that should run after consent is given,
+    // like initializing more detailed analytics or ad services.
+}
+// --- END: NEW COOKIE BANNER FUNCTIONS ---
 
 // --- Live Clock and Weather Functions ---
 function updateClock() {
