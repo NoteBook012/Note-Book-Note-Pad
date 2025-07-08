@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <title>Note Pad - Modern Online Notepad, Whiteboard & To-Do List</title>
+    
+    <meta name="description" content="Note Pad is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, a to-do list manager, and an AI Essay Writer. Your data is saved locally. Works offline. Discover productivity tips on our blog."/>
+    
+    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips, study tools, free productivity app, ai essay writer, google ai"/>
+    
+    <meta name="author" content="Bishal Mishra">
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://bishalmishra.com">
+
+    <meta property="og:title" content="Note Pad - Modern Online Notepad, Whiteboard & To-Do List" />
+    <meta property="og:description" content="A free, secure online tool with a notepad, whiteboard, and to-do list. Works offline, no sign-up required for basic use. Read our productivity blog for tips." />
+    <meta property="og:image" content="https://i.imgur.com/kR1k1jU.png" />
+    <meta property="og:url" content="https://bishalmishra.com" />
+    <meta property="og:type" content="website" />
+    
+    <meta name="msvalidate.01" content="F28FD042305E7D060B4355FA59E662D8" />
+    <link rel="manifest" href="manifest.json">
+        
+    <meta name="yandex-verification" content="af349c5874d738ed" />
+   
+    <link rel="icon" type="image/png" href="images/favicon.png"> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- AdSense SCRIPT (typically in HEAD) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3010913100191778"
+         crossorigin="anonymous"></script>
+    <!-- End AdSense SCRIPT -->
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Note Pad",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "All (Web-based)",
+        "offers": {
+          "@type": "Offer",
+          "price": "0"
+        },
+        "description": "A free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, and a to-do list manager.",
+        "author": {
+          "@type": "Person",
+          "name": "Bishal Mishra"
+        },
+        "url": "https://bishalmishra.com/" 
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite", 
+        "name": "Note Pad",
+        "url": "https://bishalmishra.com/", 
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://bishalmishra.com/?s={search_term_string}", 
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Note P@d?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Note P@d is a free, versatile online application offering a modern notepad, a digital whiteboard for drawing, a to-do list manager, and a calendar. It's designed to be fast, secure, work offline (as a PWA), and save your data locally in your browser for basic use. Optional account features provide extended capabilities like cloud sync."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data safe and private with Note P@d?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, data privacy is a top priority. For users without an account, all notes and data are stored locally in your browser's localStorage and are never transmitted to any external server. This means your data remains 100% on your device. If you use account features, we employ security measures to protect your data as outlined in our Privacy Policy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use Note P@d offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely! Note P@d is a Progressive Web App (PWA). After your first visit with an internet connection, it caches the necessary files, allowing you to use it offline. This makes it a reliable tool even when you don't have internet access."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to sign up or create an account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No sign-up is required for basic local note-taking, whiteboard use, or to-do list management. You can start using these features immediately. An account is optional and provides benefits like multi-user profile management, potential cloud synchronization for premium users, and access to other advanced features."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I export my notes or drawings?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can easily export your content. Notepad entries can be exported as PDF files using the \"PDF\" button available with each saved note. Whiteboard drawings can be downloaded as PNG image files directly from the whiteboard interface."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the premium features?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Premium features, such as Advanced Cloud Sync and Priority Support, are available for users who wish to enhance their Note P@d experience. These are typically offered via a subscription and require an account. You can find more details in the \"Unlock Premium Features\" section if you are logged in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I provide feedback or get support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We welcome your feedback! You can contact us through the details provided in the <a href=\"contact.html\">Contact Us</a> section. For users with premium accounts, priority support options are available."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
+
+    <style>
+        :root {
+            --bg-light: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            --text-light: #333;
+            --card-light: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+
+            --bg-dark: linear-gradient(120deg, #2b2b2b 0%, #1e1e1e 100%);
+            --text-dark: #e0e0e0;
+            --card-dark: #2c2c2c;
+            --shadow-dark: rgba(0, 0, 0, 0.25);
+           
+            --primary: #8c53ff;
+            --primary-dark: #7042cc;
+            --primary-light-transparent: rgba(140, 83, 255, 0.1);
+            --radius: 12px;
+        }
+
+        html { height: 100%; scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-light); line-height: 1.6; transition: background 0.3s ease, color 0.3s ease; display: flex; flex-direction: column; min-height: 100vh; }
+        body.dark { background: var(--bg-dark); color: var(--text-dark); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        main.container { width: 95%; max-width: 1200px; margin: 20px auto; flex-grow: 1; padding-bottom: 40px; transition: max-width 0.3s ease; } 
+
+        /* START: MODIFIED HEADER STYLES */
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px 5%; 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            z-index: 10; 
+            display: flex; 
+            justify-content: space-between; /* This is key for the layout */
+            align-items: center; 
+            position: relative;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1; /* Make left and right sections take up equal space */
+        }
+        
+        .header-left {
+            justify-content: flex-start;
+        }
+
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .header-content { 
+            text-align: center; 
+            flex-grow: 0; /* Do not allow logo to grow, keeping it centered */
+        }
+        body.dark header { box-shadow: 0 4px 15px var(--shadow-dark); }
+        /* END: MODIFIED HEADER STYLES */
+        
+        footer { margin-top: auto; padding: 20px; text-align: center; background: var(--primary); color: white; box-shadow: 0 4px 15px var(--shadow-light); transition: background 0.5s ease, color 0.5s ease;  }
+        body.dark footer { background: var(--card-dark); color: var(--text-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        footer a { color: #fff; font-weight: 600; text-decoration: none; transition: opacity 0.2s; margin: 0 10px;  }
+        body.dark footer a { color: var(--primary); }
+        footer a:hover { opacity: 0.8; text-decoration: underline; }
+        footer p { margin-bottom: 10px; } 
+        
+        .sidenav { height: 100%; width: 0; position: fixed; z-index: 1002; top: 0; left: 0; overflow-x: hidden; transition: 0.3s; padding-top: 60px; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); }
+        body.dark .sidenav { background-color: rgba(30, 30, 30, 0.95); }
+        .sidenav a { padding: 10px 15px 10px 32px; text-decoration: none; font-size: 20px; font-weight: 600; color: var(--text-light); display: block; transition: 0.3s; }
+        body.dark .sidenav a { color: var(--text-dark); }
+        .sidenav a:hover { color: var(--primary); }
+        .sidenav .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; margin-left: 50px; }
+        
+        .open-nav-btn { font-size: 28px; cursor: pointer; color: white; transition: transform 0.2s; }
+        .open-nav-btn:hover { transform: scale(1.1); }
+        
+        /* START: CLOCK AND WEATHER STYLES */
+        #live-clock, #live-weather {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        #live-clock {
+            font-family: 'Inter', sans-serif;
+        }
+        #live-weather i:first-child { /* Targets the main weather icon */
+            margin-right: 8px;
+            color: #ffc107;
+        }
+        #weather-refresh-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block; /* Needed for transform */
+        }
+        #weather-refresh-btn:hover {
+            color: #ffc107; /* Highlight on hover */
+            transform: scale(1.2) rotate(90deg);
+        }
+        /* END: CLOCK AND WEATHER STYLES */
+
+        #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; animation: glowing-border-light 4s ease-in-out infinite; }
+        #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
+        #menu-bar button i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+        #menu-bar button:hover, #menu-bar select:hover { background-color: #e0e0e0; transform: translateY(-2px); }
+        body.dark #menu-bar { background: #252525; animation-name: glowing-border-dark; }
+        body.dark #menu-bar button, body.dark #menu-bar select { background-color: var(--card-dark); color: var(--text-dark); }
+        
+        .mode-switcher { border-left: 2px solid #ddd; padding-left: 10px; margin-left: 10px; display:flex; gap: 10px; flex-wrap: wrap; }
+        body.dark .mode-switcher { border-left-color: #555; }
+        .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
+        body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
+        
+        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section, #ai-writer-container
+        { 
+            background: var(--card-light); 
+            padding: 25px; 
+            border-radius: var(--radius); 
+            box-shadow: 0 4px 15px var(--shadow-light); 
+            margin-bottom: 25px; 
+            text-align: left; 
+        }
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section, body.dark #ai-writer-container { 
+            background: var(--card-dark); 
+            box-shadow: 0 4px 15px var(--shadow-dark); 
+        }
+       
+        #editor textarea, #editor input[type="text"], #ai-writer-container textarea, #ai-writer-container input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
+        #editor textarea:focus, #editor input[type="text"]:focus, #ai-writer-container textarea:focus, #ai-writer-container input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
+        #editor input[type="text"], #ai-writer-container input[type="text"] { margin-bottom: 15px; font-size: 20px; font-weight: 600; }
+        body.dark #editor textarea, body.dark #editor input[type="text"], body.dark #ai-writer-container textarea, body.dark #ai-writer-container input[type="text"] { border-color: #444; background: #333; color: var(--text-dark); }
+        
+        #editor-stats { display: flex; gap: 20px; margin-top: 10px; font-size: 14px; color: #888; }
+        body.dark #editor-stats { color: #aaa; }
+
+        /* START: AI WRITER STYLES */
+        #ai-writer-container h3 { text-align: center; }
+        #ai-writer-container p { text-align: center; margin-bottom: 20px; color: #888; }
+        body.dark #ai-writer-container p { color: #aaa; }
+        #ai-generate-btn {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 20px auto;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+        }
+        #ai-generate-btn:hover:not(:disabled) { background-color: var(--primary-dark); transform: translateY(-2px); }
+        #ai-generate-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+        body.dark #ai-generate-btn:disabled { background-color: #555; }
+        #ai-loading { text-align: center; font-size: 1.2em; color: var(--primary); margin-bottom: 20px; }
+        #copy-ai-result-btn { display: block; margin: 15px auto 0 auto; padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #28a745; color: white; font-weight: 600; }
+        #copy-ai-result-btn:hover { background-color: #218838; }
+        /* END: AI WRITER STYLES */
+
+        #whiteboard-canvas { border: 2px solid #eee; border-radius: var(--radius); cursor: crosshair; touch-action: none; background-color: #fff;  }
+        body.dark #whiteboard-canvas { border-color: #444; background-color: #383838; }
+        #whiteboard-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; margin-top: 15px; }
+        #whiteboard-toolbar label { font-weight: 600; }
+        #whiteboard-toolbar input[type="color"] { width: 40px; height: 40px; border: none; padding: 0; cursor: pointer; background: none; border-radius: 50%; }
+        #whiteboard-toolbar input[type="range"] { cursor: pointer; }
+        #whiteboard-toolbar button { padding: 8px 15px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; transition: all 0.2s ease-in-out; }
+        #whiteboard-toolbar button.active { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        #todo-list-container { min-height: 200px; padding: 10px; border-radius: var(--radius); border: 1px solid #e0e0e0; }
+        body.dark #todo-list-container { border-color: #444; }
+        .todo-item { display: flex; align-items: center; gap: 12px; font-size: 16px; padding: 8px 4px; border-bottom: 1px solid #f0f0f0; }
+        body.dark .todo-item { border-bottom-color: #3a3a3a; }
+        .todo-item:last-child { border-bottom: none; }
+        .todo-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); }
+        .todo-item .todo-text { flex-grow: 1; outline: none; }
+        .todo-item.completed .todo-text { text-decoration: line-through; color: #999; }
+        #add-todo-btn { margin-top: 15px; }
+
+        .note { border-radius: var(--radius); padding: 20px; margin-bottom: 15px; border: 1px solid #e7e7e7; transition: box-shadow 0.3s ease, transform 0.3s ease, border-left 0.3s ease; }
+        .note:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow-light); }
+        body.dark .note { border-color: #444; }
+        body.dark .note:hover { box-shadow: 0 6px 20px var(--shadow-dark); }
+        .note.pinned { border-left: 5px solid gold; }
+        .note h4 { margin-bottom: 5px; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .note p { margin: 10px 0; word-break: break-word; }
+        .note small { color: #888; }
+        body.dark .note small { color: #aaa; }
+        .note-actions button { margin-right: 8px; margin-top: 10px; padding: 6px 12px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; background: #f0f0f0; font-weight: 500; transition: all 0.2s ease-in-out; }
+        body.dark .note-actions button { background: #3e3e3e; color: var(--text-dark); border-color: #555; }
+
+        h2, h3 { font-size: 24px; margin-bottom: 20px; color: var(--primary); text-align: center; }
+        .info-section h3, #blogs-section h3, #faq-section h3, #privacy-policy-section h3, #terms-of-service-section h3, #disclaimer-section h3 { text-align: left;  }
+        .info-section p, .info-section ul, #privacy-policy-section p, #privacy-policy-section ul, #terms-of-service-section p, #terms-of-service-section ul, #disclaimer-section p, #disclaimer-section ul  { margin-bottom: 15px; }
+        .info-section ul { list-style: none; padding-left: 0; }
+        .info-section ul li { padding-left: 30px; position: relative; margin-bottom: 12px; }
+        .info-section ul li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); position: absolute; left: 0; top: 2px; font-size: 18px; }
+        #privacy-policy-section h4, #terms-of-service-section h4, #disclaimer-section h4 { font-size: 1.2em; color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
+
+        .blog-post { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: left; }
+        body.dark .blog-post { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        .blog-post h4 { color: var(--primary); margin-bottom: 5px; font-size: 22px; font-weight: 700; }
+        .blog-post-meta { font-size: 13px; color: #888; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        body.dark .blog-post-meta { color: #aaa; }
+        .blog-post-meta i { margin-right: 5px; color: var(--primary);  }
+        .blog-post-content { font-size: 16px; line-height: 1.8; color: var(--text-light); }
+        body.dark .blog-post-content { color: var(--text-dark); }
+        .blog-post-content p { margin-bottom: 15px; }
+        .blog-post-content ul { list-style: disc; padding-left: 20px; margin-bottom: 15px; }
+        .blog-post-content ul li { margin-bottom: 5px; }
+        .blog-post-content a { color: var(--primary); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+        .blog-post-content a:hover { color: var(--primary-dark); text-decoration: underline; }
+        .blog-post-image { max-width: 100%; height: auto; border-radius: var(--radius); margin-bottom: 15px; display: block;  }
+        .blog-content-short { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-height: calc(1.7em * 3); margin-bottom: 15px; }
+        .blog-content-full { display: block; max-height: none; margin-bottom: 15px; }
+        .read-more-btn { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: var(--radius); cursor: pointer; font-size: 14px; transition: background 0.2s ease-in-out; display: inline-block; margin-top: 10px; }
+        .read-more-btn:hover { background: var(--primary-dark); }
+        .blog-post-content .see-result-btn { display: block; width: fit-content; margin: 15px auto; background-color: #28a745; color: white; padding: 12px 25px; border-radius: var(--radius); text-decoration: none; font-weight: bold; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .blog-post-content .see-result-btn:hover { background-color: #218838; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+        
+        .premium-offerings { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+        .premium-feature-card { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); text-align: center; flex: 1 1 280px; max-width: 300px; }
+        body.dark .premium-feature-card { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        .premium-feature-card h4 { color: var(--primary); margin-bottom: 10px; }
+        .premium-feature-card .price { font-weight: bold; color: var(--primary); margin-top: 15px; font-size: 1.1em; }
+        .premium-buy-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); cursor: pointer; font-size: 16px; transition: background 0.2s ease; margin-top: 15px; }
+        .premium-buy-btn:hover { background: var(--primary-dark); }
+        .manual-payment-info { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: none; flex-direction: column; align-items: center; font-size: 14px; color: var(--text-light); }
+        body.dark .manual-payment-info { border-top-color: #444; color: var(--text-dark); }
+        .manual-payment-info p { margin-bottom: 5px; }
+        .manual-payment-info small { margin-top: 10px; color: #888; text-align: center; }
+        body.dark .manual-payment-info small { color: #aaa; }
+        .manual-payment-info img { box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 150px; height: 150px; border-radius: var(--radius); margin-bottom: 10px; }
+
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .profile-container { position: relative; z-index: 999; }
+        #profile-icon { width: 42px; height: 42px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s ease-in-out; object-fit: cover; }
+        #profile-icon:hover, #profile-icon:focus { transform: scale(1.1); }
+        .profile-dropdown { position: absolute; top: 55px; right: 0; width: 260px; background: var(--card-light); border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); border: 1px solid #eee; overflow: hidden; animation: fadeIn 0.3s ease; transition: opacity 0.2s ease, transform 0.2s ease; }
+        body.dark .profile-dropdown { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); border-color: #444; }
+        .dropdown-header { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f0f0f0; }
+        body.dark .dropdown-header { border-bottom-color: #444; }
+        .dropdown-header img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .dropdown-header span { font-weight: 600; font-size: 16px; word-break: break-all; }
+        body.dark .dropdown-header small { color: #bbb !important; }
+        .dropdown-menu { list-style: none; padding: 10px 0; margin: 0; }
+        .dropdown-menu li a { display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none; color: var(--text-light); font-size: 14px; transition: background-color 0.2s ease; }
+        body.dark .dropdown-menu li a { color: var(--text-dark); }
+        .dropdown-menu li a:hover { background-color: #f5f5f5; }
+        body.dark .dropdown-menu li a:hover { background-color: #3e3e3e; }
+        .dropdown-menu li.divider { height: 1px; margin: 8px 0; background: #e0e0e0; }
+        body.dark .dropdown-menu li.divider { background: #444; }
+        #emailVerifiedStatus .fa-check-circle { color: #28a745; } 
+        #emailVerifiedStatus .fa-times-circle { color: #dc3545; } 
+        
+        .about-dev { display: flex; align-items: center; gap: 25px; margin-top: 15px;  } 
+        .about-dev img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px var(--shadow-light); } 
+        body.dark .about-dev img { box-shadow: 0 4px 15px var(--shadow-dark); } 
+        .about-dev-text { flex: 1; } 
+        .about-dev a { color: var(--primary); font-weight: 600; text-decoration: none; } 
+        .about-dev a:hover { text-decoration: underline; } 
+        
+        .modal, .welcome-popup { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); z-index: 1001; } 
+        .modal-content, .welcome-content { font-family: 'Inter', sans-serif; background: var(--card-light); color: var(--text-light); padding: 32px; border-radius: var(--radius); text-align: center; max-width: 380px; width: 90%; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); animation: fadeIn 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1); } 
+        body.dark .modal-content, body.dark .welcome-content { background: var(--card-dark); color: var(--text-dark); } 
+        .modal-content h2, .welcome-content h2 { margin-bottom: 20px; } 
+        .modal-content input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid #d1d5db; border-radius: var(--radius); font-size: 16px; background: var(--bg-light); color: var(--text-light); } 
+        body.dark .modal-content input { border-color: #555; background: #333; } 
+        .modal-content button, .welcome-content button { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: var(--radius); font-size: 16px; margin-top: 16px; cursor: pointer; transition: background 0.3s ease; width: 100%; } 
+        .modal-content button:hover, .welcome-content button:hover { background: var(--primary-dark); } 
+        .modal-content a { color: var(--primary); text-decoration: none; font-size: 13px; display: block; margin-top: 12px; }
+
+        #goToTopBtn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 12px var(--shadow-light); transition: all 0.3s ease-in-out; display: flex; align-items: center; justify-content: center; } 
+        #goToTopBtn:hover { background-color: var(--primary-dark); transform: scale(1.1); } 
+        body.dark #goToTopBtn { box-shadow: 0 4px 12px var(--shadow-dark); } 
+        
+        #find-replace-dialog { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); background: var(--card-light); padding: 20px; border-radius: var(--radius); box-shadow: 0 8px 25px var(--shadow-light); z-index: 1002; display: flex; gap: 10px; align-items: center; } 
+        body.dark #find-replace-dialog { background: var(--card-dark); box-shadow: 0 8px 25px var(--shadow-dark); } 
+        #find-replace-dialog input { padding: 8px; border-radius: 8px; border: 1px solid #ccc; } 
+        body.dark #find-replace-dialog input { background: #333; border-color: #555; color: var(--text-dark); } 
+        #find-replace-dialog button { padding: 8px 12px; } 
+        #find-replace-dialog .close-btn { position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-size: 20px; cursor: pointer; } 
+        
+        .confetti { font-size: 48px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pop 1s ease-out; pointer-events: none; z-index: 2000; } 
+        @keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+        .faq-item { margin-bottom: 10px; border-radius: var(--radius); overflow: hidden; border: 1px solid #f0f0f0; }
+        body.dark .faq-item { border-color: #3a3a3a; }
+        .faq-question { font-size: 18px; color: var(--primary); padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; transition: background-color 0.3s ease; }
+        .faq-question.active { background-color: var(--primary-light-transparent); }
+        .faq-question::after { content: '\f067'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 16px; transition: transform 0.3s ease; }
+        .faq-question.active::after { transform: rotate(45deg); content: '\f068'; }
+        .faq-answer { font-size: 15px; color: var(--text-light); line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; padding: 0 20px; }
+        .faq-answer p { padding-bottom: 15px; }
+        body.dark .faq-answer { color: var(--text-dark); }
+
+        #calendar-container { padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; text-align: center; }
+        body.dark #calendar-container { box-shadow: 0 4px 15px var(--shadow-dark); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .calendar-header button { background: var(--primary); color: white; border: none; border-radius: 8px; padding: 10px 15px; cursor: pointer; font-size: 18px; transition: background 0.2s ease-in-out; }
+        .calendar-header button:hover { background: var(--primary-dark); }
+        .calendar-header h4 { font-size: 24px; color: var(--primary); margin: 0 10px; flex-grow: 1; text-align: center; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; width: 100%; max-width: 600px; margin: 0 auto; }
+        .calendar-day-header { font-weight: 600; color: #777; padding: 8px 0; text-align: center; font-size: 14px; }
+        body.dark .calendar-day-header { color: #bbb; }
+        .calendar-date { padding: 10px 5px; text-align: center; border-radius: 8px; background-color: #f9f9f9; cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease; font-size: 15px; font-weight: 500; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        body.dark .calendar-date { background-color: #3e3e3e; }
+        .calendar-date:hover:not(.empty):not(.selected) { background-color: #e0e0e0; transform: translateY(-2px); }
+        body.dark .calendar-date:hover:not(.empty):not(.selected) { background-color: #4a4a4a; }
+        .calendar-date.empty { background-color: transparent; cursor: default; pointer-events: none; opacity: 0.5; }
+        .calendar-date.current-day { background-color: var(--primary); color: white; font-weight: 700; }
+        .calendar-date.selected { background-color: var(--primary-dark); color: white; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: scale(1.05); }
+        #exitCalendarBtn { margin-top: 20px; padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: var(--radius); cursor: pointer; font-size: 16px; transition: background-color 0.2s ease, transform 0.2s ease; }
+        #exitCalendarBtn:hover { background-color: #c82333; transform: translateY(-2px); }
+
+        #contact-us-section { background: var(--card-light); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-light); margin-bottom: 25px; }
+        body.dark #contact-us-section { background: var(--card-dark); box-shadow: 0 4px 15px var(--shadow-dark); }
+        #contact-us-section h2 { text-align: left; margin-bottom: 20px; }
+        #contact-us-section ul { list-style: none; padding: 0; margin-top: 15px; }
+        #contact-us-section li { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; }
+        #contact-us-section li svg { width: 24px; height: 24px; margin-right: 12px; fill: var(--primary); }
+        #contact-us-section li a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        #contact-us-section li a:hover { text-decoration: underline; color: var(--primary-dark); }
+        #contact-us-section li span { color: var(--text-light); }
+        body.dark #contact-us-section li span { color: var(--text-dark); }
+
+        .adsense-ad-container { margin: 25px auto; padding: 10px 0; text-align: center; min-height: 50px; background-color: var(--card-light); border-radius: var(--radius); box-shadow: 0 2px 8px var(--shadow-light); }
+        body.dark .adsense-ad-container { background-color: var(--card-dark); box-shadow: 0 2px 8px var(--shadow-dark); }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 25px; margin-bottom: 25px; }
+        .feature-card { text-align: center; padding: 30px; margin-bottom: 0 !important; }
+        .feature-card .feature-icon { font-size: 48px; color: var(--primary); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; height: 60px; }
+        .feature-card h3 { text-align: center; }
+        .feature-card p { font-size: 16px; line-height: 1.7; color: var(--text-light); }
+        body.dark .feature-card p { color: var(--text-dark); }
+
+        .fade-in-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-delay: var(--animation-delay, 0s); }
+        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+        
+        @keyframes glowing-border-light {
+            0% { box-shadow: 0 4px 15px var(--shadow-light); }
+            50% { box-shadow: 0 6px 25px var(--shadow-light), 0 0 15px var(--primary); }
+            100% { box-shadow: 0 4px 15px var(--shadow-light); }
+        }
+
+        @keyframes glowing-border-dark {
+            0% { box-shadow: 0 4px 15px var(--shadow-dark); }
+            50% { box-shadow: 0 6px 25px var(--shadow-dark), 0 0 15px var(--primary); }
+            100% { box-shadow: 0 4px 15px var(--shadow-dark); }
+        }
+
+        /* --- START: COOKIE CONSENT BANNER STYLES --- */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-light);
+            color: var(--text-light);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 15px var(--shadow-light);
+            z-index: 2000; /* High z-index to be on top */
+            transition: background 0.3s ease, color 0.3s ease, transform 0.5s ease-out;
+            transform: translateY(120%); /* Start off-screen */
+        }
+        #cookie-consent-banner.show {
+            transform: translateY(0);
+        }
+        body.dark #cookie-consent-banner {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            box-shadow: 0 -4px 15px var(--shadow-dark);
+        }
+        #cookie-consent-banner p {
+            margin: 0;
+            flex-grow: 1;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+        #cookie-consent-banner a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        #cookie-consent-banner button {
+            padding: 10px 25px;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            flex-shrink: 0; /* Prevents button from shrinking */
+        }
+        #cookie-consent-banner button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        /* --- END: COOKIE CONSENT BANNER STYLES --- */
+
+        /* --- MEDIA QUERIES --- */
+        @media (min-width: 1024px) {
+            .open-nav-btn { position: relative; left: auto; top: auto; transform: none; }
+            .profile-container { position: relative; top: auto; right: auto; margin-left: 0; }
+            main.container.desktop-two-column { display: grid; grid-template-columns: 2fr 1.2fr; gap: 25px; align-items: flex-start; }
+            main.container.desktop-two-column #notes,
+            main.container.desktop-two-column #editor,
+            main.container.desktop-two-column #whiteboard-container,
+            main.container.desktop-two-column #calendar-container { margin-bottom: 0; }
+        }
+        @media (max-width: 992px) {
+            #live-clock, #live-weather { display: none; }
+        }
+        @media (max-width: 768px) { 
+            .about-dev { flex-direction: column; text-align: center; } 
+            #find-replace-dialog { flex-direction: column; width: 90%; top: 100px; } 
+            .mode-switcher { border-left: none; padding-left: 0; margin-left: 0; border-top: 1px solid #ddd; padding-top: 10px; width: 100%; justify-content: center; } 
+            body.dark .mode-switcher { border-top-color: #555;}
+            .calendar-day-header, .calendar-date { font-size: 12px; padding: 5px 2px; min-height: 30px; }
+            .sidenav a { font-size: 18px; }
+            h2, h3 { font-size: 20px; }
+            .blog-post h4 { font-size: 18px; }
+            #cookie-consent-banner { flex-direction: column; text-align: center; gap: 15px; }
+            #cookie-consent-banner p { margin-right: 0; margin-bottom: 10px; }
+        }
+        @media (max-width: 480px) {
+            #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
+            .mode-switcher button { padding: 8px 10px; font-size: 13px;}
+            .profile-container { position: fixed; top: 10px; right: 10px; }
+            .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="index.html" onclick="closeNav()">Home</a>
+  <a href="about.html" onclick="closeNavAndGoTo('about.html')">About</a>
+  <a href="blogs.html" onclick="closeNavAndGoTo('blogs.html')">Blog</a>
+  <a href="privacy-policy.html" onclick="closeNavAndGoTo('privacy-policy.html')">Privacy Policy</a>
+  <a href="terms-of-service.html" onclick="closeNavAndGoTo('terms-of-service.html')">Terms of Service</a>
+  <a href="disclaimer.html" onclick="closeNavAndGoTo('disclaimer.html')">Disclaimer</a>
+  <a href="contact.html" onclick="closeNavAndGoTo('contact.html')">Contact</a>
+</div>
+
+<!-- START: MODIFIED HEADER HTML STRUCTURE -->
+<header>
+    <div class="header-left">
+        <span class="open-nav-btn" onclick="openNav()">☰</span>
+        <span id="live-clock"></span>
+    </div>
+
+    <div class="header-content">
+        <h1>
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                📝 NOTE_<span style="color:#ffc107">P@D</span>
+            </a>
+        </h1>
+        <p style="margin-top: 5px; font-weight: 300; opacity: 0.9;">Notepad, Whiteboard, and To-Do List</p>
+    </div>
+
+    <div class="header-right">
+        <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <div id="profile-container" class="profile-container hidden">
+            <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
+            <div id="profile-dropdown" class="profile-dropdown hidden">
+                <div class="dropdown-header">
+                    <img id="userPic" src="https://ui-avatars.com/api/?name=U&background=random&color=fff" alt="Profile" width="48" height="48"> 
+                    <div>
+                        <span id="userNameDisplay">User Name</span>
+                        <small id="userEmailDisplay" style="color: #888; display: block; font-weight: 400;"></small>
+                    </div>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="editProfilePhotoBtn"><i class="fas fa-camera fa-fw"></i> Edit Profile Photo</a></li>
+                    <li><a href="#" id="verifyEmailBtn"><i class="fas fa-envelope fa-fw"></i> Verify Email <span id="emailVerifiedStatus"></span></a></li>
+                    <li><a href="#" id="resetPasswordBtn"><i class="fas fa-key fa-fw"></i> Reset Password</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="manageAccountBtn"><i class="fas fa-user-cog fa-fw"></i> Manage Account</a></li> 
+                    <li class="divider"></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- END: MODIFIED HEADER HTML STRUCTURE -->
+<input type="file" id="photoUpload" class="hidden" accept="image/*">
+
+<main id="main-container" class="container desktop-two-column"> 
+    <div id="menu-bar">
+        <button onclick="newDoc()">📝 New</button>
+        <button onclick="saveNote()">💾 Save</button>
+        <button onclick="undo()" title="Undo (Ctrl+Z)"><i class="fas fa-undo"></i> Undo</button>
+        <button onclick="redo()" title="Redo (Ctrl+Y)"><i class="fas fa-redo"></i> Redo</button>
+        <button onclick="cutText()">✂️ Cut</button>
+        <button onclick="showFindReplace()">🔍 Find/Replace</button>
+        <button id="installBtn" class="hidden">💻 Install App</button>
+        <select id="font-family" onchange="changeFont()" title="Change Font Family">
+            <option value="Poppins">Poppins</option>
+            <option value="Arial">Arial</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+        </select>
+        <select id="font-size" onchange="changeFontSize()" title="Change Font Size">
+            <option value="16px" selected>16px</option>
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+        </select>
+        <button onclick="toggleDark()" title="Toggle Dark/Light Mode">🌗</button>
+
+        <div class="mode-switcher">
+            <button id="mode-notepad" onclick="switchAppMode('notepad')" class="active-mode">Notepad</button>
+            <button id="mode-whiteboard" onclick="switchAppMode('whiteboard')">Whiteboard</button>
+            <button id="mode-todo" onclick="switchAppMode('todo')">To-Do List</button>
+            <button id="mode-calendar" onclick="switchAppMode('calendar')">🗓️ Calendar</button>
+            <!-- START: AI WRITER BUTTON -->
+            <button id="mode-ai-writer" onclick="switchAppMode('ai-writer')">🤖 AI Writer</button>
+            <!-- END: AI WRITER BUTTON -->
+            <button id="mode-blog" onclick="window.location.href='blogs.html'">Blog</button>
+        </div>
+    </div>
+
+    <div id="editor">
+        <input type="text" id="note-title" placeholder="Your Note Title..." />
+        <textarea id="note-text" placeholder="Start typing... your work is saved automatically." rows="10"></textarea>
+        <div id="todo-list-container" class="hidden"></div>
+        <button id="add-todo-btn" class="hidden" onclick="addTodoItem()">+ Add Item</button>
+        <div id="editor-stats">
+            <div id="char-count">Character Count: 0</div>
+            <div id="word-count">Word Count: 0</div>
+        </div>
+    </div>
+
+    <!-- START: AI WRITER CONTAINER -->
+    <div id="ai-writer-container" class="hidden">
+        <h3>🤖 AI Essay Writer</h3>
+        <p>Enter a topic and let the AI write an essay for you. (Powered by Google AI)</p>
+        <input type="text" id="ai-prompt" placeholder="e.g., The impact of artificial intelligence on modern society...">
+        <textarea id="ai-result" rows="15" placeholder="Your generated essay will appear here..." readonly></textarea>
+        <div id="ai-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i> Generating... This may take a moment.</div>
+        <button id="ai-generate-btn">Generate Essay</button>
+        <button id="copy-ai-result-btn" class="hidden">Copy to Clipboard</button>
+    </div>
+    <!-- END: AI WRITER CONTAINER -->
+
+    <div id="whiteboard-container" class="hidden">
+        <input type="text" id="whiteboard-title" placeholder="Your Whiteboard Title..." style="width: 100%; font-size: 20px; font-weight: 600; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; margin-bottom: 15px;" />
+        <canvas id="whiteboard-canvas"></canvas>
+        <div id="whiteboard-toolbar">
+            <label for="wb-color">Color:</label>
+            <input type="color" id="wb-color" value="#000000">
+            <label for="wb-size">Size:</label>
+            <input type="range" id="wb-size" min="1" max="50" value="5">
+            <button id="wb-eraser">Eraser</button>
+            <button id="wb-clear">Clear</button>
+            <button id="wb-download">Download PNG</button>
+        </div>
+    </div>
+
+    <div id="calendar-container" class="hidden">
+        <h3>🗓️ Calendar</h3>
+        <div class="calendar-header">
+            <button id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+            <h4 id="currentMonthYear"></h4>
+            <button id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+            </div>
+        <button id="exitCalendarBtn">Exit Calendar</button>
+    </div>
+
+    <div class="adsense-ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3010913100191778"
+             data-ad-slot="1810825365"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div id="notes"> 
+        <h3 style="text-align: center;"><i class="fas fa-star" style="color: gold; margin-right: 8px;"></i>Your Saved Notes</h3>
+        <div id="note-list"></div>
+    </div>
+   
+    <div class="features-grid">
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-pen-to-square"></i></div>
+            <h3>Simple Interface</h3>
+            <p>Nothing too fancy. Just a plain-text editor with a beautifully crafted minimalistic interface that helps you stay focused on what you need to write.</p>
+        </div>
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-cloud-arrow-down"></i></div>
+            <h3>Autosave</h3>
+            <p>Never lose your notes with its auto save feature. Every time you make changes, it will automatically store the data locally within your browser.</p>
+        </div>
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-bars"></i></div>
+            <h3>Word Count</h3>
+            <p>Track how many words there are in your text document with real-time word counter. The number of words will update as you type and make changes.</p>
+        </div>
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-arrows-rotate"></i></div>
+            <h3>Find & Replace</h3>
+            <p>Find and replace allows you to quickly search for a word or phrase in the whole page and substitute it with something else.</p>
+        </div>
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-spell-check"></i></div>
+            <h3>Spellcheck</h3>
+            <p>It takes advantage of your browser's native spellchecker to instantly find spelling mistakes. Simply right-click the red underlined word and choose the correct spelling.</p>
+        </div>
+        <div class="info-section feature-card">
+            <div class="feature-icon"><i class="fas fa-print"></i></div>
+            <h3>Print</h3>
+            <p>Getting a hard copy of your notes has never been easier. You can prepare the document for printing or save it as a PDF file with a single click of a button.</p>
+        </div>
+    </div>
+
+    <div class="info-section" id="overview">
+        <h3>Welcome to Note P@d: Your All-in-One Digital Workspace</h3>
+        <p>Note P@d is more than just an online notepad; it's your versatile, browser-based companion designed for modern productivity. Whether you're capturing fleeting ideas, journaling your thoughts, brainstorming new projects, drafting important content, sketching diagrams, or managing your daily tasks, Note P@d offers a fast, secure, and efficient experience. Forget bulky software installations – open Note P@d in your browser, and you're ready to create, organize, and achieve. It's lightweight, incredibly fast, and meticulously focused on providing a seamless, distraction-free environment for all your needs.</p>
+        <p>Our platform integrates a powerful text editor, a dynamic digital whiteboard, a simple to-do list manager, and a handy calendar, all designed to work harmoniously. With offline capabilities and local data storage, your work is always accessible and private. Explore our <a href="blogs.html">Productivity Insights blog</a> for tips and tricks to maximize your efficiency with Note P@d and beyond.</p>
+    </div>
+
+    <div id="premium-features-section" class="info-section"> 
+        <h3 style="text-align: center;">Unlock Premium Features</h3>
+        <div class="premium-offerings">
+            <div class="premium-feature-card">
+                <h4>Advanced Cloud Sync</h4>
+                <p>Sync your notes across all your devices seamlessly.</p>
+                <p class="price">Price: Rs. 100/month</p>
+                <button class="premium-buy-btn" data-feature="cloud-sync" data-price="100">Upgrade to Premium</button>
+                <div class="manual-payment-info">
+                    <p>Pay manually via Esewa:</p>
+                    <img src="https://i.ibb.co/L8nCNtj/IMG_0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
+                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
+                    <p><strong>Esewa Number:</strong> 9827801575</p>
+                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
+                </div>
+            </div>
+            <div class="premium-feature-card">
+                <h4>Priority Support</h4>
+                <p>Get faster responses to your queries.</p>
+                <p class="price">Price: Rs. 50/month</p>
+                <button class="premium-buy-btn" data-feature="priority-support" data-price="50">Upgrade to Premium</button>
+                <div class="manual-payment-info">
+                    <p>Pay manually via Esewa:</p>
+                    <img src="https://i.ibb.co/L8nCNtj/IMG_0120.jpg" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150">
+                    <p><strong>Esewa ID:</strong> B.T Mobile Care</p>
+                    <p><strong>Esewa Number:</strong> 9827801575</p>
+                    <small>After payment, please contact us with your transaction ID to activate your feature.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section" id="faq-section">
+        <h3>Frequently Asked Questions (FAQ)</h3>
+        <div class="faq-item">
+            <h4 class="faq-question">What is Note P@d?</h4>
+            <div class="faq-answer"><p>Note P@d is a free, versatile online application offering a modern notepad, a digital whiteboard for drawing, a to-do list manager, and a calendar. It's designed to be fast, secure, work offline (as a PWA), and save your data locally in your browser for basic use. Optional account features provide extended capabilities like cloud sync.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Is my data safe and private with Note P@d?</h4>
+            <div class="faq-answer"><p>Yes, data privacy is a top priority. For users without an account, all notes and data are stored locally in your browser's localStorage and are never transmitted to any external server. This means your data remains 100% on your device. If you use account features, we employ security measures to protect your data as outlined in our Privacy Policy.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Can I use Note P@d offline?</h4>
+            <div class="faq-answer"><p>Absolutely! Note P@d is a Progressive Web App (PWA). After your first visit with an internet connection, it caches the necessary files, allowing you to use it offline. This makes it a reliable tool even when you don't have internet access.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">Do I need to sign up or create an account?</h4>
+            <div class="faq-answer"><p>No sign-up is required for basic local note-taking, whiteboard use, or to-do list management. You can start using these features immediately. An account is optional and provides benefits like multi-user profile management, potential cloud synchronization for premium users, and access to other advanced features.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">How do I export my notes or drawings?</h4>
+            <div class="faq-answer"><p>You can easily export your content. Notepad entries can be exported as PDF files using the "PDF" button available with each saved note. Whiteboard drawings can be downloaded as PNG image files directly from the whiteboard interface.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">What are the premium features?</h4>
+            <div class="faq-answer"><p>Premium features, such as Advanced Cloud Sync and Priority Support, are available for users who wish to enhance their Note P@d experience. These are typically offered via a subscription and require an account. You can find more details in the "Unlock Premium Features" section if you are logged in.</p></div>
+        </div>
+        <div class="faq-item">
+            <h4 class="faq-question">How can I provide feedback or get support?</h4>
+            <div class="faq-answer"><p>We welcome your feedback! You can contact us through the details provided in the <a href="contact.html">Contact Us</a> section. For users with premium accounts, priority support options are available.</p></div>
+        </div>
+    </div>
+
+    <div class="info-section" id="how-it-works">
+        <h3>How Note P@d Works: Secure, Offline, and In Your Browser</h3>
+        <p>Note P@d leverages cutting-edge web technologies like HTML5, CSS3, and JavaScript to deliver a smooth, responsive, and private user experience. Here’s a breakdown of its core principles:</p>
+        <ul>
+            <li><strong>Local Storage First:</strong> For basic usage without an account, all notes, drawings, and to-do lists you create are stored directly in your browser’s <code>localStorage</code>. This means your data never leaves your computer by default and isn't transmitted to any external server, ensuring 100% privacy on your device.</li>
+            <li><strong>Offline Functionality (PWA):</strong> Note P@d is a Progressive Web App (PWA). After your first visit, it caches essential resources, allowing you to use most features even without an active internet connection. This makes it a reliable tool wherever you are.</li>
+            <li><strong>Client-Side Processing:</strong> Features like PDF export for notes and PNG downloads for whiteboards are handled by powerful JavaScript libraries (like jsPDF) directly within your browser. This maintains speed and privacy.</li>
+            <li><strong>Optional User Accounts:</strong> While basic use requires no sign-up, creating an account (via email or Google Sign-In) unlocks features like multi-device synchronization (premium), profile management, and potentially other collaborative tools in the future. Account data is handled securely.</li>
+            <li><strong>Intuitive Interface:</strong> We believe in simplicity. The interface is designed to be clean and intuitive, allowing you to focus on your tasks without a steep learning curve.</li>
+        </ul>
+        <p>Remember, if you are not using an account with cloud sync, clearing your browser's site data will permanently delete your locally stored notes. Always use the export features or consider an account for important data backup.</p>
+    </div>
+
+    <div class="info-section" id="privacy"> 
+        <h3>Your Privacy & Security: Our Commitment</h3>
+        <p>At Note P@d, your data privacy and security are paramount. We believe in absolute transparency and user control over information. Here's our commitment:</p>
+        <ul>
+            <li><strong>Local Data by Default:</strong> For users not signed into an account, all created content (notes, drawings, to-dos) is stored exclusively in your browser's local storage. It is *never* sent to our servers.</li>
+            <li><strong>No Tracking (Anonymous Use):</strong> We do not track your activity or content when you use the app anonymously.</li>
+            <li><strong>Secure Account Data:</strong> If you choose to create an account for features like cloud sync, your account information (like email and hashed password) is stored securely. We use industry-standard practices for data protection.</li>
+            <li><strong>User Control:</strong> You have control over your data. You can export your notes and drawings, and delete your account and associated data if you choose (subject to our full Privacy Policy).</li>
+            <li><strong>No third-party tracking cookies or pixel for personal data:</strong> Our focus is on providing a functional tool without infringing on your privacy. We use ads (Google AdSense) to support the free service, which may use cookies as per their policy, but we do not implement separate trackers for user profiling.</li>
+        </ul>
+        <p>We encourage you to read our full <a href="privacy-policy.html">Privacy Policy</a> for detailed information on how we collect, use, and protect your information. Your trust is important to us, and we strive to create a secure environment for your thoughts and ideas.</p>
+    </div>
+</main>
+
+<div id="welcomePopup" class="welcome-popup hidden"> <div class="welcome-content"> <h2>Welcome to Note P@d!</h2> <p>Capture your ideas. Organize your thoughts. Let’s get started!</p> <button id="getStartedBtn">Get Started</button> </div> </div>
+<div id="authModal" class="modal hidden"> <div class="modal-content"> <h2 id="authTitle">Sign In to Note P@d</h2> <input type="text" id="authUsername" placeholder="Username (Email)" autocomplete="username"/> <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"/> <button id="authSubmit">Sign In</button> <div id="googleSignInDiv" style="margin: 20px auto 0; display: flex; justify-content: center;"></div> <a href="#" id="forgotPassword">Forgot Password?</a> <p id="switchMode">Don't have an account? <a href="#">Sign Up</a></p> </div> </div>
+<div id="find-replace-dialog" class="hidden"> <input type="text" id="find-input" placeholder="Find..."> <input type="text" id="replace-input" placeholder="Replace with..."> <button id="replace-btn">Replace</button> <button id="replace-all-btn">Replace All</button> <button id="close-find-replace" class="close-btn" title="Close">×</button> </div>
+<button id="goToTopBtn" title="Go to top" aria-label="Go to top">↑</button>
+<div id="confetti" class="confetti hidden">🎉</div>
+<audio id="loginSound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+<!-- START: COOKIE CONSENT BANNER HTML -->
+<div id="cookie-consent-banner" class="hidden">
+    <p>We use cookies to enhance your experience, serve personalized ads, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. <a href="privacy-policy.html">Read our Privacy Policy</a>.</p>
+    <button id="accept-cookies-btn">Accept All</button>
+</div>
+<!-- END: COOKIE CONSENT BANNER HTML -->
+
+
+<footer>
+   <p>Copyright © <span id="currentYear"></span> <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Bishal Mishra</a> | All Rights Reserved.</p>
+   <div>
+        <a href="privacy-policy.html">Privacy Policy</a> |
+        <a href="terms-of-service.html">Terms of Service</a> |
+        <a href="disclaimer.html">Disclaimer</a> |
+        <a href="contact.html">Contact Us</a>
+   </div>
+</footer>
+
+
+<script>
+// --- GLOBAL VARIABLES ---
+let editModeId = null;
+let isSignUp = false;
+let deferredInstallPrompt = null;
+let undoStack = [];
+let redoStack = [];
+let lastChangeTimeout = null;
+let currentAppMode = 'notepad'; 
+let whiteboardState = { canvas: null, ctx: null, isDrawing: false, isErasing: false, lastX: 0, lastY: 0, brushColor: '#000000', brushSize: 5, imageData: null };
+let currentCalendarDate = new Date(); 
+const mainContainer = document.getElementById('main-container');
+const titleInput = document.getElementById('note-title');
+const textInput = document.getElementById('note-text');
+const noteList = document.getElementById('note-list');
+const charCount = document.getElementById('char-count');
+const wordCount = document.getElementById('word-count');
+const installBtn = document.getElementById('installBtn');
+const editorSection = document.getElementById('editor');
+const whiteboardSection = document.getElementById('whiteboard-container');
+const todoListContainer = document.getElementById('todo-list-container');
+const addTodoBtn = document.getElementById('add-todo-btn');
+const whiteboardCanvas = document.getElementById('whiteboard-canvas');
+const whiteboardTitleInput = document.getElementById('whiteboard-title');
+const findReplaceDialog = document.getElementById('find-replace-dialog');
+const goToTopBtn = document.getElementById('goToTopBtn');
+const welcomePopup = document.getElementById('welcomePopup');
+const authModal = document.getElementById('authModal');
+const authTitle = document.getElementById('authTitle');
+const authUsername = document.getElementById('authUsername');
+const authPassword = document.getElementById('authPassword');
+const authSubmit = document.getElementById('authSubmit');
+const switchAuthModeLink = document.getElementById('switchMode');
+const confetti = document.getElementById('confetti');
+const loginSound = document.getElementById('loginSound');
+const profileContainer = document.getElementById('profile-container');
+const profileIcon = document.getElementById('profile-icon');
+const profileDropdown = document.getElementById('profile-dropdown');
+const userPic = document.getElementById('userPic');
+const userNameDisplay = document.getElementById('userNameDisplay');
+const userEmailDisplay = document.getElementById('userEmailDisplay');
+const emailVerifiedStatus = document.getElementById('emailVerifiedStatus');
+const logoutBtn = document.getElementById('logoutBtn');
+const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+const editProfilePhotoBtn = document.getElementById('editProfilePhotoBtn');
+const photoUploadInput = document.getElementById('photoUpload');
+const manageAccountBtn = document.getElementById('manageAccountBtn'); 
+const calendarContainer = document.getElementById('calendar-container');
+const currentMonthYearDisplay = document.getElementById('currentMonthYear');
+const calendarGrid = document.querySelector('#calendar-container .calendar-grid'); 
+const prevMonthBtn = document.getElementById('prevMonthBtn');
+const nextMonthBtn = document.getElementById('nextMonthBtn');
+const exitCalendarBtn = document.getElementById('exitCalendarBtn'); 
+const premiumFeaturesSection = document.getElementById('premium-features-section'); 
+const adsenseContainer = document.querySelector('.adsense-ad-container');
+const QR_CODE_IMAGE_URL = "https://i.ibb.co/L8nCNtj/IMG_0120.jpg"; 
+let scrollAnimationObserver;
+const cookieBanner = document.getElementById('cookie-consent-banner');
+const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
+
+// --- START: AI WRITER VARIABLES ---
+const aiWriterContainer = document.getElementById('ai-writer-container');
+const aiPrompt = document.getElementById('ai-prompt');
+const aiResult = document.getElementById('ai-result');
+const aiGenerateBtn = document.getElementById('ai-generate-btn');
+const aiLoading = document.getElementById('ai-loading');
+const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
+// IMPORTANT: Replace this placeholder with your actual Pipedream HTTP Trigger URL.
+const PIPEDREAM_WORKFLOW_URL = 'https://eotsspqlmb4st0j.m.pipedream.net'; 
+// --- END: AI WRITER VARIABLES ---
+
+// --- SIDENAV & SCROLL FUNCTIONS ---
+function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
+function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+function scrollToSection(selector) { const element = document.getElementById(selector); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
+function closeNavAndGoTo(url) { closeNav(); setTimeout(() => window.location.href = url, 300); }
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadDarkMode();
+    updateClock(); 
+    setInterval(updateClock, 1000); 
+    fetchWeather();
+    checkCookieConsent();
+    checkAuthStatus(); 
+    attachEventListeners();
+    initWhiteboard(); 
+    if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); 
+    
+    document.getElementById('editor')?.classList.remove('hidden');
+    document.getElementById('whiteboard-container')?.classList.remove('hidden');
+    document.getElementById('calendar-container')?.classList.remove('hidden');
+    document.getElementById('ai-writer-container')?.classList.remove('hidden'); // Allow JS to control it
+    document.getElementById('notes')?.classList.remove('hidden');
+    document.querySelector('.features-grid')?.classList.remove('hidden');
+    document.getElementById('overview')?.classList.remove('hidden');
+    document.getElementById('premium-features-section')?.classList.remove('hidden');
+    document.getElementById('faq-section')?.classList.remove('hidden');
+    document.getElementById('how-it-works')?.classList.remove('hidden');
+    document.getElementById('privacy')?.classList.remove('hidden');
+    if(adsenseContainer) adsenseContainer.classList.remove('hidden');
+
+    switchAppMode('notepad'); 
+    
+    updateUIForPremiumFeatures();
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    if (!getCurrentUserId() && !localStorage.getItem('visited_notepad_home')) {
+        if(welcomePopup) welcomePopup.classList.remove('hidden');
+        localStorage.setItem('visited_notepad_home', 'true');
+    } else {
+        if(welcomePopup) welcomePopup.classList.add('hidden');
+    }
+    setupScrollAnimations();
+});
+
+window.onload = function() {
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        initGoogleSignIn();
+    } else {
+        let attempts = 0;
+        const intervalId = setInterval(() => {
+            attempts++;
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                initGoogleSignIn();
+                clearInterval(intervalId);
+            } else if (attempts > 20) {
+                console.error("Google Sign-In did not initialize in time.");
+                if(document.getElementById('googleSignInDiv')) {
+                     document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load. Please try refreshing.";
+                }
+                clearInterval(intervalId);
+            }
+        }, 500);
+    }
+};
+
+function attachEventListeners() {
+    if (textInput) textInput.addEventListener('input', () => { updateAll(); recordState(); });
+    if (titleInput) titleInput.addEventListener('input', saveDraft);
+    window.onscroll = () => { if (goToTopBtn) goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; };
+    if (goToTopBtn) goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    if (getStartedBtn) getStartedBtn.onclick = () => { if(welcomePopup) welcomePopup.classList.add("hidden"); if(authModal) authModal.classList.remove("hidden"); }; 
+    if (switchAuthModeLink) switchAuthModeLink.onclick = (e) => { e.preventDefault(); isSignUp = !isSignUp; if(authTitle) authTitle.textContent = isSignUp ? "Create your Account" : "Welcome Back"; if(authSubmit) authSubmit.textContent = isSignUp ? "Sign Up" : "Sign In"; switchAuthModeLink.innerHTML = isSignUp ? 'Already have an account? <a href="#">Sign In</a>' : 'Don’t have an account? <a href="#">Sign Up</a>'; };
+    if (authSubmit) authSubmit.onclick = handleAuthSubmit;
+    const closeFindReplaceBtn = document.getElementById('close-find-replace');
+    if (closeFindReplaceBtn) closeFindReplaceBtn.onclick = closeFindReplace;
+    const replaceBtn = document.getElementById('replace-btn');
+    if (replaceBtn) replaceBtn.onclick = () => findAndReplace(false);
+    const replaceAllBtn = document.getElementById('replace-all-btn');
+    if (replaceAllBtn) replaceAllBtn.onclick = () => findAndReplace(true);
+    if (profileIcon) profileIcon.addEventListener('click', toggleProfileDropdown);
+    document.addEventListener('click', closeDropdownOnClickOutside);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (verifyEmailBtn) verifyEmailBtn.addEventListener('click', handleVerifyEmail);
+    if (resetPasswordBtn) resetPasswordBtn.addEventListener('click', handleResetPassword);
+    if (manageAccountBtn) manageAccountBtn.addEventListener('click', handleManageAccount); 
+    if (editProfilePhotoBtn) editProfilePhotoBtn.addEventListener('click', (e) => { e.preventDefault(); if(photoUploadInput) photoUploadInput.click();});
+    if (photoUploadInput) photoUploadInput.addEventListener('change', handlePhotoUpload);
+    const faqContainer = document.getElementById('faq-section');
+    if (faqContainer) {
+        faqContainer.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question'); if (!question) return;
+            const item = question.parentElement; const answer = item.querySelector('.faq-answer'); if (!answer) return;
+            faqContainer.querySelectorAll('.faq-item').forEach(otherItem => { if (otherItem !== item) { otherItem.querySelector('.faq-question').classList.remove('active'); otherItem.querySelector('.faq-answer').style.maxHeight = null; }});
+            if (answer.style.maxHeight) { answer.style.maxHeight = null; question.classList.remove('active'); } 
+            else { question.classList.add('active'); answer.style.maxHeight = answer.scrollHeight + "px"; }
+        });
+    }
+    if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); renderCalendar(currentCalendarDate); });
+    if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1); renderCalendar(currentCalendarDate); });
+    if (calendarGrid) calendarGrid.addEventListener('click', (e) => { if (e.target.classList.contains('calendar-date') && !e.target.classList.contains('empty')) { document.querySelectorAll('.calendar-date.selected').forEach(date => date.classList.remove('selected')); e.target.classList.add('selected'); } });
+    if (exitCalendarBtn) exitCalendarBtn.addEventListener('click', () => switchAppMode('notepad'));
+    document.querySelectorAll('.premium-buy-btn').forEach(button => { button.addEventListener('click', () => { if (!getCurrentUserId()) { alert("Please sign in to purchase premium features."); if(authModal) authModal.classList.remove("hidden"); return; } const card = button.closest('.premium-feature-card'); if (card) { const paymentInfo = card.querySelector('.manual-payment-info'); if (paymentInfo) { paymentInfo.style.display = 'flex'; paymentInfo.scrollIntoView({ behavior: 'smooth' }); } } }); });
+    document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
+    if (acceptCookiesBtn) acceptCookiesBtn.addEventListener('click', handleAcceptCookies);
+    // START: AI WRITER EVENT LISTENERS
+    if(aiGenerateBtn) aiGenerateBtn.addEventListener('click', generateAIEssay);
+    if(copyAIResultBtn) copyAIResultBtn.addEventListener('click', copyAIResult);
+    // END: AI WRITER EVENT LISTENERS
+}
+
+// --- START: AI WRITER FUNCTIONS ---
+async function generateAIEssay() {
+    const promptText = aiPrompt.value.trim();
+    if (!promptText) {
+        alert("Please enter a topic for the essay.");
+        return;
+    }
+    if (PIPEDREAM_WORKFLOW_URL === 'YOUR_PIPEDREAM_HTTP_TRIGGER_URL_HERE') {
+        alert("Developer Error: Pipedream workflow URL is not configured.");
+        return;
+    }
+
+    aiGenerateBtn.disabled = true;
+    aiLoading.classList.remove('hidden');
+    aiResult.value = '';
+    copyAIResultBtn.classList.add('hidden');
+
+    try {
+        const response = await fetch(PIPEDREAM_WORKFLOW_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ prompt: promptText })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `API Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const generatedText = data.generated_text;
+
+        aiResult.value = generatedText;
+        copyAIResultBtn.classList.remove('hidden');
+
+    } catch (error) {
+        console.error('Error calling Pipedream workflow:', error);
+        aiResult.value = `An error occurred: ${error.message}. Please check the Pipedream workflow logs and ensure it is deployed correctly.`;
+    } finally {
+        aiGenerateBtn.disabled = false;
+        aiLoading.classList.add('hidden');
+    }
+}
+
+function copyAIResult() {
+    if (aiResult.value) {
+        navigator.clipboard.writeText(aiResult.value)
+            .then(() => {
+                alert("Essay copied to clipboard!");
+            })
+            .catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert("Failed to copy text. Please try again or copy manually.");
+            });
+    }
+}
+// --- END: AI WRITER FUNCTIONS ---
+
+// --- COOKIE BANNER FUNCTIONS ---
+function checkCookieConsent() {
+    if (!localStorage.getItem('cookie_consent_given')) {
+        if (cookieBanner) {
+            cookieBanner.classList.remove('hidden');
+            setTimeout(() => { cookieBanner.classList.add('show'); }, 500);
+        }
+    }
+}
+
+function handleAcceptCookies() {
+    localStorage.setItem('cookie_consent_given', 'true');
+    if (cookieBanner) {
+        cookieBanner.classList.remove('show');
+        cookieBanner.addEventListener('transitionend', () => {
+            cookieBanner.classList.add('hidden');
+        }, { once: true });
+    }
+}
+
+// --- Live Clock and Weather Functions ---
+function updateClock() {
+    const clockElement = document.getElementById('live-clock');
+    if (!clockElement) return;
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    clockElement.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+function getWeatherIconClass(weatherId) {
+    if (weatherId >= 200 && weatherId < 300) return 'fas fa-bolt'; // Thunderstorm
+    if (weatherId >= 300 && weatherId < 400) return 'fas fa-cloud-rain'; // Drizzle
+    if (weatherId >= 500 && weatherId < 600) return 'fas fa-cloud-showers-heavy'; // Rain
+    if (weatherId >= 600 && weatherId < 700) return 'fas fa-snowflake'; // Snow
+    if (weatherId >= 700 && weatherId < 800) return 'fas fa-smog'; // Atmosphere
+    if (weatherId === 800) return 'fas fa-sun'; // Clear
+    if (weatherId === 801) return 'fas fa-cloud-sun'; // Few clouds
+    if (weatherId > 801 && weatherId < 805) return 'fas fa-cloud'; // Clouds
+    return 'fas fa-question-circle'; // Default
+}
+
+function fetchWeatherData(lat, lon) {
+    const weatherElement = document.getElementById('live-weather');
+    const apiKey = '6c6f3b5d9306e38909bea9a6b45a3e74';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => { if (!response.ok) throw new Error(`API Error: ${response.statusText}`); return response.json(); })
+        .then(data => {
+            if (!data.main || !data.weather || !data.weather[0] || !data.name) throw new Error('Invalid data from Weather API');
+            const temp = Math.round(data.main.temp);
+            const iconClass = getWeatherIconClass(data.weather[0].id);
+            weatherElement.innerHTML = `<i class="${iconClass}"></i> ${data.name}: ${temp}°C <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Refresh weather"></i>`;
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+            weatherElement.innerHTML = `<i class="fas fa-times-circle"></i> Weather unavailable <i id="weather-refresh-btn" class="fas fa-sync-alt" title="Retry"></i>`;
+        });
+}
+
+function fetchWeather() {
+    const weatherElement = document.getElementById('live-weather');
+    if (!weatherElement) return;
+    if (!document.getElementById('weather-refresh-btn')?.classList.contains('fa-spin')) weatherElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching weather...`;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( (position) => fetchWeatherData(position.coords.latitude, position.coords.longitude), () => fetchWeatherData(27.7172, 85.3240), { timeout: 10000 });
+    } else { fetchWeatherData(27.7172, 85.3240); }
+}
+
+function toggleProfileDropdown() { if(profileDropdown) profileDropdown.classList.toggle('hidden'); }
+function closeDropdownOnClickOutside(event) { if (profileContainer && !profileContainer.contains(event.target) && profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); }
+function checkAuthStatus() { const currentUserId = getCurrentUserId(); if (currentUserId) { showUserInfo(); loadDraft(); displayNotes(); if(textInput) { updateAll(); resetHistory(textInput.value); } } else { if(profileContainer) profileContainer.classList.add('hidden'); displayNotes(); } updateUIForPremiumFeatures(); }
+function showUserInfo() { const username = localStorage.getItem('currentUser'); const picUrl = localStorage.getItem('userPic'); const email = localStorage.getItem('userEmail'); const isVerified = localStorage.getItem('emailVerified') === 'true'; if (!username || !profileContainer) return; profileContainer.classList.remove('hidden'); const avatarUrl = picUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}&background=random&color=fff&size=48`; if(profileIcon) profileIcon.src = avatarUrl; if(userPic) userPic.src = avatarUrl; if(userNameDisplay) userNameDisplay.textContent = username; if(userEmailDisplay) userEmailDisplay.textContent = email || ''; if (emailVerifiedStatus) { if (isVerified) { emailVerifiedStatus.innerHTML = '<i class="fas fa-check-circle" title="Email is verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '0.6'; verifyEmailBtn.style.cursor = 'default'; } } else { emailVerifiedStatus.innerHTML = '<i class="fas fa-times-circle" title="Email not verified"></i>'; if(verifyEmailBtn) { verifyEmailBtn.style.opacity = '1'; verifyEmailBtn.style.cursor = 'pointer'; } } } if(verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'block'; const provider = localStorage.getItem('authProvider'); if (resetPasswordBtn && resetPasswordBtn.parentElement) { if (provider === 'google') { resetPasswordBtn.parentElement.style.display = 'none'; if (isVerified && verifyEmailBtn && verifyEmailBtn.parentElement) verifyEmailBtn.parentElement.style.display = 'none'; } else resetPasswordBtn.parentElement.style.display = 'block'; } }
+function handleAuthSubmit() { if(!authUsername || !authPassword) return; const username = authUsername.value.trim(); const password = authPassword.value.trim(); if (!username || !password) { alert("Please fill in all fields"); return; } const users = JSON.parse(localStorage.getItem("users") || "{}"); if (isSignUp) { if (users[username]) { alert("Username (email) already exists."); return; } users[username] = password; localStorage.setItem("users", JSON.stringify(users)); localStorage.setItem('authProvider', 'email'); localStorage.setItem('userEmail', username); localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } else { if (!users[username] || users[username] !== password) { alert("Invalid credentials"); return; } if (localStorage.getItem('userEmail') !== username) localStorage.setItem('userEmail', username); if (localStorage.getItem('authProvider') !== 'email') localStorage.setItem('authProvider', 'email'); if (localStorage.getItem('emailVerified') === null) localStorage.setItem('emailVerified', 'false'); localStorage.setItem("currentUser", username); loginSuccess(username, "", username); } }
+function handleLogout(e) { if(e) e.preventDefault(); localStorage.removeItem("currentUser"); localStorage.removeItem("userPic"); localStorage.removeItem("currentUserId"); localStorage.removeItem("emailVerified"); localStorage.removeItem("userEmail"); localStorage.removeItem("authProvider"); if (typeof google !== 'undefined' && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); if(profileContainer) profileContainer.classList.add('hidden'); if(profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); if(authModal) authModal.classList.remove("hidden"); if(noteList) noteList.innerHTML = ''; newDoc(); displayNotes(); updateUIForPremiumFeatures();  }
+function handlePhotoUpload(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { localStorage.setItem('userPic', e.target.result); showUserInfo(); alert("Profile photo updated!"); }; reader.readAsDataURL(file); }
+function handleVerifyEmail(e) { e.preventDefault(); if (localStorage.getItem('emailVerified') === 'true') { alert('Your email is already verified.'); return; } if (localStorage.getItem('authProvider') === 'google') { alert('Google accounts are typically pre-verified or managed via Google.'); return; } const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); alert(`A verification code has been "sent" to your email (for demo purposes, it's shown here).\n\nYour code is: ${verificationCode}\n\nPlease enter this code in the prompt.`); const userCode = prompt("Please enter the 6-digit verification code:"); if (userCode === verificationCode) { localStorage.setItem('emailVerified', 'true'); alert("Email verified successfully!"); showUserInfo(); }  else if (userCode) { alert("Incorrect code. Please try again."); }  else { alert("Verification cancelled."); } }
+function handleResetPassword(e) { e.preventDefault(); if (localStorage.getItem('authProvider') === 'google') { alert("Password reset is managed through your Google account."); return; } if (!localStorage.getItem('currentUser')) { alert("Please sign in to reset your password."); return; } const newPassword = prompt("Enter your new password (min 4 characters):"); if (!newPassword || newPassword.length < 4) { if (newPassword !== null) alert("Password is too short."); return; } const confirmPassword = prompt("Confirm your new password:"); if (newPassword !== confirmPassword) { alert("Passwords do not match."); return; } const username = localStorage.getItem('userEmail'); if(!username) { alert("User email not found. Cannot reset password."); return;} const users = JSON.parse(localStorage.getItem("users") || "{}"); if (users[username]) { users[username] = newPassword; localStorage.setItem("users", JSON.stringify(users)); alert("Your password has been reset successfully!"); }  else { alert("An error occurred. Could not find user to update password."); } }
+function handleManageAccount(e) { e.preventDefault(); alert("You can manage your profile photo and email verification from the dropdown. For other account settings, please contact support if needed."); }
+function loginSuccess(username, picUrl, userId) { localStorage.setItem("currentUserId", userId); if(picUrl) localStorage.setItem("userPic", picUrl); showUserInfo(); if(authModal) authModal.classList.add("hidden"); if(confetti) confetti.classList.remove("hidden"); if(loginSound) loginSound.play().catch(e => console.warn("Audio play failed:", e)); setTimeout(() => { if(confetti) confetti.classList.add("hidden"); }, 1200); loadDraft(); displayNotes(); if(textInput) { updateAll(); resetHistory(textInput.value); } updateUIForPremiumFeatures();  }
+function initGoogleSignIn() { try { if (!google || !google.accounts || !google.accounts.id) { console.error("Google Sign-In library not fully loaded."); if(document.getElementById('googleSignInDiv')) document.getElementById('googleSignInDiv').innerHTML = "Google Sign-In failed to load."; return; } google.accounts.id.initialize({ client_id: "107788525119-7mkm9t2pqe53q85ltenn4lr3av7itdfh.apps.googleusercontent.com", callback: handleGoogleSignIn }); const googleSignInButtonContainer = document.getElementById("googleSignInDiv"); if (googleSignInButtonContainer) google.accounts.id.renderButton(googleSignInButtonContainer, { theme: "outline", size: "large", shape: "pill", width: "300" }); else console.warn("Google Sign-In button container not found."); } catch (error) { console.error("Google GSI could not be initialized.", error); const googleSignInButtonContainer = document.getElementById('googleSignInDiv'); if (googleSignInButtonContainer) googleSignInButtonContainer.innerHTML = "Google Sign-In failed to load."; } }
+function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { console.error("Failed to decode JWT", e); return null; } }
+function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
+function switchAppMode(mode) {
+    currentAppMode = mode;
+    const appToolSections = [editorSection, whiteboardSection, calendarContainer, aiWriterContainer];
+    appToolSections.forEach(sec => {
+        if (sec) sec.classList.add('hidden');
+    });
+
+    // Reset specific UI elements
+    if (todoListContainer) todoListContainer.classList.add('hidden');
+    if (addTodoBtn) addTodoBtn.classList.add('hidden');
+    if (titleInput) titleInput.classList.add('hidden');
+    if (textInput) textInput.classList.add('hidden');
+    if (whiteboardTitleInput) whiteboardTitleInput.classList.add('hidden');
+
+    // Update mode buttons
+    document.querySelectorAll('.mode-switcher button').forEach(b => b.classList.remove('active-mode'));
+    const modeButton = document.getElementById(`mode-${mode}`);
+    if (modeButton) modeButton.classList.add('active-mode');
+
+    // Show the correct section based on mode
+    if (mode === 'notepad') {
+        if(editorSection) editorSection.classList.remove('hidden');
+        if(textInput) textInput.classList.remove('hidden');
+        if(titleInput) titleInput.classList.remove('hidden');
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
+        if(noteList && noteList.parentElement) noteList.parentElement.classList.remove('hidden');
+    } else if (mode === 'whiteboard') {
+        if(whiteboardSection) whiteboardSection.classList.remove('hidden');
+        if(whiteboardTitleInput) whiteboardTitleInput.classList.remove('hidden');
+        resizeWhiteboard();
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
+        if(noteList && noteList.parentElement) noteList.parentElement.classList.remove('hidden');
+    } else if (mode === 'todo') {
+        if(editorSection) editorSection.classList.remove('hidden');
+        if(todoListContainer) todoListContainer.classList.remove('hidden');
+        if(addTodoBtn) addTodoBtn.classList.remove('hidden');
+        if(titleInput) titleInput.classList.remove('hidden');
+        if(mainContainer) mainContainer.classList.add('desktop-two-column');
+        if(noteList && noteList.parentElement) noteList.parentElement.classList.remove('hidden');
+    } else if (mode === 'calendar' || mode === 'ai-writer') {
+        if(mode === 'calendar' && calendarContainer) calendarContainer.classList.remove('hidden');
+        if(mode === 'ai-writer' && aiWriterContainer) aiWriterContainer.classList.remove('hidden');
+        if(mainContainer) mainContainer.classList.remove('desktop-two-column');
+        if(noteList && noteList.parentElement) noteList.parentElement.classList.add('hidden');
+        if (mode === 'calendar' && currentMonthYearDisplay) renderCalendar(currentCalendarDate);
+    }
+}
+function newDoc() { editModeId = null; if(titleInput) titleInput.value = ''; if(textInput) textInput.value = ''; if(whiteboardTitleInput) whiteboardTitleInput.value = ''; if(todoListContainer) todoListContainer.innerHTML = ''; if(aiPrompt) aiPrompt.value = ''; if(aiResult) aiResult.value = ''; clearCanvas(); updateAll(); clearDraft(); resetHistory(); if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); switchAppMode('notepad'); if(titleInput) titleInput.focus(); }
+function saveNote() { const key = getUserNotesKey(); if (!key) { alert("Please sign in to save notes. Your work will remain in the editor."); if(authModal) authModal.classList.remove("hidden"); return; } let title, content, type; if (currentAppMode === 'notepad') { if (!textInput || !textInput.value.trim()) { alert("Cannot save an empty note."); return; } title = titleInput ? titleInput.value || 'Untitled Note' : 'Untitled Note'; content = textInput.value; type = 'notepad'; } else if (currentAppMode === 'whiteboard') { title = whiteboardTitleInput ? whiteboardTitleInput.value || 'Untitled Whiteboard' : 'Untitled Whiteboard'; if (!whiteboardState.canvas) { alert("Whiteboard not initialized."); return; } content = whiteboardState.canvas.toDataURL(); type = 'whiteboard'; } else if (currentAppMode === 'todo') { if (!todoListContainer || todoListContainer.children.length === 0) { alert("Cannot save an empty to-do list."); return; } title = titleInput ? titleInput.value || 'Untitled To-Do List' : 'Untitled To-Do List'; content = serializeTodoList(); type = 'todo'; } else { alert("Cannot save in current mode."); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const timestamp = new Date().toLocaleString(); if (editModeId) { const idx = notes.findIndex(n => n.id === editModeId); if (idx > -1) notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); } else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); newDoc(); }
+function displayNotes() { if(!noteList) return; const key = getUserNotesKey(); const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : []; if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.unobserve(noteElement); noteElement.classList.remove('is-visible'); }); } if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>"; else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>"; else { notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); noteList.innerHTML = notes.map((n, index) => { let contentPreview = ''; const noteType = n.type || 'notepad'; if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`; else if (noteType === 'whiteboard') contentPreview = `<img src="${n.text}" alt="Whiteboard Preview" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`; else if (noteType === 'todo') { try {  const todoItems = JSON.parse(n.text); const completedItems = todoItems.filter(item => item.checked).length; contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`;  } catch { contentPreview = `<i>Corrupted To-Do List.</i>`} } else { const div = document.createElement('div'); div.innerHTML = n.text; const plainText = div.textContent || div.innerText || ''; contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`; } const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : ''; const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝'); return `<div class="note ${n.pinned ? 'pinned' : ''} fade-in-up" id="note-${n.id}" data-animation-delay="${index * 0.05}">` + `<h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4>` + `<p class="note-content-preview">${contentPreview}</p>` + `<small>Last updated: ${n.date}</small>` + `<div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div>` + `</div>`; }).join(''); if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.observe(noteElement); }); } } }
+async function editNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to edit notes."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) { alert("Note not found."); return;} if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to unlock this note:"); if (password === null) return; if (!password) {alert("Password cannot be empty."); return;} const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } newDoc(); const noteType = note.type || 'notepad'; switchAppMode(noteType); editModeId = id; if (noteType === 'notepad') { if(titleInput) titleInput.value = note.title; if(textInput) { textInput.value = note.text; resetHistory(note.text); } } else if (noteType === 'whiteboard') { if(whiteboardTitleInput) whiteboardTitleInput.value = note.title; if (whiteboardState.canvas && whiteboardState.ctx) { const img = new Image(); img.onload = () => { clearCanvas(); const canvasWidth = whiteboardState.canvas.width, canvasHeight = whiteboardState.canvas.height, hRatio = canvasWidth / img.width, vRatio = canvasHeight / img.height, ratio = Math.min(hRatio, vRatio), centerShift_x = (canvasWidth - img.width * ratio) / 2, centerShift_y = (canvasHeight - img.height * ratio) / 2; whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio); whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, canvasWidth, canvasHeight); }; img.onerror = () => alert("Failed to load whiteboard image for editing."); img.src = note.text; } else alert("Whiteboard component not ready for editing."); } else if (noteType === 'todo') { if(titleInput) titleInput.value = note.title; parseAndRenderTodoList(note.text); } updateAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function getCurrentUserId() { return localStorage.getItem('currentUserId'); }
+function getUserNotesKey() { return getCurrentUserId() ? `notes_${getCurrentUserId()}` : null; }
+function getDraftKey() { return getCurrentUserId() ? `draft_${getCurrentUserId()}` : null; }
+function updateAll() { saveDraft(); updateCharCount(); updateWordCount(); }
+function updateCharCount() { if(charCount && textInput) charCount.textContent = `Character Count: ${textInput.value.length}`; }
+function updateWordCount() { if(wordCount && textInput) {const words = textInput.value.trim().split(/\s+/).filter(Boolean); wordCount.textContent = `Word Count: ${words.length}`; }}
+function saveDraft() { const key = getDraftKey(); if (!key || !titleInput || !textInput) return; if (currentAppMode === 'notepad') localStorage.setItem(key, JSON.stringify({ title: titleInput.value, text: textInput.value })); }
+function loadDraft() { const key = getDraftKey(); if (!key || !titleInput || !textInput) return; const d = localStorage.getItem(key); if (d) { try {const { title, text } = JSON.parse(d); titleInput.value = title; textInput.value = text;} catch(e){console.error("Error parsing draft", e); localStorage.removeItem(key);}} }
+function clearDraft() { const key = getDraftKey(); if (key) localStorage.removeItem(key); }
+function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('darkMode', document.body.classList.contains('dark')); }
+function loadDarkMode() { if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark'); }
+function changeFont() { const fontFamilySelect = document.getElementById('font-family'); if(textInput && fontFamilySelect) textInput.style.fontFamily = fontFamilySelect.value; }
+function changeFontSize() { const fontSizeSelect = document.getElementById('font-size'); if(textInput && fontSizeSelect) textInput.style.fontSize = fontSizeSelect.value; }
+async function hashPassword(password) { if (!password) return ''; try {const encoder = new TextEncoder(); const data = encoder.encode(password); const hashBuffer = await crypto.subtle.digest('SHA-256', data); const hashArray = Array.from(new Uint8Array(hashBuffer)); return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');} catch(e) { console.error("Password hashing failed", e); return 'error_hashing_password'; }}
+function initWhiteboard() { if (!whiteboardCanvas) return; whiteboardState.canvas = whiteboardCanvas; whiteboardState.ctx = whiteboardCanvas.getContext('2d', { willReadFrequently: true }); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); resizeWhiteboard(); whiteboardState.canvas.addEventListener('mousedown', startDrawing); whiteboardState.canvas.addEventListener('mouseup', stopDrawing); whiteboardState.canvas.addEventListener('mouseout', stopDrawing); whiteboardState.canvas.addEventListener('mousemove', draw); whiteboardState.canvas.addEventListener('touchstart', startDrawing, { passive: false }); whiteboardState.canvas.addEventListener('touchend', stopDrawing, { passive: false }); whiteboardState.canvas.addEventListener('touchmove', draw, { passive: false }); const wbColorInput = document.getElementById('wb-color'); if (wbColorInput) wbColorInput.onchange = (e) => { whiteboardState.brushColor = e.target.value; whiteboardState.isErasing = false; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.remove('active'); }; const wbSizeInput = document.getElementById('wb-size'); if (wbSizeInput) wbSizeInput.onchange = (e) => whiteboardState.brushSize = e.target.value; const wbEraserBtn = document.getElementById('wb-eraser'); if (wbEraserBtn) wbEraserBtn.onclick = toggleEraser; const wbClearBtn = document.getElementById('wb-clear'); if (wbClearBtn) wbClearBtn.onclick = clearCanvas; const wbDownloadBtn = document.getElementById('wb-download'); if (wbDownloadBtn) wbDownloadBtn.onclick = downloadCanvas; window.addEventListener('resize', resizeWhiteboard);  }
+function resizeWhiteboard() { if (!whiteboardState.canvas || !whiteboardState.ctx || !whiteboardSection) return; if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) { try { whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); } catch (e) { console.error("Error getting image data during resize: ", e); whiteboardState.imageData = null; } } const containerWidth = whiteboardSection.clientWidth - 50; whiteboardState.canvas.width = Math.max(containerWidth, 300); whiteboardState.canvas.height = Math.min(Math.max(containerWidth * 0.6, 200), window.innerHeight * 0.5); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); if (whiteboardState.imageData) { try { whiteboardState.ctx.putImageData(whiteboardState.imageData, 0, 0); } catch(e) { console.error("Error putting image data during resize: ", e); clearCanvas(); } } }
+function getMousePos(e) { if(!whiteboardState.canvas) return { x: 0, y: 0 }; const rect = whiteboardState.canvas.getBoundingClientRect(); const scaleX = whiteboardState.canvas.width / rect.width; const scaleY = whiteboardState.canvas.height / rect.height; const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };  }
+function startDrawing(e) { e.preventDefault(); whiteboardState.isDrawing = true; const { x, y } = getMousePos(e); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
+function stopDrawing() { if (!whiteboardState.isDrawing) return; whiteboardState.isDrawing = false; whiteboardState.ctx.beginPath(); if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); }
+function draw(e) { e.preventDefault(); if (!whiteboardState.isDrawing || !whiteboardState.ctx) return; const { ctx, lastX, lastY, brushColor, brushSize, isErasing } = whiteboardState; const { x, y } = getMousePos(e); ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over'; ctx.strokeStyle = isErasing ? 'rgba(0,0,0,1)' : brushColor; ctx.lineWidth = brushSize; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(x, y); ctx.stroke(); [whiteboardState.lastX, whiteboardState.lastY] = [x, y]; }
+function toggleEraser() { whiteboardState.isErasing = !whiteboardState.isErasing; const wbEraserBtn = document.getElementById('wb-eraser'); if(wbEraserBtn) wbEraserBtn.classList.toggle('active', whiteboardState.isErasing); }
+function clearCanvas() { if (!whiteboardState.ctx || !whiteboardState.canvas) return; whiteboardState.ctx.clearRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); whiteboardState.ctx.fillStyle = document.body.classList.contains('dark') ? '#383838' : '#fff'; whiteboardState.ctx.fillRect(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); if (whiteboardState.canvas.width > 0 && whiteboardState.canvas.height > 0) whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, whiteboardState.canvas.width, whiteboardState.canvas.height); }
+function downloadCanvas() { if(!whiteboardState.canvas || !whiteboardTitleInput) return; const link = document.createElement('a'); link.download = `${whiteboardTitleInput.value.trim().replace(/[^\w\s]/gi, '_') || 'whiteboard_drawing'}.png`; link.href = whiteboardState.canvas.toDataURL('image/png'); link.click();  }
+function addTodoItem(text = '', checked = false) { if(!todoListContainer) return; const itemDiv = document.createElement('div'); itemDiv.className = 'todo-item'; if (checked) itemDiv.classList.add('completed'); const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = checked; checkbox.onchange = () => { itemDiv.classList.toggle('completed', checkbox.checked); saveDraft(); }; const textSpan = document.createElement('span'); textSpan.className = 'todo-text'; textSpan.contentEditable = true; textSpan.textContent = text || 'New to-do...'; textSpan.onblur = () => saveDraft(); itemDiv.append(checkbox, textSpan); todoListContainer.appendChild(itemDiv); }
+function serializeTodoList() { if(!todoListContainer) return JSON.stringify([]); const items = []; todoListContainer.querySelectorAll('.todo-item').forEach(item => { const textElement = item.querySelector('.todo-text'); const checkboxElement = item.querySelector('input[type="checkbox"]'); if (textElement && checkboxElement) items.push({ text: textElement.textContent, checked: checkboxElement.checked }); }); return JSON.stringify(items); }
+function parseAndRenderTodoList(jsonString) { if(!todoListContainer) return; todoListContainer.innerHTML = ''; try { const items = JSON.parse(jsonString); if (Array.isArray(items)) items.forEach(item => addTodoItem(item.text, item.checked)); else console.error("Parsed To-Do list is not an array:", items); } catch (e) { console.error("Failed to parse To-Do list", e); }  }
+function renderCalendar(dateToRender) { if(!currentMonthYearDisplay || !calendarGrid) return; const year = dateToRender.getFullYear(), month = dateToRender.getMonth(); currentMonthYearDisplay.textContent = dateToRender.toLocaleString('default', { month: 'long', year: 'numeric' }); while (calendarGrid.children.length > 7) calendarGrid.removeChild(calendarGrid.lastChild); const firstDayOfMonthIndex = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const today = new Date(); const isCurrentDisplayingTodayMonth = today.getFullYear() === year && today.getMonth() === month; for (let i = 0; i < firstDayOfMonthIndex; i++) { const emptyDiv = document.createElement('div'); emptyDiv.classList.add('calendar-date', 'empty'); calendarGrid.appendChild(emptyDiv); } for (let day = 1; day <= daysInMonth; day++) { const dateDiv = document.createElement('div'); dateDiv.classList.add('calendar-date'); dateDiv.textContent = day; dateDiv.dataset.date = new Date(year, month, day).toISOString().split('T')[0]; if (isCurrentDisplayingTodayMonth && day === today.getDate()) dateDiv.classList.add('current-day'); calendarGrid.appendChild(dateDiv); } }
+function recordState() { if(!textInput) return; clearTimeout(lastChangeTimeout); lastChangeTimeout = setTimeout(() => { if (currentAppMode !== 'notepad') return; const currentState = textInput.value; if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) { undoStack.push(currentState); redoStack = []; if (undoStack.length > 50) undoStack.shift(); } }, 500); }
+function undo() { if(!textInput || currentAppMode !== 'notepad' || undoStack.length < 2) return; redoStack.push(undoStack.pop()); textInput.value = undoStack[undoStack.length - 1] || ''; updateAll(); }
+function redo() { if(!textInput || currentAppMode !== 'notepad' || redoStack.length === 0) return; const nextState = redoStack.pop(); undoStack.push(nextState); textInput.value = nextState; updateAll(); }
+function resetHistory(initialText = '') { undoStack = [initialText]; redoStack = []; }
+function cutText() { if(!textInput || currentAppMode !== 'notepad' || textInput.selectionStart === textInput.selectionEnd) return; try { navigator.clipboard.writeText(textInput.value.substring(textInput.selectionStart, textInput.selectionEnd)); const start = textInput.selectionStart, end = textInput.selectionEnd; textInput.value = textInput.value.substring(0, start) + textInput.value.substring(end); textInput.selectionStart = textInput.selectionEnd = start; } catch (e) { console.warn("Clipboard API failed:", e); try { document.execCommand('delete', false, null); } catch (ex) { /* ignore */ } } updateAll(); recordState();  }
+function showFindReplace() { if (currentAppMode !== 'notepad' && findReplaceDialog) { findReplaceDialog.classList.remove('hidden'); findReplaceDialog.querySelector('#find-input')?.focus(); }}
+function closeFindReplace() { if(findReplaceDialog) findReplaceDialog.classList.add('hidden'); }
+function findAndReplace(replaceAll = false) { if(!textInput) return; const findInputEl = document.getElementById('find-input'); const replaceInputEl = document.getElementById('replace-input'); if(!findInputEl || !replaceInputEl) return; const findValue = findInputEl.value, replaceValue = replaceInputEl.value; if (!findValue) return; try { const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); textInput.value = textInput.value.replace(regex, replaceValue); } catch(e) { alert("Invalid find pattern."); console.error("Regex error:", e); return; } updateAll(); recordState(); }
+function deleteNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; } if (!confirm("Are you sure you want to delete this note permanently?")) return; let notes = JSON.parse(localStorage.getItem(key)) || []; localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); displayNotes(); if (editModeId === id) newDoc(); }
+function pinNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to pin notes."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (note) note.pinned = !note.pinned; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
+async function toggleLock(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in."); if(authModal) authModal.classList.remove("hidden"); return; } let notes = JSON.parse(localStorage.getItem(key)) || []; const noteIndex = notes.findIndex(n => n.id === id); if (noteIndex === -1) return; const note = notes[noteIndex]; if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to unlock:"); if (password === null) return; if (!password) { alert("Password cannot be empty."); return; } const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } note.isLocked = false; note.passwordHash = null; alert("Note unlocked successfully!"); } else { const password = prompt("Enter a new password (min 4 chars):"); if (password === null) return; if (!password || password.length < 4) { alert("Password is too short."); return; } const confirmPassword = prompt("Confirm password:"); if (password !== confirmPassword) { alert("Passwords do not match."); return; } note.isLocked = true; note.passwordHash = await hashPassword(password); alert("Note locked successfully!"); } notes[noteIndex] = note; localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); }
+async function exportPDF(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to export."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) { alert("Note not found."); return; } if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to export:"); if (password === null) return; if (!password) { alert("Password cannot be empty."); return;} const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') { alert("PDF library not loaded."); return; } const { jsPDF } = window.jspdf; try { const doc = new jsPDF(); doc.setFont("Helvetica", "bold"); doc.setFontSize(20); doc.text(note.title, 15, 20); doc.setFont("Helvetica", "normal"); doc.setFontSize(12); let contentToExport = note.text; if (note.type === 'todo') { try { contentToExport = JSON.parse(note.text).map(item => `${item.checked ? '[x]' : '[ ]'} ${item.text}`).join('\n'); } catch { contentToExport = "Error parsing to-do list."} } const lines = doc.splitTextToSize(contentToExport, 180); doc.text(lines, 15, 30); doc.save(`${note.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_') || 'NoteP@d_Export'}.pdf`); } catch (e) { alert("An error occurred generating the PDF."); console.error("PDF Export Error:", e); } }
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; if(installBtn) installBtn.classList.remove('hidden'); });
+if(installBtn) installBtn.addEventListener('click', async () => { if (deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installBtn.classList.add('hidden'); } });
+document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
+function checkPremiumStatus(feature) { return false; }
+function updateUIForPremiumFeatures() { if (!premiumFeaturesSection) return; const isLoggedIn = !!getCurrentUserId(); if (!isLoggedIn) premiumFeaturesSection.classList.add('hidden'); else premiumFeaturesSection.classList.remove('hidden'); document.querySelectorAll('.premium-feature-card').forEach(card => { const buyButton = card.querySelector('.premium-buy-btn'); const manualPaymentInfo = card.querySelector('.manual-payment-info'); if (!buyButton || !manualPaymentInfo) return; const feature = buyButton.getAttribute('data-feature'); if (checkPremiumStatus(feature)) { buyButton.style.display = 'none'; manualPaymentInfo.style.display = 'flex'; manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`; } else { buyButton.style.display = 'block'; if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`; } manualPaymentInfo.style.display = 'none'; } }); }
+function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), document.getElementById('ai-writer-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar') || (section.id === 'ai-writer-container' && currentAppMode === 'ai-writer'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
+</script>
+</body>
+</html>
