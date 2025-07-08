@@ -8,7 +8,7 @@
     
     <meta name="description" content="Note Pad is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, a to-do list manager, and an AI Essay Writer. Your data is saved locally. Works offline. Discover productivity tips on our blog."/>
     
-    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips, study tools, free productivity app, ai essay writer"/>
+    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips, study tools, free productivity app, ai essay writer, google ai"/>
     
     <meta name="author" content="Bishal Mishra">
     <meta name="robots" content="index, follow">
@@ -686,7 +686,7 @@
     <!-- START: AI WRITER CONTAINER -->
     <div id="ai-writer-container" class="hidden">
         <h3>🤖 AI Essay Writer</h3>
-        <p>Enter a topic and let the AI write an essay for you. (Powered by Hugging Face)</p>
+        <p>Enter a topic and let the AI write an essay for you. (Powered by Google AI)</p>
         <input type="text" id="ai-prompt" placeholder="e.g., The impact of artificial intelligence on modern society...">
         <textarea id="ai-result" rows="15" placeholder="Your generated essay will appear here..." readonly></textarea>
         <div id="ai-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i> Generating... This may take a moment.</div>
@@ -969,11 +969,8 @@ const aiResult = document.getElementById('ai-result');
 const aiGenerateBtn = document.getElementById('ai-generate-btn');
 const aiLoading = document.getElementById('ai-loading');
 const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
-// IMPORTANT SECURITY WARNING: Exposing API keys on the client-side is a major security risk.
-// Anyone can view your page source and steal this key. For a production application,
-// you MUST use a backend proxy to make API calls securely.
-const HUGGING_FACE_API_KEY = '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'; 
-const HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2';
+// IMPORTANT: Replace this placeholder with your actual Pipedream HTTP Trigger URL.
+const PIPEDREAM_WORKFLOW_URL = 'YOUR_PIPEDREAM_HTTP_TRIGGER_URL_HERE'; 
 // --- END: AI WRITER VARIABLES ---
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
@@ -1094,6 +1091,10 @@ async function generateAIEssay() {
         alert("Please enter a topic for the essay.");
         return;
     }
+    if (PIPEDREAM_WORKFLOW_URL === 'YOUR_PIPEDREAM_HTTP_TRIGGER_URL_HERE') {
+        alert("Developer Error: Pipedream workflow URL is not configured.");
+        return;
+    }
 
     aiGenerateBtn.disabled = true;
     aiLoading.classList.remove('hidden');
@@ -1101,18 +1102,12 @@ async function generateAIEssay() {
     copyAIResultBtn.classList.add('hidden');
 
     try {
-        const response = await fetch(HUGGING_FACE_API_URL, {
+        const response = await fetch(PIPEDREAM_WORKFLOW_URL, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${HUGGING_FACE_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                inputs: promptText,
-                options: {
-                    wait_for_model: true // Crucial for free tier models
-                }
-            })
+            body: JSON.stringify({ prompt: promptText })
         });
 
         if (!response.ok) {
@@ -1121,16 +1116,14 @@ async function generateAIEssay() {
         }
 
         const data = await response.json();
-        // The API returns the original prompt plus the generated text. We need to remove the prompt.
-        const fullText = data[0].generated_text;
-        const generatedText = fullText.replace(promptText, '').trim();
+        const generatedText = data.generated_text;
 
         aiResult.value = generatedText;
         copyAIResultBtn.classList.remove('hidden');
 
     } catch (error) {
-        console.error('Error fetching from Hugging Face API:', error);
-        aiResult.value = `An error occurred: ${error.message}. The model might be loading or the API might be busy. Please try again in a moment.`;
+        console.error('Error calling Pipedream workflow:', error);
+        aiResult.value = `An error occurred: ${error.message}. Please check the Pipedream workflow logs and ensure it is deployed correctly.`;
     } finally {
         aiGenerateBtn.disabled = false;
         aiLoading.classList.add('hidden');
