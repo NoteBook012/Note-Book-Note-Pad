@@ -9,10 +9,14 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// ✅ Use v1beta to support gemini-pro
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY, {
+  apiVersion: 'v1beta'
+});
+console.log("API KEY =", process.env.GEMINI_API_KEY);
 
 app.get('/', (req, res) => {
-  res.send('✅ Gemini AI Backend is Live');
+  res.send('Gemini AI Backend is Live');
 });
 
 app.post('/generate', async (req, res) => {
