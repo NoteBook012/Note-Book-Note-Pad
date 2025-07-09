@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ask Gemini AI - Bishal Mishra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    pre {
+      background-color: white;
+      padding: 20px;
+      border-left: 5px solid #4CAF50;
+      white-space: pre-wrap;
+      margin-top: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 Ask Gemini AI</h1>
+    <textarea id="prompt" rows="4" placeholder="Type your question or prompt here..."></textarea>
+    <button onclick="generate()">Generate</button>
+    <pre id="output">Waiting for your prompt...</pre>
+  </div>
+
+  <script>
+    async function generate() {
+      const prompt = document.getElementById("prompt").value.trim();
+      const outputBox = document.getElementById("output");
+
+      if (!prompt) {
+        outputBox.textContent = "⚠️ Please enter a prompt.";
+        return;
+      }
+
+      outputBox.textContent = "⏳ Generating response...";
+
+      try {
+        const res = await fetch("https://eotsspqlmb4st0j.m.pipedream.net", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt })
+        });
+
+        const data = await res.json();
+        outputBox.textContent = data.output || "⚠️ No response or something went wrong.";
+      } catch (err) {
+        outputBox.textContent = "❌ Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
