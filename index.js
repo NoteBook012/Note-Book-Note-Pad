@@ -13,16 +13,19 @@ app.use(express.json());
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY, {
   apiVersion: 'v1beta'
 });
-console.log("API KEY =", process.env.GEMINI_API_KEY);
+
+console.log("✅ API KEY LOADED:", process.env.GEMINI_API_KEY);
 
 app.get('/', (req, res) => {
-  res.send('Gemini AI Backend is Live');
+  res.send('✅ Gemini AI Backend is Live');
 });
 
 app.post('/generate', async (req, res) => {
   try {
     const { prompt } = req.body;
-    if (!prompt) return res.status(400).json({ error: 'Prompt is required.' });
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required.' });
+    }
 
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
     const result = await model.generateContent(prompt);
@@ -30,6 +33,7 @@ app.post('/generate', async (req, res) => {
     const text = response.text();
 
     res.json({ output: text });
+
   } catch (error) {
     console.error('❌ AI Error:', error);
     res.status(500).json({ error: 'Failed to generate content' });
@@ -37,5 +41,5 @@ app.post('/generate', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
