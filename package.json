@@ -1,0 +1,16 @@
+{
+  "name": "gemini-api-server",
+  "version": "1.0.0",
+  "description": "Gemini API Backend using Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.3.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
