@@ -34,13 +34,13 @@ app.post('/generate', async (req, res) => {
 
     res.json({ output: text });
 
- catch (error) {
-  console.error('❌ AI Error:', error.toString());
-  console.error(error); // Prints full error stack trace in logs
-  res.status(500).json({ error: 'Failed to generate content' });
-}
+  } catch (error) {
+    console.error('❌ AI Error:', error.toString());
+    console.error(error); // Print full error
+    res.status(500).json({ error: 'Failed to generate content' });
+  }
 });
 
 app.listen(port, () => {
-  console.log(🚀 Server running on port ${port});
+  console.log(`🚀 Server running on port ${port}`);
 });
