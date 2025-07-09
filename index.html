@@ -962,16 +962,15 @@ let scrollAnimationObserver;
 const cookieBanner = document.getElementById('cookie-consent-banner');
 const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
 
-// --- START: AI WRITER VARIABLES ---
+// --- START: AI WRITER VARIABLES (UPDATED FOR PIPEDREAM) ---
 const aiWriterContainer = document.getElementById('ai-writer-container');
 const aiPrompt = document.getElementById('ai-prompt');
 const aiResult = document.getElementById('ai-result');
 const aiGenerateBtn = document.getElementById('ai-generate-btn');
 const aiLoading = document.getElementById('ai-loading');
 const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
-// IMPORTANT: Replace this placeholder with your actual Render service URL.
-const RENDER_BACKEND_URL = 'https://note-book-note-pad.onrender.com'; // <-- 🚨 ACTION REQUIRED: UPDATE THIS URL 🚨
-const API_ENDPOINT = '/generate';
+// 🚨 ACTION REQUIRED: Replace this with your Pipedream Workflow HTTP Endpoint URL 🚨
+const PIPEDREAM_WORKFLOW_URL = 'https://eotsspqlmb4st0j.m.pipedream.net'; // <-- PASTE YOUR URL HERE
 // --- END: AI WRITER VARIABLES ---
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
@@ -1085,15 +1084,16 @@ function attachEventListeners() {
     // END: AI WRITER EVENT LISTENERS
 }
 
-// --- START: AI WRITER FUNCTIONS ---
+// --- START: AI WRITER FUNCTIONS (UPDATED FOR PIPEDREAM) ---
 async function generateAIEssay() {
     const promptText = aiPrompt.value.trim();
     if (!promptText) {
         alert("Please enter a topic for the essay.");
         return;
     }
-    if (RENDER_BACKEND_URL.includes('your-app-name')) {
-        alert("Developer Error: The Render backend URL has not been configured in the HTML file.");
+    // Check if the user has replaced the placeholder URL
+    if (!PIPEDREAM_WORKFLOW_URL || PIPEDREAM_WORKFLOW_URL.includes('https://eo...m.pipedream.net')) {
+        alert("Developer Error: The Pipedream workflow URL has not been configured. Please update the PIPEDREAM_WORKFLOW_URL variable in the script.");
         return;
     }
 
@@ -1103,28 +1103,38 @@ async function generateAIEssay() {
     copyAIResultBtn.classList.add('hidden');
 
     try {
-        const fullUrl = RENDER_BACKEND_URL + API_ENDPOINT;
-        const response = await fetch(fullUrl, {
+        // The fetch call now points directly to your Pipedream endpoint
+        const response = await fetch(PIPEDREAM_WORKFLOW_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            // The body of the request contains the prompt
             body: JSON.stringify({ prompt: promptText })
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || `API Error: ${response.statusText}`);
+            // Pipedream might return errors in a 'error' key or just a message.
+            throw new Error(data.error || data.message || `API Error: ${response.statusText}`);
         }
         
-        const generatedText = data.generated_text;
+        // IMPORTANT: Check your Pipedream workflow's response structure.
+        // The generated text might be in 'data.generated_text', 'data.text', 'data.response', or something else.
+        // Adjust 'data.generated_text' below if your workflow returns a different key.
+        const generatedText = data.generated_text; 
+        
+        if (!generatedText) {
+            throw new Error("The API response did not contain the expected 'generated_text' field. Please check your Pipedream workflow's return value.");
+        }
+
         aiResult.value = generatedText.trim();
         copyAIResultBtn.classList.remove('hidden');
 
     } catch (error) {
-        console.error('Error calling Render backend:', error);
-        aiResult.value = `An error occurred: ${error.message}. Please check your Render service logs.`;
+        console.error('Error calling Pipedream workflow:', error);
+        aiResult.value = `An error occurred: ${error.message}. Please check your Pipedream workflow's execution logs for details.`;
     } finally {
         aiGenerateBtn.disabled = false;
         aiLoading.classList.add('hidden');
