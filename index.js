@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// ✅ Use v1beta to support gemini-pro
+// ✅ This is the key line: use v1beta
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY, {
   apiVersion: 'v1beta'
 });
@@ -36,7 +36,6 @@ app.post('/generate', async (req, res) => {
 
   } catch (error) {
     console.error('❌ AI Error:', error.toString());
-    console.error(error); // Print full error
     res.status(500).json({ error: 'Failed to generate content' });
   }
 });
