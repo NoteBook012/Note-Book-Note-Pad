@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -969,8 +970,9 @@ const aiResult = document.getElementById('ai-result');
 const aiGenerateBtn = document.getElementById('ai-generate-btn');
 const aiLoading = document.getElementById('ai-loading');
 const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
-// IMPORTANT: Replace this placeholder with your actual Pipedream HTTP Trigger URL.
-const PIPEDREAM_WORKFLOW_URL = 'https://eotsspqlmb4st0j.m.pipedream.net'; 
+// IMPORTANT: Replace this placeholder with your actual Render service URL.
+const RENDER_BACKEND_URL = 'https://your-app-name.onrender.com'; // <-- 🚨 ACTION REQUIRED: UPDATE THIS URL 🚨
+const API_ENDPOINT = '/generate';
 // --- END: AI WRITER VARIABLES ---
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
@@ -1091,8 +1093,8 @@ async function generateAIEssay() {
         alert("Please enter a topic for the essay.");
         return;
     }
-    if (PIPEDREAM_WORKFLOW_URL === 'YOUR_PIPEDREAM_HTTP_TRIGGER_URL_HERE') {
-        alert("Developer Error: Pipedream workflow URL is not configured.");
+    if (RENDER_BACKEND_URL.includes('your-app-name')) {
+        alert("Developer Error: The Render backend URL has not been configured in the HTML file.");
         return;
     }
 
@@ -1102,7 +1104,8 @@ async function generateAIEssay() {
     copyAIResultBtn.classList.add('hidden');
 
     try {
-        const response = await fetch(PIPEDREAM_WORKFLOW_URL, {
+        const fullUrl = RENDER_BACKEND_URL + API_ENDPOINT;
+        const response = await fetch(fullUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1110,20 +1113,19 @@ async function generateAIEssay() {
             body: JSON.stringify({ prompt: promptText })
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `API Error: ${response.statusText}`);
-        }
-
         const data = await response.json();
-        const generatedText = data.generated_text;
 
-        aiResult.value = generatedText;
+        if (!response.ok) {
+            throw new Error(data.error || `API Error: ${response.statusText}`);
+        }
+        
+        const generatedText = data.generated_text;
+        aiResult.value = generatedText.trim();
         copyAIResultBtn.classList.remove('hidden');
 
     } catch (error) {
-        console.error('Error calling Pipedream workflow:', error);
-        aiResult.value = `An error occurred: ${error.message}. Please check the Pipedream workflow logs and ensure it is deployed correctly.`;
+        console.error('Error calling Render backend:', error);
+        aiResult.value = `An error occurred: ${error.message}. Please check your Render service logs.`;
     } finally {
         aiGenerateBtn.disabled = false;
         aiLoading.classList.add('hidden');
