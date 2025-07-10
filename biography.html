@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bishal Mishra - Web Developer | Official Biography</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Official biography of Bishal Mishra – young developer from Nepal, creator of Note p@d and Fix My Speaker, with skills, certificates, and achievements." />
+  <meta name="keywords" content="Bishal Mishra, Web Developer Nepal, Note p@d, Fix My Speaker, Mishra, bish, bishal developer, who is Bishal Mishra, 9827801575" />
+  <meta name="author" content="Bishal Mishra" />
+  <link rel="canonical" href="https://bishalmishra.com/biography.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bishal Mishra - Web Developer | Official Biography" />
+  <meta property="og:description" content="Meet Bishal Mishra: Developer from Nepal, creator of Fix My Speaker and Note p@d, skilled in HTML, CSS, JavaScript, SEO, and more." />
+  <meta property="og:image" content="https://i.ibb.co/RpStGhqm/IMG-5251-Original.jpg" />
+  <meta property="og:url" content="https://bishalmishra.com/biography.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bishal Mishra - Developer from Nepal" />
+  <meta name="twitter:description" content="Biography of Bishal Mishra, creator of Note p@d and Fix My Speaker. Discover skills, certificates, education, and more." />
+  <meta name="twitter:image" content="https://i.ibb.co/RpStGhqm/IMG-5251-Original.jpg" />
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 30px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: 2.6em;
+    }
+    header p {
+      margin-top: 8px;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      flex-grow: 1;
+    }
+    .bio-img {
+      width: 180px;
+      float: right;
+      border-radius: 10px;
+      margin-left: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .section {
+      margin-top: 40px;
+    }
+    .skills .skill {
+      margin-bottom: 20px;
+    }
+    .skill-name {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .bar-bg {
+      background: #ddd;
+      border-radius: 5px;
+      height: 12px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 12px;
+      background: #00aced;
+      width: 0;
+      transition: width 2s ease-in-out;
+    }
+    .certificates ul {
+      padding-left: 20px;
+      list-style: square;
+    }
+    .explore-btn-container {
+      text-align: center;
+      margin: 40px 0 0 0;
+    }
+    .explore-btn {
+      display: inline-block;
+      padding: 14px 40px;
+      background: #00aced;
+      color: white;
+      font-weight: 700;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.2em;
+      box-shadow: 0 4px 12px rgba(0,172,237,0.5);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .explore-btn:hover {
+      background: #0084b4;
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #2c3e50;
+      color: #fff;
+      font-size: 0.9em;
+      margin-top: 60px;
+      flex-shrink: 0;
+    }
+
+    /* Amazing Features */
+    .features {
+      background: #f0f8ff;
+      margin-top: 40px;
+      padding: 30px 15px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,172,237,0.15);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .feature-item {
+      flex: 1 1 100%;
+      background: transparent; /* remove card background */
+      box-shadow: none; /* remove shadow */
+      border-radius: 0;
+      padding: 10px 0;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 0.6s forwards;
+    }
+    .feature-item:nth-child(1) {animation-delay: 0.1s;}
+    .feature-item:nth-child(2) {animation-delay: 0.3s;}
+    .feature-item:nth-child(3) {animation-delay: 0.5s;}
+    .feature-item:nth-child(4) {animation-delay: 0.7s;}
+    .feature-icon {
+      font-size: 2.8em;
+      color: #00aced;
+      margin-bottom: 12px;
+    }
+    .feature-title {
+      font-weight: 700;
+      font-size: 1.2em;
+      margin-bottom: 6px;
+    }
+    .feature-desc {
+      font-size: 1em;
+      color: #444;
+      line-height: 1.4;
+    }
+    @media(min-width: 600px) {
+      .feature-item {
+        flex: 1 1 calc(50% - 15px);
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .bio-img {
+        float: none;
+        display: block;
+        margin: 20px auto;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body onload="animateSkills()">
+
+  <header>
+    <h1>Bishal Mishra</h1>
+    <p>Web Developer | Nepal</p>
+  </header>
+
+  <div class="container" id="about">
+    <img src="https://i.ibb.co/RpStGhqm/IMG-5251-Original.jpg" alt="Bishal Mishra" class="bio-img" />
+    <p><strong>Bishal Mishra</strong> (DOB: <strong>2006/06/19 AD</strong> | <strong>2063/03/05 BS</strong>) is a passionate web developer from <strong>Kirtipur, Kathmandu, Nepal</strong>. He is best known as the creator of <a href="https://bishalmishra.com">Note p@d</a> and <a href="https://fixedmyspeaker.com">Fix My Speaker</a>, tools used worldwide.</p>
+
+    <p>He completed his +2 education from <strong>Janasewa Secondary School, Kirtipur</strong>. Since his early teens, Bishal has shown strong interest in coding, design, and web technology. He builds modern, cross-platform websites and apps that work across mobile, tablet, and desktop.</p>
+
+    <p>Bishal is constantly learning, experimenting, and pushing limits to create powerful web utilities. You can contact him at <strong>9827801575</strong>.</p>
+
+    <div class="explore-btn-container">
+      <a href="https://bishalmishra.com" class="explore-btn" target="_blank" rel="noopener noreferrer">Explore My Site</a>
+    </div>
+  </div>
+
+  <div class="container section" id="skills">
+    <h2>💻 Skills</h2>
+    <div class="skills">
+      <div class="skill">
+        <div class="skill-name">HTML5</div>
+        <div class="bar-bg"><div class="bar-fill" id="bar-html"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">CSS3 + Animations</div>
+        <div class="bar-bg"><div class="bar-fill" id="bar-css"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">JavaScript</div>
+        <div class="bar-bg"><div class="bar-fill" id="bar-js"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">Responsive Design</div>
+        <div class="bar-bg"><div class="bar-fill" id="bar-responsive"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">SEO & Performance</div>
+        <div class="bar-bg"><div class="bar-fill" id="bar-seo"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section certificates" id="certificates">
+    <h2>📜 Certificates & Achievements</h2>
+    <ul>
+      <li>+2 Graduate – Janasewa Secondary School, Kirtipur</li>
+      <li>Completed HTML5 & CSS3 Bootcamp (Self-Learning)</li>
+      <li>JavaScript DOM Mastery (Personal Projects)</li>
+      <li>Founder of FixMySpeaker.com – Popular Utility Tool</li>
+      <li>Created Note p@d – Cross-platform Notepad App</li>
+    </ul>
+  </div>
+
+  <div class="container section features" id="features">
+    <h2>✨ Amazing Features</h2>
+    <div class="feature-item" style="animation-delay: 0.1s;">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Lightning-fast Performance</div>
+      <div class="feature-desc">Web apps and tools optimized for blazing speed on all devices.</div>
+    </div>
+    <div class="feature-item" style="animation-delay: 0.3s;">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Mobile-First Design</div>
+      <div class="feature-desc">Fully responsive interfaces that look great on smartphones and tablets.</div>
+    </div>
+    <div class="feature-item" style="animation-delay: 0.5s;">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Privacy & Security</div>
+      <div class="feature-desc">User data is respected and kept secure across all projects.</div>
+    </div>
+    <div class="feature-item" style="animation-delay: 0.7s;">
+      <div class="feature-icon">🚀</div>
+      <div class="feature-title">SEO Optimized</div>
+      <div class="feature-desc">Projects built to rank high on Google and other search engines.</div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Bishal Mishra
+  </footer>
+
+  <script>
+    function animateSkills() {
+      document.getElementById("bar-html").style.width = "95%";
+      document.getElementById("bar-css").style.width = "90%";
+      document.getElementById("bar-js").style.width = "85%";
+      document.getElementById("bar-responsive").style.width = "92%";
+      document.getElementById("bar-seo").style.width = "88%";
+    }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bishal Mishra",
+    "url": "https://bishalmishra.com/biography.html",
+    "sameAs": [
+      "https://bishalmishra.com",
+      "https://fixedmyspeaker.com",
+      "https://github.com/NoteBook012"
+    ],
+    "image": "https://i.ibb.co/RpStGhqm/IMG-5251-Original.jpg",
+    "jobTitle": "Web Developer",
+    "birthDate": "2006-06-19",
+    "birthPlace": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kirtipur",
+        "addressRegion": "Bagmati",
+        "addressCountry": "Nepal"
+      }
+    },
+    "alumniOf": {
+      "@type": "EducationalOrganization",
+      "name": "Janasewa Secondary School"
+    },
+    "description": "Young developer from Nepal, creator of Fix My Speaker and Note p@d. Skilled in web development, design, SEO, and performance."
+  }
+  </script>
+</body>
+</html>
