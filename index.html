@@ -6,9 +6,9 @@
     
     <title>Note Pad - Modern Online Notepad, Whiteboard & To-Do List</title>
     
-    <meta name="description" content="Note Pad is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, a to-do list manager, and an AI Essay Writer. Your data is saved locally. Works offline. Discover productivity tips on our blog."/>
+    <meta name="description" content="Note Pad is a free, fast, and secure online application featuring a modern notepad, a digital whiteboard for drawing, a to-do list manager, and an AI Assistant. Your data is saved locally. Works offline. Discover productivity tips on our blog."/>
     
-    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips, study tools, free productivity app, ai essay writer, google ai"/>
+    <meta name="keywords" content="online notepad, notepad, text editor, whiteboard, online drawing tool, to-do list, checklist, pwa, secure notepad, offline notes, bishal mishra, productivity blog, organization tips, study tools, free productivity app, ai assistant, replit chatbot"/>
     
     <meta name="author" content="Bishal Mishra">
     <meta name="robots" content="index, follow">
@@ -252,7 +252,7 @@
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
         
-        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section, #ai-writer-container
+        #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section
         { 
             background: var(--card-light); 
             padding: 25px; 
@@ -261,46 +261,18 @@
             margin-bottom: 25px; 
             text-align: left; 
         }
-        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section, body.dark #ai-writer-container { 
+        body.dark #editor, body.dark #notes, body.dark .info-section, body.dark #whiteboard-container, body.dark #calendar-container, body.dark #faq-section, body.dark #blogs-section, body.dark #privacy-policy-section, body.dark #terms-of-service-section, body.dark #disclaimer-section { 
             background: var(--card-dark); 
             box-shadow: 0 4px 15px var(--shadow-dark); 
         }
        
-        #editor textarea, #editor input[type="text"], #ai-writer-container textarea, #ai-writer-container input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
-        #editor textarea:focus, #editor input[type="text"]:focus, #ai-writer-container textarea:focus, #ai-writer-container input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
-        #editor input[type="text"], #ai-writer-container input[type="text"] { margin-bottom: 15px; font-size: 20px; font-weight: 600; }
-        body.dark #editor textarea, body.dark #editor input[type="text"], body.dark #ai-writer-container textarea, body.dark #ai-writer-container input[type="text"] { border-color: #444; background: #333; color: var(--text-dark); }
+        #editor textarea, #editor input[type="text"] { width: 100%; font-size: 16px; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; background: var(--bg-light); color: var(--text-light); resize: vertical; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease; }
+        #editor textarea:focus, #editor input[type="text"]:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(140, 83, 255, 0.2); }
+        #editor input[type="text"] { margin-bottom: 15px; font-size: 20px; font-weight: 600; }
+        body.dark #editor textarea, body.dark #editor input[type="text"] { border-color: #444; background: #333; color: var(--text-dark); }
         
         #editor-stats { display: flex; gap: 20px; margin-top: 10px; font-size: 14px; color: #888; }
         body.dark #editor-stats { color: #aaa; }
-
-        /* START: AI WRITER STYLES */
-        #ai-writer-container h3 { text-align: center; }
-        #ai-writer-container p { text-align: center; margin-bottom: 20px; color: #888; }
-        body.dark #ai-writer-container p { color: #aaa; }
-        #ai-generate-btn {
-            display: block;
-            width: fit-content;
-            margin: 0 auto 20px auto;
-            background: var(--primary);
-            color: white;
-            padding: 12px 25px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: none;
-            cursor: pointer;
-        }
-        #ai-generate-btn:hover:not(:disabled) { background-color: var(--primary-dark); transform: translateY(-2px); }
-        #ai-generate-btn:disabled { background-color: #ccc; cursor: not-allowed; }
-        body.dark #ai-generate-btn:disabled { background-color: #555; }
-        #ai-loading { text-align: center; font-size: 1.2em; color: var(--primary); margin-bottom: 20px; }
-        #copy-ai-result-btn { display: block; margin: 15px auto 0 auto; padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #28a745; color: white; font-weight: 600; }
-        #copy-ai-result-btn:hover { background-color: #218838; }
-        /* END: AI WRITER STYLES */
 
         #whiteboard-canvas { border: 2px solid #eee; border-radius: var(--radius); cursor: crosshair; touch-action: none; background-color: #fff;  }
         body.dark #whiteboard-canvas { border-color: #444; background-color: #383838; }
@@ -547,6 +519,80 @@
             transform: scale(1.05);
         }
         /* --- END: COOKIE CONSENT BANNER STYLES --- */
+        
+        /* --- START: AI CHATBOT MODAL STYLES --- */
+        #aiChatbotModal {
+            align-items: flex-start; /* Align to top */
+            padding-top: 5vh;
+        }
+        .ai-chatbot-content {
+            background: var(--card-light);
+            color: var(--text-light);
+            border-radius: var(--radius);
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: 0;
+            animation: fadeIn 0.3s ease;
+            overflow: hidden; /* Ensure content stays within rounded corners */
+        }
+        body.dark .ai-chatbot-content {
+            background: var(--card-dark);
+            color: var(--text-dark);
+        }
+        .ai-chatbot-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--text-light);
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+            z-index: 10;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .ai-chatbot-close-btn:hover {
+            transform: scale(1.1);
+            color: var(--primary);
+        }
+        body.dark .ai-chatbot-close-btn {
+            color: var(--text-dark);
+        }
+        .ai-chatbot-header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+        body.dark .ai-chatbot-header {
+            border-bottom-color: #444;
+        }
+        .ai-chatbot-header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        .ai-chatbot-header p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+        body.dark .ai-chatbot-header p {
+            color: var(--text-dark);
+        }
+        .ai-chatbot-iframe {
+            width: 100%;
+            flex-grow: 1; /* Take remaining height */
+            border: none;
+        }
+        /* --- END: AI CHATBOT MODAL STYLES --- */
 
         /* --- MEDIA QUERIES --- */
         @media (min-width: 1024px) {
@@ -570,8 +616,10 @@
             .sidenav a { font-size: 18px; }
             h2, h3 { font-size: 20px; }
             .blog-post h4 { font-size: 18px; }
-            #cookie-consent-banner { flex-direction: column; text-align: center; gap: 15px; }
+            .cookie-consent-banner { flex-direction: column; text-align: center; gap: 15px; }
             #cookie-consent-banner p { margin-right: 0; margin-bottom: 10px; }
+            .ai-chatbot-header h1 { font-size: 1.5rem; }
+            .ai-chatbot-header p { font-size: 0.9rem; }
         }
         @media (max-width: 480px) {
             #menu-bar button, #menu-bar select { padding: 8px 10px; font-size: 13px; }
@@ -665,9 +713,9 @@
             <button id="mode-whiteboard" onclick="switchAppMode('whiteboard')">Whiteboard</button>
             <button id="mode-todo" onclick="switchAppMode('todo')">To-Do List</button>
             <button id="mode-calendar" onclick="switchAppMode('calendar')">🗓️ Calendar</button>
-            <!-- START: AI WRITER BUTTON -->
-            <button id="mode-ai-writer" onclick="switchAppMode('ai-writer')">🤖 AI Writer</button>
-            <!-- END: AI WRITER BUTTON -->
+            <!-- START: AI ASSISTANT BUTTON -->
+            <button id="mode-ai-writer" onclick="openAIChatbot()">🤖 AI Assistant</button>
+            <!-- END: AI ASSISTANT BUTTON -->
             <button id="mode-blog" onclick="window.location.href='blogs.html'">Blog</button>
         </div>
     </div>
@@ -682,18 +730,6 @@
             <div id="word-count">Word Count: 0</div>
         </div>
     </div>
-
-    <!-- START: AI WRITER CONTAINER -->
-    <div id="ai-writer-container" class="hidden">
-        <h3>🤖 AI Essay Writer</h3>
-        <p>Enter a topic and let the AI write an essay for you. (Powered by Google AI)</p>
-        <input type="text" id="ai-prompt" placeholder="e.g., The impact of artificial intelligence on modern society...">
-        <textarea id="ai-result" rows="15" placeholder="Your generated essay will appear here..." readonly></textarea>
-        <div id="ai-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i> Generating... This may take a moment.</div>
-        <button id="ai-generate-btn">Generate Essay</button>
-        <button id="copy-ai-result-btn" class="hidden">Copy to Clipboard</button>
-    </div>
-    <!-- END: AI WRITER CONTAINER -->
 
     <div id="whiteboard-container" class="hidden">
         <input type="text" id="whiteboard-title" placeholder="Your Whiteboard Title..." style="width: 100%; font-size: 20px; font-weight: 600; padding: 12px; border-radius: var(--radius); border: 1px solid #e0e0e0; margin-bottom: 15px;" />
@@ -889,6 +925,24 @@
 </div>
 <!-- END: COOKIE CONSENT BANNER HTML -->
 
+<!-- START: AI CHATBOT MODAL -->
+<div id="aiChatbotModal" class="modal hidden">
+    <div class="ai-chatbot-content">
+        <button id="closeAiChatbotBtn" class="ai-chatbot-close-btn">&times;</button>
+        <div class="ai-chatbot-header">
+            <h1>🤖 AI Assistant</h1>
+            <p>Your intelligent writing companion. Get help with ideas, writing, questions, and more!</p>
+        </div>
+        <iframe
+            src="https://15f2823c-1df8-4dfc-bc0c-077f6c44d3fa-00-1hwxzvns4jlz4.worf.replit.dev/"
+            class="ai-chatbot-iframe"
+            title="AI Assistant Chat"
+            loading="lazy">
+        </iframe>
+    </div>
+</div>
+<!-- END: AI CHATBOT MODAL -->
+
 
 <footer>
    <p>Copyright © <span id="currentYear"></span> <a href="https://www.facebook.com/share/166miohhL6/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Bishal Mishra</a> | All Rights Reserved.</p>
@@ -962,19 +1016,10 @@ let scrollAnimationObserver;
 const cookieBanner = document.getElementById('cookie-consent-banner');
 const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
 
-// --- START: AI WRITER VARIABLES (UPDATED FOR PIPEDREAM) ---
-const aiWriterContainer = document.getElementById('ai-writer-container');
-const aiPrompt = document.getElementById('ai-prompt');
-const aiResult = document.getElementById('ai-result');
-const aiGenerateBtn = document.getElementById('ai-generate-btn');
-const aiLoading = document.getElementById('ai-loading');
-const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
-
-// ✅ ========================================================================= ✅
-// ✅ ACTION REQUIRED: Replace the placeholder with your Pipedream Workflow URL  ✅
-// ✅ ========================================================================= ✅
-const PIPEDREAM_WORKFLOW_URL = "https://eoiher1i0s7cxda.m.pipedream.net"; 
-// --- END: AI WRITER VARIABLES ---
+// --- START: AI CHATBOT VARIABLES ---
+const aiChatbotModal = document.getElementById('aiChatbotModal');
+const closeAiChatbotBtn = document.getElementById('closeAiChatbotBtn');
+// --- END: AI CHATBOT VARIABLES ---
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
 function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
@@ -996,7 +1041,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('editor')?.classList.remove('hidden');
     document.getElementById('whiteboard-container')?.classList.remove('hidden');
     document.getElementById('calendar-container')?.classList.remove('hidden');
-    document.getElementById('ai-writer-container')?.classList.remove('hidden'); // Allow JS to control it
     document.getElementById('notes')?.classList.remove('hidden');
     document.querySelector('.features-grid')?.classList.remove('hidden');
     document.getElementById('overview')?.classList.remove('hidden');
@@ -1081,83 +1125,26 @@ function attachEventListeners() {
     document.querySelectorAll('.premium-buy-btn').forEach(button => { button.addEventListener('click', () => { if (!getCurrentUserId()) { alert("Please sign in to purchase premium features."); if(authModal) authModal.classList.remove("hidden"); return; } const card = button.closest('.premium-feature-card'); if (card) { const paymentInfo = card.querySelector('.manual-payment-info'); if (paymentInfo) { paymentInfo.style.display = 'flex'; paymentInfo.scrollIntoView({ behavior: 'smooth' }); } } }); });
     document.body.addEventListener('click', (event) => { if (event.target && event.target.id === 'weather-refresh-btn') { const icon = event.target; icon.classList.add('fa-spin'); fetchWeather(); } });
     if (acceptCookiesBtn) acceptCookiesBtn.addEventListener('click', handleAcceptCookies);
-    // START: AI WRITER EVENT LISTENERS
-    if(aiGenerateBtn) aiGenerateBtn.addEventListener('click', generateAIEssay);
-    if(copyAIResultBtn) copyAIResultBtn.addEventListener('click', copyAIResult);
-    // END: AI WRITER EVENT LISTENERS
-}
-
-// --- START: AI WRITER FUNCTIONS (UPDATED FOR PIPEDREAM) ---
-// This is the fully corrected function.
-async function generateAIEssay() {
-    const promptText = aiPrompt.value.trim();
-    if (!promptText) {
-        alert("Please enter a topic for the essay.");
-        return;
-    }
-    // Check if the user has replaced the placeholder URL
-    if (!PIPEDREAM_WORKFLOW_URL || PIPEDREAM_WORKFLOW_URL.includes("YOUR_REAL_PIPEDREAM_WEBHOOK_URL_GOES_HERE")) {
-        alert("Developer Error: The Pipedream workflow URL has not been configured. Please update the PIPEDREAM_WORKFLOW_URL variable in the script.");
-        return;
-    }
-
-    aiGenerateBtn.disabled = true;
-    aiLoading.classList.remove('hidden');
-    aiResult.value = '';
-    copyAIResultBtn.classList.add('hidden');
-
-    try {
-        // The fetch call now points directly to your Pipedream endpoint
-        const response = await fetch(PIPEDREAM_WORKFLOW_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            // The body of the request contains the prompt
-            body: JSON.stringify({ prompt: promptText })
-        });
-        
-        // Pipedream sends the data back, we need to parse it as JSON
-        const data = await response.json();
-
-        if (!response.ok) {
-            // Pipedream might return errors in a 'error' key or just a message.
-            throw new Error(data.error || data.message || `API Error: ${response.statusText}`);
+    // --- START: AI CHATBOT EVENT LISTENERS ---
+    if(closeAiChatbotBtn) closeAiChatbotBtn.addEventListener('click', closeAIChatbot);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" && aiChatbotModal && !aiChatbotModal.classList.contains('hidden')) {
+            closeAIChatbot();
         }
-        
-        // ✅ --- THIS IS THE CRITICAL FIX --- ✅
-        // We are now looking for data.essay, which matches what your Pipedream workflow returns.
-        const generatedText = data.essay; 
-        
-        if (typeof generatedText === 'undefined') {
-            throw new Error("The API response did not contain the expected 'essay' field. Please check your Pipedream workflow's return value. It should be using `$.flow.respond({ body: { essay: text } })`.");
-        }
-
-        aiResult.value = generatedText.trim();
-        copyAIResultBtn.classList.remove('hidden');
-
-    } catch (error) {
-        console.error('Error calling Pipedream workflow:', error);
-        aiResult.value = `An error occurred: ${error.message}. Please check your Pipedream workflow's execution logs for details.`;
-    } finally {
-        aiGenerateBtn.disabled = false;
-        aiLoading.classList.add('hidden');
-    }
+    });
+    // --- END: AI CHATBOT EVENT LISTENERS ---
 }
 
-function copyAIResult() {
-    if (aiResult.value) {
-        navigator.clipboard.writeText(aiResult.value)
-            .then(() => {
-                alert("Essay copied to clipboard!");
-            })
-            .catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert("Failed to copy text. Please try again or copy manually.");
-            });
-    }
+// --- START: AI CHATBOT FUNCTIONS ---
+function openAIChatbot() {
+    if(aiChatbotModal) aiChatbotModal.classList.remove('hidden');
 }
-// --- END: AI WRITER FUNCTIONS ---
+
+function closeAIChatbot() {
+    if(aiChatbotModal) aiChatbotModal.classList.add('hidden');
+}
+// --- END: AI CHATBOT FUNCTIONS ---
+
 
 // --- COOKIE BANNER FUNCTIONS ---
 function checkCookieConsent() {
@@ -1249,7 +1236,7 @@ function jwtDecode(token) { try { return JSON.parse(atob(token.split('.')[1])); 
 function handleGoogleSignIn(response) { const data = jwtDecode(response.credential); if (!data) { alert("Failed to process Google Sign-In. Please try again."); return;} const name = data.name || data.email; const picture = data.picture || ""; const userId = data.sub; const email = data.email; const emailVerified = data.email_verified === true || data.email_verified === 'true'; localStorage.setItem("currentUser", name); localStorage.setItem('authProvider', 'google'); localStorage.setItem('userEmail', email); localStorage.setItem('emailVerified', emailVerified.toString()); loginSuccess(name, picture, userId); }
 function switchAppMode(mode) {
     currentAppMode = mode;
-    const appToolSections = [editorSection, whiteboardSection, calendarContainer, aiWriterContainer];
+    const appToolSections = [editorSection, whiteboardSection, calendarContainer];
     appToolSections.forEach(sec => {
         if (sec) sec.classList.add('hidden');
     });
@@ -1286,15 +1273,14 @@ function switchAppMode(mode) {
         if(titleInput) titleInput.classList.remove('hidden');
         if(mainContainer) mainContainer.classList.add('desktop-two-column');
         if(noteList && noteList.parentElement) noteList.parentElement.classList.remove('hidden');
-    } else if (mode === 'calendar' || mode === 'ai-writer') {
-        if(mode === 'calendar' && calendarContainer) calendarContainer.classList.remove('hidden');
-        if(mode === 'ai-writer' && aiWriterContainer) aiWriterContainer.classList.remove('hidden');
+    } else if (mode === 'calendar') {
+        if(calendarContainer) calendarContainer.classList.remove('hidden');
         if(mainContainer) mainContainer.classList.remove('desktop-two-column');
         if(noteList && noteList.parentElement) noteList.parentElement.classList.add('hidden');
-        if (mode === 'calendar' && currentMonthYearDisplay) renderCalendar(currentCalendarDate);
+        if (currentMonthYearDisplay) renderCalendar(currentCalendarDate);
     }
 }
-function newDoc() { editModeId = null; if(titleInput) titleInput.value = ''; if(textInput) textInput.value = ''; if(whiteboardTitleInput) whiteboardTitleInput.value = ''; if(todoListContainer) todoListContainer.innerHTML = ''; if(aiPrompt) aiPrompt.value = ''; if(aiResult) aiResult.value = ''; clearCanvas(); updateAll(); clearDraft(); resetHistory(); if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); switchAppMode('notepad'); if(titleInput) titleInput.focus(); }
+function newDoc() { editModeId = null; if(titleInput) titleInput.value = ''; if(textInput) textInput.value = ''; if(whiteboardTitleInput) whiteboardTitleInput.value = ''; if(todoListContainer) todoListContainer.innerHTML = ''; clearCanvas(); updateAll(); clearDraft(); resetHistory(); if(currentMonthYearDisplay) renderCalendar(currentCalendarDate); switchAppMode('notepad'); if(titleInput) titleInput.focus(); }
 function saveNote() { const key = getUserNotesKey(); if (!key) { alert("Please sign in to save notes. Your work will remain in the editor."); if(authModal) authModal.classList.remove("hidden"); return; } let title, content, type; if (currentAppMode === 'notepad') { if (!textInput || !textInput.value.trim()) { alert("Cannot save an empty note."); return; } title = titleInput ? titleInput.value || 'Untitled Note' : 'Untitled Note'; content = textInput.value; type = 'notepad'; } else if (currentAppMode === 'whiteboard') { title = whiteboardTitleInput ? whiteboardTitleInput.value || 'Untitled Whiteboard' : 'Untitled Whiteboard'; if (!whiteboardState.canvas) { alert("Whiteboard not initialized."); return; } content = whiteboardState.canvas.toDataURL(); type = 'whiteboard'; } else if (currentAppMode === 'todo') { if (!todoListContainer || todoListContainer.children.length === 0) { alert("Cannot save an empty to-do list."); return; } title = titleInput ? titleInput.value || 'Untitled To-Do List' : 'Untitled To-Do List'; content = serializeTodoList(); type = 'todo'; } else { alert("Cannot save in current mode."); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const timestamp = new Date().toLocaleString(); if (editModeId) { const idx = notes.findIndex(n => n.id === editModeId); if (idx > -1) notes[idx] = { ...notes[idx], title, text: content, type, date: timestamp }; else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); } else notes.unshift({ id: Date.now(), title, text: content, type, date: timestamp, pinned: false, isLocked: false, passwordHash: null }); localStorage.setItem(key, JSON.stringify(notes)); displayNotes(); newDoc(); }
 function displayNotes() { if(!noteList) return; const key = getUserNotesKey(); const notes = key ? JSON.parse(localStorage.getItem(key)) || [] : []; if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.unobserve(noteElement); noteElement.classList.remove('is-visible'); }); } if (notes.length === 0 && key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>No notes saved yet. Create one above!</p>"; else if (!key) noteList.innerHTML = "<p style='text-align:center; color: #888;'>Please sign in to see your saved notes.</p>"; else { notes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.id - a.id); noteList.innerHTML = notes.map((n, index) => { let contentPreview = ''; const noteType = n.type || 'notepad'; if (n.isLocked && n.passwordHash) contentPreview = `<i><i class="fas fa-lock" style="margin-right: 5px;"></i>This note is locked. Click 'Unlock' to view.</i>`; else if (noteType === 'whiteboard') contentPreview = `<img src="${n.text}" alt="Whiteboard Preview" style="width:100%; max-height: 150px; object-fit: contain; border-radius: 8px; margin-top: 10px; border: 1px solid #eee;">`; else if (noteType === 'todo') { try {  const todoItems = JSON.parse(n.text); const completedItems = todoItems.filter(item => item.checked).length; contentPreview = `<i>To-Do List: ${completedItems} of ${todoItems.length} items completed.</i>`;  } catch { contentPreview = `<i>Corrupted To-Do List.</i>`} } else { const div = document.createElement('div'); div.innerHTML = n.text; const plainText = div.textContent || div.innerText || ''; contentPreview = `${plainText.substring(0, 150)}${plainText.length > 150 ? '...' : ''}`; } const lockIcon = (n.isLocked && n.passwordHash) ? '<i class="fas fa-lock" style="color: #ffc107; margin-left: 5px;"></i>' : ''; const pinIconClass = n.pinned ? 'fas fa-thumbtack' : 'far fa-thumbtack'; const noteTypeIcon = noteType === 'whiteboard' ? '🎨' : (noteType === 'todo' ? '☑️' : '📝'); return `<div class="note ${n.pinned ? 'pinned' : ''} fade-in-up" id="note-${n.id}" data-animation-delay="${index * 0.05}">` + `<h4>${noteTypeIcon} <span class="note-title-text">${n.title}</span>${lockIcon}</h4>` + `<p class="note-content-preview">${contentPreview}</p>` + `<small>Last updated: ${n.date}</small>` + `<div class="note-actions"><button onclick="editNote(${n.id})"><i class="fas fa-edit"></i> Edit</button><button onclick="toggleLock(${n.id})"><i class="fas fa-key"></i> ${(n.isLocked && n.passwordHash) ? 'Unlock' : 'Lock'}</button><button onclick="pinNote(${n.id})"><i class="${pinIconClass}"></i> ${n.pinned ? 'Unpin' : 'Pin'}</button>${noteType !== 'whiteboard' ? `<button onclick="exportPDF(${n.id})"><i class="fas fa-file-pdf"></i> PDF</button>` : ''}<button onclick="deleteNote(${n.id})"><i class="fas fa-trash"></i> Delete</button></div>` + `</div>`; }).join(''); if (scrollAnimationObserver) { document.querySelectorAll('#note-list .note').forEach(noteElement => { scrollAnimationObserver.observe(noteElement); }); } } }
 async function editNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to edit notes."); if(authModal) authModal.classList.remove("hidden"); return; } const notes = JSON.parse(localStorage.getItem(key)) || []; const note = notes.find(n => n.id === id); if (!note) { alert("Note not found."); return;} if (note.isLocked && note.passwordHash) { const password = prompt("Enter password to unlock this note:"); if (password === null) return; if (!password) {alert("Password cannot be empty."); return;} const hashed = await hashPassword(password); if (hashed !== note.passwordHash) { alert("Incorrect password."); return; } } newDoc(); const noteType = note.type || 'notepad'; switchAppMode(noteType); editModeId = id; if (noteType === 'notepad') { if(titleInput) titleInput.value = note.title; if(textInput) { textInput.value = note.text; resetHistory(note.text); } } else if (noteType === 'whiteboard') { if(whiteboardTitleInput) whiteboardTitleInput.value = note.title; if (whiteboardState.canvas && whiteboardState.ctx) { const img = new Image(); img.onload = () => { clearCanvas(); const canvasWidth = whiteboardState.canvas.width, canvasHeight = whiteboardState.canvas.height, hRatio = canvasWidth / img.width, vRatio = canvasHeight / img.height, ratio = Math.min(hRatio, vRatio), centerShift_x = (canvasWidth - img.width * ratio) / 2, centerShift_y = (canvasHeight - img.height * ratio) / 2; whiteboardState.ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width * ratio, img.height * ratio); whiteboardState.imageData = whiteboardState.ctx.getImageData(0, 0, canvasWidth, canvasHeight); }; img.onerror = () => alert("Failed to load whiteboard image for editing."); img.src = note.text; } else alert("Whiteboard component not ready for editing."); } else if (noteType === 'todo') { if(titleInput) titleInput.value = note.title; parseAndRenderTodoList(note.text); } updateAll(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -1342,7 +1328,7 @@ if(installBtn) installBtn.addEventListener('click', async () => { if (deferredIn
 document.addEventListener('keydown', (e) => { if (e.ctrlKey || e.metaKey) { switch (e.key.toLowerCase()) { case 's': e.preventDefault(); saveNote(); break; case 'n': e.preventDefault(); newDoc(); break; case 'z': e.preventDefault(); undo(); break; case 'y': e.preventDefault(); redo(); break; case 'f': e.preventDefault(); showFindReplace(); break; } } });
 function checkPremiumStatus(feature) { return false; }
 function updateUIForPremiumFeatures() { if (!premiumFeaturesSection) return; const isLoggedIn = !!getCurrentUserId(); if (!isLoggedIn) premiumFeaturesSection.classList.add('hidden'); else premiumFeaturesSection.classList.remove('hidden'); document.querySelectorAll('.premium-feature-card').forEach(card => { const buyButton = card.querySelector('.premium-buy-btn'); const manualPaymentInfo = card.querySelector('.manual-payment-info'); if (!buyButton || !manualPaymentInfo) return; const feature = buyButton.getAttribute('data-feature'); if (checkPremiumStatus(feature)) { buyButton.style.display = 'none'; manualPaymentInfo.style.display = 'flex'; manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`; } else { buyButton.style.display = 'block'; if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`; } manualPaymentInfo.style.display = 'none'; } }); }
-function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), document.getElementById('ai-writer-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar') || (section.id === 'ai-writer-container' && currentAppMode === 'ai-writer'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
+function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
 </script>
 </body>
 </html>
