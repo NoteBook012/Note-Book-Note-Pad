@@ -969,8 +969,11 @@ const aiResult = document.getElementById('ai-result');
 const aiGenerateBtn = document.getElementById('ai-generate-btn');
 const aiLoading = document.getElementById('ai-loading');
 const copyAIResultBtn = document.getElementById('copy-ai-result-btn');
-// 🚨 ACTION REQUIRED: Replace this with your Pipedream Workflow HTTP Endpoint URL 🚨
-const PIPEDREAM_WORKFLOW_URL = 'https://eotsspqlmb4st0j.m.pipedream.net'; // <-- PASTE YOUR URL HERE
+
+// ✅ ========================================================================= ✅
+// ✅ ACTION REQUIRED: Replace the placeholder with your Pipedream Workflow URL  ✅
+// ✅ ========================================================================= ✅
+const PIPEDREAM_WORKFLOW_URL = "YOUR_REAL_PIPEDREAM_WEBHOOK_URL_GOES_HERE"; 
 // --- END: AI WRITER VARIABLES ---
 
 // --- SIDENAV & SCROLL FUNCTIONS ---
@@ -1085,6 +1088,7 @@ function attachEventListeners() {
 }
 
 // --- START: AI WRITER FUNCTIONS (UPDATED FOR PIPEDREAM) ---
+// This is the fully corrected function.
 async function generateAIEssay() {
     const promptText = aiPrompt.value.trim();
     if (!promptText) {
@@ -1092,7 +1096,7 @@ async function generateAIEssay() {
         return;
     }
     // Check if the user has replaced the placeholder URL
-    if (!PIPEDREAM_WORKFLOW_URL || PIPEDREAM_WORKFLOW_URL.includes('https://eoiher1i0s7cxda.m.pipedream.net')) {
+    if (!PIPEDREAM_WORKFLOW_URL || PIPEDREAM_WORKFLOW_URL.includes("YOUR_REAL_PIPEDREAM_WEBHOOK_URL_GOES_HERE")) {
         alert("Developer Error: The Pipedream workflow URL has not been configured. Please update the PIPEDREAM_WORKFLOW_URL variable in the script.");
         return;
     }
@@ -1112,7 +1116,8 @@ async function generateAIEssay() {
             // The body of the request contains the prompt
             body: JSON.stringify({ prompt: promptText })
         });
-
+        
+        // Pipedream sends the data back, we need to parse it as JSON
         const data = await response.json();
 
         if (!response.ok) {
@@ -1120,13 +1125,12 @@ async function generateAIEssay() {
             throw new Error(data.error || data.message || `API Error: ${response.statusText}`);
         }
         
-        // IMPORTANT: Check your Pipedream workflow's response structure.
-        // The generated text might be in 'data.generated_text', 'data.text', 'data.response', or something else.
-        // Adjust 'data.generated_text' below if your workflow returns a different key.
-        const generatedText = data.generated_text; 
+        // ✅ --- THIS IS THE CRITICAL FIX --- ✅
+        // We are now looking for data.essay, which matches what your Pipedream workflow returns.
+        const generatedText = data.essay; 
         
-        if (!generatedText) {
-            throw new Error("The API response did not contain the expected 'generated_text' field. Please check your Pipedream workflow's return value.");
+        if (typeof generatedText === 'undefined') {
+            throw new Error("The API response did not contain the expected 'essay' field. Please check your Pipedream workflow's return value. It should be using `$.flow.respond({ body: { essay: text } })`.");
         }
 
         aiResult.value = generatedText.trim();
