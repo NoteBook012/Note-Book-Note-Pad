@@ -236,6 +236,24 @@
             transform: scale(1.2) rotate(90deg);
         }
         /* END: CLOCK AND WEATHER STYLES */
+        
+        /* START: DARK MODE TOGGLE IN HEADER */
+        #darkModeToggleHeader {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background-color 0.2s, transform 0.2s;
+            line-height: 1;
+        }
+        #darkModeToggleHeader:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        /* END: DARK MODE TOGGLE IN HEADER */
 
         #menu-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; background: var(--card-light); padding: 15px; border-radius: var(--radius); margin: 20px 0; animation: glowing-border-light 4s ease-in-out infinite; }
         #menu-bar button, #menu-bar select { padding: 8px 15px; border-radius: var(--radius); border: none; cursor: pointer; background-color: #f0f0f0; color: #333; font-weight: 600; transition: all 0.2s ease-in-out; }
@@ -251,6 +269,19 @@
         body.dark .mode-switcher { border-left-color: #555; }
         .mode-switcher button.active-mode { background-color: var(--primary); color: white; }
         body.dark .mode-switcher button.active-mode { background-color: var(--primary-dark); }
+        
+        /* START: GLOWING AI BUTTON */
+        .glowing-ai-btn {
+            animation: glowing-button 3s ease-in-out infinite;
+            border: 1px solid var(--primary) !important;
+        }
+
+        @keyframes glowing-button {
+            0% { box-shadow: 0 0 3px var(--primary); }
+            50% { box-shadow: 0 0 15px var(--primary), 0 0 5px var(--primary); }
+            100% { box-shadow: 0 0 3px var(--primary); }
+        }
+        /* END: GLOWING AI BUTTON */
         
         #editor, #notes, .info-section, #whiteboard-container, #calendar-container, #faq-section, #blogs-section, #privacy-policy-section, #terms-of-service-section, #disclaimer-section
         { 
@@ -661,6 +692,8 @@
 
     <div class="header-right">
         <span id="live-weather"><i class="fas fa-spinner fa-spin"></i> Loading...</span>
+        <!-- DARK MODE TOGGLE MOVED HERE -->
+        <button id="darkModeToggleHeader" onclick="toggleDark()" title="Toggle Dark/Light Mode">🌗</button>
         <div id="profile-container" class="profile-container hidden">
             <img id="profile-icon" src="https://ui-avatars.com/api/?name=U" alt="Profile" tabindex="0" width="42" height="42">
             <div id="profile-dropdown" class="profile-dropdown hidden">
@@ -707,15 +740,15 @@
             <option value="18px">18px</option>
             <option value="20px">20px</option>
         </select>
-        <button onclick="toggleDark()" title="Toggle Dark/Light Mode">🌗</button>
+        <!-- DARK MODE BUTTON REMOVED FROM HERE -->
 
         <div class="mode-switcher">
             <button id="mode-notepad" onclick="switchAppMode('notepad')" class="active-mode">Notepad</button>
             <button id="mode-whiteboard" onclick="switchAppMode('whiteboard')">Whiteboard</button>
             <button id="mode-todo" onclick="switchAppMode('todo')">To-Do List</button>
             <button id="mode-calendar" onclick="switchAppMode('calendar')">🗓️ Calendar</button>
-            <!-- START: AI ASSISTANT BUTTON -->
-            <button id="mode-ai-writer" onclick="openAIChatbot()">🤖 AI Assistant</button>
+            <!-- START: AI ASSISTANT BUTTON WITH GLOWING CLASS -->
+            <button id="mode-ai-writer" onclick="openAIChatbot()" class="glowing-ai-btn">🤖 AI Assistant</button>
             <!-- END: AI ASSISTANT BUTTON -->
             <button id="mode-blog" onclick="window.location.href='blogs.html'">Blog</button>
         </div>
@@ -1317,7 +1350,18 @@ function undo() { if(!textInput || currentAppMode !== 'notepad' || undoStack.len
 function redo() { if(!textInput || currentAppMode !== 'notepad' || redoStack.length === 0) return; const nextState = redoStack.pop(); undoStack.push(nextState); textInput.value = nextState; updateAll(); }
 function resetHistory(initialText = '') { undoStack = [initialText]; redoStack = []; }
 function cutText() { if(!textInput || currentAppMode !== 'notepad' || textInput.selectionStart === textInput.selectionEnd) return; try { navigator.clipboard.writeText(textInput.value.substring(textInput.selectionStart, textInput.selectionEnd)); const start = textInput.selectionStart, end = textInput.selectionEnd; textInput.value = textInput.value.substring(0, start) + textInput.value.substring(end); textInput.selectionStart = textInput.selectionEnd = start; } catch (e) { console.warn("Clipboard API failed:", e); try { document.execCommand('delete', false, null); } catch (ex) { /* ignore */ } } updateAll(); recordState();  }
-function showFindReplace() { if (currentAppMode !== 'notepad' && findReplaceDialog) { findReplaceDialog.classList.remove('hidden'); findReplaceDialog.querySelector('#find-input')?.focus(); }}
+// --- START: CORRECTED Find/Replace FUNCTION ---
+function showFindReplace() { 
+    if (currentAppMode === 'notepad') {
+        if(findReplaceDialog) {
+            findReplaceDialog.classList.remove('hidden');
+            findReplaceDialog.querySelector('#find-input')?.focus();
+        }
+    } else {
+        alert("Find/Replace is only available in Notepad mode.");
+    }
+}
+// --- END: CORRECTED Find/Replace FUNCTION ---
 function closeFindReplace() { if(findReplaceDialog) findReplaceDialog.classList.add('hidden'); }
 function findAndReplace(replaceAll = false) { if(!textInput) return; const findInputEl = document.getElementById('find-input'); const replaceInputEl = document.getElementById('replace-input'); if(!findInputEl || !replaceInputEl) return; const findValue = findInputEl.value, replaceValue = replaceInputEl.value; if (!findValue) return; try { const regex = new RegExp(findValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), replaceAll ? 'g' : ''); textInput.value = textInput.value.replace(regex, replaceValue); } catch(e) { alert("Invalid find pattern."); console.error("Regex error:", e); return; } updateAll(); recordState(); }
 function deleteNote(id) { const key = getUserNotesKey(); if (!key) { alert("Please sign in to delete notes."); if(authModal) authModal.classList.remove("hidden"); return; } if (!confirm("Are you sure you want to delete this note permanently?")) return; let notes = JSON.parse(localStorage.getItem(key)) || []; localStorage.setItem(key, JSON.stringify(notes.filter(n => n.id !== id))); displayNotes(); if (editModeId === id) newDoc(); }
