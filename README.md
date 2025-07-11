@@ -137,4 +137,4 @@ Simply commit and push the updated `index.html` file to the GitHub repository th
 This application was designed and developed by **Bishal Mishra**.
 
 ---
-*Copyright © 2024 Bishal Mishra | All Rights Reserved.*
+*Copyright © 2025 Bishal Mishra | All Rights Reserved.*
