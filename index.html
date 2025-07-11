@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -618,10 +619,14 @@
         body.dark .ai-chatbot-header p {
             color: var(--text-dark);
         }
-        .ai-chatbot-iframe {
+        
+        /* --- This is where the chat app will live --- */
+        #chat-app-container {
             width: 100%;
-            flex-grow: 1; /* Take remaining height */
+            flex-grow: 1;
             border: none;
+            /* Allow the React app to control its own background */
+            background-color: transparent;
         }
         /* --- END: AI CHATBOT MODAL STYLES --- */
 
@@ -661,17 +666,19 @@
     </style>
 
     <!-- Required libraries for the chat widget -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@^19.1.0",
-        "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-        "react/": "https://esm.sh/react@^19.1.0/",
-        "@google/genai": "https://esm.sh/@google/genai@^1.9.0",
-        "tailwindcss": "https://cdn.tailwindcss.com"
-      }
-    }
-    </script>
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+    "@google/genai": "https://esm.sh/@google/genai@^1.9.0",
+    "htm": "https://esm.sh/htm@^3.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -980,12 +987,8 @@
             <h1>🤖 AI Assistant</h1>
             <p>Your intelligent writing companion. Get help with ideas, writing, questions, and more!</p>
         </div>
-        <iframe
-            src="https://15f2823c-1df8-4dfc-bc0c-077f6c44d3fa-00-1hwxzvns4jlz4.worf.replit.dev/"
-            class="ai-chatbot-iframe"
-            title="AI Assistant Chat"
-            loading="lazy">
-        </iframe>
+        <!-- The AI Chat App will be rendered here -->
+        <div id="chat-app-container" class="w-full h-full"></div>
     </div>
 </div>
 <!-- END: AI CHATBOT MODAL -->
@@ -1389,11 +1392,475 @@ function updateUIForPremiumFeatures() { if (!premiumFeaturesSection) return; con
 function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
 </script>
 
-<!-- Chat Widget Container -->
-<div id="chat-root"></div>
+<!-- START: All-in-one Chat Widget Script -->
+<script type="module">
+  import React from 'react';
+  import ReactDOM from 'react-dom/client';
+  import { GoogleGenAI } from '@google/genai';
+  import htm from 'htm';
 
-<!-- Load Chat Widget -->
-<script type="module" src="https://note-book-note-gyclyzgcw-bishal-mishras-projects-e381ab1f.vercel.app/index.tsx"></script>
+  const { useState, useCallback, useEffect, useRef } = React;
+  const html = htm.bind(React.createElement);
+
+  // --- Start: Inlined from types.ts ---
+  const ChatRole = {
+    USER: 'user',
+    MODEL: 'model',
+    SYSTEM: 'system',
+  };
+  // --- End: Inlined from types.ts ---
+
+
+  // --- Start: Inlined from services/geminiService.ts ---
+  const BISHAL_MISHRA_BIO = `
+Hi, I'm Bishal Mishra — a passionate developer and AI enthusiast dedicated to building intelligent solutions that make digital interaction smarter and more human. I recently developed this powerful Chat AI tool to enhance communication, automate tasks, and deliver meaningful user experiences across various domains.
+
+With a strong foundation in programming, machine learning, and natural language processing, I enjoy creating tools that not only work efficiently but also add real value to people's lives. My goal is to push the boundaries of what AI can do, one innovative project at a time.
+`;
+
+  const chatSessions = new Map();
+
+  const getChatSession = (sessionId) => {
+    if (chatSessions.has(sessionId)) {
+      return chatSessions.get(sessionId);
+    }
+
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const newChat = ai.chats.create({
+      model: 'gemini-2.5-flash',
+      config: {
+        systemInstruction: "You are a helpful and friendly AI assistant. Be concise and informative.",
+      },
+    });
+
+    chatSessions.set(sessionId, newChat);
+    return newChat;
+  };
+
+  async function* sendMessageToGemini(prompt, sessionId, image) {
+    const creatorQuestion = prompt.toLowerCase().trim().replace(/[^a-z0-9\s]/g, '');
+    if (['who created you', 'who made you', 'who is your creator', 'who is your developer'].includes(creatorQuestion)) {
+      yield BISHAL_MISHRA_BIO;
+      return;
+    }
+
+    const chat = getChatSession(sessionId);
+
+    const parts = [];
+    if (image) {
+      parts.push({
+        inlineData: {
+          mimeType: image.mimeType,
+          data: image.data,
+        },
+      });
+    }
+    if (prompt) {
+      parts.push({ text: prompt });
+    }
+
+    try {
+      const stream = await chat.sendMessageStream({ message: parts });
+      for await (const chunk of stream) {
+        if (chunk.text) {
+          yield chunk.text;
+        }
+      }
+    } catch (error) {
+      console.error('Gemini API Error:', error);
+      yield "An error occurred while communicating with the AI. Please check the console for details.";
+    }
+  }
+  // --- End: Inlined from services/geminiService.ts ---
+
+
+  // --- Start: Inlined from hooks/useSpeechRecognition.ts ---
+  const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const useSpeechRecognition = () => {
+    const [text, setText] = useState('');
+    const [isListening, setIsListening] = useState(false);
+    const recognitionRef = useRef(null);
+    
+    const hasRecognitionSupport = !!SpeechRecognitionAPI;
+
+    const stopListening = () => {
+      if (recognitionRef.current && isListening) {
+        recognitionRef.current.stop();
+        setIsListening(false);
+      }
+    };
+
+    useEffect(() => {
+      if (!hasRecognitionSupport) {
+        return;
+      }
+
+      const recognition = new SpeechRecognitionAPI();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('');
+        setText(transcript);
+        recognition.stop();
+      };
+      
+      recognition.onerror = (event) => {
+          console.error('Speech recognition error:', event.error);
+          recognition.stop();
+      };
+      
+      recognition.onend = () => {
+          setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      
+      return () => {
+          if (recognitionRef.current) {
+              recognitionRef.current.stop();
+          }
+      };
+    }, [hasRecognitionSupport]);
+    
+    const startListening = () => {
+      if (recognitionRef.current && !isListening) {
+        setText('');
+        recognitionRef.current.start();
+        setIsListening(true);
+      }
+    };
+
+    return { text, isListening, startListening, stopListening, hasRecognitionSupport };
+  };
+  // --- End: Inlined from hooks/useSpeechRecognition.ts ---
+
+
+  // --- Start: Inlined from components/Icon.tsx ---
+  const Icon = ({ name, className = 'w-6 h-6' }) => {
+    const iconSVG = {
+      send: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=${1.5} stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+      </svg>`,
+      mic: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=${1.5} stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5a6 6 0 00-12 0v1.5a6 6 0 006 6zM19.5 12a7.5 7.5 0 11-15 0" />
+      </svg>`,
+      paperclip: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=${1.5} stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.122 2.122l7.81-7.81" />
+      </svg>`,
+      plus: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=${1.5} stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>`,
+      logo: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.5 21.75l-.398-1.178a3.375 3.375 0 00-2.456-2.456L12.5 18l1.178-.398a3.375 3.375 0 002.456-2.456L16.5 14.25l.398 1.178a3.375 3.375 0 002.456 2.456L20.5 18l-1.178.398a3.375 3.375 0 00-2.456 2.456z" />
+      </svg>`,
+      user: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=${1.5} stroke="currentColor" className=${className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+      </svg>`,
+      x: html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className=${className}>
+         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>`
+    };
+    return iconSVG[name] || null;
+  };
+  // --- End: Inlined from components/Icon.tsx ---
+
+
+  // --- Start: Inlined from components/Message.tsx ---
+  const Message = ({ message }) => {
+    const isUser = message.role === ChatRole.USER;
+    const isModel = message.role === ChatRole.MODEL;
+    
+    const bubbleClasses = isUser ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-700 text-slate-300 rounded-bl-none';
+    const containerClasses = isUser ? 'justify-end' : 'justify-start';
+
+    return html`
+      <div className="flex items-end gap-3 ${containerClasses}">
+        ${isModel && html`
+          <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-full flex items-center justify-center">
+              <${Icon} name="logo" className="w-5 h-5 text-white" />
+          </div>
+        `}
+        <div className="rounded-xl p-4 max-w-xl whitespace-pre-wrap ${bubbleClasses}">
+          ${message.image && html`
+            <div className="mb-2">
+              <img src=${message.image.url} alt=${message.image.name} className="rounded-lg max-h-64" />
+            </div>
+          `}
+          <p>${message.text}</p>
+        </div>
+        ${isUser && html`
+          <div className="flex-shrink-0 w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center">
+              <${Icon} name="user" className="w-5 h-5 text-slate-300" />
+          </div>
+        `}
+      </div>
+    `;
+  };
+  // --- End: Inlined from components/Message.tsx ---
+
+
+  // --- Start: Inlined from components/ChatWindow.tsx ---
+  const ChatWindow = ({ messages, isLoading }) => {
+    const endOfMessagesRef = useRef(null);
+
+    useEffect(() => {
+      endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+    return html`
+      <div className="space-y-6">
+        ${messages.map((msg) => html`<${Message} key=${msg.id} message=${msg} />`)}
+        ${isLoading && html`
+          <div className="flex justify-start">
+              <div className="flex items-center space-x-2 bg-slate-700 rounded-lg p-3 max-w-xl animate-pulse">
+                  <div className="h-2 w-2 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="h-2 w-2 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="h-2 w-2 bg-slate-500 rounded-full animate-bounce"></div>
+              </div>
+          </div>
+        `}
+        <div ref=${endOfMessagesRef} />
+      </div>
+    `;
+  };
+  // --- End: Inlined from components/ChatWindow.tsx ---
+
+
+  // --- Start: Inlined from components/InputBar.tsx ---
+  const InputBar = ({ onSendMessage, isLoading }) => {
+    const [text, setText] = useState('');
+    const [imageFile, setImageFile] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const {
+      text: speechText,
+      isListening,
+      startListening,
+      stopListening,
+      hasRecognitionSupport
+    } = useSpeechRecognition();
+
+    useEffect(() => {
+      if (speechText) {
+        setText(prev => (prev ? prev + ' ' : '') + speechText);
+      }
+    }, [speechText]);
+    
+    const handleFileChange = (event) => {
+      const file = event.target.files?.[0];
+      if (file && file.type.startsWith('image/')) {
+        const previewUrl = URL.createObjectURL(file);
+        setImageFile({ file, previewUrl });
+      }
+      if(event.target) event.target.value = '';
+    };
+
+    const handleSend = useCallback(async () => {
+      if ((!text && !imageFile) || isLoading) return;
+      
+      if (imageFile) {
+          const reader = new FileReader();
+          reader.readAsDataURL(imageFile.file);
+          reader.onloadend = () => {
+              const base64String = (reader.result).split(',')[1];
+              const imageData = {
+                  mimeType: imageFile.file.type,
+                  data: base64String
+              };
+              onSendMessage(text, imageData);
+              setText('');
+              setImageFile(null);
+          };
+      } else {
+          onSendMessage(text);
+          setText('');
+      }
+    }, [text, imageFile, isLoading, onSendMessage]);
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        handleSend();
+      }
+    };
+
+    return html`
+      <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        ${imageFile && html`
+          <div className="mb-3 p-2 bg-slate-700/50 rounded-lg flex items-center justify-between">
+            <div className="flex items-center gap-3">
+               <img src=${imageFile.previewUrl} alt="Preview" className="w-12 h-12 rounded-md object-cover" />
+               <span className="text-slate-400 text-sm font-medium">${imageFile.file.name}</span>
+            </div>
+            <button onClick=${() => setImageFile(null)} className="p-1 rounded-full hover:bg-slate-600">
+              <${Icon} name="x" className="w-5 h-5 text-slate-400"/>
+            </button>
+          </div>
+        `}
+        <div className="flex items-center gap-2">
+          <button onClick=${() => fileInputRef.current?.click()} className="p-2 rounded-full hover:bg-slate-700 transition-colors">
+              <${Icon} name="paperclip" className="h-6 w-6 text-slate-400" />
+          </button>
+          <input type="file" ref=${fileInputRef} onChange=${handleFileChange} accept="image/*" className="hidden" />
+
+          ${hasRecognitionSupport && html`
+            <button onClick=${isListening ? stopListening : startListening} className="p-2 rounded-full transition-colors ${isListening ? 'bg-red-500/80 text-white' : 'hover:bg-slate-700 text-slate-400'}">
+              <${Icon} name="mic" className="h-6 w-6" />
+            </button>
+          `}
+
+          <textarea
+              value=${text}
+              onChange=${(e) => setText(e.target.value)}
+              onKeyDown=${handleKeyDown}
+              placeholder="Type your message or upload an image..."
+              className="flex-1 bg-transparent resize-none focus:outline-none text-slate-300 placeholder-slate-500"
+              rows=${1}
+              disabled=${isLoading}
+          />
+          <button onClick=${handleSend} disabled=${(!text && !imageFile) || isLoading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors">
+             <${Icon} name="send" className="h-6 w-6" />
+          </button>
+        </div>
+      </div>
+    `;
+  };
+  // --- End: Inlined from components/InputBar.tsx ---
+
+
+  // --- Start: Inlined from components/Header.tsx ---
+  const Header = ({ onNewChat }) => {
+    return html`
+      <header className="bg-slate-800/50 backdrop-blur-sm p-4 border-b border-slate-700 flex justify-between items-center flex-shrink-0">
+        <div className="flex items-center space-x-3">
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-2 rounded-lg">
+              <${Icon} name="logo" className="h-6 w-6 text-white"/>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-slate-200">Bishal's AI Chat</h1>
+            <p className="text-xs text-slate-400">By CEO Bishal Mishra</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick=${onNewChat}
+            className="flex items-center space-x-2 bg-slate-700 hover:bg-slate-600 text-slate-300 font-semibold py-2 px-3 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="New Chat"
+          >
+            <${Icon} name="plus" className="h-5 w-5"/>
+          </button>
+        </div>
+      </header>
+    `;
+  };
+  // --- End: Inlined from components/Header.tsx ---
+
+  // --- Start: Inlined from App.tsx ---
+  const App = () => {
+    const [messages, setMessages] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const chatSessionRef = useRef({ id: Date.now() });
+
+    const handleNewChat = useCallback(() => {
+      setMessages([
+          {
+              id: 'welcome-message',
+              role: ChatRole.MODEL,
+              text: "Hello! I'm your AI assistant. How can I help you today?",
+          }
+      ]);
+      chatSessionRef.current.id = Date.now();
+    }, []);
+
+    useEffect(() => {
+      handleNewChat();
+    }, [handleNewChat]);
+
+    const handleSendMessage = useCallback(async (inputText, image) => {
+      if (!inputText && !image) return;
+
+      setIsLoading(true);
+      const userMessage = {
+        id: `user-${Date.now()}`,
+        role: ChatRole.USER,
+        text: inputText,
+        ...(image && {
+          image: {
+            url: `data:${image.mimeType};base64,${image.data}`,
+            name: 'Uploaded Image'
+          }
+        })
+      };
+      setMessages(prev => [...prev, userMessage]);
+
+      const modelMessageId = `model-${Date.now()}`;
+      const initialModelMessage = {
+        id: modelMessageId,
+        role: ChatRole.MODEL,
+        text: '',
+      };
+      setMessages(prev => [...prev, initialModelMessage]);
+
+      try {
+        const stream = sendMessageToGemini(inputText, chatSessionRef.current.id, image);
+
+        for await (const chunk of stream) {
+          setMessages(prev =>
+            prev.map(msg =>
+              msg.id === modelMessageId ? { ...msg, text: msg.text + chunk } : msg
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
+        setMessages(prev =>
+          prev.map(msg =>
+            msg.id === modelMessageId ? {
+              ...msg,
+              text: "Sorry, I encountered an error. Please try again."
+            } : msg
+          )
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    }, []);
+
+    return html`
+      <div className="flex flex-col h-full w-full bg-slate-900 font-sans rounded-xl overflow-hidden">
+        <${Header} onNewChat=${handleNewChat} />
+        <main className="flex-grow flex flex-col h-full overflow-hidden p-4">
+          <div className="flex-grow overflow-y-auto pr-2">
+              <${ChatWindow} messages=${messages} isLoading=${isLoading} />
+          </div>
+          <div className="flex-shrink-0 pt-4">
+              <${InputBar} onSendMessage=${handleSendMessage} isLoading=${isLoading} />
+          </div>
+        </main>
+      </div>
+    `;
+  };
+  // --- End: Inlined from App.tsx ---
+
+
+  // --- Start: Inlined from index.tsx (Entry Point) ---
+  const chatAppRootElement = document.getElementById('chat-app-container');
+  if (chatAppRootElement) {
+    const root = ReactDOM.createRoot(chatAppRootElement);
+    root.render(html`<${React.StrictMode}><${App} /></${React.StrictMode}>`);
+  } else {
+    console.error("Chat widget container ('chat-app-container') not found!");
+  }
+  // --- End: Entry Point ---
+
+</script>
+<!-- END: All-in-one Chat Widget Script -->
 
 </body>
 </html>
