@@ -659,6 +659,19 @@
             .open-nav-btn { position: absolute; left: 5%; top: 50%; transform: translateY(-50%); }
         }
     </style>
+
+    <!-- Required libraries for the chat widget -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@^19.1.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+        "react/": "https://esm.sh/react@^19.1.0/",
+        "@google/genai": "https://esm.sh/@google/genai@^1.9.0",
+        "tailwindcss": "https://cdn.tailwindcss.com"
+      }
+    }
+    </script>
 </head>
 <body>
 
@@ -1375,5 +1388,12 @@ function checkPremiumStatus(feature) { return false; }
 function updateUIForPremiumFeatures() { if (!premiumFeaturesSection) return; const isLoggedIn = !!getCurrentUserId(); if (!isLoggedIn) premiumFeaturesSection.classList.add('hidden'); else premiumFeaturesSection.classList.remove('hidden'); document.querySelectorAll('.premium-feature-card').forEach(card => { const buyButton = card.querySelector('.premium-buy-btn'); const manualPaymentInfo = card.querySelector('.manual-payment-info'); if (!buyButton || !manualPaymentInfo) return; const feature = buyButton.getAttribute('data-feature'); if (checkPremiumStatus(feature)) { buyButton.style.display = 'none'; manualPaymentInfo.style.display = 'flex'; manualPaymentInfo.innerHTML = `<p style="color: var(--primary); font-weight: bold;">Premium Feature Activated!</p>`; } else { buyButton.style.display = 'block'; if (!manualPaymentInfo.querySelector('img[alt*="Esewa QR Code"]') && QR_CODE_IMAGE_URL) { manualPaymentInfo.innerHTML = `<p>Pay manually via Esewa:</p><img src="${QR_CODE_IMAGE_URL}" alt="Esewa QR Code for B.T Mobile Care" width="150" height="150"><p><strong>Esewa ID:</strong> B.T Mobile Care</p><p><strong>Esewa Number:</strong> 9827801575</p><small>After payment, contact us to activate.</small>`; } manualPaymentInfo.style.display = 'none'; } }); }
 function setupScrollAnimations() { if ('IntersectionObserver' in window) { scrollAnimationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { const target = entry.target; if (!target.classList.contains('is-visible')) { const delay = target.dataset.animationDelay ? parseFloat(target.dataset.animationDelay) : 0; target.style.setProperty('--animation-delay', `${delay}s`); target.classList.add('is-visible'); } observer.unobserve(target); } }); }, { rootMargin: '0px', threshold: 0.1 }); const sectionsToAnimate = [ document.getElementById('menu-bar'), document.getElementById('editor'), document.getElementById('whiteboard-container'), document.getElementById('calendar-container'), adsenseContainer, document.getElementById('notes'), document.getElementById('overview'), document.getElementById('premium-features-section'), document.getElementById('faq-section'), document.getElementById('how-it-works'), document.getElementById('privacy') ]; let index = 0; sectionsToAnimate.forEach(section => { if (section) { const isCurrentlyActiveEditor = (section.id === 'editor' && currentAppMode === 'notepad') || (section.id === 'whiteboard-container' && currentAppMode === 'whiteboard') || (section.id === 'calendar-container' && currentAppMode === 'calendar'); if (!section.classList.contains('hidden') || isCurrentlyActiveEditor) { section.classList.add('fade-in-up'); section.dataset.animationDelay = index * 0.02; scrollAnimationObserver.observe(section); index++; } } }); document.querySelectorAll('.features-grid .feature-card').forEach((card, cardIndex) => { card.classList.add('fade-in-up'); card.dataset.animationDelay = (index * 0.02) + (cardIndex * 0.01); scrollAnimationObserver.observe(card); }); } else { document.querySelectorAll('.fade-in-up').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); } }
 </script>
+
+<!-- Chat Widget Container -->
+<div id="chat-root"></div>
+
+<!-- Load Chat Widget -->
+<script type="module" src="https://note-book-note-gyclyzgcw-bishal-mishras-projects-e381ab1f.vercel.app/index.tsx"></script>
+
 </body>
 </html>
