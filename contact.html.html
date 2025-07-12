@@ -126,23 +126,22 @@
         .contact-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: flex-start; }
         .contact-form-column { background: var(--card-light); padding: 40px; border-radius: var(--radius); box-shadow: 0 10px 30px var(--shadow-light); border: 1px solid #eee; }
         body.dark .contact-form-column { background: var(--card-dark); box-shadow: 0 10px 30px var(--shadow-dark); border-color: #444; }
+        
+        /* Form Styles (Shared by old and new form) */
         .form-group { position: relative; margin-bottom: 25px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; }
         .form-group .fa-solid, .form-group .fa-brands { position: absolute; left: 18px; top: 50%; transform: translateY(25%); color: #aaa; transition: color 0.3s; }
-        #contactForm input, #contactForm textarea, #contactForm select { width: 100%; padding: 14px 18px 14px 50px; border: 1px solid #ddd; border-radius: var(--radius); background-color: #f7f7f7; color: var(--text-light); font-family: 'Poppins', sans-serif; font-size: 16px; transition: all 0.3s ease; }
-        body.dark #contactForm input, body.dark #contactForm textarea, body.dark #contactForm select { background-color: #3a3f44; border-color: #555; color: var(--text-dark); }
-        #contactForm input:focus, #contactForm textarea:focus, #contactForm select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light-transparent); }
-        #contactForm input:focus ~ i, #contactForm textarea:focus ~ i, #contactForm select:focus ~ i { color: var(--primary); }
+        #contactForm input, #contactForm textarea { width: 100%; padding: 14px 18px 14px 50px; border: 1px solid #ddd; border-radius: var(--radius); background-color: #f7f7f7; color: var(--text-light); font-family: 'Poppins', sans-serif; font-size: 16px; transition: all 0.3s ease; }
+        body.dark #contactForm input, body.dark #contactForm textarea { background-color: #3a3f44; border-color: #555; color: var(--text-dark); }
+        #contactForm input:focus, #contactForm textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light-transparent); }
+        #contactForm input:focus ~ i, #contactForm textarea:focus ~ i { color: var(--primary); }
         #contactForm textarea { resize: vertical; min-height: 140px; padding-top: 14px; }
-        #contactForm input.is-valid, #contactForm select.is-valid, #contactForm textarea.is-valid { border-color: var(--success); }
-        #contactForm input.is-invalid, #contactForm select.is-invalid, #contactForm textarea.is-invalid { border-color: var(--danger); }
         #contact-submit-btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius); background: var(--primary); color: white; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
         #contact-submit-btn:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-3px); }
         #contact-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
         body.dark #contact-submit-btn:disabled { background: #555; }
-        #form-status-message { margin-top: 20px; padding: 15px; border-radius: var(--radius); text-align: center; font-weight: 500; }
-        #form-status-message.success { background-color: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
-        #form-status-message.error { background-color: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+
+        /* Info column styles */
         .contact-info-column { display: flex; flex-direction: column; gap: 30px; }
         .info-card { background: var(--card-light); padding: 30px; border-radius: var(--radius); box-shadow: 0 10px 30px var(--shadow-light); border: 1px solid #eee; }
         body.dark .info-card { background: var(--card-dark); box-shadow: 0 10px 30px var(--shadow-dark); border-color: #444; }
@@ -234,14 +233,29 @@
         <div class="contact-container">
             <!-- Left Column: Form -->
             <div class="contact-form-column fade-in-up">
-                <form id="contactForm" novalidate>
-                    <div class="form-group"><label for="contact-name">Full Name</label><input type="text" id="contact-name" name="name" placeholder="John Doe" required><i class="fa-solid fa-user"></i></div>
-                    <div class="form-group"><label for="contact-email">Email Address</label><input type="email" id="contact-email" name="email" placeholder="you@example.com" required><i class="fa-solid fa-envelope"></i></div>
-                    <div class="form-group"><label for="contact-inquiry">Reason for Contact</label><select id="contact-inquiry" name="inquiry" required><option value="" disabled selected>Please select a reason...</option><option value="general">General Question</option><option value="support">Technical Support</option><option value="feedback">Feedback & Suggestions</option><option value="partnership">Partnership Inquiry</option><option value="other">Other</option></select><i class="fa-solid fa-clipboard-question"></i></div>
-                    <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="6" placeholder="Your detailed message here..." required></textarea><i class="fa-solid fa-pen-to-square"></i></div>
-                    <div id="form-status-message" style="display: none;"></div>
+                <!-- === FORM UPDATED FOR FORMSPREE === -->
+                <form id="contactForm" action="https://formspree.io/f/xovwgzpa" method="POST">
+                    <div class="form-group">
+                        <label for="contact-name">Your Name</label>
+                        <input type="text" id="contact-name" name="name" placeholder="John Doe" required>
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Your Message</label>
+                        <textarea id="contact-message" name="message" rows="6" placeholder="Your detailed message here..." required></textarea>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <!-- Hidden field for Formspree to redirect after submission -->
+                    <input type="hidden" name="_next" value="https://bishalmishra.com/thanks.html">
+                    
                     <button type="submit" id="contact-submit-btn">Send Message</button>
                 </form>
+                <!-- === END OF UPDATED FORM === -->
             </div>
 
             <!-- Right Column: Info -->
@@ -289,8 +303,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDarkMode(); 
     updateClock(); 
     setInterval(updateClock, 1000); 
-    fetchWeather(); // <-- FIXED: This is now enabled
-    checkAuthStatus(); // <-- FIXED: This is now enabled
+    fetchWeather();
+    checkAuthStatus();
     attachEventListeners(); 
     setupIntersectionObserver();
     document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -309,45 +323,13 @@ function setupIntersectionObserver() {
     document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 }
 
-// --- CONTACT FORM LOGIC ---
-const contactForm = document.getElementById('contactForm');
-const fields = ['name', 'email', 'inquiry', 'message'];
-function validateField(field) {
-    const input = contactForm.elements[field];
-    input.classList.remove('is-valid', 'is-invalid');
-    let isValid = (field === 'email') ? (input.value.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) : (input.value.trim() !== '');
-    input.classList.add(isValid ? 'is-valid' : 'is-invalid');
-    return isValid;
-}
-function validateAllFields() { return fields.map(validateField).every(isValid => isValid); }
-function handleContactFormSubmit(event) {
-    event.preventDefault();
-    const submitBtn = document.getElementById('contact-submit-btn');
-    const statusMsg = document.getElementById('form-status-message');
-    if (!validateAllFields()) {
-        statusMsg.textContent = 'Please correct the errors before submitting.';
-        statusMsg.className = 'error'; statusMsg.style.display = 'block'; return;
-    }
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    statusMsg.style.display = 'none';
-    setTimeout(() => {
-        statusMsg.innerHTML = '<i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.';
-        statusMsg.className = 'success'; statusMsg.style.display = 'block';
-        contactForm.reset();
-        fields.forEach(field => contactForm.elements[field].classList.remove('is-valid', 'is-invalid'));
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-        setTimeout(() => { statusMsg.style.display = 'none'; }, 6000);
-    }, 2000);
-}
+// --- CONTACT FORM LOGIC REMOVED ---
+// All form validation and submission logic has been removed.
+// Formspree now handles the submission process.
 
 // --- ALL EVENT LISTENERS ---
 function attachEventListeners() {
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactFormSubmit);
-        fields.forEach(field => { const el = contactForm.elements[field]; if(el) el.addEventListener('blur', () => validateField(field)); });
-    }
+    // Note: The contact form event listeners have been removed.
     const goToTopBtn = document.getElementById('goToTopBtn');
     window.onscroll = () => { if (goToTopBtn) { goToTopBtn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "flex" : "none"; } };
     if (goToTopBtn) { goToTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -372,7 +354,6 @@ function showUserInfo() {
 
     profileContainer.classList.remove('hidden');
     // For simplicity, I am keeping the profile dropdown structure minimal here.
-    // If you need the full dropdown functionality, that code can be re-added.
     profileContainer.innerHTML = `<img id="profile-icon" src="${localStorage.getItem('userPic') || `https://ui-avatars.com/api/?name=${encodeURIComponent(username.substring(0,2))}`}" alt="Profile" />`;
 }
 </script>
